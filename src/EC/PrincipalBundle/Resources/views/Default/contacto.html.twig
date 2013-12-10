@@ -1,0 +1,38 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block sidebar %}
+	<div class="subtitulo izquierda">Contacto.</div>
+{% endblock %}
+
+{% block colder %}
+	<section id="form_login">
+		<div class="subtitulo centrado">Formulario de Contacto.</div>
+		{{ form_start(form) }}
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+ 
+    		<div class="campo_login">
+        		<div class="label_campo">{{ form_label(form.Nombre) }}:</div>
+        		{{ form_widget(form.Nombre) }}
+        		<div class="error">{{ form_errors(form.Nombre) }}</div>
+    		</div>
+ 
+    		<div class="campo_login">
+        		<div class="label_campo">{{ form_label(form.Email) }}:</div>
+        		{{ form_widget(form.Email) }}
+        		<div class="error">{{ form_errors(form.Email) }}</div>
+    		</div>
+    
+    		<div class="campo_login">
+        		<div class="label_campo">{{ form_label(form.Mensaje) }}:</div>
+        		<p>{{ form_widget(form.Mensaje) }}</p>
+        		<div class="error">{{ form_errors(form.Mensaje) }}</div>
+    		</div>
+
+    		<div class="campo_login">
+    		<input type="submit" value="Enviar"/>
+    		<input type="reset" value="Borrar"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+	</section>
+{% endblock %}

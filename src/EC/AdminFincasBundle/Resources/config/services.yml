@@ -1,0 +1,7 @@
+parameters:
+#    ec_admin_fincas.example.class: EC\AdminFincasBundle\Example
+
+services:
+#    ec_admin_fincas.example:
+#        class: %ec_admin_fincas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

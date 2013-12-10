@@ -1,0 +1,15 @@
+ec_principal_homepage:
+    pattern:  /
+    defaults: { _controller: ECPrincipalBundle:Default:index }
+
+ec_principal_alta_adminfincas:
+    pattern:  /alta/adminfincas
+    defaults: { _controller: ECPrincipalBundle:Default:alta_adminfincas }
+    
+ec_principal_alta_vecino:
+    pattern:  /alta/vecino
+    defaults: { _controller: ECPrincipalBundle:Default:alta_vecino }
+    
+ec_principal_contacto:
+    pattern:  /contacto
+    defaults: { _controller: ECPrincipalBundle:Default:contacto }

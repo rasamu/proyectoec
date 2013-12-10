@@ -1,39 +1,49 @@
 security:
-    encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    firewalls: 
+         admin:
+            pattern:    ^/root
+            http_basic:	~
+            provider: administradores
+            logout:
+               path:		/root/logout
+               target:	/ 
+         frontend:
+            pattern:    ^/*
+            anonymous: ~
+            provider: usuarios
+            form_login:
+               login_path: login
+               check_path: login_check
+               default_target_path: ec_principal_homepage
+            logout:
+               path: logout
+               target: ec_principal_homepage     
+               
+    access_control:
+        - { path: ^/root, roles: ROLE_ADMIN }
+        - { path: ^/adminfincas, roles: ROLE_ADMINFINCAS }
+        - { path: ^/vecino, roles: ROLE_VECINO }
 
     providers:
-        in_memory:
+        administradores:
             memory:
                 users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    root: { password: rootpass, roles: 'ROLE_ADMIN' }
+        usuarios:
+            chain:
+                providers: [adminfincas, vecinos]
+        adminfincas:
+            entity: { class: EC\AdminFincasBundle\Entity\AdminFincas, property: n_colegiado }
+        vecinos:
+            entity: { class: EC\VecinoBundle\Entity\Vecino, property: dni }
 
-    firewalls:
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        secured_area:
-            pattern:    ^/demo/secured/
-            form_login:
-                check_path: _security_check
-                login_path: _demo_login
-            logout:
-                path:   _demo_logout
-                target: _demo
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
-
-    access_control:
-        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        EC\AdminFincasBundle\Entity\AdminFincas:
+              algorithm:  sha512
+              iterations: 10
+              encode_as_base64: false
+        EC\VecinoBundle\Entity\Vecino:
+              algorithm:  sha512
+              iterations: 10
+              encode_as_base64: false

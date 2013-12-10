@@ -1,0 +1,29 @@
+ec_vecino:
+    resource: "@ECVecinoBundle/Resources/config/routing.yml"
+    prefix:   /vecino
+
+ec_comunidad:
+    resource: "@ECComunidadBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ec_backend:
+    resource: "@ECBackendBundle/Resources/config/routing.yml"
+    prefix:   /root
+
+ec_admin_fincas:
+    resource: "@ECAdminFincasBundle/Resources/config/routing.yml"
+    prefix:   /adminfincas
+
+ec_principal:
+    resource: "@ECPrincipalBundle/Resources/config/routing.yml"
+    prefix:   /
+
+login:
+   pattern: /login
+   defaults: { _controller:ECPrincipalBundle:Default:login }
+
+login_check:
+   pattern: /login_check
+
+logout:
+   pattern: /logout

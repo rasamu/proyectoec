@@ -1,0 +1,27 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block sidebar %}
+	<div class="subtitulo izquierda">Acceso.</div>
+{% endblock %}
+
+{% block colder %}
+		<section id="form_login">
+			<div class="subtitulo centrado">Formulario de acceso</div>
+		
+			{% if error %}
+				<div class="error centrado">Datos incorrectos</div>
+			{% endif %}
+		
+			<form method="post" action="{{ path('login_check') }}">
+				<div class="campo_login">
+					<div class="label_campo"><label>Usuario:</label></div>
+					<input type="text" name="_username" id="username" maxlength="9"/>
+				</div>
+				<div class="campo_login">
+					<div class="label_campo"><label>Contraseña:</label></div>
+					<input type="password" name="_password" id="password" maxlength="9"/>
+				</div>
+				<div class="campo_login"><div></div><input type="submit" value="Entrar"></div>
+			</form>
+		</section>
+{% endblock %}

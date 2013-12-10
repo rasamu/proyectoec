@@ -1,0 +1,91 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block sidebar %}
+	<div class="subtitulo izquierda">Alta Vecino</div>
+{% endblock %}
+
+{% block colder %}
+		<section id="form">
+			<div class="subtitulo centrado">Alta Vecino</div>
+			{{ form_start(form) }}
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="campo">
+       		 <div class="label_campo">{{ form_label(form.dni) }}</div>
+        		{{ form_widget(form.dni) }}
+        		<div class="error">{{ form_errors(form.dni) }}</div>
+    		</div>
+ 
+ 			<div class="campo">
+       		 <div class="label_campo">{{ form_label(form.comunidad) }}</div>
+        		{{ form_widget(form.comunidad) }}
+        		<div class="error">{{ form_errors(form.comunidad) }}</div>
+    		</div>
+ 			
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.nombre) }}</div>
+       		 {{ form_widget(form.nombre) }}
+        		<div class="error">{{ form_errors(form.nombre) }}</div>
+    		</div>
+    		
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.apellidos) }}</div>
+       		 {{ form_widget(form.apellidos) }}
+        		<div class="error">{{ form_errors(form.apellidos) }}</div>
+    		</div>
+    
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.telefono) }}</div>
+        		{{ form_widget(form.telefono) }}
+        		<div class="error">{{ form_errors(form.telefono) }}</div>       
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.email) }}</div>
+        		{{ form_widget(form.email) }}        
+       		 <div class="error">{{ form_errors(form.email) }}</div>
+    		</div>
+
+   		 <div class="campo">
+        		<div class="label_campo">{{ form_label(form.portal) }}</div>
+        		{{ form_widget(form.portal) }}
+        		<div class="error">{{ form_errors(form.portal) }}</div>        
+    		</div>
+    		
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.piso) }}</div>
+        		{{ form_widget(form.piso) }}
+        		<div class="error">{{ form_errors(form.piso) }}</div>        
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.provincia) }}</div>
+        		{{ form_widget(form.provincia) }}
+        		<div class="error">{{ form_errors(form.provincia) }}</div>        
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.localidad) }}</div>
+        		{{ form_widget(form.localidad) }}
+       		 <div class="error">{{ form_errors(form.localidad) }}</div>        
+    		</div>
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.password.first) }}</div>
+        		{{ form_widget(form.password.first) }}
+       		 <div class="error">{{ form_errors(form.password.first) }}</div>        
+    		</div>    		
+    		
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.password.second) }}</div>
+        		{{ form_widget(form.password.second) }}
+       		 <div class="error">{{ form_errors(form.password.second) }}</div>        
+    		</div>   
+    		
+    		<div class="campo">
+    		<input type="submit" value="Enviar"/>
+    		<input type="reset" value="Borrar"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+		</section>
+{% endblock %}

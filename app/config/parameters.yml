@@ -2,13 +2,15 @@
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
-    database_port: null
-    database_name: symfony
+    database_port: ~
+    database_name: entre_comunidades
     database_user: root
-    database_password: null
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
-    locale: en
-    secret: ThisTokenIsNotSoSecretChangeIt
+    database_password: ~
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com
+    mailer_user: rasamu24@gmail.com
+    mailer_password: 08091987
+    locale: es
+    secret: a67f71ad704f1c1229c3abc91a16e1cb9bc8fded
+    database_path: null
+

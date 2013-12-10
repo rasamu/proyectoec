@@ -1,0 +1,68 @@
+{% extends 'ECAdminFincasBundle::layout.html.twig' %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block colder %}
+		<section id="form">
+			<div class="subtitulo centrado">Modificación Datos personales.</div>
+			{{ form_start(form) }}
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+ 
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.nombre) }}</div>
+       		 {{ form_widget(form.nombre) }}
+        		<div class="error">{{ form_errors(form.nombre) }}</div>
+    		</div>
+    		
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.apellidos) }}</div>
+       		 {{ form_widget(form.apellidos) }}
+        		<div class="error">{{ form_errors(form.apellidos) }}</div>
+    		</div>
+    
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.telefono) }}</div>
+        		{{ form_widget(form.telefono) }}
+        		<div class="error">{{ form_errors(form.telefono) }}</div>       
+    		</div>
+
+    		<div class="campo">
+       		 <div class="label_campo">{{ form_label(form.fax) }}</div>
+        		{{ form_widget(form.fax) }}
+       		 <div class="error">{{ form_errors(form.fax) }}</div>      
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.email) }}</div>
+        		{{ form_widget(form.email) }}        
+       		 <div class="error">{{ form_errors(form.email) }}</div>
+    		</div>
+
+   		 <div class="campo">
+        		<div class="label_campo">{{ form_label(form.direccion) }}</div>
+        		{{ form_widget(form.direccion) }}
+        		<div class="error">{{ form_errors(form.direccion) }}</div>        
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.provincia) }}</div>
+        		{{ form_widget(form.provincia) }}
+        		<div class="error">{{ form_errors(form.provincia) }}</div>        
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.localidad) }}</div>
+        		{{ form_widget(form.localidad) }}
+       		 <div class="error">{{ form_errors(form.localidad) }}</div>        
+    		</div> 	
+    	
+    		<div class="campo">
+    		<input type="submit" value="Actualizar"/>
+    		<input type="reset" value="Borrar"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+		</section>
+{% endblock %}

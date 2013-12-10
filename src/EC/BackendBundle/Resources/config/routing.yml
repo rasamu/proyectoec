@@ -1,0 +1,7 @@
+ec_backend_homepage:
+    pattern:  /
+    defaults: { _controller: ECBackendBundle:Default:index }
+    
+logout:
+    path:   /logout
+

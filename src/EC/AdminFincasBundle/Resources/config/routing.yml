@@ -1,0 +1,19 @@
+ec_adminfincas_alta_comunidad:
+    pattern:  /alta/comunidad
+    defaults: { _controller: ECAdminFincasBundle:Default:alta_comunidad }
+
+ec_adminfincas_listado_comunidades:
+    pattern:  /listado/comunidades
+    defaults: { _controller: ECAdminFincasBundle:Default:listado_comunidades }
+    
+ec_adminfincas_comunidad_listado_vecinos:
+    pattern:  /comunidad/{cif}/listado/vecinos
+    defaults: { _controller: ECAdminFincasBundle:Default:comunidad_listado_vecinos }
+    
+ec_adminfincas_perfil:
+    pattern:  /perfil
+    defaults: { _controller: ECAdminFincasBundle:Default:modificacion_perfil }
+    
+ec_adminfincas_contraseña:
+    pattern:  /contraseña
+    defaults: { _controller: ECAdminFincasBundle:Default:modificacion_contraseña }

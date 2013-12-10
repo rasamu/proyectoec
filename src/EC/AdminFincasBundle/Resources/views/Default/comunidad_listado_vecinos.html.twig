@@ -1,0 +1,54 @@
+{% extends 'ECAdminFincasBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+		{{ parent() }}
+<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
+<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
+	   <script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$('#example').dataTable();
+			} );
+		</script>
+{% endblock %}
+
+{% block colder %}
+
+<div class="subtitulo centrado">Listado de Vecinos</div>
+Comunidad: {{comunidad.cif}}
+<div id="demo">
+		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<thead>
+				<tr>
+					<th>DNI</th>
+					<th>Nombre</th>
+					<th>Portal</th>
+					<th>Piso</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for vecino in vecinos %}
+				<tr class="gradeX">
+       			<td>{{vecino.dni}}</td>
+       			<td>{{vecino.nombre}} {{vecino.apellidos}}</td>
+       			<td>{{vecino.portal}}</td>
+       			<td>{{vecino.piso}}</td>
+      		</tr> 
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>DNI</th>
+					<th>Nombre</th>
+					<th>Portal</th>
+					<th>Piso</th>
+				</tr>
+			</tfoot>
+		</table>
+</div>
+
+{% endblock %}

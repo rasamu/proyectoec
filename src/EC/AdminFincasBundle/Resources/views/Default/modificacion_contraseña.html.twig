@@ -1,0 +1,38 @@
+{% extends 'ECVecinoBundle::layout.html.twig' %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block colder %}
+	<section id="form_login">
+		<div class="subtitulo centrado">Cambio de Contraseña.</div>
+		{{ form_start(form) }}
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+ 
+    		<div class="campo_login">
+        		<div class="label_campo">{{ form_label(form.pass) }}</div>
+        		{{ form_widget(form.pass) }}
+        		<div class="error">{{ form_errors(form.pass) }}</div>
+    		</div>
+ 
+    		<div class="campo_login">
+        		<div class="label_campo">{{ form_label(form.password.first) }}</div>
+        		{{ form_widget(form.password.first) }}
+       		 <div class="error">{{ form_errors(form.password.first) }}</div>        
+    		</div>    		
+    		
+    		<div class="campo_login">
+        		<div class="label_campo">{{ form_label(form.password.second) }}</div>
+        		{{ form_widget(form.password.second) }}
+       		 <div class="error">{{ form_errors(form.password.second) }}</div>        
+    		</div>  
+
+    		<div class="campo_login">
+    		<input type="submit" value="Actualizar"/>
+    		<input type="reset" value="Borrar"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+	</section>
+{% endblock %}

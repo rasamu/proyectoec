@@ -1,13 +1,112 @@
+<!-- app/Resources/views/base.html.twig -->
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+        <title>{% block title %}EntreComunidades{% endblock %}</title>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        {% block stylesheets %}
+            <link href="{{ asset('css/principal.css') }}" type="text/css" rel="stylesheet" />
+            <link rel='stylesheet' type='text/css' href="{{ asset('css/menu.css') }}" />
+            <link href='http://fonts.googleapis.com/css?family=Miltonian+Tattoo' rel='stylesheet' type='text/css'>
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        {% block javascripts %}
+				<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+				<script type='text/javascript' src="{{ asset('js/menu_jquery.js') }}"></script>        
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+            <header id="header">
+            		  <section id="topheader">
+            		  		<section id="tituloheader">
+            		  			<div class="titulo"><a href="{{ path('ec_principal_homepage') }}" style="color:#f7d118; text-decoration:none">Entre</a><a href="{{ path('ec_principal_homepage') }}" style="color:#fff; text-decoration:none;">Comunidades</a></div>
+            		  		</section>
+            		  </section>
+                	  <section id="subheader">	
+                			<section id="botones">
+                			   <nav>
+                    			{% block navigation %}
+									<section id="menu">
+                            	<ul class="navigation">
+                                <li><a href="{{ path('ec_principal_homepage') }}">Inicio</a></li>
+                                <li><a href="{{ path('ec_principal_alta_adminfincas') }}">Alta Administrador</a></li>
+                                <li><a href="{{ path('ec_principal_alta_vecino') }}">Alta Vecino</a></li>
+                                <li><a href="{{ path('ec_principal_contacto') }}">Contacto</a></li>
+                            	</ul>
+                        	</section>
+                    			{% endblock %}
+                    			<section id="entrar">
+										{% if is_granted('ROLE_ADMINFINCAS') %}	  
+											<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
+											<div>Administrador de Fincas</div>
+											<a href="{{ path('logout') }}">Cerrar sesión</a>
+										{% else %}
+											{% if is_granted('ROLE_VECINO') %}
+												<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
+												<a href="{{ path('logout') }}">Cerrar sesión</a>
+											{% else %} 
+												<a  href="{{ path('login') }}" >Acceder</a>
+											{% endif %}
+										{% endif %}
+									</section>
+									</nav>
+								</section>
+						  </section>
+            </header>
+            <section id="wrapper">
+            	<section id="contenido">
+                		<section id="sidebar">
+                			{% block sidebar %}
+
+        						{% endblock %}
+                		
+                			{% if is_granted('ROLE_ADMINFINCAS') %}	  
+								<div id='cssmenu'>
+									<ul>
+   									<li class="has-sub"><a href="#"><span>Comunidades</span></a>
+      									<ul>
+      	   								<li><a href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>Alta</span></a></li>
+   	      								<li class="last"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>Listado</span></a></li>
+    	 									</ul>
+ 	  									</li>
+										<li class="has-sub"><a href="#"><span>Mi Perfil</span></a>
+											<ul>
+   											<li><a href="{{ path('ec_adminfincas_perfil') }}"><span>Datos Personales</span></a></li>
+   											<li><a href="{{ path('ec_adminfincas_contraseña') }}"><span>Contraseña</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+								{% else %}
+									{% if is_granted('ROLE_VECINO') %}
+										<div id='cssmenu'>
+											<ul>
+												<li class="has-sub"><a href="#"><span>Mi Perfil</span></a>
+													<ul>
+   													<li><a href="{{ path('ec_vecino_perfil') }}"><span>Datos Personales</span></a></li>
+   													<li><a href="{{ path('ec_vecino_contraseña') }}"><span>Contraseña</span></a></li>
+													</ul>
+												</li>
+											</ul>
+										</div>
+									{% endif %}
+								{% endif %}
+   						</section>
+	
+   						<section id="col-der">
+         					{% block colder %}
+          	
+         					{% endblock %}
+   						</section>
+            	</section>
+				</section>
+            <footer>
+                {% block footer %}
+                     EntreComunidades - Rafael Sánchez Muñoz
+                {% endblock %}
+            </footer>
     </body>
 </html>
