@@ -10,6 +10,22 @@ ec_adminfincas_comunidad_listado_vecinos:
     pattern:  /comunidad/{cif}/listado/vecinos
     defaults: { _controller: ECAdminFincasBundle:Default:comunidad_listado_vecinos }
     
+ec_adminfincas_comunidad_editar:
+    pattern:  /comunidad/{cif}/editar
+    defaults: { _controller: ECAdminFincasBundle:Default:editar_comunidad }
+    
+ec_adminfincas_comunidad_eliminar:
+    pattern:  /comunidad/{cif}/eliminar
+    defaults: { _controller: ECAdminFincasBundle:Default:eliminar_comunidad }
+
+ec_adminfincas_nombrar_presidente:
+    pattern:  /comunidad/{cif}/nombrarpresidente/{dni}
+    defaults: { _controller: ECAdminFincasBundle:Default:nombrar_presidente }
+
+ec_adminfincas_nombrar_vicepresidente:
+    pattern:  /comunidad/{cif}/nombrarvicepresidente/{dni}
+    defaults: { _controller: ECAdminFincasBundle:Default:nombrar_vicepresidente }
+
 ec_adminfincas_perfil:
     pattern:  /perfil
     defaults: { _controller: ECAdminFincasBundle:Default:modificacion_perfil }

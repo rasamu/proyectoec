@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="Vecinos")
+ * @ORM\HasLifecycleCallbacks
  */
 class Vecino implements UserInterface
 {	
@@ -24,7 +25,15 @@ class Vecino implements UserInterface
 	
 	function getRoles()
 	{
-		return array('ROLE_VECINO');	
+		if($this->getTipo()=='Vecino'){
+			return array('ROLE_VECINO');	
+		}else{
+			if($this->getTipo()=='Presidente'){
+				return array('ROLE_PRESIDENTE');	
+			}else{
+				return array('ROLE_VICEPRESIDENTE');	
+			}
+		}
 	}
 	
 	function getUsername()
@@ -45,9 +54,9 @@ class Vecino implements UserInterface
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="tipo_vecino",type="string", length=10)
+     * @ORM\Column(name="tipo_vecino",type="string", length=14)
      */
-    protected $tipo="vecino";
+    protected $tipo="Vecino";
 
     /**
 	  * @Assert\NotNull()
@@ -95,16 +104,9 @@ class Vecino implements UserInterface
     protected $piso;
     
     /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="provincia_vecino",type="string", length=100)
+     * @ORM\Column(name="fecha_alta_vecino",type="datetime")
      */
-    protected $provincia;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="localidad_vecino",type="string", length=100)
-     */
-    protected $localidad;
+    protected $fecha_alta;
     
     /**
 	  * @Assert\NotNull()
@@ -308,52 +310,6 @@ class Vecino implements UserInterface
     }
 
     /**
-     * Set provincia
-     *
-     * @param string $provincia
-     * @return Vecino
-     */
-    public function setProvincia($provincia)
-    {
-        $this->provincia = $provincia;
-    
-        return $this;
-    }
-
-    /**
-     * Get provincia
-     *
-     * @return string 
-     */
-    public function getProvincia()
-    {
-        return $this->provincia;
-    }
-
-    /**
-     * Set localidad
-     *
-     * @param string $localidad
-     * @return Vecino
-     */
-    public function setLocalidad($localidad)
-    {
-        $this->localidad = $localidad;
-    
-        return $this;
-    }
-
-    /**
-     * Get localidad
-     *
-     * @return string 
-     */
-    public function getLocalidad()
-    {
-        return $this->localidad;
-    }
-
-    /**
      * Set password
      *
      * @param string $password
@@ -397,6 +353,27 @@ class Vecino implements UserInterface
     public function getSalt()
     {
         return $this->salt;
+    }
+    
+    /**
+     * Set fecha_alta
+	  * @ORM\PrePersist()
+     */
+    public function setFechaAlta($fechaAlta = null)
+    {
+        $this->fecha_alta = null === $fechaAlta ? new \DateTime() : $fechaAlta;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_alta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAlta()
+    {
+        return $this->fecha_alta;
     }
 
     /**

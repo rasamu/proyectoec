@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="AdminFincas")
+ * @ORM\HasLifecycleCallbacks
  */
 class AdminFincas implements UserInterface
 {
@@ -104,6 +105,11 @@ class AdminFincas implements UserInterface
      * @ORM\Column(name="localidad_admin",type="string", length=100)
      */
     protected $localidad;
+    
+    /**
+     * @ORM\Column(name="fecha_alta_admin",type="datetime")
+     */
+    protected $fecha_alta;
     
     /**
 	  * @Assert\NotNull()
@@ -379,5 +385,57 @@ class AdminFincas implements UserInterface
         return $this;
     }
 
+    /**
+     * Set fecha_alta
+	  * @ORM\PrePersist()
+     */
+    public function setFechaAlta($fechaAlta = null)
+    {
+        $this->fecha_alta = null === $fechaAlta ? new \DateTime() : $fechaAlta;
+    
+        return $this;
+    }
 
+    /**
+     * Get fecha_alta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAlta()
+    {
+        return $this->fecha_alta;
+    }
+
+    /**
+     * Get comunidades
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComunidades()
+    {
+        return $this->comunidades;
+    }
+
+    /**
+     * Add comunidades
+     *
+     * @param \EC\ComunidadBundle\Entity\Comunidad $comunidades
+     * @return AdminFincas
+     */
+    public function addComunidade(\EC\ComunidadBundle\Entity\Comunidad $comunidades)
+    {
+        $this->comunidades[] = $comunidades;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comunidades
+     *
+     * @param \EC\ComunidadBundle\Entity\Comunidad $comunidades
+     */
+    public function removeComunidade(\EC\ComunidadBundle\Entity\Comunidad $comunidades)
+    {
+        $this->comunidades->removeElement($comunidades);
+    }
 }

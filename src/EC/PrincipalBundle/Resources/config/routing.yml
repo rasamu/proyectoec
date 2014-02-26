@@ -13,3 +13,11 @@ ec_principal_alta_vecino:
 ec_principal_contacto:
     pattern:  /contacto
     defaults: { _controller: ECPrincipalBundle:Default:contacto }
+
+select_cities:
+   pattern:  /cities
+   defaults: { _controller: ECPrincipalBundle:Default:cities }
+
+select_provinces:
+   pattern:  /provinces
+   defaults: { _controller: ECPrincipalBundle:Default:provinces }

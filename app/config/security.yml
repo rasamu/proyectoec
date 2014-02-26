@@ -18,7 +18,11 @@ security:
             logout:
                path: logout
                target: ec_principal_homepage     
-               
+    
+    role_hierarchy:
+        ROLE_PRESIDENTE: ROLE_VECINO
+        ROLE_VICEPRESIDENTE: ROLE VECINO
+           
     access_control:
         - { path: ^/root, roles: ROLE_ADMIN }
         - { path: ^/adminfincas, roles: ROLE_ADMINFINCAS }

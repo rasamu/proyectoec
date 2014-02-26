@@ -1,0 +1,59 @@
+{% extends 'ECAdminFincasBundle::layout.html.twig' %}
+
+{% block colder %}
+		<section id="form">
+			<div class="subtitulo centrado">Modificación de Comunidad.</div>
+			{{ form_start(form) }}
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.n_plazas_garaje) }}</div>
+        		{{ form_widget(form.n_plazas_garaje) }}
+       		 <div class="error">{{ form_errors(form.n_plazas_garaje) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.n_locales_comerciales) }}</div>
+        		{{ form_widget(form.n_locales_comerciales) }}
+       		 <div class="error">{{ form_errors(form.n_locales_comerciales) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.n_piscinas) }}</div>
+        		{{ form_widget(form.n_piscinas) }}
+       		 <div class="error">{{ form_errors(form.n_piscinas) }}</div>        
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.n_pistas) }}</div>
+        		{{ form_widget(form.n_pistas) }}
+       		 <div class="error">{{ form_errors(form.n_pistas) }}</div>        
+    		</div>
+
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.gimnasio) }}</div>
+        		{{ form_widget(form.gimnasio) }}
+       		 <div class="error">{{ form_errors(form.gimnasio) }}</div>        
+    		</div>    		
+    		    		
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.ascensor) }}</div>
+        		{{ form_widget(form.ascensor) }}
+       		 <div class="error">{{ form_errors(form.ascensor) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.conserjeria) }}</div>
+        		{{ form_widget(form.conserjeria) }}
+       		 <div class="error">{{ form_errors(form.conserjeria) }}</div>        
+    		</div>    		
+
+    		<div class="campo">
+    		<input type="submit" value="Guardar"/>
+    		<input type="button" value="Volver" onclick="history.back()"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+		</section>
+{% endblock %}
+

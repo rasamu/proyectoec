@@ -20,10 +20,6 @@ class DefaultController extends Controller
     				->add('email','text')
     				->add('portal','text', array('label' => 'Portal'))
     				->add('piso','text', array('label' => 'Piso'))
-    				->add('provincia','text')
-    				->add('localidad','text')
-    				->add('comunidad','entity',array('class'=>'ECComunidadBundle:Comunidad',
-    				'property'=>'cif'))
     				->getForm();
     		
     		$form->handleRequest($request);

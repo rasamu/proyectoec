@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="EC\ComunidadBundle\Entity\ComunidadRepository")
  * @ORM\Table(name="Comunidades")
+ * @ORM\HasLifecycleCallbacks
  */
 class Comunidad
 {	
@@ -28,18 +29,6 @@ class Comunidad
      * @ORM\Column(name="direccion",type="string", length=150)
      */
     protected $direccion;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="provincia",type="string", length=100)
-     */
-    protected $provincia;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="localidad",type="string", length=100)
-     */
-    protected $localidad;
     
     /**
 	  * @Assert\NotNull()
@@ -84,6 +73,11 @@ class Comunidad
     protected $conserjeria;
     
     /**
+     * @ORM\Column(name="fecha_alta",type="datetime")
+     */
+    protected $fecha_alta;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="EC\AdminFincasBundle\Entity\AdminFincas", inversedBy="comunidades")
      * @ORM\JoinColumn(name="n_colegiado_admin", referencedColumnName="n_colegiado_admin")
      */
@@ -93,6 +87,12 @@ class Comunidad
      * @ORM\OneToMany(targetEntity="EC\VecinoBundle\Entity\Vecino", mappedBy="comunidad")
      */
     protected $vecinos;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\City", inversedBy="comunidades")
+     * @ORM\JoinColumn(name="city", referencedColumnName="id")
+     */
+    protected $city;
  
     public function __construct()
     {
@@ -144,52 +144,7 @@ class Comunidad
     {
         return $this->direccion;
     }
-
-    /**
-     * Set provincia
-     *
-     * @param string $provincia
-     * @return Comunidad
-     */
-    public function setProvincia($provincia)
-    {
-        $this->provincia = $provincia;
     
-        return $this;
-    }
-
-    /**
-     * Get provincia
-     *
-     * @return string 
-     */
-    public function getProvincia()
-    {
-        return $this->provincia;
-    }
-
-    /**
-     * Set localidad
-     *
-     * @param string $localidad
-     * @return Comunidad
-     */
-    public function setLocalidad($localidad)
-    {
-        $this->localidad = $localidad;
-    
-        return $this;
-    }
-
-    /**
-     * Get localidad
-     *
-     * @return string 
-     */
-    public function getLocalidad()
-    {
-        return $this->localidad;
-    }
 
     /**
      * Set n_plazas_garaje
@@ -328,6 +283,27 @@ class Comunidad
     {
         return $this->conserjeria;
     }
+    
+    /**
+     * Set fecha_alta
+	  * @ORM\PrePersist()
+     */
+    public function setFechaAlta($fechaAlta = null)
+    {
+        $this->fecha_alta = null === $fechaAlta ? new \DateTime() : $fechaAlta;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_alta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAlta()
+    {
+        return $this->fecha_alta;
+    }
 
     /**
      * Set administrador
@@ -406,5 +382,29 @@ class Comunidad
     public function getVecinos()
     {
         return $this->vecinos;
+    }
+
+
+    /**
+     * Set city
+     *
+     * @param \EC\PrincipalBundle\Entity\City $city
+     * @return Comunidad
+     */
+    public function setCity(\EC\PrincipalBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \EC\PrincipalBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }

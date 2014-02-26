@@ -125,7 +125,7 @@ body {
 /*Pie*/
 footer{ 
 	text-align: center; 
-	padding: 15px;
+	padding: 12px;
  	background-color: #316431; 
  	color:#fff;
 	box-shadow:0 4px 4px 0 #000000;
@@ -204,6 +204,7 @@ input:focus,textarea:focus,select:focus
     width: 300px;
     float: left;
     margin-left: 10px;
+    height: 35px;
 }
 
 #form_login{

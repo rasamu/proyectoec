@@ -1,9 +1,48 @@
 {% extends 'ECAdminFincasBundle::layout.html.twig' %}
 
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function(){
+            $("#comunidad_country").change(function(){
+                var data = {
+                    country_id: $(this).val()
+                };
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("select_provinces") }}',
+                    data: data,
+                    success: function(data) {
+                        $('#comunidad_province').html(data);
+                        $('#comunidad_city').html("<option>Ciudad</option>");
+                    }
+                });
+            });
+
+            $("#comunidad_province").change(function(){
+                var data = {
+                    province_id: $(this).val()
+                };
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("select_cities") }}',
+                    data: data,
+                    success: function(data) {
+                        $('#comunidad_city').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block colder %}
 		<section id="form">
 			<div class="subtitulo centrado">Alta Comunidad.</div>
-			{{ form_start(form) }}
+            <form action="{{ path('ec_adminfincas_alta_comunidad') }}" method="POST">
     		<div style="color:red;">{{ form_errors(form) }}</div>
 
     		<div class="campo">
@@ -11,23 +50,29 @@
         		{{ form_widget(form.cif) }}
         		<div class="error">{{ form_errors(form.cif) }}</div>
     		</div>
- 
+		
     		<div class="campo">
         		<div class="label_campo">{{ form_label(form.direccion) }}</div>
        		 {{ form_widget(form.direccion) }}
         		<div class="error">{{ form_errors(form.direccion) }}</div>
-    		</div>
-
+    		</div>	
+    		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.provincia) }}</div>
-        		{{ form_widget(form.provincia) }}
-        		<div class="error">{{ form_errors(form.provincia) }}</div>        
-    		</div>
-
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.localidad) }}</div>
-        		{{ form_widget(form.localidad) }}
-       		 <div class="error">{{ form_errors(form.localidad) }}</div>        
+        		<div class="label_campo">{{ form_label(form.country) }}</div>
+        		{{ form_widget(form.country) }}
+       		 <div class="error">{{ form_errors(form.country) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.province) }}</div>
+        		{{ form_widget(form.province) }}
+       		 <div class="error">{{ form_errors(form.province) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.city) }}</div>
+        		{{ form_widget(form.city) }}
+       		 <div class="error">{{ form_errors(form.city) }}</div>        
     		</div>
     		
 			<div class="campo">
@@ -70,14 +115,14 @@
         		<div class="label_campo">{{ form_label(form.conserjeria) }}</div>
         		{{ form_widget(form.conserjeria) }}
        		 <div class="error">{{ form_errors(form.conserjeria) }}</div>        
-    		</div>    		
+    		</div> 
 
     		<div class="campo">
     		<input type="submit" value="Enviar"/>
     		<input type="reset" value="Borrar"/>
     		</div>
  
-		{{ form_end(form) }}
+            </form>
 		</section>
 {% endblock %}
 

@@ -3,17 +3,19 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block javascripts %}
 		{{ parent() }}
 <script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
 <script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
-	   <script type="text/javascript" charset="utf-8">
+<script type='text/javascript' src="{{ asset('js/boton_acciones.js') }}"></script>    
+<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				$('#example').dataTable();
 			} );
-		</script>
+</script>
 {% endblock %}
 
 {% block colder %}
@@ -25,27 +27,43 @@ Comunidad: {{comunidad.cif}}
 			<thead>
 				<tr>
 					<th>DNI</th>
+					<th>Tipo</th>
 					<th>Nombre</th>
 					<th>Portal</th>
 					<th>Piso</th>
+					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for vecino in vecinos %}
 				<tr class="gradeX">
        			<td>{{vecino.dni}}</td>
+       			<td>{{vecino.tipo}}</td>
        			<td>{{vecino.nombre}} {{vecino.apellidos}}</td>
        			<td>{{vecino.portal}}</td>
        			<td>{{vecino.piso}}</td>
+       			<td>
+						<ul id="sddm">
+    						<li><a href="#" onmouseover="mopen({{vecino.dni}})" onmouseout="mclosetime()">Acciones</a>
+        						<div id="{{vecino.dni}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+        						<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'dni': vecino.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{vecino.nombre}} {{vecino.apellidos}} como nuevo presidente?')">Nombrar Presidente</a>
+        						<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'dni': vecino.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{vecino.nombre}} {{vecino.apellidos}} como nuevo vicepresidente?')">Nombrar Vicepresidente</a>
+        						</div>
+    						</li>
+						</ul>
+						<div style="clear:both"></div>
+       			</td>
       		</tr> 
 			{% endfor %}
 			</tbody>
 			<tfoot>
 				<tr>
 					<th>DNI</th>
+					<th>Tipo</th>
 					<th>Nombre</th>
 					<th>Portal</th>
 					<th>Piso</th>
+					<th>Acciones</th>
 				</tr>
 			</tfoot>
 		</table>

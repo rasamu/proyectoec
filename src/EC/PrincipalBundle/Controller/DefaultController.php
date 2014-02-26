@@ -3,11 +3,16 @@
 namespace EC\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\AdminFincasBundle\Entity\AdminFincas;
 use EC\VecinoBundle\Entity\Vecino;
 use EC\ComunidadBundle\Entity\Comunidad;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
+use EC\PrincipalBundle\Entity\City;
+use EC\PrincipalBundle\Entity\Province;
 
 class DefaultController extends Controller
 {
@@ -88,8 +93,6 @@ class DefaultController extends Controller
     				->add('email','text')
     				->add('portal','text', array('label' => 'Portal'))
     				->add('piso','text', array('label' => 'Piso'))
-    				->add('provincia','text')
-    				->add('localidad','text')
     				->add('password', 'repeated', array(
                 'type' => 'password',
                 'invalid_message' => 'Las dos contraseñas deben coincidir',
@@ -97,33 +100,38 @@ class DefaultController extends Controller
                 'first_options'  => array('label' => 'Contraseña','max_length' =>9),
     				 'second_options' => array('label' => 'Confirmación','max_length' =>9),
     				))
-    				->add('comunidad','entity',array('class'=>'ECComunidadBundle:Comunidad',
-    				'property'=>'cif'))
+    				->add('comunidad','text',array('mapped' => false, 'label' => 'Cif Comunidad','max_length' =>9))
     				->getForm();
     		
     		$form->handleRequest($request);
     			
     		if ($form->isValid()) {
-    				$dni=$form->get('dni')->getData();
-					$comprobacion=$this->getDoctrine()
-        				->getRepository('ECVecinoBundle:Vecino')
-        				->find($dni);
+    				$cif=$form->get('comunidad')->getData();
+    				$comunidad=$this->getDoctrine()->getRepository('ECComunidadBundle:Comunidad')->find($cif);
+    				if($comunidad){
+    					$dni=$form->get('dni')->getData();
+						$comprobacion=$this->getDoctrine()->getRepository('ECVecinoBundle:Vecino')->find($dni);
             	
-            	if($comprobacion){
-						return $this->render('ECPrincipalBundle:Default:error.html.twig',
-        	       		array('mensaje' => 'Vecino ya registrado.',
-        	      		));
-            	}else{
-    				 	 $this->setSecurePassword($vecino);
+            		if($comprobacion){
+							return $this->render('ECPrincipalBundle:Default:error.html.twig',
+        	       			array('mensaje' => 'Vecino ya registrado.',
+        	      			));
+            		}else{
+    				 	 	$this->setSecurePassword($vecino);
+    				 	 	$vecino->setComunidad($comunidad);
     			
-    				 	 $em = $this->getDoctrine()->getManager();
-               	
-   					 $em->persist($vecino);
-   					 $em->flush();
+    				 	 	$em = $this->getDoctrine()->getManager();
+   					 	$em->persist($vecino);
+   					 	$em->flush();
     			
 							return $this->render('ECPrincipalBundle:Default:mensaje.html.twig',
-        	       		array('mensaje1'=>'Alta Vecino.','mensaje2' => 'Alta realizada con éxito.',
-        	      		));
+        	       			array('mensaje1'=>'Alta Vecino.','mensaje2' => 'Alta realizada con éxito.',
+        	      			));
+						}
+					}else{
+						return $this->render('ECPrincipalBundle:Default:error.html.twig',
+        	       			array('mensaje' => 'La comunidad no está registrada. Póngase en contacto con el administrador de la finca.',
+        	      			));
 					}   				
         	}
         	
@@ -182,5 +190,39 @@ class DefaultController extends Controller
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
         ));
+    }
+    
+   /**
+	* @Route("/provinces", name="select_provinces")
+	* @Template()
+	*/
+    public function provincesAction()
+    {
+        $country_id = $this->getRequest()->request->get('country_id');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $provinces = $em->getRepository('ECPrincipalBundle:Province')->findByCountryId($country_id);
+
+        return array(
+            'provinces' => $provinces
+        );
+    }
+
+	/**
+	* @Route("/cities", name="select_cities")
+	* @Template()
+	*/
+    public function citiesAction()
+    {
+        $province_id = $this->getRequest()->request->get('province_id');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $cities = $em->getRepository('ECPrincipalBundle:City')->findByProvinceId($province_id);
+
+        return array(
+            'cities' => $cities
+        );
     }
 }

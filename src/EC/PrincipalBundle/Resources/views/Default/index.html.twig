@@ -6,12 +6,12 @@
 
 {% block colder %}
 	{% if is_granted('ROLE_ADMINFINCAS') %}	  
-		<div class="subtitulo centrado">Bienvenido {{ app.user.nombre }}.</div>
+		<div class="subtitulo centrado">Bienvenid@ {{ app.user.nombre }}.</div>
 	{% else %}
 		{% if is_granted('ROLE_VECINO') %}	  
-			<div class="subtitulo centrado">Bienvenido {{ app.user.nombre }}.</div>
+			<div class="subtitulo centrado">Bienvenid@ {{ app.user.nombre }}.</div>
 		{% else %}
-			<div class="subtitulo centrado">Bienvenido a EntreComunidades.</div>
+			<div class="subtitulo centrado">Bienvenid@ a EntreComunidades.</div>
 		{% endif %}
 	{% endif %}
 {% endblock %}

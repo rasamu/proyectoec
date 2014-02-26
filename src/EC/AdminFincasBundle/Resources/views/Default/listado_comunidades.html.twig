@@ -24,18 +24,21 @@
 			<thead>
 				<tr>
 					<th>Cif</th>
-					<th>Direccion</th>
-					<th>Localidad</th>
-					<th>Provincia</th>
+					<th>Dirección</th>
+					<th>Cuidad</th>
+					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for comunidad in comunidades %}
-				<tr class="gradeX" onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">
-       			<td>{{comunidad.cif}}</td>
-       			<td>{{comunidad.direccion}}</td>
-       			<td>{{comunidad.localidad}}</td>
-       			<td>{{comunidad.provincia}}</td>
+				<tr class="gradeX">
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.direccion}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
+       			<td>
+       			<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="/images/pencil-icon.png"></a>
+       			<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="/images/action-cancel-icon.png"></a>
+       			</td>
       		</tr> 
 			{% endfor %}
 			</tbody>
@@ -43,8 +46,8 @@
 				<tr>
 					<th>Cif</th>
 					<th>Dirección</th>
-					<th>Localidad</th>
-					<th>Provincia</th>
+					<th>Cuidad</th>
+					<th>Acciones</th>
 				</tr>
 			</tfoot>
 		</table>

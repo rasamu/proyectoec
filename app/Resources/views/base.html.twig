@@ -40,15 +40,28 @@
                     			{% endblock %}
                     			<section id="entrar">
 										{% if is_granted('ROLE_ADMINFINCAS') %}	  
-											<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
-											<div>Administrador de Fincas</div>
-											<a href="{{ path('logout') }}">Cerrar sesión</a>
+											<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+											<div style="clear:both">Administrador de Fincas</div>
+											<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
 										{% else %}
-											{% if is_granted('ROLE_VECINO') %}
-												<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
-												<a href="{{ path('logout') }}">Cerrar sesión</a>
+											{% if is_granted('ROLE_PRESIDENTE') %}
+												<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+												<div style="clear:both">Presidente</div>
+												<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
 											{% else %} 
-												<a  href="{{ path('login') }}" >Acceder</a>
+												{% if is_granted('ROLE_VICEPRESIDENTE') %}
+													<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+													<div style="clear:both">Vicepresidente</div>
+													<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
+												{% else %}
+													{% if is_granted('ROLE_VECINO') %}
+														<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+														<div style="clear:both">Vecino</div>
+														<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
+													{% else %}
+														<a  href="{{ path('login') }}" >Acceder</a>
+													{% endif %}
+												{% endif %}
 											{% endif %}
 										{% endif %}
 									</section>
@@ -66,7 +79,7 @@
                 			{% if is_granted('ROLE_ADMINFINCAS') %}	  
 								<div id='cssmenu'>
 									<ul>
-   									<li class="has-sub"><a href="#"><span>Comunidades</span></a>
+   									<li class="has-sub"><a href="#"><span>Mis Comunidades</span></a>
       									<ul>
       	   								<li><a href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>Alta</span></a></li>
    	      								<li class="last"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>Listado</span></a></li>
@@ -105,7 +118,7 @@
 				</section>
             <footer>
                 {% block footer %}
-                     EntreComunidades - Rafael Sánchez Muñoz
+                     <a href="{{ path('ec_principal_homepage') }}" style="color:#f7d118; text-decoration:none; font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica; font-size:15px;">Entre</a><a href="{{ path('ec_principal_homepage') }}" style="color:#fff; text-decoration:none; font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica; font-size:15px;">Comunidades</a> - Rafael Sánchez Muñoz
                 {% endblock %}
             </footer>
     </body>
