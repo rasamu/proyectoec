@@ -37,7 +37,7 @@ security:
             chain:
                 providers: [adminfincas, vecinos]
         adminfincas:
-            entity: { class: EC\AdminFincasBundle\Entity\AdminFincas, property: n_colegiado }
+            entity: { class: EC\AdminFincasBundle\Entity\AdminFincas, property: dni }
         vecinos:
             entity: { class: EC\VecinoBundle\Entity\Vecino, property: dni }
 

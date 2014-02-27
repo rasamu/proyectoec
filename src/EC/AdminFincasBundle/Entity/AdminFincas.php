@@ -16,7 +16,7 @@ class AdminFincas implements UserInterface
 {
 	function equals(UserInterface $adminfincas)
 	{
-		return $this->getNColegiado() == $adminfincas->getNColegiado();	
+		return $this->getDni() == $adminfincas->getDni();	
 	}
 	
 	function eraseCredentials()
@@ -30,7 +30,7 @@ class AdminFincas implements UserInterface
 	
 	function getUsername()
 	{
-		return $this->getNColegiado();
+		return $this->getDni();
 	}
 	
 	/**
@@ -39,10 +39,21 @@ class AdminFincas implements UserInterface
      *      max=9
      * )
      * @Assert\Type(type="string")
+     * @Assert\NotNull()
      * @ORM\Id
-     * @ORM\Column(name="n_colegiado_admin",type="string",unique=true,length=9)
+     * @ORM\Column(name="dni_admin",type="string", unique=true, length=9)
      */
-    protected $n_colegiado;
+    protected $dni;
+    
+	/**
+	  * @Assert\Length(
+     *      min=9,
+     *      max=9
+     * )
+     * @Assert\Type(type="string")
+     * @ORM\Column(name="n_colegiado_admin",type="string",unique=true,length=9,nullable=true)
+     */
+    protected $n_colegiado=NULL;
 
     /**
 	  * @Assert\NotNull()
@@ -68,15 +79,14 @@ class AdminFincas implements UserInterface
     protected $telefono;
     
     /**
-	  * @Assert\NotNull()
 	  * @Assert\Length(
      *      min=9,
      *      max=9
      * )
      * @Assert\Type(type="integer")
-     * @ORM\Column(name="fax_admin",type="string",length=9)
+     * @ORM\Column(name="fax_admin",type="string",length=9,nullable=true)
      */
-    protected $fax; 
+    protected $fax=NULL; 
     
     /**
 	  * @Assert\NotNull()
@@ -437,5 +447,28 @@ class AdminFincas implements UserInterface
     public function removeComunidade(\EC\ComunidadBundle\Entity\Comunidad $comunidades)
     {
         $this->comunidades->removeElement($comunidades);
+    }
+
+    /**
+     * Set dni
+     *
+     * @param string $dni
+     * @return AdminFincas
+     */
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+    
+        return $this;
+    }
+
+    /**
+     * Get dni
+     *
+     * @return string 
+     */
+    public function getDni()
+    {
+        return $this->dni;
     }
 }

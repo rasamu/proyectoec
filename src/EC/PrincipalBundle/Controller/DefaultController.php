@@ -16,6 +16,10 @@ use EC\PrincipalBundle\Entity\Province;
 
 class DefaultController extends Controller
 {
+	/**
+	  * @Route("/", name="ec_principal_homepage")
+	  * @Template("ECPrincipalBundle:Default:index.html.twig")
+	  */
     public function indexAction()
     {
         	return $this->render('ECPrincipalBundle:Default:index.html.twig');
@@ -26,18 +30,23 @@ class DefaultController extends Controller
 			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
 			$password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
 			$entity->setPassword($password);
-	}
+	 }
     
+    /**
+	  * @Route("/alta/adminfincas", name="ec_principal_alta_adminfincas")
+	  * @Template("ECPrincipalBundle:Default:alta_adminfincas.html.twig")
+	  */
     public function alta_adminfincasAction(Request $request)
     {
     		$adminfincas = new AdminFincas();
     		
     		$form = $this ->createFormBuilder($adminfincas)
-    				->add('n_colegiado','text', array('label' => 'NºColegiado','max_length' =>9))
+    				->add('dni','text', array('label' => 'DNI','max_length' =>9))
+    				->add('n_colegiado','text', array('label' => 'NºColegiado','max_length' =>9,'required' => false))
     				->add('nombre','text')
     				->add('apellidos','text')
     				->add('telefono','integer', array('label' => 'Teléfono'))
-    				->add('fax','integer')
+    				->add('fax','integer',array('required' => false))
     				->add('email','text')
     				->add('direccion','text', array('label' => 'Dirección'))
     				->add('provincia','text')
@@ -54,7 +63,7 @@ class DefaultController extends Controller
     		$form->handleRequest($request);
     			
     		if ($form->isValid()) {
-    				$num=$form->get('n_colegiado')->getData();
+    				$num=$form->get('dni')->getData();
 					$comprobacion=$this->getDoctrine()
         				->getRepository('ECAdminFincasBundle:AdminFincas')
         				->find($num);
@@ -81,65 +90,10 @@ class DefaultController extends Controller
         	      		));
     }
     
-    public function alta_vecinoAction(Request $request)
-    {
-    		$vecino = new Vecino();
-    		
-    		$form = $this ->createFormBuilder($vecino)
-    				->add('dni','text',array('max_length'=>9))
-    				->add('nombre','text')
-    				->add('apellidos','text')
-    				->add('telefono','integer', array('label' => 'Teléfono'))
-    				->add('email','text')
-    				->add('portal','text', array('label' => 'Portal'))
-    				->add('piso','text', array('label' => 'Piso'))
-    				->add('password', 'repeated', array(
-                'type' => 'password',
-                'invalid_message' => 'Las dos contraseñas deben coincidir',
-                'required' => true,
-                'first_options'  => array('label' => 'Contraseña','max_length' =>9),
-    				 'second_options' => array('label' => 'Confirmación','max_length' =>9),
-    				))
-    				->add('comunidad','text',array('mapped' => false, 'label' => 'Cif Comunidad','max_length' =>9))
-    				->getForm();
-    		
-    		$form->handleRequest($request);
-    			
-    		if ($form->isValid()) {
-    				$cif=$form->get('comunidad')->getData();
-    				$comunidad=$this->getDoctrine()->getRepository('ECComunidadBundle:Comunidad')->find($cif);
-    				if($comunidad){
-    					$dni=$form->get('dni')->getData();
-						$comprobacion=$this->getDoctrine()->getRepository('ECVecinoBundle:Vecino')->find($dni);
-            	
-            		if($comprobacion){
-							return $this->render('ECPrincipalBundle:Default:error.html.twig',
-        	       			array('mensaje' => 'Vecino ya registrado.',
-        	      			));
-            		}else{
-    				 	 	$this->setSecurePassword($vecino);
-    				 	 	$vecino->setComunidad($comunidad);
-    			
-    				 	 	$em = $this->getDoctrine()->getManager();
-   					 	$em->persist($vecino);
-   					 	$em->flush();
-    			
-							return $this->render('ECPrincipalBundle:Default:mensaje.html.twig',
-        	       			array('mensaje1'=>'Alta Vecino.','mensaje2' => 'Alta realizada con éxito.',
-        	      			));
-						}
-					}else{
-						return $this->render('ECPrincipalBundle:Default:error.html.twig',
-        	       			array('mensaje' => 'La comunidad no está registrada. Póngase en contacto con el administrador de la finca.',
-        	      			));
-					}   				
-        	}
-        	
-        	return $this->render('ECPrincipalBundle:Default:alta_vecino.html.twig',
-        	       		array('form' => $form->createView(),
-        	      		));
-    }
-    
+    /**
+	  * @Route("/contacto", name="ec_principal_contacto")
+	  * @Template("ECPrincipalBundle:Default:contacto.html.twig")
+	  */
     public function contactoAction(Request $request)
     {
 			$defaultData = array('message' => 'Escribe aqui.');
@@ -175,6 +129,10 @@ class DefaultController extends Controller
        		));
     }
     
+    /**
+	  * @Route("/login", name="login")
+	  * @Template("ECPrincipalBundle:Default:login.html.twig")
+	  */
     public function loginAction()
     {
 		  $request = $this->getRequest();

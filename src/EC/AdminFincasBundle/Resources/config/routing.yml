@@ -6,6 +6,10 @@ ec_adminfincas_listado_comunidades:
     pattern:  /listado/comunidades
     defaults: { _controller: ECAdminFincasBundle:Default:listado_comunidades }
     
+ec_adminfincas_alta_vecino:
+    pattern:  /alta/vecino
+    defaults: { _controller: ECAdminFincasBundle:Default:alta_vecino }
+    
 ec_adminfincas_comunidad_listado_vecinos:
     pattern:  /comunidad/{cif}/listado/vecinos
     defaults: { _controller: ECAdminFincasBundle:Default:comunidad_listado_vecinos }

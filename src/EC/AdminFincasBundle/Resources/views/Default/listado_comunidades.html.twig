@@ -23,6 +23,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 			<thead>
 				<tr>
+					<th>Código Despacho</th>
 					<th>Cif</th>
 					<th>Dirección</th>
 					<th>Cuidad</th>
@@ -32,6 +33,7 @@
 			<tbody>
 			{% for comunidad in comunidades %}
 				<tr class="gradeX">
+				   <td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
        			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
        			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.direccion}}</td>
        			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
@@ -44,6 +46,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
+					<th>Código Despacho</th>
 					<th>Cif</th>
 					<th>Dirección</th>
 					<th>Cuidad</th>

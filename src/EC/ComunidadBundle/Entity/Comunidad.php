@@ -25,6 +25,12 @@ class Comunidad
     protected $cif;
     
     /**
+     * @Assert\Type(type="integer")
+     * @ORM\Column(name="codigo_despacho",type="integer",length=9,nullable=true)
+     */
+    protected $codigo;
+    
+    /**
 	  * @Assert\NotNull()
      * @ORM\Column(name="direccion",type="string", length=150)
      */
@@ -35,12 +41,6 @@ class Comunidad
      * @ORM\Column(name="n_plazas_garaje",type="integer")
      */
     protected $n_plazas_garaje;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="n_locales_comerciales",type="integer")
-     */
-    protected $n_locales_comerciales;
     
     /**
 	  * @Assert\NotNull()
@@ -79,7 +79,7 @@ class Comunidad
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\AdminFincasBundle\Entity\AdminFincas", inversedBy="comunidades")
-     * @ORM\JoinColumn(name="n_colegiado_admin", referencedColumnName="n_colegiado_admin")
+     * @ORM\JoinColumn(name="dni_administrador", referencedColumnName="dni_admin")
      */
     protected $administrador;
     
@@ -167,29 +167,6 @@ class Comunidad
     public function getNPlazasGaraje()
     {
         return $this->n_plazas_garaje;
-    }
-
-    /**
-     * Set n_locales_comerciales
-     *
-     * @param integer $nLocalesComerciales
-     * @return Comunidad
-     */
-    public function setNLocalesComerciales($nLocalesComerciales)
-    {
-        $this->n_locales_comerciales = $nLocalesComerciales;
-    
-        return $this;
-    }
-
-    /**
-     * Get n_locales_comerciales
-     *
-     * @return integer 
-     */
-    public function getNLocalesComerciales()
-    {
-        return $this->n_locales_comerciales;
     }
 
     /**
@@ -406,5 +383,28 @@ class Comunidad
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param integer $codigo
+     * @return Comunidad
+     */
+    public function setCodigo($codigo=null)
+    {
+        $this->codigo = $codigo;
+    
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return integer 
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
     }
 }

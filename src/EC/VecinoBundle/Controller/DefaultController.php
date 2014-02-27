@@ -9,6 +9,10 @@ use EC\VecinoBundle\Entity\Vecino;
 
 class DefaultController extends Controller
 {
+	 /**
+	  * @Route("/perfil", name="ec_vecino_perfil")
+	  * @Template("ECVecinoBundle:Default:modificacion_datospersonales.html.twig")
+	  */
     public function modificacion_perfilAction(Request $request)
     {
     	$vecino = $this->getUser();
@@ -41,6 +45,10 @@ class DefaultController extends Controller
     	
     }
     
+    /**
+	  * @Route("/contraseña", name="ec_vecino_contraseña")
+	  * @Template("ECVecinoBundle:Default:modificacion_contraseña.html.twig")
+	  */
     public function modificacion_contraseñaAction(Request $request)
     {
     		$form = $this->createFormBuilder()

@@ -5,12 +5,12 @@ use Doctrine\ORM\EntityRepository;
  
 class ComunidadRepository extends EntityRepository
 {
-    public function findAllByNColegiado($admin)
+    public function findAllByDni($admin)
     {
-    	  $ncolegiado=$admin->getNColegiado();
+    	  $dni=$admin->getDni();
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT c FROM ECComunidadBundle:Comunidad c WHERE c.administrador=$ncolegiado"
+                "SELECT c FROM ECComunidadBundle:Comunidad c WHERE c.administrador=$dni"
             )
             ->getResult();
     }
