@@ -1,6 +1,6 @@
 <?php
 
-namespace EC\VecinoBundle\Entity;
+namespace EC\PropietarioBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,14 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Vecinos")
+ * @ORM\Table(name="Propietarios")
  * @ORM\HasLifecycleCallbacks
  */
-class Vecino implements UserInterface
+class Propietario implements UserInterface
 {	
-	function equals(UserInterface $vecino)
+	function equals(UserInterface $propietario)
 	{
-		return $this->getDni() == $vecino->getDni();	
+		return $this->getDni() == $propietario->getDni();	
 	}
 	
 	function eraseCredentials()
@@ -48,25 +48,25 @@ class Vecino implements UserInterface
      * )
      * @Assert\Type(type="string")
      * @ORM\Id
-     * @ORM\Column(name="dni_vecino",type="string",unique=true)
+     * @ORM\Column(name="dni_propietario",type="string",unique=true)
      */
     protected $dni;
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="tipo_vecino",type="string", length=14)
+     * @ORM\Column(name="tipo_propietario",type="string", length=14)
      */
     protected $tipo="Vecino";
 
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="nombre_vecino",type="string", length=100)
+     * @ORM\Column(name="nombre_propietario",type="string", length=100)
      */
     protected $nombre;
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="apellidos_vecino",type="string", length=100)
+     * @ORM\Column(name="apellidos_propietario",type="string", length=100)
      */
     protected $apellidos;
 
@@ -77,7 +77,7 @@ class Vecino implements UserInterface
      *      max=9
      * )
      * @Assert\Type(type="integer")
-     * @ORM\Column(name="telefono_vecino",type="string",length=9)
+     * @ORM\Column(name="telefono_propietario",type="string",length=9)
      */
     protected $telefono;
     
@@ -87,24 +87,24 @@ class Vecino implements UserInterface
      *     message = "El email '{{ value }}' no es un email válido.",
      *     checkMX = true
      * )
-     * @ORM\Column(name="email_vecino",type="string", length=100)
+     * @ORM\Column(name="email_propietario",type="string", length=100)
      */
     protected $email;
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="portal_vecino",type="string", length=10)
+     * @ORM\Column(name="portal_propietario",type="string", length=10)
      */
     protected $portal;
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="piso_vecino",type="string", length=10)
+     * @ORM\Column(name="piso_propietario",type="string", length=10)
      */
     protected $piso;
     
     /**
-     * @ORM\Column(name="fecha_alta_vecino",type="datetime")
+     * @ORM\Column(name="fecha_alta_propietario",type="datetime")
      */
     protected $fecha_alta;
     
@@ -120,7 +120,7 @@ class Vecino implements UserInterface
     protected $salt;
     
     /**
-     * @ORM\ManyToOne(targetEntity="EC\ComunidadBundle\Entity\Comunidad", inversedBy="vecinos")
+     * @ORM\ManyToOne(targetEntity="EC\ComunidadBundle\Entity\Comunidad", inversedBy="propietarios")
      * @ORM\JoinColumn(name="cif", referencedColumnName="cif")
      */
     protected $comunidad;
@@ -129,7 +129,7 @@ class Vecino implements UserInterface
      * Set dni
      *
      * @param string $dni
-     * @return Vecino
+     * @return Propietario
      */
     public function setDni($dni)
     {
@@ -152,7 +152,7 @@ class Vecino implements UserInterface
      * Set tipo
      *
      * @param string $tipo
-     * @return Vecino
+     * @return Propietario
      */
     public function setTipo($tipo)
     {
@@ -175,7 +175,7 @@ class Vecino implements UserInterface
      * Set nombre
      *
      * @param string $nombre
-     * @return Vecino
+     * @return Propietario
      */
     public function setNombre($nombre)
     {
@@ -198,7 +198,7 @@ class Vecino implements UserInterface
      * Set apellidos
      *
      * @param string $apellidos
-     * @return Vecino
+     * @return Propietario
      */
     public function setApellidos($apellidos)
     {
@@ -221,7 +221,7 @@ class Vecino implements UserInterface
      * Set telefono
      *
      * @param string $telefono
-     * @return Vecino
+     * @return Propietario
      */
     public function setTelefono($telefono)
     {
@@ -244,7 +244,7 @@ class Vecino implements UserInterface
      * Set email
      *
      * @param string $email
-     * @return Vecino
+     * @return Propietario
      */
     public function setEmail($email)
     {
@@ -267,7 +267,7 @@ class Vecino implements UserInterface
      * Set portal
      *
      * @param string $portal
-     * @return Vecino
+     * @return Propietario
      */
     public function setPortal($portal)
     {
@@ -290,7 +290,7 @@ class Vecino implements UserInterface
      * Set piso
      *
      * @param string $piso
-     * @return Vecino
+     * @return Propietario
      */
     public function setPiso($piso)
     {
@@ -313,7 +313,7 @@ class Vecino implements UserInterface
      * Set password
      *
      * @param string $password
-     * @return Vecino
+     * @return Propietario
      */
     public function setPassword($password)
     {
@@ -336,7 +336,7 @@ class Vecino implements UserInterface
      * Set salt
      *
      * @param string $salt
-     * @return Vecino
+     * @return Propietario
      */
     public function setSalt($salt)
     {
@@ -380,7 +380,7 @@ class Vecino implements UserInterface
      * Set comunidad
      *
      * @param \EC\ComunidadBundle\Entity\Comunidad $comunidad
-     * @return Vecino
+     * @return Propietario
      */
     public function setComunidad(\EC\ComunidadBundle\Entity\Comunidad $comunidad = null)
     {

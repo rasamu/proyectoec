@@ -1,7 +1,0 @@
-parameters:
-#    ec_vecino.example.class: EC\VecinoBundle\Example
-
-services:
-#    ec_vecino.example:
-#        class: %ec_vecino.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

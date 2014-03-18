@@ -23,6 +23,10 @@
             		  <section id="topheader">
             		  		<section id="tituloheader">
             		  			<div class="titulo"><a href="{{ path('ec_principal_homepage') }}" style="color:#f7d118; text-decoration:none">Entre</a><a href="{{ path('ec_principal_homepage') }}" style="color:#fff; text-decoration:none;">Comunidades</a></div>
+            		  			<section id="idiomas">
+										<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Español" height="14" width="21" /></a>
+        								<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'en'})) }}"><img src="{{ asset('images/en.png') }}" alt="English" height="14" width="21" /></a>
+            		  			</section>
             		  		</section>
             		  </section>
                 	  <section id="subheader">	
@@ -31,34 +35,35 @@
                     			{% block navigation %}
 									<section id="menu">
                             	<ul class="navigation">
-                                <li><a href="{{ path('ec_principal_homepage') }}">Inicio</a></li>
-                                <li><a href="{{ path('ec_principal_alta_adminfincas') }}">Alta Administrador</a></li>
-                                <li><a href="{{ path('ec_principal_contacto') }}">Contacto</a></li>
+                                <li><a href="{{ path('ec_principal_homepage') }}">{% trans %}Inicio{% endtrans %}</a></li>
+                                <li><a href="{{ path('ec_principal_alta_adminfincas') }}">{% trans %}Alta Administrador{% endtrans %}</a></li>
+                                <li><a href="{{ path('ec_principal_contacto') }}">{% trans %}Contacto{% endtrans %}</a></li>
                             	</ul>
                         	</section>
                     			{% endblock %}
+          			
                     			<section id="entrar">
 										{% if is_granted('ROLE_ADMINFINCAS') %}	  
 											<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
-											<div style="clear:both">Administrador de Fincas</div>
-											<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
+											<div style="clear:both">{% trans %}Administrador de Fincas{% endtrans %}</div>
+											<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 										{% else %}
 											{% if is_granted('ROLE_PRESIDENTE') %}
 												<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
-												<div style="clear:both">Presidente</div>
-												<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
+												<div style="clear:both">{% trans %}Presidente{% endtrans %}</div>
+												<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 											{% else %} 
 												{% if is_granted('ROLE_VICEPRESIDENTE') %}
 													<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
-													<div style="clear:both">Vicepresidente</div>
-													<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
+													<div style="clear:both">{% trans %}Vicepresidente{% endtrans %}</div>
+													<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 												{% else %}
 													{% if is_granted('ROLE_VECINO') %}
 														<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
-														<div style="clear:both">Vecino</div>
-														<a style="clear:both" href="{{ path('logout') }}">Cerrar sesión</a>
+														<div style="clear:both">{% trans %}Propietario{% endtrans %}</div>
+														<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 													{% else %}
-														<a  href="{{ path('login') }}" >Acceder</a>
+														<a  href="{{ path('login') }}" >{% trans %}Acceder{% endtrans %}</a>
 													{% endif %}
 												{% endif %}
 											{% endif %}
@@ -74,8 +79,7 @@
                 			{% block sidebar %}
 
         						{% endblock %}
-                		
-                			{% if is_granted('ROLE_ADMINFINCAS') %}	  
+        						{% if is_granted('ROLE_ADMINFINCAS') %}	  
 								<div id='cssmenu'>
 									<ul>
    									<li class="has-sub"><a href="#"><span>Mis Comunidades</span></a>

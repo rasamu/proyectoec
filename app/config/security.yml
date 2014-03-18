@@ -6,27 +6,27 @@ security:
             provider: administradores
             logout:
                path:		/root/logout
-               target:	/ 
-         frontend:
+               target:	/
+         privado:
             pattern:    ^/*
             anonymous: ~
             provider: usuarios
             form_login:
                login_path: login
                check_path: login_check
-               default_target_path: ec_principal_homepage
+               default_target_path: ec_principal_check
             logout:
                path: logout
                target: ec_principal_homepage     
     
     role_hierarchy:
         ROLE_PRESIDENTE: ROLE_VECINO
-        ROLE_VICEPRESIDENTE: ROLE VECINO
+        ROLE_VICEPRESIDENTE: ROLE_VECINO
            
     access_control:
-        - { path: ^/root, roles: ROLE_ADMIN }
-        - { path: ^/adminfincas, roles: ROLE_ADMINFINCAS }
-        - { path: ^/vecino, roles: ROLE_VECINO }
+        - { path: ^/.*/root, roles: ROLE_ADMIN }
+        - { path: ^/.*/adminfincas, roles: ROLE_ADMINFINCAS }
+        - { path: ^/.*/propietario, roles: ROLE_VECINO }
 
     providers:
         administradores:
@@ -35,11 +35,11 @@ security:
                     root: { password: rootpass, roles: 'ROLE_ADMIN' }
         usuarios:
             chain:
-                providers: [adminfincas, vecinos]
+                providers: [adminfincas, propietarios]
         adminfincas:
             entity: { class: EC\AdminFincasBundle\Entity\AdminFincas, property: dni }
-        vecinos:
-            entity: { class: EC\VecinoBundle\Entity\Vecino, property: dni }
+        propietarios:
+            entity: { class: EC\PropietarioBundle\Entity\Propietario, property: dni }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
@@ -47,7 +47,7 @@ security:
               algorithm:  sha512
               iterations: 10
               encode_as_base64: false
-        EC\VecinoBundle\Entity\Vecino:
+        EC\PropietarioBundle\Entity\Propietario:
               algorithm:  sha512
               iterations: 10
               encode_as_base64: false

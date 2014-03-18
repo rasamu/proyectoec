@@ -9,7 +9,7 @@
 			<div class="subtitulo centrado">Formulario de acceso</div>
 		
 			{% if error %}
-				<div class="error centrado">Datos incorrectos</div>
+				<div class="mensaje" style="color:red;">Datos incorrectos</div>
 			{% endif %}
 		
 			<form method="post" action="{{ path('login_check') }}">

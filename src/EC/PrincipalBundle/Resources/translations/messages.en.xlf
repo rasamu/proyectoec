@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="es" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Bienvenid@ a EntreComunidades.</source>
+                <target>Welcome to EntreComunidades.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Inicio</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Alta Administrador</source>
+                <target>New Administrator</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Contacto</source>
+                <target>Contact</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Acceder</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Cerrar Sesión</source>
+                <target>Logout</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Presidente</source>
+                <target>President</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Administrador de Fincas</source>
+                <target>Property Administrator</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Vicepresidente</source>
+                <target>Vice-president</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Propietario</source>
+                <target>Owner</target>
+            </trans-unit>
+            
+        </body>
+    </file>
+</xliff>

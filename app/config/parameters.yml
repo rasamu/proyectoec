@@ -7,10 +7,11 @@ parameters:
     database_user: root
     database_password: ~
     mailer_transport: gmail
-    mailer_host: smtp.gmail.com
+    mailer_encryption: ~
+    mailer_auth_mode: ~
+    mailer_host: ~
     mailer_user: rasamu24@gmail.com
-    mailer_password: 08091987
+    mailer_password: '08091987'
     locale: es
     secret: a67f71ad704f1c1229c3abc91a16e1cb9bc8fded
     database_path: null
-

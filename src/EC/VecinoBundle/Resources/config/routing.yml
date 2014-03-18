@@ -1,7 +1,0 @@
-ec_vecino_perfil:
-    pattern:  /perfil
-    defaults: { _controller: ECVecinoBundle:Default:modificacion_perfil }
-    
-ec_vecino_contraseña:
-    pattern:  /contraseña
-    defaults: { _controller: ECVecinoBundle:Default:modificacion_contraseña }

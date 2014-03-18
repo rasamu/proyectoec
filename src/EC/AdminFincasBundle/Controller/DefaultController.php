@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\ComunidadBundle\Form\Type\ComunidadType;
 use EC\ComunidadBundle\Entity\Comunidad;
-use EC\VecinoBundle\Entity\Vecino;
+use EC\PropietarioBundle\Entity\Propietario;
 use EC\AdminFincasBundle\Entity\AdminFincas;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -16,7 +16,15 @@ use EC\PrincipalBundle\Entity\City;
 use EC\PrincipalBundle\Entity\Province;
 
 class DefaultController extends Controller
-{    
+{  
+   /**
+	  * @Route("/", name="ec_adminfincas_homepage")
+	  * @Template("ECAdminFincasBundle:Default:index.html.twig")
+	  */
+	public function indexAction(){
+		 return $this->render('ECAdminFincasBundle:Default:index.html.twig');
+	}
+
     /**
 	  * @Route("/alta/comunidad", name="ec_adminfincas_alta_comunidad")
 	  * @Template("ECAdminFincasBundle:Default:alta_comunidad.html.twig")
@@ -45,16 +53,16 @@ class DefaultController extends Controller
     				 		$em = $this->getDoctrine()->getManager();
    				 		$em->persist($comunidad);
    				 		$em->flush();
-        			 	
-        			 		return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Alta de comunidad realizada con éxito.',
-        	      		));
+   				 		
+   				 		$this->get('session')->getFlashBag()->add('notice','Alta de comunidad realizada con éxito.');
+   				 		$this->get('session')->getFlashBag()->add('color','green');
+   				 		return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
         			 }else{
         			 	if($comprobacion->getAdministrador()){
         			 		/*Ya existe*/
-        			 		return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Comunidad ya registrada.',
-        	      		));
+        			 		$this->get('session')->getFlashBag()->add('notice','Comunidad ya registrada.');
+        			 		$this->get('session')->getFlashBag()->add('color','red');
+							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
    				 	}else{
 							/*Actualizacion*/
 							$cuidad=$form->get('city')->getData();
@@ -80,9 +88,9 @@ class DefaultController extends Controller
    				 		$em->persist($comprobacion);
    				 		$em->flush();
    				 		
-   				 		return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Alta de comunidad realizada con éxito.',
-        	      		));
+   				 		$this->get('session')->getFlashBag()->add('notice','Alta de comunidad realizada con éxito.');
+   				 		$this->get('session')->getFlashBag()->add('color','green');
+							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
    				 	}
         			}
         	}      	
@@ -105,18 +113,18 @@ class DefaultController extends Controller
     }
     
     /**
-	  * @Route("/alta/vecino", name="ec_adminfincas_alta_vecino")
+	  * @Route("/alta/propietario", name="ec_adminfincas_alta_propietario")
 	  * @Template("ECAdminFincasBundle:Default:mensaje.html.twig")
 	  */
-    public function alta_vecinoAction(Request $request)
+    public function alta_propietarioAction(Request $request)
     {
-    		$vecino = new Vecino();
+    		$propietario = new Propietario();
     		
-    		$form = $this ->createFormBuilder($vecino)
+    		$form = $this ->createFormBuilder($propietario)
     				->add('dni','text',array('max_length'=>9))
     				->add('nombre','text')
     				->add('apellidos','text')
-    				->add('telefono','integer', array('label' => 'Teléfono'))
+    				->add('telefono','integer', array('label' => 'Teléfono','max_length' =>9))
     				->add('email','text')
     				->add('portal','text', array('label' => 'Portal'))
     				->add('piso','text', array('label' => 'Piso'))
@@ -134,36 +142,36 @@ class DefaultController extends Controller
     			
     		if ($form->isValid()) {
     					$dni=$form->get('dni')->getData();
-						$comprobacion=$this->getDoctrine()->getRepository('ECVecinoBundle:Vecino')->find($dni);
+						$comprobacion=$this->getDoctrine()->getRepository('ECPropietarioBundle:Propietario')->find($dni);
             	
             		if($comprobacion){
 							return $this->render('ECAdminFincasBundle:Default:error.html.twig',
-        	       			array('mensaje' => 'Vecino ya registrado.',
+        	       			array('mensaje' => 'Propietario ya registrado.',
         	      			));
             		}else{
-    				 	 	$this->setSecurePassword($vecino);
-    				 	 	$vecino->setComunidad($comunidad);
+    				 	 	$this->setSecurePassword($propietario);
+    				 	 	$propietario->setComunidad($comunidad);
     			
     				 	 	$em = $this->getDoctrine()->getManager();
-   					 	$em->persist($vecino);
+   					 	$em->persist($propietario);
    					 	$em->flush();
     			
 							return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       			array('mensaje1'=>'Alta Vecino.','mensaje2' => 'Alta realizada con éxito.',
+        	       			array('mensaje1'=>'Alta Propietario.','mensaje2' => 'Alta realizada con éxito.',
         	      			));
 						} 				
         	}
         	
-        	return $this->render('ECAdminFincasBundle:Default:alta_vecino.html.twig',
+        	return $this->render('ECAdminFincasBundle:Default:alta_propietario.html.twig',
         	       		array('form' => $form->createView(),
         	      		));
     }
     
     /**
-	  * @Route("/comunidad/{cif}/listado/vecinos", name="ec_adminfincas_comunidad_listado_vecinos")
-	  * @Template("ECAdminFincasBundle:Default:comunidad_listado_vecinos.html.twig")
+	  * @Route("/comunidad/{cif}/listado/propietarios", name="ec_adminfincas_comunidad_listado_propietarios")
+	  * @Template("ECAdminFincasBundle:Default:comunidad_listado_propietarios.html.twig")
 	  */
-    public function comunidad_listado_vecinosAction($cif)
+    public function comunidad_listado_propietariosAction($cif)
     {
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
@@ -172,10 +180,10 @@ class DefaultController extends Controller
       			WHERE c.cif = :cif'
 			)->setParameter('cif', $cif);
 			$comunidad = $query->getSingleResult();  
-         $vecinos=$comunidad->getVecinos();
+         $propietarios=$comunidad->getPropietarios();
 			
-        	return $this->render('ECAdminFincasBundle:Default:comunidad_listado_vecinos.html.twig',array(
-        		'vecinos' => $vecinos, 'comunidad' =>$comunidad
+        	return $this->render('ECAdminFincasBundle:Default:comunidad_listado_propietarios.html.twig',array(
+        		'propietarios' => $propietarios, 'comunidad' =>$comunidad
         	));
     }
     
@@ -206,9 +214,9 @@ class DefaultController extends Controller
    				 	$em->persist($adminfincas);
    				 	$em->flush();
     			
-						return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Modificación realizada con éxito.',
-        	      		));
+        	      	$this->get('session')->getFlashBag()->add('notice','Su perfil ha sido actualizado.');
+        			 	$this->get('session')->getFlashBag()->add('color','green');
+						return $this->redirect($this->generateUrl('ec_adminfincas_perfil'));
         	}
         	
         	return $this->render('ECAdminFincasBundle:Default:modificacion_datospersonales.html.twig',
@@ -256,13 +264,13 @@ class DefaultController extends Controller
    				 	$em->persist($adminfincas);
     					$em->flush();
     					
-						return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Cambio de contraseña realizado con éxito.',
-        	      		));
+						$this->get('session')->getFlashBag()->add('notice','Su contraseña ha sido actualizada.');
+        			 	$this->get('session')->getFlashBag()->add('color','green');
+						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
             	}else{    				     				 
-    				 	return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Contraseña no válida.',
-        	      		));
+    				 	$this->get('session')->getFlashBag()->add('notice','Contraseña no válida.');
+        			 	$this->get('session')->getFlashBag()->add('color','red');
+						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
         			}
     		}
     	
@@ -302,9 +310,9 @@ class DefaultController extends Controller
    				 	$em->persist($comunidad);
    				 	$em->flush();
     					
-						return $this->render('ECAdminFincasBundle:Default:mensaje.html.twig',
-        	       		array('mensaje' => 'Modificación de comunidad realizada con éxito.',
-        	      		));
+						$this->get('session')->getFlashBag()->add('notice','Comunidad Modificada con éxito.');
+        			 	$this->get('session')->getFlashBag()->add('color','green');
+						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
         	}
         	
         	return $this->render('ECAdminFincasBundle:Default:editar_comunidad.html.twig',
@@ -332,8 +340,10 @@ class DefaultController extends Controller
 			$em = $this->getDoctrine()->getManager();
    	   $em->persist($comunidad);
    	   $em->flush();        	
-        	
-        	return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'), 301);
+   	   
+        	$this->get('session')->getFlashBag()->add('notice','Comunidad eliminada con éxito.');
+        	$this->get('session')->getFlashBag()->add('color','green');
+			return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
     }
     
     /**
@@ -345,20 +355,20 @@ class DefaultController extends Controller
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT v
-       			FROM ECVecinoBundle:Vecino v
+       			FROM ECPropietarioBundle:Propietario v
       			WHERE v.comunidad = :cif and v.tipo = :tipo'
 			)->setParameters(array('cif' => $cif,'tipo'=>'Presidente',));
 			
 			try {
-				$vecino = $query->getSingleResult();
+				$propietario = $query->getSingleResult();
 			} catch (\Doctrine\Orm\NoResultException $e) {
-    			$vecino = null;
+    			$propietario = null;
 			}
 			
-			if($vecino){
-				$vecino->setTipo('Vecino');
+			if($propietario){
+				$propietario->setTipo('Propietario');
 				$em = $this->getDoctrine()->getManager();
-   	 		$em->persist($vecino);
+   	 		$em->persist($propietario);
    	   	$em->flush();  
 			}
 			
@@ -366,7 +376,7 @@ class DefaultController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT v
-       			FROM ECVecinoBundle:Vecino v
+       			FROM ECPropietarioBundle:Propietario v
       			WHERE v.comunidad = :cif and v.dni = :dni'
 			)->setParameters(array('cif' => $cif, 'dni' => $dni,));
 			
@@ -382,8 +392,9 @@ class DefaultController extends Controller
    	 		$em->persist($presidente);
    	   	$em->flush();  
 			}
-			
-			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_vecinos', array('cif' => $cif)), 301);
+			$this->get('session')->getFlashBag()->add('notice',$presidente->getNombre().' '.$presidente->getApellidos().' ha sido nombrado nuevo Presidente.');
+        	$this->get('session')->getFlashBag()->add('color','green');
+			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }
     
     /**
@@ -395,20 +406,20 @@ class DefaultController extends Controller
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT v
-       			FROM ECVecinoBundle:Vecino v
+       			FROM ECPropietarioBundle:Propietario v
       			WHERE v.comunidad = :cif and v.tipo = :tipo'
 			)->setParameters(array('cif' => $cif,'tipo'=>'Vicepresidente',));
 			
 			try {
-				$vecino = $query->getSingleResult();
+				$propietario = $query->getSingleResult();
 			} catch (\Doctrine\Orm\NoResultException $e) {
-    			$vecino = null;
+    			$propietario = null;
 			}
 			
-			if($vecino){
-				$vecino->setTipo('Vecino');
+			if($propietario){
+				$propietario->setTipo('Propietario');
 				$em = $this->getDoctrine()->getManager();
-   	 		$em->persist($vecino);
+   	 		$em->persist($propietario);
    	   	$em->flush();  
 			}
 			
@@ -416,7 +427,7 @@ class DefaultController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT v
-       			FROM ECVecinoBundle:Vecino v
+       			FROM ECPropietarioBundle:Propietario v
       			WHERE v.comunidad = :cif and v.dni = :dni'
 			)->setParameters(array('cif' => $cif, 'dni' => $dni,));
 			
@@ -433,6 +444,8 @@ class DefaultController extends Controller
    	   	$em->flush();  
 			}
 			
-			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_vecinos', array('cif' => $cif)), 301);
+			$this->get('session')->getFlashBag()->add('notice',$vicepresidente->getNombre().' '.$vicepresidente->getApellidos().' ha sido nombrado nuevo Vicepresidente.');
+        	$this->get('session')->getFlashBag()->add('color','green');
+			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }
 }

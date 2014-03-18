@@ -1,26 +1,23 @@
-{% extends 'ECAdminFincasBundle::layout.html.twig' %}
+{% extends 'ECPropietarioBundle::layout.html.twig' %}
 
 {% block sidebar %}
 
 {% endblock %}
 
 {% block colder %}
+		{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+		{% endfor %}	
+	
 		<section id="form">
-			<div class="subtitulo centrado">Alta Vecino</div>
+			<div class="subtitulo centrado">Modificación Datos Personales</div>
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
-    		<div class="campo">
-       		 <div class="label_campo">{{ form_label(form.dni) }}</div>
-        		{{ form_widget(form.dni) }}
-        		<div class="error">{{ form_errors(form.dni) }}</div>
-    		</div>
  
- 			<div class="campo">
-       		 <div class="label_campo">{{ form_label(form.comunidad) }}</div>
-        		{{ form_widget(form.comunidad) }}
-        		<div class="error">{{ form_errors(form.comunidad) }}</div>
-    		</div>
- 			
     		<div class="campo">
         		<div class="label_campo">{{ form_label(form.nombre) }}</div>
        		 {{ form_widget(form.nombre) }}
@@ -57,20 +54,8 @@
         		<div class="error">{{ form_errors(form.piso) }}</div>        
     		</div>
     		
-			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.password.first) }}</div>
-        		{{ form_widget(form.password.first) }}
-       		 <div class="error">{{ form_errors(form.password.first) }}</div>        
-    		</div>    		
-    		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.password.second) }}</div>
-        		{{ form_widget(form.password.second) }}
-       		 <div class="error">{{ form_errors(form.password.second) }}</div>        
-    		</div>   
-    		
-    		<div class="campo">
-    		<input type="submit" value="Enviar"/>
+    		<input type="submit" value="Actualizar"/>
     		<input type="reset" value="Borrar"/>
     		</div>
  

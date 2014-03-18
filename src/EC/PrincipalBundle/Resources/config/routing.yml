@@ -1,19 +1,23 @@
 ec_principal_homepage:
     pattern:  /
-    defaults: { _controller: ECPrincipalBundle:Default:index }
+    defaults: { _controller: ECPrincipalBundle:Default:index}
+    
+ec_principal_check:
+    pattern:  /check
+    defaults: { _controller: ECPrincipalBundle:Default:check}
 
 ec_principal_alta_adminfincas:
-    pattern:  /alta/adminfincas
-    defaults: { _controller: ECPrincipalBundle:Default:alta_adminfincas }
+    pattern:  /alta
+    defaults: { _controller: ECPrincipalBundle:Default:alta_adminfincas}
     
 ec_principal_contacto:
     pattern:  /contacto
-    defaults: { _controller: ECPrincipalBundle:Default:contacto }
-
+    defaults: { _controller: ECPrincipalBundle:Default:contacto}
+    
 select_cities:
    pattern:  /cities
-   defaults: { _controller: ECPrincipalBundle:Default:cities }
+   defaults: { _controller: ECPrincipalBundle:Default:cities}
 
 select_provinces:
    pattern:  /provinces
-   defaults: { _controller: ECPrincipalBundle:Default:provinces }
+   defaults: { _controller: ECPrincipalBundle:Default:provinces}

@@ -1,6 +1,14 @@
 {% extends 'ECAdminFincasBundle::layout.html.twig' %}
 
 {% block colder %}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
 		<section id="form">
 			<div class="subtitulo centrado">Modificación de Comunidad.</div>
 			{{ form_start(form) }}

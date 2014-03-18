@@ -1,6 +1,6 @@
 <?php
 
-namespace EC\VecinoBundle\Tests\Controller;
+namespace EC\PropietarioBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

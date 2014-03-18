@@ -1,9 +1,15 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block sidebar %}
-	<div class="subtitulo izquierda">{{mensaje1}}</div>
+
 {% endblock %}
 
 {% block colder %}
-	<div class="subtitulo izquierda">{{mensaje2}}</div>
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
 {% endblock %}

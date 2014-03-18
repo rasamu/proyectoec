@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\AdminFincasBundle\Entity\AdminFincas;
-use EC\VecinoBundle\Entity\Vecino;
+use EC\PropietarioBundle\Entity\Propietario;
 use EC\ComunidadBundle\Entity\Comunidad;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -25,6 +25,22 @@ class DefaultController extends Controller
         	return $this->render('ECPrincipalBundle:Default:index.html.twig');
     }
     
+    /**
+	  * @Route("/check", name="ec_principal_check")
+	  */
+    public function checkAction()
+    {
+			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+				return $this->redirect($this->generateUrl('ec_adminfincas_homepage'), 301);
+			}else{
+				if($this->get('security.context')->isGranted('ROLE_VECINO')){
+						return $this->redirect($this->generateUrl('ec_propietario_homepage'), 301);
+				}else{
+					return $this->redirect($this->generateUrl('ec_principal_homepage'), 301);
+				}	
+			}
+    }
+    
     private function setSecurePassword($entity) {
 			$entity->setSalt(md5(time()));
 			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
@@ -33,7 +49,7 @@ class DefaultController extends Controller
 	 }
     
     /**
-	  * @Route("/alta/adminfincas", name="ec_principal_alta_adminfincas")
+	  * @Route("/alta", name="ec_principal_alta_adminfincas")
 	  * @Template("ECPrincipalBundle:Default:alta_adminfincas.html.twig")
 	  */
     public function alta_adminfincasAction(Request $request)
@@ -45,8 +61,8 @@ class DefaultController extends Controller
     				->add('n_colegiado','text', array('label' => 'NºColegiado','max_length' =>9,'required' => false))
     				->add('nombre','text')
     				->add('apellidos','text')
-    				->add('telefono','integer', array('label' => 'Teléfono'))
-    				->add('fax','integer',array('required' => false))
+    				->add('telefono','integer', array('label' => 'Teléfono','max_length' =>9))
+    				->add('fax','integer',array('required' => false,'max_length' =>9))
     				->add('email','text')
     				->add('direccion','text', array('label' => 'Dirección'))
     				->add('provincia','text')
@@ -69,19 +85,27 @@ class DefaultController extends Controller
         				->find($num);
             	
             	if($comprobacion){
-						return $this->render('ECPrincipalBundle:Default:error.html.twig',
-        	       		array('mensaje' => 'Administrador de Fincas ya registrado.',
-        	      		));
+            		$this->get('session')->getFlashBag()->add('notice','Administrador de Fincas ya registrado.');
+   				 	$this->get('session')->getFlashBag()->add('color','red');   				 	
+						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
             	}else{    				     				 
     				 	$this->setSecurePassword($adminfincas);
     			
     				 	$em = $this->getDoctrine()->getManager();
    				 	$em->persist($adminfincas);
    				 	$em->flush();
+   				 	
+   				 	$message = \Swift_Message::newInstance()
+        				->setSubject('Alta EntreComunidades')
+        				->setFrom('rasamu24@gmail.com')
+        				->setTo($form->get('email')->getData())
+        				->setContentType('text/html')
+        				->setBody($this->renderView('ECPrincipalBundle:Default:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
+    					$this->get('mailer')->send($message);
     			
-						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig',
-        	       		array('mensaje1'=>'Alta Administrador de Fincas','mensaje2' => 'Alta realizada con éxito.',
-        	      		));
+						$this->get('session')->getFlashBag()->add('notice','Alta realizada con éxito.');
+   				 	$this->get('session')->getFlashBag()->add('color','green');   				 	
+						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
         			}
         	}
         	
@@ -110,18 +134,16 @@ class DefaultController extends Controller
        		 $data = $form->getData();
        	 
         		$message = \Swift_Message::newInstance()
-        		->setSubject('EntreComunidades')
-        		->setFrom('rasamu24@gmail.com')
-        		->setTo('rasamu24@hotmail.com')
-        		->setBody(
-           		 $this->renderView(
-               		 'ECPrincipalBundle:Default:email.txt.twig', array('data' => $data)));
-   	  
-   	  		$this->get('mailer')->send($message);
+        				->setSubject('Contacto EntreComunidades')
+        				->setFrom($form->get('Email')->getData())
+        				->setTo('rasamu24@hotmail.com')
+        				->setContentType('text/html')
+        				->setBody($this->renderView('ECPrincipalBundle:Default:email_contacto.txt.twig', array('nombre'=>$form->get('Nombre')->getData(),'email'=>$form->get('Email')->getData(),'mensaje'=>$form->get('Mensaje')->getData())));
+    			$this->get('mailer')->send($message);
         
-				return $this->render('ECPrincipalBundle:Default:mensaje.html.twig',
-        	       		array('mensaje1'=>'Contacto.','mensaje2' => 'Formulario de contacto enviado.',
-        	      		));
+        		$this->get('session')->getFlashBag()->add('notice','Formulario de contacto enviado.');
+   			$this->get('session')->getFlashBag()->add('color','green');   				 	
+				return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
    		}
     	
       	return $this->render('ECPrincipalBundle:Default:contacto.html.twig', array(

@@ -1,0 +1,7 @@
+parameters:
+#    ec_propietario.example.class: EC\PropietarioBundle\Example
+
+services:
+#    ec_propietario.example:
+#        class: %ec_propietario.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

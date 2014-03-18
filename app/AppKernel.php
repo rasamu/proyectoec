@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new EC\AdminFincasBundle\ECAdminFincasBundle(),
             new EC\BackendBundle\ECBackendBundle(),
             new EC\ComunidadBundle\ECComunidadBundle(),
-            new EC\VecinoBundle\ECVecinoBundle(),
+            new EC\PropietarioBundle\ECPropietarioBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

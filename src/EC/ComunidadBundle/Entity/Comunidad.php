@@ -84,9 +84,9 @@ class Comunidad
     protected $administrador;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\VecinoBundle\Entity\Vecino", mappedBy="comunidad")
+     * @ORM\OneToMany(targetEntity="EC\PropietarioBundle\Entity\Propietario", mappedBy="comunidad")
      */
-    protected $vecinos;
+    protected $propietarios;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\City", inversedBy="comunidades")
@@ -96,7 +96,7 @@ class Comunidad
  
     public function __construct()
     {
-        $this->vecinos = new ArrayCollection();
+        $this->propietarios = new ArrayCollection();
     }
 
     /**
@@ -329,36 +329,36 @@ class Comunidad
     }
 
     /**
-     * Add vecinos
+     * Add propietarios
      *
-     * @param \EC\VecinoBundle\Entity\Vecino $vecinos
+     * @param \EC\PropietarioBundle\Entity\Propietario $propietarios
      * @return Comunidad
      */
-    public function addVecino(\EC\VecinoBundle\Entity\Vecino $vecinos)
+    public function addPropietario(\EC\PropietarioBundle\Entity\Propietario $propietarios)
     {
-        $this->vecinos[] = $vecinos;
+        $this->propietarios[] = $propietarios;
     
         return $this;
     }
 
     /**
-     * Remove vecinos
+     * Remove propietarios
      *
-     * @param \EC\VecinoBundle\Entity\Vecino $vecinos
+     * @param \EC\PropietarioBundle\Entity\Propietario $propietarios
      */
-    public function removeVecino(\EC\VecinoBundle\Entity\Vecino $vecinos)
+    public function removePropietario(\EC\PropietarioBundle\Entity\Propietario $propietarios)
     {
-        $this->vecinos->removeElement($vecinos);
+        $this->propietarios->removeElement($propietarios);
     }
 
     /**
-     * Get vecinos
+     * Get propietarios
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getVecinos()
+    public function getPropietarios()
     {
-        return $this->vecinos;
+        return $this->propietarios;
     }
 
 

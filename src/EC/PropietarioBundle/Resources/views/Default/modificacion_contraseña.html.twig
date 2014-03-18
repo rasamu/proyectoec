@@ -1,10 +1,18 @@
-{% extends 'ECVecinoBundle::layout.html.twig' %}
+{% extends 'ECPropietarioBundle::layout.html.twig' %}
 
 {% block sidebar %}
 
 {% endblock %}
 
 {% block colder %}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+
 	<section id="form_login">
 		<div class="subtitulo centrado">Cambio de Contraseña.</div>
 		{{ form_start(form) }}

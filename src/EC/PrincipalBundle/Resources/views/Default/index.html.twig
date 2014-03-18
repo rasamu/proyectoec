@@ -5,13 +5,7 @@
 {% endblock %}
 
 {% block colder %}
-	{% if is_granted('ROLE_ADMINFINCAS') %}	  
-		<div class="subtitulo centrado">Bienvenid@ {{ app.user.nombre }}.</div>
-	{% else %}
-		{% if is_granted('ROLE_VECINO') %}	  
-			<div class="subtitulo centrado">Bienvenid@ {{ app.user.nombre }}.</div>
-		{% else %}
-			<div class="subtitulo centrado">Bienvenid@ a EntreComunidades.</div>
-		{% endif %}
-	{% endif %}
+
+			<div class="subtitulo centrado">{% trans %}Bienvenid@ a EntreComunidades.{% endtrans %}</div>
+
 {% endblock %}

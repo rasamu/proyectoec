@@ -1,29 +1,56 @@
-ec_vecino:
-    resource: "@ECVecinoBundle/Resources/config/routing.yml"
-    prefix:   /vecino
+ec_propietario:
+    resource: "@ECPropietarioBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/propietario
+    defaults: { _locale: es }
+    requirements:
+        _locale: en|es
 
 ec_comunidad:
     resource: "@ECComunidadBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /{_locale}
+    defaults: { _locale: es }
+    requirements:
+        _locale: en|es
 
 ec_backend:
     resource: "@ECBackendBundle/Resources/config/routing.yml"
-    prefix:   /root
+    prefix:   /{_locale}/root
+    defaults: { _locale: es }
+    requirements:
+        _locale: en|es
 
 ec_admin_fincas:
     resource: "@ECAdminFincasBundle/Resources/config/routing.yml"
-    prefix:   /adminfincas
+    prefix:   /{_locale}/adminfincas
+    defaults: { _locale: es }
+    requirements:
+        _locale: en|es
+        
+home:
+    pattern:  /{_locale}
+    defaults: { _controller: ECPrincipalBundle:Default:index, _locale:es }
 
 ec_principal:
     resource: "@ECPrincipalBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix: /{_locale}
+    defaults: { _locale:es }
+    requirements:
+        _locale: en|es
 
 login:
-   pattern: /login
-   defaults: { _controller:ECPrincipalBundle:Default:login }
+   pattern: /{_locale}/login
+   defaults: { _controller:ECPrincipalBundle:Default:login, _locale:es }
+   requirements:
+        _locale: en|es
 
 login_check:
-   pattern: /login_check
+   pattern: /{_locale}/login_check
+   defaults: { _locale: es }
+   requirements:
+        _locale: en|es
 
 logout:
-   pattern: /logout
+   pattern: /{_locale}/logout
+   defaults: { _locale: es }
+   requirements:
+        _locale: en|es

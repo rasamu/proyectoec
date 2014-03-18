@@ -20,8 +20,16 @@
 
 {% block colder %}
 
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
 <div class="subtitulo centrado">Comunidad: {{comunidad.cif}}</div>
-
+       <a href="{{ path('ec_adminfincas_alta_propietario')}}">Nuevo Propietario</a>
 <div id="demo">
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 			<thead>
@@ -35,19 +43,19 @@
 				</tr>
 			</thead>
 			<tbody>
-			{% for vecino in vecinos %}
+			{% for propietario in propietarios %}
 				<tr class="gradeX">
-       			<td>{{vecino.dni}}</td>
-       			<td>{{vecino.tipo}}</td>
-       			<td>{{vecino.nombre}} {{vecino.apellidos}}</td>
-       			<td>{{vecino.portal}}</td>
-       			<td>{{vecino.piso}}</td>
+       			<td>{{propietario.dni}}</td>
+       			<td>{{propietario.tipo}}</td>
+       			<td>{{propietario.nombre}} {{propietario.apellidos}}</td>
+       			<td>{{propietario.portal}}</td>
+       			<td>{{propietario.piso}}</td>
        			<td>
 						<ul id="sddm">
-    						<li><a href="#" onmouseover="mopen({{vecino.dni}})" onmouseout="mclosetime()">Acciones</a>
-        						<div id="{{vecino.dni}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-        						<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'dni': vecino.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{vecino.nombre}} {{vecino.apellidos}} como nuevo presidente?')">Nombrar Presidente</a>
-        						<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'dni': vecino.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{vecino.nombre}} {{vecino.apellidos}} como nuevo vicepresidente?')">Nombrar Vicepresidente</a>
+    						<li><a href="" onmouseover="mopen({{propietario.dni}})" onmouseout="mclosetime()">Acciones</a>
+        						<div id="{{propietario.dni}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+        						<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'dni': propietario.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propietario.nombre}} {{propietario.apellidos}} como nuevo presidente?')">Nombrar Presidente</a>
+        						<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'dni': propietario.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propietario.nombre}} {{propietario.apellidos}} como nuevo vicepresidente?')">Nombrar Vicepresidente</a>
         						</div>
     						</li>
 						</ul>

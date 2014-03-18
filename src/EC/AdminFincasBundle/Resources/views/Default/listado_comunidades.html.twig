@@ -17,7 +17,13 @@
 {% endblock %}
 
 {% block colder %}
-
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
 <div class="subtitulo centrado">Listado de Comunidades</div>
 <div id="demo">
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -33,10 +39,10 @@
 			<tbody>
 			{% for comunidad in comunidades %}
 				<tr class="gradeX">
-				   <td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
-       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
-       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.direccion}}</td>
-       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_vecinos', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
+				   <td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.direccion}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
        			<td>
        			<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="/images/pencil-icon.png"></a>
        			<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="/images/action-cancel-icon.png"></a>

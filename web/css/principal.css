@@ -45,7 +45,15 @@ body {
 .titulo{
 	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
 	font-size: 50px; 
-	text-align: left;
+	float: left;
+	width: auto;
+}
+
+#idiomas{
+	float:right;
+	width: auto;
+	margin-top: 8px;
+	margin-left: 8px;	
 }
 
 /*subheader*/
@@ -129,6 +137,14 @@ footer{
  	background-color: #316431; 
  	color:#fff;
 	box-shadow:0 4px 4px 0 #000000;
+}
+
+/*Mensajes de erros y éxito*/
+.mensaje{
+	text-align: center;
+	border-style: solid;
+	border-width: 1px;
+	padding: 5px;
 }
 
 /*FORMULARIO*/
