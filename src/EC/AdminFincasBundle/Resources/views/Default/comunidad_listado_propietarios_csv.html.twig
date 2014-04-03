@@ -1,0 +1,6 @@
+numbloque;nombre;piso
+{% for bloque in bloques %}
+{% for propiedad in bloque.propiedades %}
+{{bloque.num}};{{propiedad.propietario.nombre}};{{propiedad.piso}}
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+	<dynamic-page>
+		<h1>Listado de comunidades</h1>
+		<table>
+
+			{% for comunidad in comunidades %}
+				<tr>
+				   <td>{{comunidad.codigo}}</td>
+       			<td>{{comunidad.cif}}</td>
+       			<td>{{comunidad.city.name}}</td>
+      		</tr> 
+			{% endfor %}
+
+		</table>
+	</dynamic-page>
+</pdf>

@@ -1,0 +1,44 @@
+{% extends 'ECAdminFincasBundle::layout_comunidad.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block colder %}
+{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+
+		<section id="form">
+			<div class="subtitulo centrado">Alta de Bloque</div>
+            <form action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post">
+    				<div style="color:red;">{{ form_errors(form) }}</div>
+
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.num) }}</div>*
+        				{{ form_widget(form.num) }}
+        				<div class="error">{{ form_errors(form.num) }}</div>
+    				</div>
+    		
+    				<div class="campo_login">
+        				<div class="label_campo">{{ form_label(form.direccion) }}</div>*
+        				{{ form_widget(form.direccion) }}
+       		 		<div class="error">{{ form_errors(form.direccion) }}</div>        
+    				</div>    
+
+    				<div class="campo_login">
+    					(*) Campo Obligatorio
+    					<input type="submit" value="Enviar"/>
+    					<input type="reset" value="Borrar"/>
+    				</div>
+            </form>
+		</section>
+{% endblock %}
+

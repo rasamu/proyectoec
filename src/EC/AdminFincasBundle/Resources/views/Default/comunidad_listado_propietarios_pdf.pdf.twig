@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+	<dynamic-page>
+		<h1>Listado de propietarios</h1>
+		<h3>Comunidad: {{comunidad.codigo}}</h3>
+		<table>
+
+			{% for bloque in bloques %}
+				{% for propiedad in bloque.propiedades%}
+					<tr>
+						<td>{{bloque.num}}</td>
+						<td>{{bloque.direccion}}</td>
+       				<td>{{propiedad.propietario.nombre}}</td>
+       				<td>{{propiedad.piso}}</td>
+      			</tr>
+      		{% endfor %}
+			{% endfor %}
+
+		</table>
+	</dynamic-page>
+</pdf>

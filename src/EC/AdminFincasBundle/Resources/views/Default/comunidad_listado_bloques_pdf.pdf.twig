@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+	<dynamic-page>
+		<h1>Listado de bloques</h1>
+		<h3>Comunidad: {{comunidad.codigo}}</h3>
+		<table>
+
+			{% for bloque in bloques %}
+				<tr>
+				   <td>{{bloque.num}}</td>
+       			<td>{{bloque.direccion}}</td>
+      		</tr> 
+			{% endfor %}
+
+		</table>
+	</dynamic-page>
+</pdf>
