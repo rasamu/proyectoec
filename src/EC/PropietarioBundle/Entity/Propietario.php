@@ -12,11 +12,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="Propietarios")
  * @ORM\HasLifecycleCallbacks
  */
-class Propietario implements UserInterface
+class Propietario implements UserInterface, \Serializable
 {	
 	function equals(UserInterface $propietario)
 	{
-		return $this->getDni() == $propietario->getDni();	
+		return $this->getId() == $propietario->getId();	
 	}
 	
 	function eraseCredentials()
@@ -38,8 +38,49 @@ class Propietario implements UserInterface
 	
 	function getUsername()
 	{
-		return $this->getDni();
+		return $this->getUsuario();
 	}
+	
+	/**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->usuario,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->usuario,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+	
+	/**
+     * @ORM\Id
+     * @ORM\Column(name="id",type="integer",unique=true)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @Assert\Type(type="string")
+     * @ORM\Column(name="usuario",type="string",unique=true)
+     */
+    protected $usuario;
 	
 	/**
 	  * @Assert\Length(
@@ -47,8 +88,7 @@ class Propietario implements UserInterface
      *      max=9
      * )
      * @Assert\Type(type="string")
-     * @ORM\Id
-     * @ORM\Column(name="dni_propietario",type="string",unique=true)
+     * @ORM\Column(name="dni_propietario",type="string",nullable=true)
      */
     protected $dni;
     
@@ -63,45 +103,25 @@ class Propietario implements UserInterface
      * @ORM\Column(name="nombre_propietario",type="string", length=100)
      */
     protected $nombre;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="apellidos_propietario",type="string", length=100)
-     */
-    protected $apellidos;
 
 	/**
-	  * @Assert\NotNull()
 	  * @Assert\Length(
      *      min=9,
      *      max=9
      * )
      * @Assert\Type(type="integer")
-     * @ORM\Column(name="telefono_propietario",type="string",length=9)
+     * @ORM\Column(name="telefono_propietario",type="string",length=9,nullable=true)
      */
     protected $telefono;
     
     /**
-	  * @Assert\NotNull()
      * @Assert\Email(
      *     message = "El email '{{ value }}' no es un email válido.",
      *     checkMX = true
      * )
-     * @ORM\Column(name="email_propietario",type="string", length=100)
+     * @ORM\Column(name="email_propietario",type="string", length=100,nullable=true)
      */
     protected $email;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="portal_propietario",type="string", length=10)
-     */
-    protected $portal;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="piso_propietario",type="string", length=10)
-     */
-    protected $piso;
     
     /**
      * @ORM\Column(name="fecha_alta_propietario",type="datetime")
@@ -120,10 +140,10 @@ class Propietario implements UserInterface
     protected $salt;
     
     /**
-     * @ORM\ManyToOne(targetEntity="EC\ComunidadBundle\Entity\Comunidad", inversedBy="propietarios")
-     * @ORM\JoinColumn(name="cif", referencedColumnName="cif")
-     */
-    protected $comunidad;
+     * @ORM\OneToOne(targetEntity="EC\PropietarioBundle\Entity\Propiedad", inversedBy="propietario")
+     * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
+     **/
+    private $propiedad;
 
     /**
      * Set dni
@@ -195,29 +215,6 @@ class Propietario implements UserInterface
     }
 
     /**
-     * Set apellidos
-     *
-     * @param string $apellidos
-     * @return Propietario
-     */
-    public function setApellidos($apellidos)
-    {
-        $this->apellidos = $apellidos;
-    
-        return $this;
-    }
-
-    /**
-     * Get apellidos
-     *
-     * @return string 
-     */
-    public function getApellidos()
-    {
-        return $this->apellidos;
-    }
-
-    /**
      * Set telefono
      *
      * @param string $telefono
@@ -261,52 +258,6 @@ class Propietario implements UserInterface
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Set portal
-     *
-     * @param string $portal
-     * @return Propietario
-     */
-    public function setPortal($portal)
-    {
-        $this->portal = $portal;
-    
-        return $this;
-    }
-
-    /**
-     * Get portal
-     *
-     * @return string 
-     */
-    public function getPortal()
-    {
-        return $this->portal;
-    }
-
-	/**
-     * Set piso
-     *
-     * @param string $piso
-     * @return Propietario
-     */
-    public function setPiso($piso)
-    {
-        $this->piso = $piso;
-    
-        return $this;
-    }
-
-    /**
-     * Get piso
-     *
-     * @return string 
-     */
-    public function getPiso()
-    {
-        return $this->piso;
     }
 
     /**
@@ -377,25 +328,58 @@ class Propietario implements UserInterface
     }
 
     /**
-     * Set comunidad
+     * Set propiedad
      *
-     * @param \EC\ComunidadBundle\Entity\Comunidad $comunidad
+     * @param \EC\PropietarioBundle\Entity\Propiedad $propiedad
      * @return Propietario
      */
-    public function setComunidad(\EC\ComunidadBundle\Entity\Comunidad $comunidad = null)
+    public function setPropiedad(\EC\PropietarioBundle\Entity\Propiedad $propiedad = null)
     {
-        $this->comunidad = $comunidad;
+        $this->propiedad = $propiedad;
     
         return $this;
     }
 
     /**
-     * Get comunidad
+     * Get propiedad
      *
-     * @return \EC\ComunidadBundle\Entity\Comunidad 
+     * @return \EC\PropietarioBundle\Entity\Propiedad 
      */
-    public function getComunidad()
+    public function getPropiedad()
     {
-        return $this->comunidad;
+        return $this->propiedad;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param string $usuario
+     * @return Propietario
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+    
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return string 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

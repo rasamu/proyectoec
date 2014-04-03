@@ -1,4 +1,4 @@
-{% extends 'ECAdminFincasBundle::layout.html.twig' %}
+{% extends 'ECAdminFincasBundle::layout_comunidad.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block colder %}
-
+{{ parent() }}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -27,46 +27,47 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
-	
-<div class="subtitulo centrado">Comunidad: {{comunidad.cif}}</div>
-       <a href="{{ path('ec_adminfincas_alta_propietario')}}">Nuevo Propietario</a>
+
+<div class="subtitulo izquierda">Listado de propietarios</div>
+<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="/images/pdf-icon.png" alt="pdf"></a>
+<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="/images/csv-icon.png" alt="csv"></a>
 <div id="demo">
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 			<thead>
 				<tr>
-					<th>DNI</th>
 					<th>Tipo</th>
 					<th>Nombre</th>
-					<th>Portal</th>
+					<th>Bloque</th>
 					<th>Piso</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
-			{% for propietario in propietarios %}
-				<tr class="gradeX">
-       			<td>{{propietario.dni}}</td>
-       			<td>{{propietario.tipo}}</td>
-       			<td>{{propietario.nombre}} {{propietario.apellidos}}</td>
-       			<td>{{propietario.portal}}</td>
-       			<td>{{propietario.piso}}</td>
-       			<td>
-						<ul id="sddm">
-    						<li><a href="" onmouseover="mopen({{propietario.dni}})" onmouseout="mclosetime()">Acciones</a>
-        						<div id="{{propietario.dni}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-        						<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'dni': propietario.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propietario.nombre}} {{propietario.apellidos}} como nuevo presidente?')">Nombrar Presidente</a>
-        						<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'dni': propietario.dni}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propietario.nombre}} {{propietario.apellidos}} como nuevo vicepresidente?')">Nombrar Vicepresidente</a>
-        						</div>
-    						</li>
-						</ul>
-						<div style="clear:both"></div>
-       			</td>
-      		</tr> 
+			{% for bloque in bloques %}
+				{% for propiedad in bloque.propiedades%}
+					<tr class="gradeX">
+       				<td>{{propiedad.propietario.tipo}}</td>
+       				<td>{{propiedad.propietario.nombre}}</td>
+       				<td>{{bloque.direccion}}</td>
+       				<td>{{propiedad.piso}}</td>
+       				<td>
+       					<a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')"><img src="/images/action-cancel-icon.png"></a>
+							<ul id="sddm">
+    							<li><a href="" onmouseover="mopen({{propiedad.propietario.id}})" onmouseout="mclosetime()">Acciones</a>
+        							<div id="{{propiedad.propietario.id}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+        							<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">Nombrar Presidente</a>
+        							<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">Nombrar Vicepresidente</a>
+        							</div>
+    							</li>
+							</ul>
+							<div style="clear:both"></div>
+       				</td>
+      			</tr>
+      		{% endfor %} 
 			{% endfor %}
 			</tbody>
 			<tfoot>
 				<tr>
-					<th>DNI</th>
 					<th>Tipo</th>
 					<th>Nombre</th>
 					<th>Portal</th>

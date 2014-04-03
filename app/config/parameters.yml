@@ -2,16 +2,13 @@
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
-    database_port: ~
+    database_port: null
     database_name: entre_comunidades
     database_user: root
-    database_password: ~
+    database_password: null
     mailer_transport: gmail
-    mailer_encryption: ~
-    mailer_auth_mode: ~
-    mailer_host: ~
+    mailer_host: null
     mailer_user: rasamu24@gmail.com
     mailer_password: '08091987'
     locale: es
     secret: a67f71ad704f1c1229c3abc91a16e1cb9bc8fded
-    database_path: null

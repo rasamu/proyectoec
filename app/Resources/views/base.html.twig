@@ -49,17 +49,17 @@
 											<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 										{% else %}
 											{% if is_granted('ROLE_PRESIDENTE') %}
-												<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+												<div style="clear:both">{{ app.user.nombre }}</div>
 												<div style="clear:both">{% trans %}Presidente{% endtrans %}</div>
 												<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 											{% else %} 
 												{% if is_granted('ROLE_VICEPRESIDENTE') %}
-													<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+													<div style="clear:both">{{ app.user.nombre }}</div>
 													<div style="clear:both">{% trans %}Vicepresidente{% endtrans %}</div>
 													<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 												{% else %}
 													{% if is_granted('ROLE_VECINO') %}
-														<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
+														<div style="clear:both">{{ app.user.nombre }}</div>
 														<div style="clear:both">{% trans %}Propietario{% endtrans %}</div>
 														<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 													{% else %}
@@ -102,8 +102,8 @@
 											<ul>
 												<li class="has-sub"><a href="#"><span>Mi Perfil</span></a>
 													<ul>
-   													<li><a href="{{ path('ec_vecino_perfil') }}"><span>Datos Personales</span></a></li>
-   													<li><a href="{{ path('ec_vecino_contraseña') }}"><span>Contraseña</span></a></li>
+   													<li><a href="{{ path('ec_propietario_perfil') }}"><span>Datos Personales</span></a></li>
+   													<li><a href="{{ path('ec_propietario_contraseña') }}"><span>Contraseña</span></a></li>
 													</ul>
 												</li>
 											</ul>

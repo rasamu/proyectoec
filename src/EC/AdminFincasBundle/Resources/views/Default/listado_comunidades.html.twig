@@ -24,14 +24,15 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
-<div class="subtitulo centrado">Listado de Comunidades</div>
+<div class="subtitulo izquierda">Listado de Comunidades</div>
+<a href="{{ path('ec_adminfincas_listado_comunidades_pdf') }}"><img src="/images/pdf-icon.png" alt="pdf"></a>
+<a href="{{ path('ec_adminfincas_listado_comunidades_csv') }}"><img src="/images/csv-icon.png" alt="csv"></a>
 <div id="demo">
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 			<thead>
 				<tr>
 					<th>Código Despacho</th>
 					<th>Cif</th>
-					<th>Dirección</th>
 					<th>Cuidad</th>
 					<th>Acciones</th>
 				</tr>
@@ -39,13 +40,12 @@
 			<tbody>
 			{% for comunidad in comunidades %}
 				<tr class="gradeX">
-				   <td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
-       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
-       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.direccion}}</td>
-       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
+				   <td onclick="window.location.href='{{ path('ec_adminfincas_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
+       			<td onclick="window.location.href='{{ path('ec_adminfincas_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
        			<td>
-       			<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="/images/pencil-icon.png"></a>
-       			<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="/images/action-cancel-icon.png"></a>
+       			<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="/images/pencil-icon.png" alt="edit"></a>
+       			<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="/images/action-cancel-icon.png" alt="cancel"></a>
        			</td>
       		</tr> 
 			{% endfor %}
@@ -54,7 +54,6 @@
 				<tr>
 					<th>Código Despacho</th>
 					<th>Cif</th>
-					<th>Dirección</th>
 					<th>Cuidad</th>
 					<th>Acciones</th>
 				</tr>

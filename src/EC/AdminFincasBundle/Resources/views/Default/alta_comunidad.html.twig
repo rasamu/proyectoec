@@ -46,46 +46,34 @@
     		<div style="color:red;">{{ form_errors(form) }}</div>
 
     		<div class="campo">
-       		 <div class="label_campo">{{ form_label(form.cif) }}</div>
+       		 <div class="label_campo">{{ form_label(form.cif) }}</div>*
         		{{ form_widget(form.cif) }}
         		<div class="error">{{ form_errors(form.cif) }}</div>
     		</div>
     		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.codigo) }}</div>
+        		<div class="label_campo">{{ form_label(form.codigo) }}</div>*
         		{{ form_widget(form.codigo) }}
        		 <div class="error">{{ form_errors(form.codigo) }}</div>        
     		</div>    
-		
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.direccion) }}</div>
-       		 {{ form_widget(form.direccion) }}
-        		<div class="error">{{ form_errors(form.direccion) }}</div>
-    		</div>	
     		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.country) }}</div>
+        		<div class="label_campo">{{ form_label(form.country) }}</div>*
         		{{ form_widget(form.country) }}
        		 <div class="error">{{ form_errors(form.country) }}</div>        
     		</div>    		
     		
 			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.province) }}</div>
+        		<div class="label_campo">{{ form_label(form.province) }}</div>*
         		{{ form_widget(form.province) }}
        		 <div class="error">{{ form_errors(form.province) }}</div>        
     		</div>    		
     		
 			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.city) }}</div>
+        		<div class="label_campo">{{ form_label(form.city) }}</div>*
         		{{ form_widget(form.city) }}
        		 <div class="error">{{ form_errors(form.city) }}</div>        
-    		</div>
-    		
-			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.n_plazas_garaje) }}</div>
-        		{{ form_widget(form.n_plazas_garaje) }}
-       		 <div class="error">{{ form_errors(form.n_plazas_garaje) }}</div>        
-    		</div>    				
+    		</div> 				
     		
 			<div class="campo">
         		<div class="label_campo">{{ form_label(form.n_piscinas) }}</div>
@@ -100,23 +88,25 @@
     		</div>
 
 			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.gimnasio) }}</div>
+        		<div class="label_campo">{{ form_label(form.gimnasio) }}</div>*
         		{{ form_widget(form.gimnasio) }}
        		 <div class="error">{{ form_errors(form.gimnasio) }}</div>        
     		</div>    		
     		    		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.ascensor) }}</div>
+        		<div class="label_campo">{{ form_label(form.ascensor) }}</div>*
         		{{ form_widget(form.ascensor) }}
        		 <div class="error">{{ form_errors(form.ascensor) }}</div>        
     		</div>    		
     		
 			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.conserjeria) }}</div>
+        		<div class="label_campo">{{ form_label(form.conserjeria) }}</div>*
         		{{ form_widget(form.conserjeria) }}
        		 <div class="error">{{ form_errors(form.conserjeria) }}</div>        
     		</div> 
-
+			<div class="campo">
+				(*) Campo Obligatorio			
+			</div>
     		<div class="campo">
     		<input type="submit" value="Enviar"/>
     		<input type="reset" value="Borrar"/>

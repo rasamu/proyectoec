@@ -25,22 +25,10 @@ class Comunidad
     protected $cif;
     
     /**
-     * @Assert\Type(type="integer")
+	  * @Assert\Type(type="integer")
      * @ORM\Column(name="codigo_despacho",type="integer",length=9,nullable=true)
      */
     protected $codigo;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="direccion",type="string", length=150)
-     */
-    protected $direccion;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="n_plazas_garaje",type="integer")
-     */
-    protected $n_plazas_garaje;
     
     /**
 	  * @Assert\NotNull()
@@ -84,21 +72,21 @@ class Comunidad
     protected $administrador;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PropietarioBundle\Entity\Propietario", mappedBy="comunidad")
-     */
-    protected $propietarios;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\City", inversedBy="comunidades")
      * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */
     protected $city;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\ComunidadBundle\Entity\Bloque", mappedBy="comunidad")
+     */
+    protected $bloques;
  
     public function __construct()
     {
-        $this->propietarios = new ArrayCollection();
+        $this->bloques = new ArrayCollection();
     }
-
+    
     /**
      * Set cif
      *
@@ -121,54 +109,7 @@ class Comunidad
     {
         return $this->cif;
     }
-
-    /**
-     * Set direccion
-     *
-     * @param string $direccion
-     * @return Comunidad
-     */
-    public function setDireccion($direccion)
-    {
-        $this->direccion = $direccion;
     
-        return $this;
-    }
-
-    /**
-     * Get direccion
-     *
-     * @return string 
-     */
-    public function getDireccion()
-    {
-        return $this->direccion;
-    }
-    
-
-    /**
-     * Set n_plazas_garaje
-     *
-     * @param integer $nPlazasGaraje
-     * @return Comunidad
-     */
-    public function setNPlazasGaraje($nPlazasGaraje)
-    {
-        $this->n_plazas_garaje = $nPlazasGaraje;
-    
-        return $this;
-    }
-
-    /**
-     * Get n_plazas_garaje
-     *
-     * @return integer 
-     */
-    public function getNPlazasGaraje()
-    {
-        return $this->n_plazas_garaje;
-    }
-
     /**
      * Set n_piscinas
      *
@@ -327,41 +268,7 @@ class Comunidad
     {
         return $this->n_pistas;
     }
-
-    /**
-     * Add propietarios
-     *
-     * @param \EC\PropietarioBundle\Entity\Propietario $propietarios
-     * @return Comunidad
-     */
-    public function addPropietario(\EC\PropietarioBundle\Entity\Propietario $propietarios)
-    {
-        $this->propietarios[] = $propietarios;
     
-        return $this;
-    }
-
-    /**
-     * Remove propietarios
-     *
-     * @param \EC\PropietarioBundle\Entity\Propietario $propietarios
-     */
-    public function removePropietario(\EC\PropietarioBundle\Entity\Propietario $propietarios)
-    {
-        $this->propietarios->removeElement($propietarios);
-    }
-
-    /**
-     * Get propietarios
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPropietarios()
-    {
-        return $this->propietarios;
-    }
-
-
     /**
      * Set city
      *
@@ -386,12 +293,45 @@ class Comunidad
     }
 
     /**
+     * Add bloques
+     *
+     * @param \EC\ComunidadBundle\Entity\Bloque $bloques
+     * @return Comunidad
+     */
+    public function addBloque(\EC\ComunidadBundle\Entity\Bloque $bloques)
+    {
+        $this->bloques[] = $bloques;
+    
+        return $this;
+    }
+
+    /**
+     * Remove bloques
+     *
+     * @param \EC\ComunidadBundle\Entity\Bloque $bloques
+     */
+    public function removeBloque(\EC\ComunidadBundle\Entity\Bloque $bloques)
+    {
+        $this->bloques->removeElement($bloques);
+    }
+
+    /**
+     * Get bloques
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBloques()
+    {
+        return $this->bloques;
+    }
+
+    /**
      * Set codigo
      *
      * @param integer $codigo
      * @return Comunidad
      */
-    public function setCodigo($codigo=null)
+    public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
     

@@ -1,4 +1,4 @@
-{% extends 'ECAdminFincasBundle::layout.html.twig' %}
+{% extends 'ECAdminFincasBundle::layout_comunidad.html.twig' %}
 
 {% block sidebar %}
  {{ parent() }}
@@ -6,75 +6,58 @@
 {% endblock %}
 
 {% block colder %}
+{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
 		<section id="form">
 			<div class="subtitulo centrado">Alta Propietario</div>
-			{{ form_start(form) }}
-    		<div style="color:red;">{{ form_errors(form) }}</div>
-    		<div class="campo">
-       		 <div class="label_campo">{{ form_label(form.dni) }}</div>
-        		{{ form_widget(form.dni) }}
-        		<div class="error">{{ form_errors(form.dni) }}</div>
-    		</div>
- 
- 			<div class="campo">
-       		 <div class="label_campo">{{ form_label(form.comunidad) }}</div>
-        		{{ form_widget(form.comunidad) }}
-        		<div class="error">{{ form_errors(form.comunidad) }}</div>
-    		</div>
+         <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}" method="post">
+    				<div style="color:red;">{{ form_errors(form) }}</div>
  			
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.nombre) }}</div>
-       		 {{ form_widget(form.nombre) }}
-        		<div class="error">{{ form_errors(form.nombre) }}</div>
-    		</div>
-    		
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.apellidos) }}</div>
-       		 {{ form_widget(form.apellidos) }}
-        		<div class="error">{{ form_errors(form.apellidos) }}</div>
-    		</div>
+    				<div class="campo">
+        				<div class="label_campo">{{ form_label(form.propietario.nombre) }}</div>*
+       				 {{ form_widget(form.propietario.nombre) }}
+        				<div class="error">{{ form_errors(form.propietario.nombre) }}</div>
+    				</div>
+    				
+    				<div class="campo">
+        				<div class="label_campo">{{ form_label(form.piso) }}</div>*
+        				{{ form_widget(form.piso) }}
+        				<div class="error">{{ form_errors(form.piso) }}</div>        
+    				</div>
     
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.telefono) }}</div>
-        		{{ form_widget(form.telefono) }}
-        		<div class="error">{{ form_errors(form.telefono) }}</div>       
-    		</div>
+    				<div class="campo">
+        				<div class="label_campo">{{ form_label(form.propietario.telefono) }}</div>
+        				{{ form_widget(form.propietario.telefono) }}
+        				<div class="error">{{ form_errors(form.propietario.telefono) }}</div>       
+    				</div>
 
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.email) }}</div>
-        		{{ form_widget(form.email) }}        
-       		 <div class="error">{{ form_errors(form.email) }}</div>
-    		</div>
-
-   		 <div class="campo">
-        		<div class="label_campo">{{ form_label(form.portal) }}</div>
-        		{{ form_widget(form.portal) }}
-        		<div class="error">{{ form_errors(form.portal) }}</div>        
-    		</div>
-    		
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.piso) }}</div>
-        		{{ form_widget(form.piso) }}
-        		<div class="error">{{ form_errors(form.piso) }}</div>        
-    		</div>
-    		
-			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.password.first) }}</div>
-        		{{ form_widget(form.password.first) }}
-       		 <div class="error">{{ form_errors(form.password.first) }}</div>        
-    		</div>    		
-    		
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.password.second) }}</div>
-        		{{ form_widget(form.password.second) }}
-       		 <div class="error">{{ form_errors(form.password.second) }}</div>        
-    		</div>   
-    		
-    		<div class="campo">
-    		<input type="submit" value="Enviar"/>
-    		<input type="reset" value="Borrar"/>
-    		</div>
- 
-		{{ form_end(form) }}
+    				<div class="campo">
+        				<div class="label_campo">{{ form_label(form.propietario.email) }}</div>
+        				{{ form_widget(form.propietario.email) }}        
+       		 		<div class="error">{{ form_errors(form.propietario.email) }}</div>
+    				</div>
+    				
+    				<div class="campo">
+        				<div class="label_campo">{{ form_label(form.bloque) }}</div>*
+        				{{ form_widget(form.bloque) }}
+        				<div class="error">{{ form_errors(form.bloque) }}</div>        
+    				</div>
+    				<div class="campo">
+    					    (*) Campo Obligatorio
+    				</div>
+    				
+    				<div class="campo">
+    					<input type="submit" value="Enviar"/>
+    					<input type="reset" value="Borrar"/>
+    				</div>
+			</form>
 		</section>
 {% endblock %}

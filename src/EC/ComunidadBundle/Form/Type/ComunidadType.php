@@ -14,8 +14,6 @@ class ComunidadType extends AbstractType
     {
          $builder->add('cif','text',array('max_length' =>9));
          $builder->add('codigo','integer',array('label' => 'Código'));
-    	 	$builder->add('direccion','text',array('label' => 'Direccion'));
-    		$builder->add('n_plazas_garaje','integer',array('label' => 'N Plazas de garaje'));
     		$builder->add('n_piscinas','integer',array('label' => 'N Piscinas'));
     		$builder->add('n_pistas','integer',array('label' => 'N Pistas'));
     		$builder->add('gimnasio','choice',array('choices'=>array('1' => 'Si', '0' => 'No')));

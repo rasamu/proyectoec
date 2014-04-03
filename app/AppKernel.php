@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new EC\BackendBundle\ECBackendBundle(),
             new EC\ComunidadBundle\ECComunidadBundle(),
             new EC\PropietarioBundle\ECPropietarioBundle(),
+            new Ps\PdfBundle\PsPdfBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

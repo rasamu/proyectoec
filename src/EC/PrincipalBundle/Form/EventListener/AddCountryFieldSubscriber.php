@@ -30,6 +30,7 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
     {
         $form->add('country', 'entity', array(
             'class' => 'ECPrincipalBundle:Country',
+            'label' => 'País',
             'mapped' => false,
             'data' => $country,
             'empty_value' => 'Pais',

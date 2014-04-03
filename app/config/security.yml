@@ -39,7 +39,7 @@ security:
         adminfincas:
             entity: { class: EC\AdminFincasBundle\Entity\AdminFincas, property: dni }
         propietarios:
-            entity: { class: EC\PropietarioBundle\Entity\Propietario, property: dni }
+            entity: { class: EC\PropietarioBundle\Entity\Propietario, property: usuario }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext

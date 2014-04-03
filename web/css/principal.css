@@ -12,9 +12,9 @@ body {
 
 .subtitulo{
 	font-family: serif, Arial, Helvetica;
-	font-size: 20px;
+	font-size: 16px;
 	color: #316431;
-	padding: 10px; 
+	margin-bottom: 10px;
 }
 
 .centrado{
@@ -96,6 +96,12 @@ body {
    border-top-right-radius: 1em;
    text-decoration: none;
    color:#fff;
+}
+
+#menu .navigation li:hover > a {
+	background:#F7D118;
+	color:#316431;
+   border-left: 2px solid #316431;
 }
 
 /*Contenido*/
@@ -194,13 +200,13 @@ input:focus,textarea:focus,select:focus
 #entrar > a{
 	color:#316431;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 14px;
 	float: right;
 	font-weight: bold;
 }
 
 #entrar > div{
-	font-size: 14px;
+	font-size: 13px;
 	color:#316431;	
 	float: right;
 	font-style: oblique;
