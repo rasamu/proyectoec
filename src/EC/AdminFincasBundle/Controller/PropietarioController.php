@@ -11,6 +11,7 @@ use EC\ComunidadBundle\Entity\Comunidad;
 use EC\ComunidadBundle\Entity\Bloque;
 use EC\PropietarioBundle\Entity\Propietario;
 use EC\PropietarioBundle\Entity\Propiedad;
+use EC\PrincipalBundle\Entity\Csv;
 use EC\PropietarioBundle\Form\Type\PropiedadType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -35,6 +36,22 @@ class PropietarioController extends Controller
     		return $comunidad;	
 	 }
 	 
+	 private function comprobar_bloque($comunidad,$num) {
+			$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+    				'SELECT b
+       			FROM ECComunidadBundle:Bloque b
+      			WHERE b.num = :num and b.comunidad = :comunidad'
+			)->setParameters(array('num' => $num, 'comunidad' => $comunidad));    			
+    		
+    		try{
+    			$bloque=$query->getSingleResult();	
+			} catch (\Doctrine\Orm\NoResultException $e) {
+				return null;
+			}
+			return $bloque;
+	 }
+	 
 	 private function setSecurePassword($entity) {
 			$entity->setSalt(md5(time()));
 			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
@@ -55,11 +72,11 @@ class PropietarioController extends Controller
 				if($this->comprobar_usuario($usuario)){
 					return $usuario;
 				}else{
-					$usuario=$vector[0].'.'.$vector[1].$vector[2];	
+					$usuario=$vector[0].'_'.$vector[1];	
 					if($this->comprobar_usuario($usuario)){
 						return $usuario;
 					}else{
-						$usuario=$vector[0].'_'.$vector[1].$vector[2];
+						$usuario=$vector[1].'_'.$vector[0];
 						if($this->comprobar_usuario($usuario)){
 							return $usuario;
 						}else{
@@ -103,41 +120,109 @@ class PropietarioController extends Controller
     {
     		$comunidad=$this->comprobar_comunidad($cif);
     		$bloques=$comunidad->getBloques();
-    		
+    
     		$propiedad = new Propiedad();	
     		$propietario= new Propietario();
     		$propietario->setPropiedad($propiedad);
 			$propiedad->setPropietario($propietario);
-			
 			$form=$this->createForm(new PropiedadType($comunidad),$propiedad);
-    		
-    		$form->handleRequest($request);
-    			
-    		if ($form->isValid()) {
-    				$bloque=$form->get('bloque')->getData();
+			
+			$csv=new Csv();
+			$form_csv=$this->createFormBuilder($csv,array('csrf_protection' => false))
+					->add('file','file', array('label' => 'Fichero CSV', 'required' => true))
+					->getForm();
+    		//Comprobamos primero si hay bloques
+    		if(count($bloques)!=0){
+				if ($this->getRequest()->isMethod('POST')) {
+        			$form_csv->bind($this->getRequest());
+        			$form->bind($this->getRequest());
+        			//Form
+        			if ($form->isValid()) {
+    					$bloque=$form->get('bloque')->getData();
 					
-					$propiedad->setBloque($bloque);
-					$bloque->addPropiedade($propiedad);						
+						$propiedad->setBloque($bloque);
+						$bloque->addPropiedade($propiedad);						
 					
-					$password=$this->generar_password();
-					$usuario=$this->generar_usuario($propietario->getNombre());
-					$propietario->setUsuario($usuario);
-					$propietario->setPassword($password);
-					$this->setSecurePassword($propietario);
+						$password=$this->generar_password();
+						$usuario=$this->generar_usuario($propietario->getNombre());
+						$propietario->setUsuario($usuario);
+						$propietario->setPassword($password);
+						$this->setSecurePassword($propietario);
     			
-    				$em = $this->getDoctrine()->getManager();
-   				$em->persist($propiedad);
-   				$em->persist($propietario);
-   				$em->flush();
+    					$em = $this->getDoctrine()->getManager();
+   					$em->persist($propiedad);
+   					$em->persist($propietario);
+   					$em->flush();
     			
-					$this->get('session')->getFlashBag()->add('notice','Propietario registrado con éxito. Contraseña: '.$password);
-   				$this->get('session')->getFlashBag()->add('color','green');
-   				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
-        	}
-        	
-        	return $this->render('ECAdminFincasBundle:Default:alta_propietario.html.twig',
-        	       		array('form' => $form->createView(), 'comunidad'=>$comunidad,
+    					$flash=$this->get('translator')->trans('Propietario registrado con éxito.');
+						$this->get('session')->getFlashBag()->add('notice',$flash.' Contraseña:'.$password);
+   					$this->get('session')->getFlashBag()->add('color','green');
+   					return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
+        			}
+        			//Form CSV
+        			if ($form_csv->isValid()) {
+        				$reader = new \EasyCSV\Reader($csv->getFile());
+        				$reader->setDelimiter(';');
+        				$headers=$reader->getHeaders();
+        				$aux=0;
+        				if($headers[0]=='nfinca' && $headers[1]=='piso' && $headers[2]=='razon') {
+        					while($row = $reader->getRow()){  			
+    							$bloque_csv = $this->comprobar_bloque($comunidad,$row[$headers[0]]);
+    							
+    							if($bloque_csv){
+									$propiedad_csv=new Propiedad();
+									$propietario_csv=new Propietario();
+									$propietario_csv->setPropiedad($propiedad_csv);
+									$propiedad_csv->setPropietario($propietario_csv);
+									$propiedad_csv->setBloque($bloque_csv);
+									$bloque_csv->addPropiedade($propiedad_csv);
+									
+									$propiedad_csv->setPiso($row[$headers[1]]);						
+									$propietario_csv->setNombre($row[$headers[2]]);
+									$password=$this->generar_password();
+									$usuario=$this->generar_usuario($propietario_csv->getNombre());
+									$propietario_csv->setUsuario($usuario);
+									$propietario_csv->setPassword($password);
+									$this->setSecurePassword($propietario_csv);
+								
+									$em = $this->getDoctrine()->getManager();
+   				 				$em->persist($bloque_csv);
+   				 				$em->persist($propiedad_csv);
+   				 				$em->persist($propietario_csv);
+   				 				$em->flush();
+   				 				
+   				 			}else{
+   				 				$aux=1;	
+   				 			}
+    						}
+    						if($aux==0){
+    							$flash=$this->get('translator')->trans('Registro de propietarios realizado con éxito.');
+    							$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 			$this->get('session')->getFlashBag()->add('color','green');
+   				 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
+   				 		}else{
+   				 			$flash=$this->get('translator')->trans('Algunos números de bloques del fichero no existen, por lo que no se han podido dar de alta.');
+   				 			$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 			$this->get('session')->getFlashBag()->add('color','red');
+   				 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
+   				 		}
+            		}else{
+            			$flash=$this->get('translator')->trans('Cabeceras del fichero CSV no válidas.');
+            			$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 		$this->get('session')->getFlashBag()->add('color','red');
+   				 		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
+            		}				
+        			}
+        		}
+        		return $this->render('ECAdminFincasBundle:Default:alta_propietario.html.twig',
+        	       		array('form' => $form->createView(),'form_csv' => $form_csv->createView(), 'comunidad'=>$comunidad,
         	      		));
+        	}else{
+        		$flash=$this->get('translator')->trans('Para dar de alta a los propietarios, primero debe dar de alta a los bloques.');
+        		$this->get('session')->getFlashBag()->add('notice',$flash);
+   			$this->get('session')->getFlashBag()->add('color','red');
+   			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_bloque', array('cif'=>$comunidad->getCif())));
+        	}
     }
     
 	/**
@@ -161,7 +246,9 @@ class PropietarioController extends Controller
 			}
 			$propiedad=$propietario->getPropiedad();
 			
-			$this->get('session')->getFlashBag()->add('notice','El propietario '.$propietario->getNombre().' ha sido eliminado.');
+			$flash1=$this->get('translator')->trans('El propietario ');
+			$flash2=$this->get('translator')->trans(' ha sido eliminado.');
+			$this->get('session')->getFlashBag()->add('notice',$flash1.$propietario->getNombre().$flash2);
         	$this->get('session')->getFlashBag()->add('color','green');
     		$em = $this->getDoctrine()->getEntityManager();
     		$em->remove($propietario);
@@ -269,7 +356,9 @@ class PropietarioController extends Controller
    	 		$em->persist($presidente);
    	   	$em->flush();  
 			}
-			$this->get('session')->getFlashBag()->add('notice',$presidente->getNombre().' ha sido nombrado nuevo Presidente.');
+			
+			$flash=$this->get('translator')->trans(' ha sido nombrado nuevo Presidente.');
+			$this->get('session')->getFlashBag()->add('notice',$presidente->getNombre().$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }
@@ -322,8 +411,8 @@ class PropietarioController extends Controller
    	 		$em->persist($vicepresidente);
    	   	$em->flush();  
 			}
-			
-			$this->get('session')->getFlashBag()->add('notice',$vicepresidente->getNombre().' ha sido nombrado nuevo Vicepresidente.');
+			$flash=$this->get('translator')->trans(' ha sido nombrado nuevo Vicepresidente.');
+			$this->get('session')->getFlashBag()->add('notice',$vicepresidente->getNombre().$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }

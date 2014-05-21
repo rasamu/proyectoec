@@ -48,7 +48,7 @@
 	border: 1px solid #ddd;
 	text-align: center;
 	color: #999;
-	font-size: 14px;
+	font-size: 1.167em;
 	background-color: white;
 }
 
@@ -136,6 +136,9 @@ table.display {
 	width: 100%;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	padding-left: 0;
+	padding-right: 0;
+	border-spacing: 0;
 	/* Note Firefox 3.5 and before have a bug with border-collapse
 	 * ( https://bugzilla.mozilla.org/show%5Fbug.cgi?id=155955 ) 
 	 * border-spacing: 0; is one possible option. Conditional-css.com is

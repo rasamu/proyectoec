@@ -69,20 +69,12 @@ class AdminFincas implements UserInterface
 
 	/**
 	  * @Assert\NotNull()
-	  * @Assert\Length(
-     *      min=9,
-     *      max=9
-     * )
      * @Assert\Type(type="integer")
      * @ORM\Column(name="telefono_admin",type="string",length=9)
      */
     protected $telefono;
     
     /**
-	  * @Assert\Length(
-     *      min=9,
-     *      max=9
-     * )
      * @Assert\Type(type="integer")
      * @ORM\Column(name="fax_admin",type="string",length=9,nullable=true)
      */
@@ -122,6 +114,10 @@ class AdminFincas implements UserInterface
     protected $fecha_alta;
     
     /**
+     * @Assert\Length(
+     *      min=6
+     * )
+     * @Assert\Type(type="string")
 	  * @Assert\NotNull()
      * @ORM\Column(name="password",type="string", length=255)
      */

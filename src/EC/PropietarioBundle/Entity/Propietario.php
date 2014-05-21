@@ -105,10 +105,6 @@ class Propietario implements UserInterface, \Serializable
     protected $nombre;
 
 	/**
-	  * @Assert\Length(
-     *      min=9,
-     *      max=9
-     * )
      * @Assert\Type(type="integer")
      * @ORM\Column(name="telefono_propietario",type="string",length=9,nullable=true)
      */

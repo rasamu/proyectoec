@@ -1,9 +1,10 @@
-<!-- app/Resources/views/base.html.twig -->
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}" xml:lang="{{ app.request.locale }}" xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
-        <title>{% block title %}EntreComunidades{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta content="Herramienta web para la administración de comunidades de propietarios" name="description"/>
+		  <meta content="administrador, fincas, gestión, comunidades, vecinos, propiedades, propietarios, bloques, segunda mano" name="keywords"/>
+        <title>{% block title %}- EntreComunidades{% endblock %}</title>
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -22,10 +23,14 @@
             <header id="header">
             		  <section id="topheader">
             		  		<section id="tituloheader">
-            		  			<div class="titulo"><a href="{{ path('ec_principal_homepage') }}" style="color:#f7d118; text-decoration:none">Entre</a><a href="{{ path('ec_principal_homepage') }}" style="color:#fff; text-decoration:none;">Comunidades</a></div>
+            		  			<a href="{{ path('ec_principal_homepage') }}">
+            		  				<h1>
+            		  					<em class="amarillo">Entre</em><em class="blanco">Comunidades</em>
+            		  				</h1>
+            		  			</a>
             		  			<section id="idiomas">
-										<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Español" height="14" width="21" /></a>
-        								<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'en'})) }}"><img src="{{ asset('images/en.png') }}" alt="English" height="14" width="21" /></a>
+										<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Idioma Español" height="14" width="21" /></a>
+        								<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'en'})) }}"><img src="{{ asset('images/en.png') }}" alt="English language" height="14" width="21" /></a>
             		  			</section>
             		  		</section>
             		  </section>
@@ -82,16 +87,16 @@
         						{% if is_granted('ROLE_ADMINFINCAS') %}	  
 								<div id='cssmenu'>
 									<ul>
-   									<li class="has-sub"><a href="#"><span>Mis Comunidades</span></a>
+   									<li class="has-sub"><a href="#"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a>
       									<ul>
-      	   								<li><a href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>Alta</span></a></li>
-   	      								<li class="last"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>Listado</span></a></li>
+      	   								<li><a href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>{% trans %}Alta{% endtrans %}</span></a></li>
+   	      								<li class="last"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Listado{% endtrans %}</span></a></li>
     	 									</ul>
  	  									</li>
-										<li class="has-sub"><a href="#"><span>Mi Perfil</span></a>
+										<li class="has-sub"><a href="#"><span>{% trans %}Mi Perfil{% endtrans %}</span></a>
 											<ul>
-   											<li><a href="{{ path('ec_adminfincas_perfil') }}"><span>Datos Personales</span></a></li>
-   											<li><a href="{{ path('ec_adminfincas_contraseña') }}"><span>Contraseña</span></a></li>
+   											<li><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Datos Personales{% endtrans %}</span></a></li>
+   											<li><a href="{{ path('ec_adminfincas_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a></li>
 											</ul>
 										</li>
 									</ul>
@@ -100,10 +105,10 @@
 									{% if is_granted('ROLE_VECINO') %}
 										<div id='cssmenu'>
 											<ul>
-												<li class="has-sub"><a href="#"><span>Mi Perfil</span></a>
+												<li class="has-sub"><a href="#"><span>{% trans %}Mi Perfil{% endtrans %}</span></a>
 													<ul>
-   													<li><a href="{{ path('ec_propietario_perfil') }}"><span>Datos Personales</span></a></li>
-   													<li><a href="{{ path('ec_propietario_contraseña') }}"><span>Contraseña</span></a></li>
+   													<li><a href="{{ path('ec_propietario_perfil') }}"><span>{% trans %}Datos Personales{% endtrans %}</span></a></li>
+   													<li><a href="{{ path('ec_propietario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a></li>
 													</ul>
 												</li>
 											</ul>
@@ -121,7 +126,14 @@
 				</section>
             <footer>
                 {% block footer %}
-                     <a href="{{ path('ec_principal_homepage') }}" style="color:#f7d118; text-decoration:none; font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica; font-size:15px;">Entre</a><a href="{{ path('ec_principal_homepage') }}" style="color:#fff; text-decoration:none; font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica; font-size:15px;">Comunidades</a> - Rafael Sánchez Muñoz
+                <section id="footer">
+                		<section id="titulofooter">
+                     	<a href="{{ path('ec_principal_homepage') }}">
+                     		<em class="amarillo titulofooter">Entre</em><em class="blanco titulofooter">Comunidades</em>
+                     	</a>
+                     	<em>&nbsp;- Rafael Sánchez Muñoz</em>
+                     </section>
+                </section>
                 {% endblock %}
             </footer>
     </body>

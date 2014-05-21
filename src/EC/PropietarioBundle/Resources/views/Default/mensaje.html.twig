@@ -1,9 +1,16 @@
 {% extends 'ECPropietarioBundle::layout.html.twig' %}
 
-{% block sidebar %}
+{% block title %}
+	EntreComunidades
+{% endblock %}
 
+{% block sidebar %}
+	{{ parent() }}
+	
 {% endblock %}
 
 {% block colder %}
-	<div class="subtitulo izquierda">{{mensaje}}</div>
+	{{ parent() }}
+	<h2 class="verde izquierda">{{mensaje}}</h2>
+	
 {% endblock %}

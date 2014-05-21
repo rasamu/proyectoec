@@ -26,21 +26,21 @@ class Comunidad
     
     /**
 	  * @Assert\Type(type="integer")
-     * @ORM\Column(name="codigo_despacho",type="integer",length=9,nullable=true)
+     * @ORM\Column(name="codigo_despacho",type="integer",length=9)
      */
     protected $codigo;
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="n_piscinas",type="integer")
+     * @ORM\Column(name="piscinas",type="boolean")
      */
-    protected $n_piscinas;
+    protected $piscinas;
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="n_pistas",type="integer")
+     * @ORM\Column(name="pistas",type="boolean")
      */
-    protected $n_pistas;
+    protected $pistas;
     
     /**
 	  * @Assert\NotNull()
@@ -111,26 +111,26 @@ class Comunidad
     }
     
     /**
-     * Set n_piscinas
+     * Set piscinas
      *
-     * @param integer $nPiscinas
+     * @param integer $Piscinas
      * @return Comunidad
      */
-    public function setNPiscinas($nPiscinas)
+    public function setPiscinas($piscinas)
     {
-        $this->n_piscinas = $nPiscinas;
+        $this->piscinas = $piscinas;
     
         return $this;
     }
 
     /**
-     * Get n_piscinas
+     * Get piscinas
      *
      * @return integer 
      */
-    public function getNPiscinas()
+    public function getPiscinas()
     {
-        return $this->n_piscinas;
+        return $this->piscinas;
     }
 
     /**
@@ -247,26 +247,26 @@ class Comunidad
     }
 
     /**
-     * Set n_pistas
+     * Set pistas
      *
-     * @param integer $nPistas
+     * @param integer $Pistas
      * @return Comunidad
      */
-    public function setNPistas($nPistas)
+    public function setPistas($Pistas)
     {
-        $this->n_pistas = $nPistas;
+        $this->pistas = $Pistas;
     
         return $this;
     }
 
     /**
-     * Get n_pistas
+     * Get pistas
      *
      * @return integer 
      */
-    public function getNPistas()
+    public function getPistas()
     {
-        return $this->n_pistas;
+        return $this->pistas;
     }
     
     /**

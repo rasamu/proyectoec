@@ -1,22 +1,26 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}EntreComunidades - Administrador de Fincas{% endblock %}
+{% block title %}
+	 {{ parent() }}
+	 
+{% endblock %}
 
 {% block stylesheets %}
- {{ parent() }}
+	{{ parent() }}
  
 {% endblock %}
 
 {% block sidebar %}
- {{ parent() }}
+	{{ parent() }}
 
 {% endblock %}
 
 {% block colder %}    
-   
+	 {{ parent() }}
+	  
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
+	{{ parent() }}
      
 {% endblock %}

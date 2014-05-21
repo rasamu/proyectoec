@@ -1,6 +1,8 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}EntreComunidades - Administrador de Fincas{% endblock %}
+{% block title %}
+	{{comunidad.codigo}} -
+{% endblock %}
 
 {% block stylesheets %}
  {{ parent() }}
@@ -16,23 +18,23 @@
 {% block colder %} 
 	{{ parent() }}
 	       
-	<div class="subtitulo centrado">Comunidad: {{comunidad.codigo}}</div>
+	<h2 class="verde centrado">{% trans %}Comunidad{% endtrans %}: {{comunidad.codigo}}</h2>
 
 	<div class="nav_comunidad">
 		<nav>
 		<ul>		
 			<li>
-				<a href="#">Bloques</a>
+				<a href="#">{% trans %}Bloques{% endtrans%}</a>
 				<ul>
-					<li><a href="{{ path('ec_adminfincas_comunidad_listado_bloques', { 'cif': comunidad.cif }) }}">Listado</a></li>
-					<li><a href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">Nuevo Bloque</a></li>
+					<li><a href="{{ path('ec_adminfincas_comunidad_listado_bloques', { 'cif': comunidad.cif }) }}">{% trans %}Listado{% endtrans %}</a></li>
+					<li><a href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo bloque{% endtrans %}</a></li>
 				</ul>			
 			</li>	
 			<li>
-				<a href="#">Propietarios</a>
+				<a href="#">{% trans %}Propietarios{% endtrans %}</a>
 				<ul>
-					<li><a href="{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}">Listado</a></li>
-					<li><a href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">Nuevo Propietario</a></li>
+					<li><a href="{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}">{% trans %}Listado{% endtrans %}</a></li>
+					<li><a href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo propietario{% endtrans %}</a></li>
 				</ul>
 			</li>	
 		</ul>	

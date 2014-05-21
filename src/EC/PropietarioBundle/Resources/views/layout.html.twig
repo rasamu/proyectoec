@@ -1,6 +1,9 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}EntreComunidades - Propietario{% endblock %}
+{% block title %}
+    {{ parent() }}
+    
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,10 +11,12 @@
 {% endblock %}
 
 {% block sidebar %}
-
+    {{ parent() }}
+    
 {% endblock %}
 
 {% block colder %}
+    {{ parent() }}    
           	
 {% endblock %}
 

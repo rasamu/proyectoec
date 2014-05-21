@@ -64,6 +64,10 @@ ec_adminfincas_comunidad_alta_bloque:
     pattern:  /comunidad/{cif}/alta/bloque
     defaults: { _controller: ECAdminFincasBundle:Bloque:comunidad_alta_bloque }
     
+ec_adminfincas_comunidad_eliminar_bloque:
+    pattern:  /comunidad/{cif}/bloque/eliminar/{num}
+    defaults: { _controller: ECAdminFincasBundle:Bloque:comunidad_eliminar_bloque } 
+    
 ec_adminfincas_comunidad_editar:
     pattern:  /comunidad/{cif}/editar
     defaults: { _controller: ECAdminFincasBundle:Comunidad:editar_comunidad }

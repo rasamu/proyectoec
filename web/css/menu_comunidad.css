@@ -5,7 +5,7 @@
 .nav_comunidad nav {
      font-family: arial, sans-serif;
      position: relative;
-     font-size:12px;
+     font-size:1.000em;
      color:#333;
      margin: 0 auto;
      border-bottom:2px solid #316431;
@@ -42,6 +42,7 @@
 	color:#316431;
 	text-shadow:none;
    border-left: 2px solid #316431;
+   padding: 10px 14px;
 }
 .nav_comunidad nav ul li ul {
      display: none

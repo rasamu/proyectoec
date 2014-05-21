@@ -1,6 +1,13 @@
 {% extends 'ECAdminFincasBundle::layout.html.twig' %}
 
+{% block title %}
+	{% trans %}Editar comunidad{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
 {% block colder %}
+	{{ parent() }}
+	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -9,9 +16,9 @@
     		{% endfor %}
 	{% endfor %}
 	
-		<section id="form">
-			<div class="subtitulo centrado">Modificación de Comunidad.</div>
-			{{ form_start(form) }}
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Editar comunidad{% endtrans %}</h2>
+         <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
     		<div style="color:red;">{{ form_errors(form) }}</div>
 		
 			<div class="campo">
@@ -21,15 +28,15 @@
     		</div>    		
     		
 			<div class="campo">
-        		<div class="label_campo">{{ form_label(form.n_piscinas) }}</div>
-        		{{ form_widget(form.n_piscinas) }}
-       		 <div class="error">{{ form_errors(form.n_piscinas) }}</div>        
+        		<div class="label_campo">{{ form_label(form.piscinas) }}</div>
+        		{{ form_widget(form.piscinas) }}
+       		 <div class="error">{{ form_errors(form.piscinas) }}</div>        
     		</div>
 
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.n_pistas) }}</div>
-        		{{ form_widget(form.n_pistas) }}
-       		 <div class="error">{{ form_errors(form.n_pistas) }}</div>        
+        		<div class="label_campo">{{ form_label(form.pistas) }}</div>
+        		{{ form_widget(form.pistas) }}
+       		 <div class="error">{{ form_errors(form.pistas) }}</div>        
     		</div>
 
 			<div class="campo">
@@ -51,11 +58,10 @@
     		</div>    		
 
     		<div class="campo">
-    		<input type="submit" value="Guardar"/>
-    		<input type="button" value="Volver" onclick="history.back()"/>
+    		<input type="submit" value="{% trans %}Guardar{% endtrans %}"/>
+    		<input type="button" value="{% trans %}Volver{% endtrans %}" onclick="history.back()"/>
     		</div>
  
-		{{ form_end(form) }}
+			</form>
 		</section>
 {% endblock %}
-

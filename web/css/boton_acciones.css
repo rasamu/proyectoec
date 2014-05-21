@@ -1,16 +1,16 @@
-#sddm
+.sddm
 {	margin: 0;
 	padding: 0;
 	z-index: 30}
 
-#sddm li
+.sddm li
 {	margin: 0;
 	padding: 0;
 	list-style: none;
 	float: left;
-	font: bold 11px arial}
+	font: bold 0.917em arial}
 
-#sddm li a
+.sddm li a
 {	display: block;
 	margin: 0 1px 0 0;
 	padding: 4px 10px;
@@ -20,10 +20,10 @@
 	text-align: center;
 	text-decoration: none}
 
-#sddm li a:hover
+.sddm li a:hover
 {	background: #316431}
 
-#sddm div
+.sddm div
 {	position: absolute;
 	visibility: hidden;
 	margin: 0;
@@ -31,7 +31,7 @@
 	background: #EAEBD8;
 	border: 1px solid #316431}
 
-	#sddm div a
+.sddm div a
 	{	position: relative;
 		display: block;
 		margin: 0;
@@ -42,8 +42,8 @@
 		text-decoration: none;
 		background: #D9E1E8;
 		color: #000;
-		font: 11px arial}
+		font: 0.917em arial}
 
-	#sddm div a:hover
+.sddm div a:hover
 	{	background: #F7D118;
 		color: #000}

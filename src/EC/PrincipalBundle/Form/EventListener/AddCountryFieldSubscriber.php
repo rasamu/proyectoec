@@ -33,7 +33,7 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
             'label' => 'País',
             'mapped' => false,
             'data' => $country,
-            'empty_value' => 'Pais',
+            'empty_value' => 'País',
             'attr' => array(
                 'class' => 'country_selector',
             ),

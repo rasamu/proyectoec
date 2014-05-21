@@ -74,13 +74,15 @@ class ComunidadController extends Controller
    				 		$em->persist($comunidad);
    				 		$em->flush();
    				 		
-   				 		$this->get('session')->getFlashBag()->add('notice','Alta de comunidad realizada con éxito.');
+   				 		$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
+   				 		$this->get('session')->getFlashBag()->add('notice',$flash);
    				 		$this->get('session')->getFlashBag()->add('color','green');
    				 		return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
         			 }else{
         			 	if($comprobacion->getAdministrador()){
         			 		/*Ya existe*/
-        			 		$this->get('session')->getFlashBag()->add('notice','Comunidad ya registrada.');
+        			 		$flash=$this->get('translator')->trans('Comunidad ya registrada.');
+        			 		$this->get('session')->getFlashBag()->add('notice',$flash);
         			 		$this->get('session')->getFlashBag()->add('color','red');
 							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
    				 	}else{
@@ -106,7 +108,8 @@ class ComunidadController extends Controller
    				 		$em->persist($comprobacion);
    				 		$em->flush();
    				 		
-   				 		$this->get('session')->getFlashBag()->add('notice','Alta de comunidad realizada con éxito.');
+   				 		$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
+   				 		$this->get('session')->getFlashBag()->add('notice',$flash);
    				 		$this->get('session')->getFlashBag()->add('color','green');
 							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
    				 	}
@@ -172,13 +175,13 @@ class ComunidadController extends Controller
     {
     		$comunidad=$this->comprobar_comunidad($cif); 
 	
-			$form = $this ->createFormBuilder($comunidad)
-					->add('codigo','integer',array('label' => 'Código'))
-    				->add('n_piscinas','integer',array('label' => 'Nº Piscinas'))
-    				->add('n_pistas','integer',array('label' => 'Nº Pistas'))
-    				->add('gimnasio','choice',array('choices'=>array('1' => 'Si', '0' => 'No')))
-    				->add('ascensor','choice',array('choices'=>array('1' => 'Si', '0' => 'No')))
-    				->add('conserjeria','choice',array('choices'=>array('1' => 'Si', '0' => 'No')))
+			$form = $this ->createFormBuilder($comunidad,array('csrf_protection' => false))
+					->add('codigo','integer',array('label' => 'Código Despacho'))
+    				->add('piscinas','choice',array('label' => 'Piscina','choices'=>array(1 => 'Si', 0 => 'No')))
+    				->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(1 => 'Si', 0 => 'No')))
+    				->add('gimnasio','choice',array('choices'=>array(1 => 'Si', 0 => 'No')))
+    				->add('ascensor','choice',array('choices'=>array(1 => 'Si', 0 => 'No')))
+    				->add('conserjeria','choice',array('label'=>'Conserjería', 'choices'=>array(1 => 'Si', '0' => 'No')))
     				->getForm();
     				
     		$form->handleRequest($request);
@@ -188,14 +191,15 @@ class ComunidadController extends Controller
    				 	$em->persist($comunidad);
    				 	$em->flush();
     					
-						$this->get('session')->getFlashBag()->add('notice','Comunidad Modificada con éxito.');
+   				   $flash=$this->get('translator')->trans('Comunidad modificada con éxito.');    					
+						$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','green');
 						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',
 								array('cif'=>$cif)));
         	}
         	
         	return $this->render('ECAdminFincasBundle:Default:editar_comunidad.html.twig',
-        	       		array('form' => $form->createView(),
+        	       		array('form' => $form->createView(),'comunidad' => $comunidad
         	      		));
     }
     
@@ -209,12 +213,13 @@ class ComunidadController extends Controller
         	
         	$this->getUser()->removeComunidade($comunidad);
         	$comunidad->setAdministrador();
-        	$comunidad->setCodigo();
+        	$comunidad->setCodigo(0);
 			$em = $this->getDoctrine()->getManager();
    	   $em->persist($comunidad);
    	   $em->flush();        	
    	   
-        	$this->get('session')->getFlashBag()->add('notice','Comunidad eliminada con éxito.');
+   	   $flash=$this->get('translator')->trans('Comunidad eliminada con éxito.');    					
+        	$this->get('session')->getFlashBag()->add('notice',$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
 			return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
     }

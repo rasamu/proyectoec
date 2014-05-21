@@ -23,7 +23,7 @@
                 <target>Login</target>
             </trans-unit>
             <trans-unit id="6">
-                <source>Cerrar Sesión</source>
+                <source>Cerrar sesión</source>
                 <target>Logout</target>
             </trans-unit>
             <trans-unit id="7">
@@ -42,7 +42,86 @@
                 <source>Propietario</source>
                 <target>Owner</target>
             </trans-unit>
-            
+            <trans-unit id="11">
+                <source>Formulario de Contacto</source>
+                <target>Contact form</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Formulario de acceso</source>
+                <target>Access form</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Alta administrador de fincas</source>
+                <target>New property administrator</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Mensaje</source>
+                <target>Message</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Nombre</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Formulario de contacto enviado.</source>
+                <target>Contact form has sent.</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>NºColegiado</source>
+                <target>Referee nº</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>NºColegiado</source>
+                <target>Referee nº</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Apellidos</source>
+                <target>Surnames</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Teléfono</source>
+                <target>Telephone</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Dirección</source>
+                <target>Adress</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Provincia</source>
+                <target>Province</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Localidad</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Contraseña</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Confirmación</source>
+                <target>Confirm</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Campo obligatorio</source>
+                <target>Required field</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Enviar</source>
+                <target>Sent</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Borrar</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Usuario</source>
+                <target>User</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Bienvenid@</source>
+                <target>Welcome</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,6 +1,6 @@
-numbloque;nombre;piso
+nfinca;piso;razon
 {% for bloque in bloques %}
 {% for propiedad in bloque.propiedades %}
-{{bloque.num}};{{propiedad.propietario.nombre}};{{propiedad.piso}}
+{{bloque.num}};{{propiedad.piso}};{{propiedad.propietario.nombre}}
 {% endfor %}
 {% endfor %}

@@ -17,7 +17,7 @@ class PropiedadType extends AbstractType
     {
     		$comunidad = $this->comunidad;
     		 
-         $builder->add('piso','text');
+         $builder->add('piso','text',array('label'=>'Propiedad'));
          $builder->add('propietario', new PropietarioType());
          $builder->add('bloque','entity',array(
          'class'=>'ECComunidadBundle:Bloque',

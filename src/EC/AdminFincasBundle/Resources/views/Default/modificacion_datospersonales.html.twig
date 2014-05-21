@@ -1,10 +1,16 @@
 {% extends 'ECAdminFincasBundle::layout.html.twig' %}
 
+{% block title %}
+	{% trans %}Modificar datos personales{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
 {% block sidebar %}
- {{ parent() }}
+	{{ parent() }}
 {% endblock %}
 
 {% block colder %}
+	{{ parent() }}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -13,8 +19,8 @@
     		{% endfor %}
 	{% endfor %}
 	
-		<section id="form">
-			<div class="subtitulo centrado">Modificación Datos personales.</div>
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Modificar datos personales{% endtrans %}</h2>
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
  
@@ -25,19 +31,19 @@
     		</div>
     		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.nombre) }}</div>*
+        		<div class="label_campo">{{ form_label(form.nombre) }} *</div>
        		 {{ form_widget(form.nombre) }}
         		<div class="error">{{ form_errors(form.nombre) }}</div>
     		</div>
     		
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.apellidos) }}</div>*
+        		<div class="label_campo">{{ form_label(form.apellidos) }} *</div>
        		 {{ form_widget(form.apellidos) }}
         		<div class="error">{{ form_errors(form.apellidos) }}</div>
     		</div>
     
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.telefono) }}</div>*
+        		<div class="label_campo">{{ form_label(form.telefono) }} *</div>
         		{{ form_widget(form.telefono) }}
         		<div class="error">{{ form_errors(form.telefono) }}</div>       
     		</div>
@@ -49,35 +55,35 @@
     		</div>
 
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.email) }}</div>*
+        		<div class="label_campo">{{ form_label(form.email) }} *</div>
         		{{ form_widget(form.email) }}        
        		 <div class="error">{{ form_errors(form.email) }}</div>
     		</div>
 
    		 <div class="campo">
-        		<div class="label_campo">{{ form_label(form.direccion) }}</div>*
+        		<div class="label_campo">{{ form_label(form.direccion) }} *</div>
         		{{ form_widget(form.direccion) }}
         		<div class="error">{{ form_errors(form.direccion) }}</div>        
     		</div>
 
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.provincia) }}</div>*
+        		<div class="label_campo">{{ form_label(form.provincia) }} *</div>
         		{{ form_widget(form.provincia) }}
         		<div class="error">{{ form_errors(form.provincia) }}</div>        
     		</div>
 
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.localidad) }}</div>*
+        		<div class="label_campo">{{ form_label(form.localidad) }} *</div>
         		{{ form_widget(form.localidad) }}
        		 <div class="error">{{ form_errors(form.localidad) }}</div>        
     		</div> 	
     		
     		<div class="campo">
-    			(*) Campo Obligatorio
+    			(*) {% trans %}Campo obligatorio{% endtrans %}
     		</div>
     		<div class="campo">
-    		<input type="submit" value="Actualizar"/>
-    		<input type="reset" value="Borrar"/>
+    		<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
+    		<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
 		{{ form_end(form) }}

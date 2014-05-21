@@ -19,7 +19,8 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "psliwa/pdf-bundle": "dev-master"
+        "psliwa/pdf-bundle": "dev-master",
+        "jwage/easy-csv": "0.0.1"
     },
     "scripts": {
         "post-install-cmd": [

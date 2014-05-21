@@ -1,13 +1,17 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}EntreComunidades{% endblock %}
+{% block title %}
+	 {{ parent() }}
 
+{% endblock %}
 
 {% block sidebar %}
-      
+	{{ parent() }}
+	
 {% endblock %}
 
 {% block colder %}
-          	
+	{{ parent() }}	
+	
 {% endblock %}
 

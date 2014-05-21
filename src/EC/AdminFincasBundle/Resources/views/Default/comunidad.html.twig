@@ -1,5 +1,10 @@
 {% extends 'ECAdminFincasBundle::layout_comunidad.html.twig' %}
 
+{% block title %}
+	{{ parent() }}
+	{% trans %}Comunidad{% endtrans %}
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
 

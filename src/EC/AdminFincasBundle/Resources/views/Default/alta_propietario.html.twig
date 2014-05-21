@@ -1,12 +1,31 @@
 {% extends 'ECAdminFincasBundle::layout_comunidad.html.twig' %}
 
+{% block title %}
+	{% trans %}Alta propietario{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type='text/javascript'>
+	$(document).ready(function()
+	{
+  		$('#enviar').click(function()
+  		{
+  			$('#enviar').hide();
+      	$('#loading').show();
+  		});
+	});
+	</script>
+{% endblock %}
+
 {% block sidebar %}
- {{ parent() }}
+ 	{{ parent() }}
  
 {% endblock %}
 
 {% block colder %}
-{{ parent() }}
+	{{ parent() }}
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
@@ -15,20 +34,19 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
-	
-		<section id="form">
-			<div class="subtitulo centrado">Alta Propietario</div>
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Alta propietario{% endtrans %}</h2>
          <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}" method="post">
     				<div style="color:red;">{{ form_errors(form) }}</div>
  			
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.propietario.nombre) }}</div>*
+        				<div class="label_campo">{{ form_label(form.propietario.nombre) }} *</div>
        				 {{ form_widget(form.propietario.nombre) }}
         				<div class="error">{{ form_errors(form.propietario.nombre) }}</div>
     				</div>
     				
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.piso) }}</div>*
+        				<div class="label_campo">{{ form_label(form.piso) }} *</div>
         				{{ form_widget(form.piso) }}
         				<div class="error">{{ form_errors(form.piso) }}</div>        
     				</div>
@@ -46,18 +64,36 @@
     				</div>
     				
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.bloque) }}</div>*
+        				<div class="label_campo">{{ form_label(form.bloque) }} *</div>
         				{{ form_widget(form.bloque) }}
         				<div class="error">{{ form_errors(form.bloque) }}</div>        
     				</div>
     				<div class="campo">
-    					    (*) Campo Obligatorio
+    					    (*) {% trans %}Campo obligatorio{% endtrans %}
     				</div>
     				
     				<div class="campo">
-    					<input type="submit" value="Enviar"/>
-    					<input type="reset" value="Borrar"/>
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}" />
+    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
 			</form>
+		</section>
+
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
+            <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form_csv) }}>
+    				<div style="color:red;">{{ form_errors(form_csv) }}</div>
+
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form_csv.file) }}</div>
+        				{{ form_widget(form_csv.file) }}
+        				<div class="error">{{ form_errors(form_csv.file) }}</div>
+    				</div>   
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}" id="enviar"/>
+    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    					<img id="loading" src="{{ asset('images/loading.gif') }}" />
+    				</div>
+            </form>
 		</section>
 {% endblock %}

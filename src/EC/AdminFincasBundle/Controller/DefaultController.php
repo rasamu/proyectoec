@@ -29,12 +29,13 @@ class DefaultController extends Controller
 			$adminfincas = $this->getUser();
     		
     		$form = $this ->createFormBuilder($adminfincas)
+    		    	->setAction($this->generateUrl('ec_adminfincas_perfil'))
     			   ->add('n_colegiado','text', array('label' => 'NºColegiado','required' => false))
     				->add('nombre','text')
     				->add('apellidos','text')
-    				->add('telefono','integer', array('label' => 'Teléfono'))
-    				->add('fax','integer', array('required' => false))
-    				->add('email','text')
+    				->add('telefono','integer', array('label' => 'Teléfono', 'attr' => array('min' => 9, 'max'=> 9)))
+    				->add('fax','integer', array('required' => false, 'attr' => array('min' => 9, 'max'=> 9)))
+    				->add('email','email')
     				->add('direccion','text', array('label' => 'Dirección'))
     				->add('provincia','text')
     				->add('localidad','text')
@@ -47,7 +48,8 @@ class DefaultController extends Controller
    				 	$em->persist($adminfincas);
    				 	$em->flush();
     			
-        	      	$this->get('session')->getFlashBag()->add('notice','Su perfil ha sido actualizado.');
+    					$flash=$this->get('translator')->trans('Su perfil ha sido actualizado.');
+        	      	$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','green');
 						return $this->redirect($this->generateUrl('ec_adminfincas_perfil'));
         	}
@@ -64,13 +66,14 @@ class DefaultController extends Controller
     public function modificacion_contraseñaAction(Request $request)
     {
     		$form = $this->createFormBuilder()
+    		   ->setAction($this->generateUrl('ec_adminfincas_contraseña'))
         		->add('pass', 'password', array('label' => 'Contraseña actual','max_length' =>9))
 				->add('password', 'repeated', array(
                 'type' => 'password',
                 'invalid_message' => 'Las dos contraseñas deben coincidir',
                 'required' => true,
-                'first_options'  => array('label' => 'Nueva Contraseña','max_length' =>9),
-    				 'second_options' => array('label' => 'Confirmación Contraseña','max_length' =>9),
+                'first_options'  => array('label' => 'Nueva contraseña','max_length' =>9),
+    				 'second_options' => array('label' => 'Confirmación contraseña','max_length' =>9),
     				))
        		->getForm();
  
@@ -97,11 +100,13 @@ class DefaultController extends Controller
    				 	$em->persist($adminfincas);
     					$em->flush();
     					
-						$this->get('session')->getFlashBag()->add('notice','Su contraseña ha sido actualizada.');
+    					$flash=$this->get('translator')->trans('Su contraseña ha sido actualizada.');
+						$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','green');
 						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
             	}else{    				     				 
-    				 	$this->get('session')->getFlashBag()->add('notice','Contraseña no válida.');
+            		$flash=$this->get('translator')->trans('Contraseña no válida.');
+    				 	$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','red');
 						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
         			}

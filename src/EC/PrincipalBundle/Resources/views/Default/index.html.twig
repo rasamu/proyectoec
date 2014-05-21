@@ -1,11 +1,17 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
-{% block sidebar %}
+{% block title %}
+	{% trans %}Bienvenid@ a EntreComunidades.{% endtrans %}
+{% endblock %}
 
+{% block sidebar %}
+	{{ parent() }}
+	
 {% endblock %}
 
 {% block colder %}
-
-			<div class="subtitulo centrado">{% trans %}Bienvenid@ a EntreComunidades.{% endtrans %}</div>
+	{{ parent() }}
+	
+	<h2 class="centrado verde">{% trans %}Bienvenid@ a EntreComunidades.{% endtrans %}</h2>
 
 {% endblock %}

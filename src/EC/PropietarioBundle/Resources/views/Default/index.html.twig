@@ -1,9 +1,17 @@
 {% extends 'ECPropietarioBundle::layout.html.twig' %}
 
-{% block sidebar %}
+{% block title %}
+	{% trans %}Bienvenid@{% endtrans %}
+	{{ parent() }}
+{% endblock %}
 
+{% block sidebar %}
+	{{ parent() }}
+	
 {% endblock %}
 
 {% block colder %}
-			<div class="subtitulo centrado">Bienvenid@ {{ app.user.nombre }}.</div>
+	{{ parent() }}
+	<h2 class="verde centrado">{% trans %}Bienvenid@{% endtrans %} {{ app.user.nombre }}</h2>
+	
 {% endblock %}

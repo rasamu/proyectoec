@@ -1,12 +1,19 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
+{% block title %}
+	{% trans %}Formulario de acceso{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
 {% block sidebar %}
-	<div class="subtitulo izquierda">Acceso.</div>
+	{{ parent() }}
+	
 {% endblock %}
 
 {% block colder %}
+	{{ parent() }}
 		<section id="form_login">
-			<div class="subtitulo centrado">Formulario de acceso</div>
+			<h2 class="verde centrado">{% trans %}Formulario de acceso{% endtrans %}</h2>
 		
 			{% if error %}
 				<div class="mensaje" style="color:red;">Datos incorrectos</div>
@@ -14,14 +21,14 @@
 		
 			<form method="post" action="{{ path('login_check') }}">
 				<div class="campo_login">
-					<div class="label_campo"><label>Usuario:</label></div>
+					<div class="label_campo"><label for="username">{% trans %}Usuario{% endtrans %}</label></div>
 					<input type="text" name="_username" id="username"/>
 				</div>
 				<div class="campo_login">
-					<div class="label_campo"><label>Contraseña:</label></div>
+					<div class="label_campo"><label for="password">{% trans %}Contraseña{% endtrans %}</label></div>
 					<input type="password" name="_password" id="password" maxlength="9"/>
 				</div>
-				<div class="campo_login"><div></div><input type="submit" value="Entrar"></div>
+				<div class="campo_login"><div></div><input type="submit" value="{% trans %}Acceder{% endtrans %}"></div>
 			</form>
 		</section>
 {% endblock %}

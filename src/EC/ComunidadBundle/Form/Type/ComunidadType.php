@@ -13,12 +13,12 @@ class ComunidadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder->add('cif','text',array('max_length' =>9));
-         $builder->add('codigo','integer',array('label' => 'Código'));
-    		$builder->add('n_piscinas','integer',array('label' => 'N Piscinas'));
-    		$builder->add('n_pistas','integer',array('label' => 'N Pistas'));
-    		$builder->add('gimnasio','choice',array('choices'=>array('1' => 'Si', '0' => 'No')));
-    		$builder->add('ascensor','choice',array('choices'=>array('1' => 'Si', '0' => 'No')));
-    		$builder->add('conserjeria','choice',array('choices'=>array('1' => 'Si', '0' => 'No')));
+         $builder->add('codigo','integer',array('label' => 'Código Despacho','attr' => array('min' => 9, 'max'=> 9)));
+    		$builder->add('piscinas','choice',array('label' => 'Piscina','choices'=>array(0 => 'No', 1 => 'Si')));
+    		$builder->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(0 => 'No', 1 => 'Si')));
+    		$builder->add('gimnasio','choice',array('choices'=>array(0 => 'No', 1 => 'Si')));
+    		$builder->add('ascensor','choice',array('choices'=>array(1 => 'Si', 0 => 'No')));
+    		$builder->add('conserjeria','choice',array('label'=>'Conserjería', 'choices'=>array(1 => 'Si', 0 => 'No')));
 			$factory = $builder->getFormFactory();
          $citySubscriber = new AddCityFieldSubscriber($factory);
          $builder->addEventSubscriber($citySubscriber);

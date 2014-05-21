@@ -10,8 +10,8 @@ class PropietarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder->add('nombre','text');
-    		$builder->add('telefono','integer', array('label' => 'Teléfono','max_length' =>9, 'required' => false));
-    		$builder->add('email','text',array('required' => false));
+    		$builder->add('telefono','integer', array('label' => 'Teléfono', 'required' => false, 'attr' => array('min' => 9, 'max'=> 9)));
+    		$builder->add('email','email',array('required' => false));
     }
  
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -1,6 +1,6 @@
 body { 
-	font-family: serif, Arial, Helvetica, ;
-	font-size: 12px; 
+	font-family: serif, Arial, Helvetica;
+	font-size: 0.750em; /*12px*/
 	color: #000; 
 	background-color:  #d9e1e8;
 	margin: 0;
@@ -8,13 +8,6 @@ body {
 
 .clear { 
 	clear: both; 
-}
-
-.subtitulo{
-	font-family: serif, Arial, Helvetica;
-	font-size: 16px;
-	color: #316431;
-	margin-bottom: 10px;
 }
 
 .centrado{
@@ -27,6 +20,11 @@ body {
 
 .derecha{
 	text-align: right;
+}
+
+h2{
+	font-size: 1.333em;
+	margin-bottom: 10px;
 }
 
 /*Cabecera*/
@@ -42,11 +40,11 @@ body {
 	margin:0 auto;	
 }
 
-.titulo{
+h1{
 	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
-	font-size: 50px; 
+	font-size: 4.167em; 	
+	margin:0;
 	float: left;
-	width: auto;
 }
 
 #idiomas{
@@ -54,6 +52,43 @@ body {
 	width: auto;
 	margin-top: 8px;
 	margin-left: 8px;	
+}
+
+/*Pie*/
+footer{ 
+	padding: 12px;
+ 	background-color: #316431; 
+ 	color:#fff;
+	box-shadow:0 4px 4px 0 #000000;
+}
+
+#footer{
+	width: 962px;
+	margin:0 auto;	
+}
+
+#titulofooter{
+	margin:0 auto;	
+	width: 33%;
+}
+
+.titulofooter{
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
+	font-size: 15px; 
+	margin:0;
+	float: left;
+}
+
+.amarillo{
+	color:#f7d118;	
+}
+
+.blanco{
+	color:#fff;	
+}
+
+.verde{
+	color: #316431;	
 }
 
 /*subheader*/
@@ -102,6 +137,7 @@ body {
 	background:#F7D118;
 	color:#316431;
    border-left: 2px solid #316431;
+   padding: 10px 14px;
 }
 
 /*Contenido*/
@@ -136,57 +172,37 @@ body {
 	min-height: 400px;
 }
 
-/*Pie*/
-footer{ 
-	text-align: center; 
-	padding: 12px;
- 	background-color: #316431; 
- 	color:#fff;
-	box-shadow:0 4px 4px 0 #000000;
-}
-
 /*Mensajes de erros y éxito*/
 .mensaje{
 	text-align: center;
 	border-style: solid;
 	border-width: 1px;
 	padding: 5px;
+	margin-bottom: 5px;
 }
 
 /*FORMULARIO*/
 input, select, textarea
 {
-    /*border: 1px solid #005764;
-    margin-bottom: 10px;
-    margin-right: 50px;
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #fffce3;*/
-	font-size: 14px;
-    font-family: Arial, helvetica;
-    outline: none;
-    transition: all 0.75s ease-in-out;
-    -webkit-transition: all 0.75s ease-in-out;
-    -moz-transition: all 0.75s ease-in-out;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border: 1px solid rgba(0,0,0, 0.2);
-    color: #316431;
-    background-color: #d9e1e8;
-    padding: 3px;
-    margin-left: 20px;
-    padding: 5px;
-    resize: none;
-    cursor:pointer;
-    text-align:left;
+	font-size: 1.167em;
+   font-family: Arial, helvetica;
+   outline: none;
+   transition: all 0.75s ease-in-out;
+   border-radius: 3px;
+   border: 1px solid rgba(0,0,0, 0.2);
+   color: #316431;
+   background-color: #d9e1e8;
+   padding: 3px;
+   margin-left: 20px;
+   padding: 5px;
+   resize: none;
+   cursor:pointer;
+   text-align:left;
 }
 
 input:focus,textarea:focus,select:focus
 {
 	box-shadow: 0 0 10px #aaa;
-	-webkit-box-shadow: 0 0 10px #aaa;
-	-moz-box-shadow: 0 0 10px #aaa;
 	border: 1px solid #999;
 	background-color: white;
 }
@@ -200,19 +216,19 @@ input:focus,textarea:focus,select:focus
 #entrar > a{
 	color:#316431;
 	text-decoration: none;
-	font-size: 14px;
+	font-size: 1.2em;
 	float: right;
 	font-weight: bold;
 }
 
 #entrar > div{
-	font-size: 13px;
+	font-size: 1.083em;
 	color:#316431;	
 	float: right;
 	font-style: oblique;
 }
 
-#form{
+.form{
 	margin: 0 auto;
 	margin-top: 20px;
 	border: 2px outset #316431;
@@ -223,7 +239,7 @@ input:focus,textarea:focus,select:focus
 
 .campo{
     margin-top: 15px;
-    width: 300px;
+    /*width: 300px;*/
     float: left;
     margin-left: 10px;
     height: 35px;
@@ -240,7 +256,7 @@ input:focus,textarea:focus,select:focus
 
 .campo_login{
     margin-top: 15px;
-    width: 300px;
+    /*width: 300px;*/
     margin-left: 10px;
 }
 
@@ -259,4 +275,9 @@ input:focus,textarea:focus,select:focus
 	display: inline-block; 
 	list-style: none;
 	padding: 0;
+}
+
+#loading{
+	display: none;
+	float: left;	
 }
