@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
-use EC\PropietarioBundle\Entity\Propietario;
+use EC\PrincipalBundle\Entity\Usuario;
 
 class DefaultController extends Controller
 {
@@ -26,15 +26,12 @@ class DefaultController extends Controller
 	  */
     public function modificacion_perfilAction(Request $request)
     {
-    	$propietario = $this->getUser();
+    		$propietario = $this->getUser();
     		
     		$form = $this ->createFormBuilder($propietario)
     				->add('nombre','text')
-    				->add('apellidos','text')
-    				->add('telefono','integer', array('label' => 'Teléfono','max_length' =>9))
-    				->add('email','text')
-    				->add('portal','text', array('label' => 'Portal'))
-    				->add('piso','text', array('label' => 'Piso'))
+    				->add('telefono','text', array('label' => 'Teléfono','max_length' =>9,'required'=>false))
+    				->add('email','email',array('required'=>false))
     				->getForm();
     		
     		$form->handleRequest($request);
@@ -79,9 +76,9 @@ class DefaultController extends Controller
        		 	$em = $this->getDoctrine()->getManager();
 					$query = $em->createQuery(
     					'SELECT v
-       				FROM ECPropietarioBundle:Propietario v
-      				WHERE v.dni = :dni'
-					)->setParameter('dni', $this->getUser());
+       				FROM ECPrincipalBundle:Usuario v
+      				WHERE v.id = :id'
+					)->setParameter('id', $this->getUser());
 					$propietario = $query->getSingleResult();
 					
 					$encoder_old = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);

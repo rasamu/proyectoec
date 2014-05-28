@@ -20,7 +20,7 @@
     		{% endfor %}
 		{% endfor %}	
 	
-		<section id="form">
+		<section class="form">
 			<h2 class="verde centrado">{% trans %}Modificar datos personales{% endtrans %}</h2>
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
@@ -30,13 +30,7 @@
        		 {{ form_widget(form.nombre) }}
         		<div class="error">{{ form_errors(form.nombre) }}</div>
     		</div>
-    		
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.apellidos) }}</div>
-       		 {{ form_widget(form.apellidos) }}
-        		<div class="error">{{ form_errors(form.apellidos) }}</div>
-    		</div>
-    
+
     		<div class="campo">
         		<div class="label_campo">{{ form_label(form.telefono) }}</div>
         		{{ form_widget(form.telefono) }}
@@ -47,18 +41,6 @@
         		<div class="label_campo">{{ form_label(form.email) }}</div>
         		{{ form_widget(form.email) }}        
        		 <div class="error">{{ form_errors(form.email) }}</div>
-    		</div>
-
-   		 <div class="campo">
-        		<div class="label_campo">{{ form_label(form.portal) }}</div>
-        		{{ form_widget(form.portal) }}
-        		<div class="error">{{ form_errors(form.portal) }}</div>        
-    		</div>
-    		
-    		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.piso) }}</div>
-        		{{ form_widget(form.piso) }}
-        		<div class="error">{{ form_errors(form.piso) }}</div>        
     		</div>
     		
     		<div class="campo">

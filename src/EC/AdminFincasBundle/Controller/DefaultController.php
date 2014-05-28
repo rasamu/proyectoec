@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\AdminFincasBundle\Entity\AdminFincas;
+use EC\PrincipalBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -33,8 +34,8 @@ class DefaultController extends Controller
     			   ->add('n_colegiado','text', array('label' => 'NºColegiado','required' => false))
     				->add('nombre','text')
     				->add('apellidos','text')
-    				->add('telefono','integer', array('label' => 'Teléfono', 'attr' => array('min' => 9, 'max'=> 9)))
-    				->add('fax','integer', array('required' => false, 'attr' => array('min' => 9, 'max'=> 9)))
+    				->add('telefono','text', array('label' => 'Teléfono'))
+    				->add('fax','text', array('required' => false))
     				->add('email','email')
     				->add('direccion','text', array('label' => 'Dirección'))
     				->add('provincia','text')
@@ -82,10 +83,10 @@ class DefaultController extends Controller
     		if ($form->isValid()) {
        		 	$em = $this->getDoctrine()->getManager();
 					$query = $em->createQuery(
-    					'SELECT v
-       				FROM ECAdminFincasBundle:AdminFincas v
-      				WHERE v.dni = :dni'
-					)->setParameter('dni', $this->getUser());
+    					'SELECT u
+       				FROM ECAdminFincasBundle:AdminFincas u
+      				WHERE u.id = :id'
+					)->setParameter('id', $this->getUser());
 					$adminfincas = $query->getSingleResult();
 					
 					$encoder_old = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);

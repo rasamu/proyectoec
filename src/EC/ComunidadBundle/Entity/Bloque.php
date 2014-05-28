@@ -21,8 +21,9 @@ class Bloque
     protected $id;
     
     /**
-     * @Assert\Type(type="integer")
-     * @ORM\Column(name="num_bloque",type="integer",length=9)
+     * @Assert\Type(type="string")
+     * @Assert\NotNull()
+     * @ORM\Column(name="num_bloque",type="string",length=9)
      */
     protected $num;
     
@@ -35,7 +36,7 @@ class Bloque
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\ComunidadBundle\Entity\Comunidad", inversedBy="bloques")
-     * @ORM\JoinColumn(name="cif_comunidad", referencedColumnName="cif")
+     * @ORM\JoinColumn(name="id_comunidad", referencedColumnName="id")
      */
     protected $comunidad;
     

@@ -1,6 +1,6 @@
 <?php
 
-namespace EC\PropietarioBundle\Entity;
+namespace EC\PrincipalBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,14 +9,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Propietarios")
+ * @ORM\Table(name="Usuarios")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"propietario"="Usuario","adminfincas" = "EC\AdminFincasBundle\Entity\AdminFincas"})
  */
-class Propietario implements UserInterface, \Serializable
-{	
-	function equals(UserInterface $propietario)
+class Usuario implements UserInterface, \Serializable
+{
+	function equals(UserInterface $usuario)
 	{
-		return $this->getId() == $propietario->getId();	
+		return $this->getId() == $usuario->getId();	
 	}
 	
 	function eraseCredentials()
@@ -25,20 +28,13 @@ class Propietario implements UserInterface, \Serializable
 	
 	function getRoles()
 	{
-		if($this->getTipo()=='Vecino'){
-			return array('ROLE_VECINO');	
-		}else{
-			if($this->getTipo()=='Presidente'){
-				return array('ROLE_PRESIDENTE');	
-			}else{
-				return array('ROLE_VICEPRESIDENTE');	
-			}
-		}
+		$role=$this->getRole();
+		return array($role->getNombre());
 	}
 	
 	function getUsername()
 	{
-		return $this->getUsuario();
+		return $this->getUser();
 	}
 	
 	/**
@@ -48,7 +44,7 @@ class Propietario implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->usuario,
+            $this->user,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -62,7 +58,7 @@ class Propietario implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->usuario,
+            $this->user,
             $this->password,
             // see section on salt below
             // $this->salt
@@ -75,38 +71,20 @@ class Propietario implements UserInterface, \Serializable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-    /**
-     * @Assert\Type(type="string")
-     * @ORM\Column(name="usuario",type="string",unique=true)
-     */
-    protected $usuario;
-	
-	/**
-	  * @Assert\Length(
-     *      min=9,
-     *      max=9
-     * )
-     * @Assert\Type(type="string")
-     * @ORM\Column(name="dni_propietario",type="string",nullable=true)
-     */
-    protected $dni;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="tipo_propietario",type="string", length=14)
-     */
-    protected $tipo="Vecino";
 
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="nombre_propietario",type="string", length=100)
+     * @ORM\Column(name="nombre",type="string", length=100)
      */
     protected $nombre;
 
 	/**
-     * @Assert\Type(type="integer")
-     * @ORM\Column(name="telefono_propietario",type="string",length=9,nullable=true)
+     * @ORM\Column(name="apellidos",type="string", length=100,nullable=true)
+     */
+    protected $apellidos;
+
+	/**
+     * @ORM\Column(name="telefono",type="string",length=9,nullable=true)
      */
     protected $telefono;
     
@@ -115,17 +93,26 @@ class Propietario implements UserInterface, \Serializable
      *     message = "El email '{{ value }}' no es un email válido.",
      *     checkMX = true
      * )
-     * @ORM\Column(name="email_propietario",type="string", length=100,nullable=true)
+     * @ORM\Column(name="email",type="string", length=100,nullable=true)
      */
     protected $email;
     
     /**
-     * @ORM\Column(name="fecha_alta_propietario",type="datetime")
+     * @ORM\Column(name="fecha_alta",type="datetime")
      */
     protected $fecha_alta;
     
     /**
-	  * @Assert\NotNull()
+     * @Assert\Type(type="string")
+     * @ORM\Column(name="user",type="string",unique=true)
+     */
+    protected $user;
+    
+    /**
+     * @Assert\Length(
+     *      min=6
+     * )
+     * @Assert\Type(type="string")
      * @ORM\Column(name="password",type="string", length=255)
      */
     protected $password;
@@ -136,66 +123,26 @@ class Propietario implements UserInterface, \Serializable
     protected $salt;
     
     /**
+     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Role", inversedBy="usuarios")
+     * @ORM\JoinColumn(name="role", referencedColumnName="id")
+     */
+    protected $role;
+    
+    /**
      * @ORM\OneToOne(targetEntity="EC\PropietarioBundle\Entity\Propiedad", inversedBy="propietario")
      * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
      **/
     private $propiedad;
 
     /**
-     * Set dni
-     *
-     * @param string $dni
-     * @return Propietario
-     */
-    public function setDni($dni)
-    {
-        $this->dni = $dni;
-    
-        return $this;
-    }
-
-    /**
-     * Get dni
-     *
-     * @return string 
-     */
-    public function getDni()
-    {
-        return $this->dni;
-    }
-    
-    /**
-     * Set tipo
-     *
-     * @param string $tipo
-     * @return Propietario
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-    
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return string 
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
-
-    /**
      * Set nombre
      *
      * @param string $nombre
-     * @return Propietario
+     * @return AdminFincas
      */
-    public function setNombre($nombre)
+    public function setNombre($name)
     {
-        $this->nombre = $nombre;
+        $this->nombre = $name;
     
         return $this;
     }
@@ -209,12 +156,35 @@ class Propietario implements UserInterface, \Serializable
     {
         return $this->nombre;
     }
+    
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     * @return AdminFincas
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+    
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string 
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
 
     /**
      * Set telefono
      *
-     * @param string $telefono
-     * @return Propietario
+     * @param integer $telefono
+     * @return Usuario
      */
     public function setTelefono($telefono)
     {
@@ -226,7 +196,7 @@ class Propietario implements UserInterface, \Serializable
     /**
      * Get telefono
      *
-     * @return string 
+     * @return integer 
      */
     public function getTelefono()
     {
@@ -237,7 +207,7 @@ class Propietario implements UserInterface, \Serializable
      * Set email
      *
      * @param string $email
-     * @return Propietario
+     * @return Usuario
      */
     public function setEmail($email)
     {
@@ -255,20 +225,7 @@ class Propietario implements UserInterface, \Serializable
     {
         return $this->email;
     }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return Propietario
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
     
-        return $this;
-    }
-
     /**
      * Get password
      *
@@ -278,20 +235,20 @@ class Propietario implements UserInterface, \Serializable
     {
         return $this->password;
     }
-
+    
     /**
-     * Set salt
+     * Set password
      *
-     * @param string $salt
-     * @return Propietario
+     * @param string $password
+     * @return Usuario
      */
-    public function setSalt($salt)
+    public function setPassword($password)
     {
-        $this->salt = $salt;
+        $this->password = $password;
     
         return $this;
     }
-
+    
     /**
      * Get salt
      *
@@ -302,6 +259,19 @@ class Propietario implements UserInterface, \Serializable
         return $this->salt;
     }
     
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return Usuario
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    
+        return $this;
+    }
+
     /**
      * Set fecha_alta
 	  * @ORM\PrePersist()
@@ -322,12 +292,68 @@ class Propietario implements UserInterface, \Serializable
     {
         return $this->fecha_alta;
     }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * Get user
+     *
+     * @return string 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     * @return Usuario
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Set role
+     *
+     * @param \EC\PrincipalBundle\Entity\Role $role
+     * @return Usuario
+     */
+    public function setRole(\EC\PrincipalBundle\Entity\Role $role = null)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return \EC\PrincipalBundle\Entity\Role 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+    
     /**
      * Set propiedad
      *
      * @param \EC\PropietarioBundle\Entity\Propiedad $propiedad
-     * @return Propietario
+     * @return Usuario
      */
     public function setPropiedad(\EC\PropietarioBundle\Entity\Propiedad $propiedad = null)
     {
@@ -344,38 +370,5 @@ class Propietario implements UserInterface, \Serializable
     public function getPropiedad()
     {
         return $this->propiedad;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param string $usuario
-     * @return Propietario
-     */
-    public function setUsuario($usuario)
-    {
-        $this->usuario = $usuario;
-    
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return string 
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
     }
 }

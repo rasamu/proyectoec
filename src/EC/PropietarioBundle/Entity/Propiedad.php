@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use EC\ComunidadBundle\Entity\Bloque;
+use EC\PrincipalBundle\Entity\Usuario;
 
 /**
  * @ORM\Entity
@@ -34,7 +35,7 @@ class Propiedad
     protected $bloque;
     
     /**
-     * @ORM\OneToOne(targetEntity="EC\PropietarioBundle\Entity\Propietario", mappedBy="propiedad")
+     * @ORM\OneToOne(targetEntity="EC\PrincipalBundle\Entity\Usuario", mappedBy="propiedad")
      **/
     private $propietario;
 
@@ -87,10 +88,10 @@ class Propiedad
     /**
      * Set propietario
      *
-     * @param \EC\PropietarioBundle\Entity\Propietario $propietario
+     * @param \EC\PrincipalBundle\Entity\Usuario $propietario
      * @return Propiedad
      */
-    public function setPropietario(\EC\PropietarioBundle\Entity\Propietario $propietario = null)
+    public function setPropietario(\EC\PrincipalBundle\Entity\Usuario $propietario = null)
     {
         $this->propietario = $propietario;
     
@@ -100,7 +101,7 @@ class Propiedad
     /**
      * Get propietario
      *
-     * @return \EC\PropietarioBundle\Entity\Propietario 
+     * @return \EC\PrincipalBundle\Entity\Usuario
      */
     public function getPropietario()
     {

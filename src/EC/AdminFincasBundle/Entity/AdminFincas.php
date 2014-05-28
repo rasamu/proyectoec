@@ -2,46 +2,27 @@
 
 namespace EC\AdminFincasBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use EC\PrincipalBundle\Entity\Usuario;
+use EC\PrincipalBundle\Entity\Role;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="AdminFincas")
  * @ORM\HasLifecycleCallbacks
  */
-class AdminFincas implements UserInterface
-{
-	function equals(UserInterface $adminfincas)
-	{
-		return $this->getDni() == $adminfincas->getDni();	
-	}
-	
-	function eraseCredentials()
-	{
-	}
-	
-	function getRoles()
-	{
-		return array('ROLE_ADMINFINCAS');	
-	}
-	
-	function getUsername()
-	{
-		return $this->getDni();
-	}
-	
-	/**
+class AdminFincas extends Usuario
+{     
+    /**
 	  * @Assert\Length(
      *      min=9,
      *      max=9
      * )
-     * @Assert\Type(type="string")
      * @Assert\NotNull()
-     * @ORM\Id
-     * @ORM\Column(name="dni_admin",type="string", unique=true, length=9)
+     * @Assert\Type(type="string")
+     * @ORM\Column(name="dni_admin",type="string", length=9,unique=true)
      */
     protected $dni;
     
@@ -54,41 +35,11 @@ class AdminFincas implements UserInterface
      * @ORM\Column(name="n_colegiado_admin",type="string",unique=true,length=9,nullable=true)
      */
     protected $n_colegiado=NULL;
-
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="nombre_admin",type="string", length=100)
-     */
-    protected $nombre;
-
-	/**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="apellidos_admin",type="string", length=100)
-     */
-    protected $apellidos;
-
-	/**
-	  * @Assert\NotNull()
-     * @Assert\Type(type="integer")
-     * @ORM\Column(name="telefono_admin",type="string",length=9)
-     */
-    protected $telefono;
     
     /**
-     * @Assert\Type(type="integer")
      * @ORM\Column(name="fax_admin",type="string",length=9,nullable=true)
      */
     protected $fax=NULL; 
-    
-    /**
-	  * @Assert\NotNull()
-     * @Assert\Email(
-     *     message = "El email '{{ value }}' no es un email válido.",
-     *     checkMX = true
-     * )
-     * @ORM\Column(name="email_admin",type="string", length=100)
-     */
-    protected $email;
     
     /**
 	  * @Assert\NotNull()
@@ -109,26 +60,6 @@ class AdminFincas implements UserInterface
     protected $localidad;
     
     /**
-     * @ORM\Column(name="fecha_alta_admin",type="datetime")
-     */
-    protected $fecha_alta;
-    
-    /**
-     * @Assert\Length(
-     *      min=6
-     * )
-     * @Assert\Type(type="string")
-	  * @Assert\NotNull()
-     * @ORM\Column(name="password",type="string", length=255)
-     */
-    protected $password;
-
-	/**
-     * @ORM\Column(name="salt",type="string", length=255)
-     */
-    protected $salt;
-    
-    /**
      * @ORM\OneToMany(targetEntity="EC\ComunidadBundle\Entity\Comunidad", mappedBy="administrador")
      */
     protected $comunidades;
@@ -137,6 +68,8 @@ class AdminFincas implements UserInterface
     {
         $this->comunidades = new ArrayCollection();
     }
+    
+
 
     /**
      * Set n_colegiado
@@ -162,75 +95,6 @@ class AdminFincas implements UserInterface
     }
 
     /**
-     * Set nombre
-     *
-     * @param string $nombre
-     * @return AdminFincas
-     */
-    public function setNombre($name)
-    {
-        $this->nombre = $name;
-    
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string 
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-    
-    /**
-     * Set apellidos
-     *
-     * @param string $apellidos
-     * @return AdminFincas
-     */
-    public function setApellidos($apellidos)
-    {
-        $this->apellidos = $apellidos;
-    
-        return $this;
-    }
-
-    /**
-     * Get apellidos
-     *
-     * @return string 
-     */
-    public function getApellidos()
-    {
-        return $this->apellidos;
-    }
-
-    /**
-     * Set telefono
-     *
-     * @param integer $telefono
-     * @return AdminFincas
-     */
-    public function setTelefono($telefono)
-    {
-        $this->telefono = $telefono;
-    
-        return $this;
-    }
-
-    /**
-     * Get telefono
-     *
-     * @return integer 
-     */
-    public function getTelefono()
-    {
-        return $this->telefono;
-    }
-
-    /**
      * Set fax
      *
      * @param integer $fax
@@ -251,29 +115,6 @@ class AdminFincas implements UserInterface
     public function getFax()
     {
         return $this->fax;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return AdminFincas
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**
@@ -346,70 +187,26 @@ class AdminFincas implements UserInterface
     }
     
     /**
-     * Get password
+     * Set dni
      *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-    
-    /**
-     * Set password
-     *
-     * @param string $password
+     * @param string $dni
      * @return AdminFincas
      */
-    public function setPassword($password)
+    public function setDni($dni)
     {
-        $this->password = $password;
-    
-        return $this;
-    }
-    
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-    
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     * @return AdminFincas
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
+        $this->dni = $dni;
     
         return $this;
     }
 
     /**
-     * Set fecha_alta
-	  * @ORM\PrePersist()
-     */
-    public function setFechaAlta($fechaAlta = null)
-    {
-        $this->fecha_alta = null === $fechaAlta ? new \DateTime() : $fechaAlta;
-    
-        return $this;
-    }
-
-    /**
-     * Get fecha_alta
+     * Get dni
      *
-     * @return \DateTime 
+     * @return string 
      */
-    public function getFechaAlta()
+    public function getDni()
     {
-        return $this->fecha_alta;
+        return $this->dni;
     }
 
     /**
@@ -444,27 +241,270 @@ class AdminFincas implements UserInterface
     {
         $this->comunidades->removeElement($comunidades);
     }
+    
+    /**
+     * @var integer
+     */
+    protected $id;
+    
+    /**
+     * @var string
+     */
+    protected $nombre;
 
     /**
-     * Set dni
+     * @var string
+     */
+    protected $apellidos;
+
+    /**
+     * @var string
+     */
+    protected $telefono;
+
+    /**
+     * @var string
+     */
+    protected $email;
+
+    /**
+     * @var \DateTime
+     */
+    protected $fecha_alta;
+
+    /**
+     * @var string
+     */
+    protected $user;
+
+    /**
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @var string
+     */
+    protected $salt;
+
+    /**
+     * @var \EC\PrincipalBundle\Entity\Role
+     */
+    protected $role;
+
+
+    /**
+     * Set nombre
      *
-     * @param string $dni
+     * @param string $nombre
      * @return AdminFincas
      */
-    public function setDni($dni)
+    public function setNombre($nombre)
     {
-        $this->dni = $dni;
+        $this->nombre = $nombre;
     
         return $this;
     }
 
     /**
-     * Get dni
+     * Get nombre
      *
      * @return string 
      */
-    public function getDni()
+    public function getNombre()
     {
-        return $this->dni;
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     * @return AdminFincas
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+    
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string 
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return AdminFincas
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return AdminFincas
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set fecha_alta
+	  * @ORM\PrePersist()
+     */
+    public function setFechaAlta($fechaAlta = null)
+    {
+        $this->fecha_alta = null === $fechaAlta ? new \DateTime() : $fechaAlta;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_alta
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAlta()
+    {
+        return $this->fecha_alta;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     * @return AdminFincas
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return AdminFincas
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return AdminFincas
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set role
+     *
+     * @param \EC\PrincipalBundle\Entity\Role $role
+     * @return AdminFincas
+     */
+    public function setRole(\EC\PrincipalBundle\Entity\Role $role = null)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return \EC\PrincipalBundle\Entity\Role 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

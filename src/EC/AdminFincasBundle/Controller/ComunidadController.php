@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\ComunidadBundle\Form\Type\ComunidadType;
 use EC\ComunidadBundle\Entity\Comunidad;
 use EC\AdminFincasBundle\Entity\AdminFincas;
+use EC\PrincipalBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use EC\PrincipalBundle\Entity\City;
@@ -176,7 +177,7 @@ class ComunidadController extends Controller
     		$comunidad=$this->comprobar_comunidad($cif); 
 	
 			$form = $this ->createFormBuilder($comunidad,array('csrf_protection' => false))
-					->add('codigo','integer',array('label' => 'Código Despacho'))
+					->add('codigo','text',array('label' => 'Código Despacho'))
     				->add('piscinas','choice',array('label' => 'Piscina','choices'=>array(1 => 'Si', 0 => 'No')))
     				->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(1 => 'Si', 0 => 'No')))
     				->add('gimnasio','choice',array('choices'=>array(1 => 'Si', 0 => 'No')))

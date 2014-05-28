@@ -13,7 +13,7 @@ class ComunidadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder->add('cif','text',array('max_length' =>9));
-         $builder->add('codigo','integer',array('label' => 'Código Despacho','attr' => array('min' => 9, 'max'=> 9)));
+         $builder->add('codigo','text',array('label' => 'Código Despacho'));
     		$builder->add('piscinas','choice',array('label' => 'Piscina','choices'=>array(0 => 'No', 1 => 'Si')));
     		$builder->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(0 => 'No', 1 => 'Si')));
     		$builder->add('gimnasio','choice',array('choices'=>array(0 => 'No', 1 => 'Si')));

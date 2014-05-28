@@ -34,20 +34,11 @@ security:
                 users:
                     root: { password: rootpass, roles: 'ROLE_ADMIN' }
         usuarios:
-            chain:
-                providers: [adminfincas, propietarios]
-        adminfincas:
-            entity: { class: EC\AdminFincasBundle\Entity\AdminFincas, property: dni }
-        propietarios:
-            entity: { class: EC\PropietarioBundle\Entity\Propietario, property: usuario }
+            entity: { class: EC\PrincipalBundle\Entity\Usuario, property: user }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        EC\AdminFincasBundle\Entity\AdminFincas:
-              algorithm:  sha512
-              iterations: 10
-              encode_as_base64: false
-        EC\PropietarioBundle\Entity\Propietario:
+        EC\PrincipalBundle\Entity\Usuario:
               algorithm:  sha512
               iterations: 10
               encode_as_base64: false

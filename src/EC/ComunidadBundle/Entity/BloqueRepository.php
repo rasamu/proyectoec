@@ -24,8 +24,8 @@ class BloqueRepository extends EntityRepository
     public function getBloquesQueryBuilder($comunidad)
 	{
    	 return $this->createQueryBuilder('b')
-        	->where('b.comunidad = :cif')
-        	->setParameter('cif', $comunidad->getCif());
+        	->where('b.comunidad = :id')
+        	->setParameter('id', $comunidad->getId());
 	}
 }
 ?>

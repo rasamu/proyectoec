@@ -14,19 +14,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Comunidad
 {	
 	/**
+     * @ORM\Id
+     * @ORM\Column(name="id",type="integer",unique=true)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+	/**
 	  * @Assert\Length(
      *      min=9,
      *      max=9
      * )
      * @Assert\Type(type="string")
-     * @ORM\Id
      * @ORM\Column(name="cif",type="string",unique=true,length=9)
      */
     protected $cif;
     
     /**
-	  * @Assert\Type(type="integer")
-     * @ORM\Column(name="codigo_despacho",type="integer",length=9)
+	  * @Assert\Type(type="string")
+     * @ORM\Column(name="codigo_despacho",type="string",length=9)
      */
     protected $codigo;
     
@@ -67,7 +73,7 @@ class Comunidad
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\AdminFincasBundle\Entity\AdminFincas", inversedBy="comunidades")
-     * @ORM\JoinColumn(name="dni_administrador", referencedColumnName="dni_admin")
+     * @ORM\JoinColumn(name="adminfincas", referencedColumnName="id")
      */
     protected $administrador;
     
@@ -85,6 +91,16 @@ class Comunidad
     public function __construct()
     {
         $this->bloques = new ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
     
     /**

@@ -9,7 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\ComunidadBundle\Entity\Comunidad;
 use EC\ComunidadBundle\Entity\Bloque;
-use EC\PropietarioBundle\Entity\Propietario;
+use EC\PrincipalBundle\Entity\Usuario;
+use EC\PrincipalBundle\Entity\Role;
 use EC\PropietarioBundle\Entity\Propiedad;
 use EC\PrincipalBundle\Entity\Csv;
 use EC\PropietarioBundle\Form\Type\PropiedadType;
@@ -94,9 +95,9 @@ class PropietarioController extends Controller
 	 		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT p
-       			FROM ECPropietarioBundle:Propietario p
-      			WHERE p.usuario = :usuario'
-			)->setParameters(array('usuario' => $usuario));
+       			FROM ECPrincipalBundle:Usuario p
+      			WHERE p.user = :user'
+			)->setParameters(array('user' => $usuario));
 			
 			try {
     				$comprobacion = $query->getSingleResult();
@@ -122,7 +123,7 @@ class PropietarioController extends Controller
     		$bloques=$comunidad->getBloques();
     
     		$propiedad = new Propiedad();	
-    		$propietario= new Propietario();
+    		$propietario= new Usuario();
     		$propietario->setPropiedad($propiedad);
 			$propiedad->setPropietario($propietario);
 			$form=$this->createForm(new PropiedadType($comunidad),$propiedad);
@@ -145,13 +146,17 @@ class PropietarioController extends Controller
 					
 						$password=$this->generar_password();
 						$usuario=$this->generar_usuario($propietario->getNombre());
-						$propietario->setUsuario($usuario);
+						$propietario->setUser($usuario);
 						$propietario->setPassword($password);
 						$this->setSecurePassword($propietario);
+						$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('2');
+						$propietario->setRole($role[0]);
+						$role[0]->addUsuario($propietario);
     			
     					$em = $this->getDoctrine()->getManager();
    					$em->persist($propiedad);
    					$em->persist($propietario);
+   					$em->persist($role[0]);
    					$em->flush();
     			
     					$flash=$this->get('translator')->trans('Propietario registrado con éxito.');
@@ -171,7 +176,7 @@ class PropietarioController extends Controller
     							
     							if($bloque_csv){
 									$propiedad_csv=new Propiedad();
-									$propietario_csv=new Propietario();
+									$propietario_csv=new Usuario();
 									$propietario_csv->setPropiedad($propiedad_csv);
 									$propiedad_csv->setPropietario($propietario_csv);
 									$propiedad_csv->setBloque($bloque_csv);
@@ -181,14 +186,18 @@ class PropietarioController extends Controller
 									$propietario_csv->setNombre($row[$headers[2]]);
 									$password=$this->generar_password();
 									$usuario=$this->generar_usuario($propietario_csv->getNombre());
-									$propietario_csv->setUsuario($usuario);
+									$propietario_csv->setUser($usuario);
 									$propietario_csv->setPassword($password);
 									$this->setSecurePassword($propietario_csv);
+									$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('2');
+									$propietario_csv->setRole($role[0]);
+									$role[0]->addUsuario($propietario_csv);
 								
 									$em = $this->getDoctrine()->getManager();
    				 				$em->persist($bloque_csv);
    				 				$em->persist($propiedad_csv);
    				 				$em->persist($propietario_csv);
+   				 				$em->persist($role[0]);
    				 				$em->flush();
    				 				
    				 			}else{
@@ -235,7 +244,7 @@ class PropietarioController extends Controller
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT p
-       			FROM ECPropietarioBundle:Propietario p
+       			FROM ECPrincipalBundle:Usuario p
       			WHERE p.id = :id'
 			)->setParameters(array('id' => $id));
 			
@@ -314,35 +323,46 @@ class PropietarioController extends Controller
 	  */
     public function nombrar_presidenteAction($cif, $id){
     		$comunidad=$this->comprobar_comunidad($cif);
-    					
+    		$role_presidente=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('3');
+						
     		/*Buscamos y eliminamos Presidente anterior*/
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
-    				'SELECT v
-       			FROM ECPropietarioBundle:Propietario v
-      			WHERE v.comunidad = :cif and v.tipo = :tipo'
-			)->setParameters(array('cif' => $cif,'tipo'=>'Presidente',));
+    				'SELECT u
+					FROM ECPrincipalBundle:Usuario u
+					WHERE u.role = :role_presidente and u.propiedad IN
+					(SELECT p FROM ECPropietarioBundle:Propiedad p WHERE p.bloque IN
+					(SELECT b FROM ECComunidadBundle:Bloque b WHERE b.comunidad = :comunidad))'
+			)->setParameters(array('comunidad'=>$comunidad,'role_presidente'=>$role_presidente[0],));
 			
 			try {
 				$propietario = $query->getSingleResult();
 			} catch (\Doctrine\Orm\NoResultException $e) {
     			$propietario = null;
 			}
-			
+			$aux=0;
 			if($propietario){
-				$propietario->setTipo('Propietario');
+				$aux=1;
+				$role_vecino=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('2');
+				    		
+				$role_presidente[0]->removeUsuario($propietario);
+				$role_vecino[0]->addUsuario($propietario);
+				$propietario->setRole($role_vecino[0]);
+				
 				$em = $this->getDoctrine()->getManager();
    	 		$em->persist($propietario);
+   	 		$em->persist($role_vecino[0]);
+   	 		$em->persist($role_presidente[0]);
    	   	$em->flush();  
 			}
 			
 			/*Buscamos y nombramos al nuevo presidente*/
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
-    				'SELECT v
-       			FROM ECPropietarioBundle:Propietario v
-      			WHERE v.comunidad = :cif and v.id = :id'
-			)->setParameters(array('cif' => $cif, 'id' => $id,));
+    				'SELECT u
+       			FROM ECPrincipalBundle:Usuario u
+      			WHERE u.id = :id'
+			)->setParameters(array('id' => $id,));
 			
 			try {
 				$presidente = $query->getSingleResult();
@@ -351,14 +371,17 @@ class PropietarioController extends Controller
 			}
 			
 			if($presidente){
-				$presidente->setTipo('Presidente');
+				$presidente->setRole($role_presidente[0]);
+				$role_presidente[0]->addUsuario($presidente);
+				
 				$em = $this->getDoctrine()->getManager();
    	 		$em->persist($presidente);
+   	 		$em->persist($role_presidente[0]);
    	   	$em->flush();  
 			}
 			
 			$flash=$this->get('translator')->trans(' ha sido nombrado nuevo Presidente.');
-			$this->get('session')->getFlashBag()->add('notice',$presidente->getNombre().$flash);
+			$this->get('session')->getFlashBag()->add('notice',$presidente->getNombre().$flash.' Aux:'.$aux);
         	$this->get('session')->getFlashBag()->add('color','green');
 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }
@@ -369,14 +392,18 @@ class PropietarioController extends Controller
 	  */
     public function nombrar_vicepresidenteAction($cif, $id){
     	$comunidad=$this->comprobar_comunidad($cif);
+    	$bloques=$comunidad->getBloques();
+    	$role_vicepresidente=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('4');
     				
     	/*Buscamos y eliminamos Vicepresidente anterior*/
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
-    				'SELECT v
-       			FROM ECPropietarioBundle:Propietario v
-      			WHERE v.comunidad = :cif and v.tipo = :tipo'
-			)->setParameters(array('cif' => $cif,'tipo'=>'Vicepresidente',));
+    				'SELECT u
+					FROM ECPrincipalBundle:Usuario u
+					WHERE u.role = :role and u.propiedad IN
+					(SELECT p.id FROM ECPropietarioBundle:Propiedad p WHERE p.bloque IN
+					(SELECT b.id FROM ECComunidadBundle:Bloque b WHERE b.comunidad = :comunidad))'
+			)->setParameters(array('comunidad'=>$comunidad,'role'=>$role_vicepresidente[0],));
 			
 			try {
 				$propietario = $query->getSingleResult();
@@ -385,19 +412,26 @@ class PropietarioController extends Controller
 			}
 			
 			if($propietario){
-				$propietario->setTipo('Propietario');
+				$role_vecino=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('2');
+				
+				$role_vicepresidente[0]->removeUsuario($propietario);
+				$role_vecino[0]->addUsuario($propietario);
+				$propietario->setRole($role_vecino[0]);
+				
 				$em = $this->getDoctrine()->getManager();
    	 		$em->persist($propietario);
+   	 		$em->persist($role_vecino[0]);
+   	 		$em->persist($role_vicepresidente[0]);
    	   	$em->flush();  
 			}
 			
 			/*Buscamos y nombramos al nuevo Vicepresidente*/
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
-    				'SELECT v
-       			FROM ECPropietarioBundle:Propietario v
-      			WHERE v.comunidad = :cif and v.id = :id'
-			)->setParameters(array('cif' => $cif, 'id' => $id,));
+    				'SELECT u
+       			FROM ECPrincipalBundle:Usuario u
+      			WHERE u.id = :id'
+			)->setParameters(array('id' => $id,));
 			
 			try {
 				$vicepresidente = $query->getSingleResult();
@@ -406,9 +440,12 @@ class PropietarioController extends Controller
 			}
 			
 			if($vicepresidente){
-				$vicepresidente->setTipo('Vicepresidente');
+				$vicepresidente->setRole($role_vicepresidente[0]);
+				$role_vicepresidente[0]->addUsuario($vicepresidente);
+
 				$em = $this->getDoctrine()->getManager();
    	 		$em->persist($vicepresidente);
+   	 		$em->persist($role_vicepresidente[0]);
    	   	$em->flush();  
 			}
 			$flash=$this->get('translator')->trans(' ha sido nombrado nuevo Vicepresidente.');

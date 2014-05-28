@@ -166,7 +166,7 @@ footer{
 #col-der { 
 	text-align: left;
 	padding: 15px; 
-	border-left: 2px solid #316431;
+	/*border-left: 2px solid #316431;*/
 	width: 72%;
 	float: left;
 	min-height: 400px;

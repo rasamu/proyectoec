@@ -111,7 +111,7 @@ class BloqueController extends Controller
 			
 			$bloque = new Bloque();
     		$form = $this ->createFormBuilder($bloque,array('csrf_protection' => false))
-    				->add('num','integer', array('label' => 'Nº Bloque', 'attr' => array('min' => 9, 'max'=> 9)))
+    				->add('num','text', array('label' => 'Nº Bloque'))
     				->add('direccion','text', array('label' => 'Dirección'))
     				->getForm();
     				
@@ -201,7 +201,7 @@ class BloqueController extends Controller
 	  */
     public function comunidad_eliminar_bloqueAction($cif,$num) {
     		$comunidad=$this->comprobar_comunidad($cif); 
-			$bloque=$this->comprobar_bloque($cif,$num);
+			$bloque=$this->comprobar_bloque($comunidad,$num);
     		$propiedades=$bloque->getPropiedades();
     		if(count($propiedades)!=0){
     			$flash=$this->get('translator')->trans('El bloque tiene propietarios registrados. Debe eliminar los propietarios primero.');
