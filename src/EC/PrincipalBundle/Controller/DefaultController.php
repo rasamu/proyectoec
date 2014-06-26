@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use EC\AdminFincasBundle\Entity\AdminFincas;
-use EC\ComunidadBundle\Entity\Comunidad;
 use EC\PrincipalBundle\Entity\Role;
 use EC\PrincipalBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,137 +33,11 @@ class DefaultController extends Controller
 				return $this->redirect($this->generateUrl('ec_adminfincas_homepage'), 301);
 			}else{
 				if($this->get('security.context')->isGranted('ROLE_VECINO')){
-						return $this->redirect($this->generateUrl('ec_propietario_homepage'), 301);
+						return $this->redirect($this->generateUrl('ec_tablon_comunidad'), 301);
 				}else{
 					return $this->redirect($this->generateUrl('ec_principal_homepage'), 301);
 				}	
 			}
-    }
-    
-    private function setSecurePassword($entity) {
-			$entity->setSalt(md5(time()));
-			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
-			$password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-			$entity->setPassword($password);
-	 }
-	 
-	 private function generar_usuario($nombre) {
-	 		$nombre=strtolower($nombre);//Convierte a minusculas
-	 		$nombre = preg_replace('/[.*-_;]/', '', $nombre);//Eliminamos caracteres especiales
-	 		$vector=preg_split("/[\s,]+/",$nombre);//Divide en elementos de un vector
-	 		
-			$usuario=$vector[0].'.'.$vector[1];
-			if($this->comprobar_usuario($usuario)){
-				return $usuario;
-			}else{
-				$usuario=$vector[1].'.'.$vector[0];
-				if($this->comprobar_usuario($usuario)){
-					return $usuario;
-				}else{
-					$usuario=$vector[0].'_'.$vector[1];	
-					if($this->comprobar_usuario($usuario)){
-						return $usuario;
-					}else{
-						$usuario=$vector[1].'_'.$vector[0];
-						if($this->comprobar_usuario($usuario)){
-							return $usuario;
-						}else{
-							$generator = new SecureRandom();
-							$random = bin2hex($generator->nextBytes(4));
-							return $random;
-						}
-					}
-				}
-			}
-	 }
-	 
-	 private function comprobar_usuario($nombre_usuario){
-	 		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT u
-       			FROM ECPrincipalBundle:Usuario u
-      			WHERE u.user = :nombre_usuario'
-			)->setParameters(array('nombre_usuario' => $nombre_usuario));
-			
-			try {
-    				$comprobacion = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			return 1;
-			}	
-			return 0;
-	 }
-    
-    /**
-	  * @Route("/alta", name="ec_principal_alta_adminfincas")
-	  * @Template("ECPrincipalBundle:Default:alta_adminfincas.html.twig")
-	  */
-    public function alta_adminfincasAction(Request $request)
-    {
-    		$adminfincas = new AdminFincas();
-    		
-    		$form = $this ->createFormBuilder($adminfincas)
-    				->setAction($this->generateUrl('ec_principal_alta_adminfincas'))
-    				->add('dni','text', array('label' => 'DNI','max_length' =>9))
-    				->add('n_colegiado','text', array('label' => 'NºColegiado','max_length' =>9,'required' => false))
-    				->add('nombre','text')
-    				->add('apellidos','text')
-    				->add('telefono','text', array('required' => true,'label' => 'Teléfono','max_length' =>9))
-    				->add('fax','text',array('required' => false, 'max_length' =>9))
-    				->add('email','email')
-    				->add('direccion','text', array('label' => 'Dirección'))
-    				->add('provincia','text')
-    				->add('localidad','text')
-    				->add('password', 'repeated', array(
-                'type' => 'password',
-                'invalid_message' => 'Las dos contraseñas deben coincidir',
-                'required' => true,
-                'first_options'  => array('label' => 'Contraseña','max_length' =>9),
-    				 'second_options' => array('label' => 'Confirmación','max_length' =>9),
-    				))
-    				->getForm();
-    				
-    		$form->handleRequest($request);
-    			
-    		if ($form->isValid()) {
-    				$num=$form->get('dni')->getData();
-					$comprobacion=$this->getDoctrine()
-        				->getRepository('ECAdminFincasBundle:AdminFincas')
-        				->find($num);
-            	
-            	if($comprobacion){
-            		$this->get('session')->getFlashBag()->add('notice','Administrador de Fincas ya registrado.');
-   				 	$this->get('session')->getFlashBag()->add('color','red');   				 	
-						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
-            	}else{    				     				 
-						$this->setSecurePassword($adminfincas);
-						$nombre_usuario=$this->generar_usuario($adminfincas->getNombre().' '.$adminfincas->getApellidos());
-    					$adminfincas->setUser($nombre_usuario);
-						$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('1');
-						$adminfincas->setRole($role[0]);
-						$role[0]->addUsuario($adminfincas);
-    			
-    				 	$em = $this->getDoctrine()->getManager();
-   				 	$em->persist($adminfincas);
-   				 	$em->persist($role[0]);
-   				 	$em->flush();
-   				 	
-   				 	$message = \Swift_Message::newInstance()
-        				->setSubject('Alta EntreComunidades')
-        				->setFrom('info@proyectoec.hol.es')
-        				->setTo($form->get('email')->getData())
-        				->setContentType('text/html')
-        				->setBody($this->renderView('ECPrincipalBundle:Default:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
-    					$this->get('mailer')->send($message);
-    			
-						$this->get('session')->getFlashBag()->add('notice','Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso.');
-   				 	$this->get('session')->getFlashBag()->add('color','green');   				 	
-						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
-        			}
-        	}
-        	
-        	return $this->render('ECPrincipalBundle:Default:alta_adminfincas.html.twig',
-        	       		array('form' => $form->createView(),
-        	      		));
     }
     
     /**

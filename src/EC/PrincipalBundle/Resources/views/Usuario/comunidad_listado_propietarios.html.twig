@@ -1,0 +1,86 @@
+{% extends 'ECPrincipalBundle::layout_comunidad.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	{% trans %}Listado de propietarios{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
+	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
+	<script type='text/javascript' src="{{ asset('js/boton_acciones.js') }}"></script>    
+	<script type="text/javascript">
+			$(document).ready(function() {
+				$('#example').dataTable();
+			} );
+	</script>
+{% endblock %}
+
+{% block colder %}
+{{ parent() }}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+
+<h2 class="verde izquierda">{% trans %}Listado de propietarios{% endtrans %}</h2>
+<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+<div id="demo">
+		<table class="display" id="example">
+			<thead>
+				<tr>
+					<th>{% trans %}Nº Bloque{% endtrans %}</th>
+					<th>{% trans %}Dirección{% endtrans %}</th>
+					<th>{% trans %}Nombre{% endtrans %}</th>
+					<th>{% trans %}Propiedad{% endtrans %}</th>
+					<th>{% trans %}Acciones{% endtrans %}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for bloque in bloques %}
+				{% for propiedad in bloque.propiedades%}
+					<tr class="gradeX">
+					   <td>{{bloque.num}}</td>
+					   <td>{{bloque.direccion}}</td>
+       				<td>{{propiedad.propietario.nombre}}</td>
+       				<td>{{propiedad.piso}}</td>
+       				<td>
+       					<a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
+							<ul class="sddm">
+    							<li><a href="" onmouseover="mopen({{propiedad.propietario.id}})" onmouseout="mclosetime()">{% trans %}Acciones{% endtrans %}</a>
+        							<div id="{{propiedad.propietario.id}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+        							<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Nombrar presidente{% endtrans %}</a>
+        							<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">{% trans %}Nombrar vicepresidente{% endtrans %}</a>
+        							</div>
+    							</li>
+							</ul>
+							<div style="clear:both"></div>
+       				</td>
+      			</tr>
+      		{% endfor %} 
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>{% trans %}Nº Bloque{% endtrans %}</th>
+					<th>{% trans %}Dirección{% endtrans %}</th>
+					<th>{% trans %}Nombre{% endtrans %}</th>
+					<th>{% trans %}Propiedad{% endtrans %}</th>
+					<th>{% trans %}Acciones{% endtrans %}</th>
+				</tr>
+			</tfoot>
+		</table>
+</div>
+
+{% endblock %}

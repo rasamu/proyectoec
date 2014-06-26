@@ -1,0 +1,84 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	{% trans %}Incidencia{% endtrans %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+
+	<h2 class="verde centrado">{% trans %}Incidencia{% endtrans %}</h2>
+	<p><b>Categoría:</b> <i>{{incidencia.categoria.nombre}}</i></p>
+	<p><b>Asunto:</b> {{incidencia.asunto}}</p>
+	<p><b>Fecha:</b> <i>{{incidencia.fecha | localizeddate('long')}}</i></p>
+	<p><b>Propietario:</b> <i>{{incidencia.usuario.nombre}}</i></p>
+	<p><b>Bloque:</b> <i>{{incidencia.usuario.propiedad.bloque.direccion}}</i>	<b>Piso:</b> <i>{{incidencia.usuario.propiedad.piso}}</i></p>
+		
+		{% if is_granted('ROLE_ADMINFINCAS') %}
+		
+				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_privacidad) }}>
+    				   <div style="color:red;">{{ form_errors(form_privacidad) }}</div>
+    				   
+    					<div class="error">{{ form_errors(form_privacidad.privacidad) }}</div>
+       		 		<div class="label_campo"><b>{{ form_label(form_privacidad.privacidad) }}:</b></div>
+        				{{ form_widget(form_privacidad.privacidad) }}
+        				
+    					<input type="submit" value="{% trans %}Cambiar{% endtrans %}"/>
+				</form>
+				<br></br>
+				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_estado) }}>
+    				   <div style="color:red;">{{ form_errors(form_estado) }}</div>
+    				   
+    					<div class="error">{{ form_errors(form_estado.estado) }}</div>
+       		 		<div class="label_campo"><b>{{ form_label(form_estado.estado) }}:</b></div>
+        				{{ form_widget(form_estado.estado) }}
+        				
+    					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
+				</form>
+				
+		{% else %}
+				<p><b>Privacidad:</b> <i>{{incidencia.privacidad.nombre}}</i></b></p>
+				<p><b>Estado:</b> <i>{{incidencia.estado.nombre}}</i></b></p>
+		{% endif %}		
+	<section class="form">
+		<p><b>Descripción:</b> {{incidencia.descripcion}}</p>
+		<p><b>Actuaciones:</b></p>
+		{% for actuacion in actuaciones %}
+			<p><i>{{actuacion.fecha | localizeddate('short')}}</i>  {{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} {% if is_granted('ROLE_ADMINFINCAS') %}(Administrador){% endif %}{% if is_granted('ROLE_PRESIDENTE') %}(Presidente){% endif %}{% if is_granted('ROLE_VICEPRESIDENTE') %}(Vicepresidente){% endif %}:</p>
+			<p style="margin-left:30px;">{{actuacion.mensaje}}</p>
+		{% endfor %}
+
+	{% if ( incidencia.estado.id !='3') %}	
+
+            <form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post">
+    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.mensaje) }}</div>
+        				<p>{{ form_widget(form.mensaje) }}</p>
+        				<div class="error">{{ form_errors(form.mensaje) }}</div>
+    				</div> 		
+    				   
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    				</div>
+				</form>
+		</section>
+	{% endif %}
+{% endblock %}

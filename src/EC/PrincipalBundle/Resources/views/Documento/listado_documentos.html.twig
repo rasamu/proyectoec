@@ -1,0 +1,76 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	{% trans %}Documentos{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones_documentos.css') }}" />
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+	<script type="text/javascript">
+		function mostrar(id)
+		{
+			m = document.getElementById(id);
+			m.style.display = (m.style.display == 'block') ? 'none' : 'block';
+		}
+	</script>
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+	<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
+	
+	{% for tipo in tipos %}
+	
+		<div onclick="javascript:mostrar({{tipo.id}});" style="cursor:pointer;"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta"></img><h2 class="verde inline"> {{tipo.nombre}} </h2>({{ tipo.documentos.count }} Ficheros)</div>
+		<div id="{{tipo.id}}" class="oculto margen_izquierdo">
+			{% for documento in documentos %}
+				{% if documento.tipo==tipo %}
+						<p><b>Descripción: </b>{{documento.descripcion}}</p>				
+						<p><b> Creado el: </b><i>{{documento.fecha | localizeddate('long')}}</i></p>
+						<p>
+						<b> Formato: </b>
+						{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
+								<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}"></img>
+						{% endif %}
+						{{documento.getFormat()}}
+						<b> Tamaño: </b>{{documento.getSize()}}
+						<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">Descargar</a>
+						
+						{% if is_granted('ROLE_ADMINFINCAS') %}
+							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
+						  		<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'cif': comunidad.cif, 'id': documento.id }) }}">Previsualizar</a>
+							{% endif %}
+							<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('¿Estás seguro de eliminar el documento {{documento.descripcion}}?')">Eliminar</a>
+						{% else %}
+							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
+								<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', {'id': documento.id }) }}">Previsualizar</a>
+							{% endif %}
+						{% endif %}
+						</p>
+					<hr class="verde"></hr>
+				{% endif %}
+			{% endfor %}
+			
+		</div>
+
+		
+	{% endfor %}
+
+{% endblock %}

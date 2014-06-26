@@ -1,12 +1,5 @@
 security:
     firewalls: 
-         admin:
-            pattern:    ^/root
-            http_basic:	~
-            provider: administradores
-            logout:
-               path:		/root/logout
-               target:	/
          privado:
             pattern:    ^/*
             anonymous: ~
@@ -27,12 +20,15 @@ security:
         - { path: ^/.*/root, roles: ROLE_ADMIN }
         - { path: ^/.*/adminfincas, roles: ROLE_ADMINFINCAS }
         - { path: ^/.*/propietario, roles: ROLE_VECINO }
+        - { path: ^/incidencia/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/incidencias/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/documento/descargar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/documento/previsualizar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/documentos/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/tablon/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/calendario/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
 
     providers:
-        administradores:
-            memory:
-                users:
-                    root: { password: rootpass, roles: 'ROLE_ADMIN' }
         usuarios:
             entity: { class: EC\PrincipalBundle\Entity\Usuario, property: user }
 

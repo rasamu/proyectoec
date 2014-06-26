@@ -2,16 +2,25 @@
 
 {% block title %}
 	 {{ parent() }}
+	 
+{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+ 
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+     
 {% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
-	
+
 {% endblock %}
 
-{% block colder %}
-	{{ parent() }}	
-	
+{% block colder %}    
+	 {{ parent() }}
+	  
 {% endblock %}
-

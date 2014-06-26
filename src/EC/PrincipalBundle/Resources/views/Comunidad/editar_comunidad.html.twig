@@ -1,0 +1,67 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Editar comunidad{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Editar comunidad{% endtrans %}</h2>
+         <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.codigo) }}</div>
+        		{{ form_widget(form.codigo) }}
+       		 <div class="error">{{ form_errors(form.codigo) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.piscinas) }}</div>
+        		{{ form_widget(form.piscinas) }}
+       		 <div class="error">{{ form_errors(form.piscinas) }}</div>        
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.pistas) }}</div>
+        		{{ form_widget(form.pistas) }}
+       		 <div class="error">{{ form_errors(form.pistas) }}</div>        
+    		</div>
+
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.gimnasio) }}</div>
+        		{{ form_widget(form.gimnasio) }}
+       		 <div class="error">{{ form_errors(form.gimnasio) }}</div>        
+    		</div>    		
+    		    		
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.ascensor) }}</div>
+        		{{ form_widget(form.ascensor) }}
+       		 <div class="error">{{ form_errors(form.ascensor) }}</div>        
+    		</div>    		
+    		
+			<div class="campo">
+        		<div class="label_campo">{{ form_label(form.conserjeria) }}</div>
+        		{{ form_widget(form.conserjeria) }}
+       		 <div class="error">{{ form_errors(form.conserjeria) }}</div>        
+    		</div>    		
+
+    		<div class="campo">
+    		<input type="submit" value="{% trans %}Guardar{% endtrans %}"/>
+    		<input type="button" value="{% trans %}Volver{% endtrans %}" onclick="history.back()"/>
+    		</div>
+ 
+			</form>
+		</section>
+{% endblock %}

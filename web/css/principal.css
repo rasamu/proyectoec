@@ -6,6 +6,10 @@ body {
 	margin: 0;
 }
 
+p{
+	line-height: 120%;
+}
+
 .clear { 
 	clear: both; 
 }
@@ -22,11 +26,21 @@ body {
 	text-align: right;
 }
 
+.margen_izquierdo{
+	margin-left: 38px;	
+}
 h2{
 	font-size: 1.333em;
 	margin-bottom: 10px;
 }
 
+.oculto{
+	display: none;	
+}
+
+.inline{
+	display:inline;	
+}
 /*Cabecera*/
 /*Topheader*/
 #topheader{

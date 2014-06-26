@@ -1,3 +1,0 @@
-ec_comunidad_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: ECComunidadBundle:Default:index }

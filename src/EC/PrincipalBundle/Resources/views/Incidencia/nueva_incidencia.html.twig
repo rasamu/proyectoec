@@ -1,0 +1,53 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Nueva incidencia{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Nueva incidencia{% endtrans %}</h2>
+			{{ form_start(form) }}
+    				<div style="color:red;">{{ form_errors(form) }}</div>
+
+					<div class="campo_login">
+        				<div class="label_campo">{{ form_label(form.categoria) }}</div>
+        				{{ form_widget(form.categoria) }}
+       		 		<div class="error">{{ form_errors(form.categoria) }}</div>        
+    				</div> 
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.asunto) }}</div>
+        				{{ form_widget(form.asunto) }}
+        				<div class="error">{{ form_errors(form.asunto) }}</div>
+    				</div> 
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.descripcion) }}</div>
+        				<p>{{ form_widget(form.descripcion) }}</p>
+        				<div class="error">{{ form_errors(form.descripcion) }}</div>
+    				</div> 		
+    				   
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    				</div>
+		{{ form_end(form) }}
+		</section>
+{% endblock %}

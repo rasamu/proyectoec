@@ -20,7 +20,8 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "psliwa/pdf-bundle": "dev-master",
-        "jwage/easy-csv": "0.0.1"
+        "jwage/easy-csv": "0.0.1",
+        "friendsofsymfony/jsrouting-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

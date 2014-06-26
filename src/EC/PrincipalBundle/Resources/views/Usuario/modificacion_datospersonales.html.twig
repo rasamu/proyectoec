@@ -1,0 +1,53 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Modificar datos personales{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+		{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+		{% endfor %}	
+	
+		<section class="form">
+			<h2 class="verde centrado">{% trans %}Modificar datos personales{% endtrans %}</h2>
+			{{ form_start(form) }}
+    		<div style="color:red;">{{ form_errors(form) }}</div>
+ 
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.nombre) }}</div>
+       		 {{ form_widget(form.nombre) }}
+        		<div class="error">{{ form_errors(form.nombre) }}</div>
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.telefono) }}</div>
+        		{{ form_widget(form.telefono) }}
+        		<div class="error">{{ form_errors(form.telefono) }}</div>       
+    		</div>
+
+    		<div class="campo">
+        		<div class="label_campo">{{ form_label(form.email) }}</div>
+        		{{ form_widget(form.email) }}        
+       		 <div class="error">{{ form_errors(form.email) }}</div>
+    		</div>
+    		
+    		<div class="campo">
+    		<input type="submit" value="Actualizar"/>
+    		<input type="reset" value="Borrar"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+		</section>
+{% endblock %}

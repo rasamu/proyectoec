@@ -1,0 +1,21 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	
+{% endblock %}
+	
+{% block sidebar %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+    	<div class="flash-notice">
+        {{ flashMessage }}
+    	</div>
+	{% endfor %}
+{% endblock %}

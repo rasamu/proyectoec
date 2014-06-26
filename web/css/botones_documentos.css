@@ -1,0 +1,34 @@
+.btn_delete {
+    background-color: red;
+    background-image: url('../images/ico_delete.png');
+}
+
+.btn_download {
+    background-color: green;
+    background-image: url('../images/ico_download.png');
+}
+
+.btn_preview {
+    background-color: purple;
+    background-image: url('../images/ico_preview.png');
+}
+
+a.boton_documento {
+    color: #FFFFFF;
+    text-decoration: none;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline;
+    margin: 2px;
+    text-decoration: none;
+    font-size: 0.9em;
+    padding: 3px 7px 3px 29px;
+    background-position: 5px center;
+}
+
+a.boton_documento:hover{
+	background-color: #F7D118;
+
+}

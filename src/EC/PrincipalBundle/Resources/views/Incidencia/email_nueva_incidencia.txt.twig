@@ -1,0 +1,131 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link href='http://fonts.googleapis.com/css?family=Miltonian+Tattoo' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body { 
+	font-family: serif, Arial, Helvetica, ;
+	font-size: 12px; 
+	color: #000; 
+	background-color:  #d9e1e8;
+	margin: 0;
+}
+
+.clear { 
+	clear: both; 
+}
+
+.subtitulo{
+	font-family: serif, Arial, Helvetica;
+	font-size: 20px;
+	color: #316431;
+	padding-top: 10px; 
+}
+
+.centrado{
+	text-align: center;
+}
+
+.izquierda{
+	text-align: left;
+}
+
+.derecha{
+	text-align: right;
+}
+
+/*Cabecera*/
+/*Topheader*/
+#topheader{
+	height: 60px; 
+	background-color: #316431; 
+	color:#fff;
+}
+
+#tituloheader{
+	width: 962px;
+	margin:0 auto;	
+}
+
+.titulo{
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
+	font-size: 50px; 
+	float: left;
+	width: auto;
+}
+
+/*subheader*/
+#subheader{
+	border-bottom: 2px solid #316431;
+	background-color:  #d9e1e8;
+}
+
+#botones{
+	margin: 0 auto;
+	width: 962px;
+	clear: both;
+	height: 60px;
+}
+
+/*Contenido*/
+#wrapper{
+		background-color: #fff;
+		clear: both;
+}
+
+#contenido{
+	width: 962px;
+	margin:0 auto;
+	overflow:hidden;
+	clear: both;
+	background-color: #fff;
+	padding-top:30px;
+}
+
+.verde{
+	color:#316431;
+	font-size:14px;
+}
+
+.cab{
+	font-size:18px;
+	padding-top:14px;
+}
+
+p{
+	margin: 0 2em 0.8em;
+}
+
+.negrita{
+	font-weight:bold;
+}
+
+.cursiva{
+	font-style:italic;
+}
+</style>
+</head>
+<body>
+            <header id="header">
+            		  <section id="topheader">
+            		  		<section id="tituloheader">
+            		  			<div class="titulo"><a href="{{ url('ec_principal_homepage') }}" style="color:#f7d118; text-decoration:none">Entre</a><a href="{{ url('ec_principal_homepage') }}" style="color:#fff; text-decoration:none;">Comunidades</a></div>
+            		  		</section>
+            		  </section>
+                	  <section id="subheader">	
+                	  		 <section id="botones">
+
+                	  		 </section>
+						  </section>
+            </header>
+            <section id="wrapper">
+            	<section id="contenido">
+							<p class="verde negrita cursiva">Categoría:  {{categoria}}</p>
+							<p class="verde negrita cursiva">Descripcion: {{descripcion}}</p>
+            	</section>
+				</section>
+</body>
+</html>

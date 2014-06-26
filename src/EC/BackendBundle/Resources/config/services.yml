@@ -1,7 +1,0 @@
-parameters:
-#    ec_backend.example.class: EC\BackendBundle\Example
-
-services:
-#    ec_backend.example:
-#        class: %ec_backend.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

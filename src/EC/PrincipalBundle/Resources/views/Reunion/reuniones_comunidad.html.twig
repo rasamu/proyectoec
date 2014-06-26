@@ -1,0 +1,73 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	{% trans %}Calendario{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+   {{ parent() }}
+	<link rel='stylesheet' type='text/css' href="{{ asset('css/fullcalendar.css') }}" />
+	<style>
+
+	#calendar {
+		width: 700px;
+		margin: 10px auto;
+	}
+
+</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+   <script type='text/javascript' src="{{ asset('js/moment.min.js') }}"></script>
+	<script type='text/javascript' src="{{ asset('js/fullcalendar.min.js') }}"></script>
+	<script type='text/javascript' src="{{ asset('js/lang-all.js') }}"></script>
+	<script>
+		$(document).ready(function() {
+			var date = new Date();
+         var d = date.getDate();
+         var m = date.getMonth();
+         var y = date.getFullYear();
+            
+        $('#calendar').fullCalendar({
+        			 lang: '{{app.getRequest().getLocale()}}',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                minTime: '09:00:00',
+                events: [
+                {% for reunion in reuniones %}
+                {
+                	  id: {{ reunion.id }},
+                    title: '{{ reunion.descripcion }}',
+                    start: '{{ reunion.fecha_toString() }}',
+                    selectable: true,
+                    {% if (reunion.comunidad.id!=comunidad.id) %}
+                    		backgroundColor: '#fcf8e3',
+                    		color: '#E6E6E6',
+                    		textColor: '#000',                    		
+                    {% endif %}
+                },
+                {% endfor %}
+            	],
+            	eventClick: function(event) {
+        				confirm('¿Estás seguro de eliminar la reunión'+event.title);
+    				},
+    				dayClick: function(date) {
+        					alert('Clicked on: ' + date.format());
+    				},
+        });
+
+    });
+	</script>
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	<h2 class="verde centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
+	<br></br>
+	<div id='calendar'></div>
+{% endblock %}

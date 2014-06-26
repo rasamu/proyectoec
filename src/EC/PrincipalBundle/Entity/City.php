@@ -42,7 +42,7 @@ class City
     protected $province;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\ComunidadBundle\Entity\Comunidad", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Comunidad", mappedBy="city")
      */
     protected $comunidades;
 
@@ -140,10 +140,10 @@ class City
     /**
      * Add comunidades
      *
-     * @param \EC\ComunidadBundle\Entity\Comunidad $comunidades
+     * @param \EC\PrincipalBundle\Entity\Comunidad $comunidades
      * @return City
      */
-    public function addComunidade(\EC\ComunidadBundle\Entity\Comunidad $comunidades)
+    public function addComunidade(\EC\PrincipalBundle\Entity\Comunidad $comunidades)
     {
         $this->comunidades[] = $comunidades;
     
@@ -153,9 +153,9 @@ class City
     /**
      * Remove comunidades
      *
-     * @param \EC\ComunidadBundle\Entity\Comunidad $comunidades
+     * @param \EC\PrincipalBundle\Entity\Comunidad $comunidades
      */
-    public function removeComunidade(\EC\ComunidadBundle\Entity\Comunidad $comunidades)
+    public function removeComunidade(\EC\PrincipalBundle\Entity\Comunidad $comunidades)
     {
         $this->comunidades->removeElement($comunidades);
     }

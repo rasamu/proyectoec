@@ -1,0 +1,66 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	{{comunidad.codigo}} -
+{% endblock %}
+
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/menu_comunidad.css') }}" />
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+    <script type='text/javascript' src="{{ asset('js/dropdown-menu.min_comunidad.js') }}"></script>        
+
+{% endblock %}
+
+{% block sidebar %}
+ {{ parent() }}
+
+{% endblock %}
+
+{% block colder %} 
+	{{ parent() }}
+	       
+	<h2 class="verde centrado">{% trans %}Comunidad{% endtrans %}: {{comunidad.codigo}}</h2>
+
+	<div class="nav_comunidad">
+		<nav>
+		<ul>
+			<li>
+				<a href="{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}">{% trans %}Tablón{% endtrans %}</a>
+			</li>
+			<li>
+				<a href="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}">{% trans %}Reuniones{% endtrans %}</a>
+			</li>		
+			<li>
+				<a href="#">{% trans %}Bloques{% endtrans%}</a>
+				<ul>
+					<li><a href="{{ path('ec_adminfincas_comunidad_listado_bloques', { 'cif': comunidad.cif }) }}">{% trans %}Listado{% endtrans %}</a></li>
+					<li><a href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo bloque{% endtrans %}</a></li>
+				</ul>			
+			</li>	
+			<li>
+				<a href="#">{% trans %}Propietarios{% endtrans %}</a>
+				<ul>
+					<li><a href="{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}">{% trans %}Listado{% endtrans %}</a></li>
+					<li><a href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo propietario{% endtrans %}</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="{{ path('ec_listado_incidencias', { 'cif': comunidad.cif }) }}">{% trans %}Incidencias{% endtrans %}</a>
+			</li>	
+			<li>
+				<a href="#">{% trans %}Documentos{% endtrans %}</a>
+				<ul>
+					<li><a href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{% trans %}Documento nuevo{% endtrans %}</a></li>
+					<li><a href="{{ path('ec_listado_documentos', { 'cif': comunidad.cif }) }}">{% trans %}Listado{% endtrans %}</a></li>
+				</ul>
+			</li>	
+		</ul>	
+		</nav>
+	</div>
+	<div class="clear"></div>
+{% endblock %}

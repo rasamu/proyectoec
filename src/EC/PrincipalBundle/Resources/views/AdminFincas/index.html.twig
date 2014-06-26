@@ -1,0 +1,16 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Bienvenid@{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+ 
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	<h2 class="verde centrado">{% trans %}Bienvenid@{% endtrans %} {{ app.user.nombre }}</h2>
+{% endblock %}

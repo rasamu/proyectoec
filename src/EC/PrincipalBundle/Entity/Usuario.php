@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"propietario"="Usuario","adminfincas" = "EC\AdminFincasBundle\Entity\AdminFincas"})
+ * @ORM\DiscriminatorMap({"propietario"="Usuario","adminfincas" = "EC\PrincipalBundle\Entity\AdminFincas"})
  */
 class Usuario implements UserInterface, \Serializable
 {
@@ -129,11 +129,21 @@ class Usuario implements UserInterface, \Serializable
     protected $role;
     
     /**
-     * @ORM\OneToOne(targetEntity="EC\PropietarioBundle\Entity\Propiedad", inversedBy="propietario")
+     * @ORM\OneToOne(targetEntity="EC\PrincipalBundle\Entity\Propiedad", inversedBy="propietario")
      * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
      **/
     private $propiedad;
 
+	 /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Incidencia", mappedBy="usuario")
+     */
+    protected $incidencias;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="usuario")
+     */
+    protected $actuaciones;
+    
     /**
      * Set nombre
      *
@@ -352,10 +362,10 @@ class Usuario implements UserInterface, \Serializable
     /**
      * Set propiedad
      *
-     * @param \EC\PropietarioBundle\Entity\Propiedad $propiedad
+     * @param \EC\PrincipalBundle\Entity\Propiedad $propiedad
      * @return Usuario
      */
-    public function setPropiedad(\EC\PropietarioBundle\Entity\Propiedad $propiedad = null)
+    public function setPropiedad(\EC\PrincipalBundle\Entity\Propiedad $propiedad = null)
     {
         $this->propiedad = $propiedad;
     
@@ -365,10 +375,83 @@ class Usuario implements UserInterface, \Serializable
     /**
      * Get propiedad
      *
-     * @return \EC\PropietarioBundle\Entity\Propiedad 
+     * @return \EC\PrincipalBundle\Entity\Propiedad 
      */
     public function getPropiedad()
     {
         return $this->propiedad;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->incidencias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add incidencias
+     *
+     * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
+     * @return Usuario
+     */
+    public function addIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
+    {
+        $this->incidencias[] = $incidencias;
+    
+        return $this;
+    }
+
+    /**
+     * Remove incidencias
+     *
+     * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
+     */
+    public function removeIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
+    {
+        $this->incidencias->removeElement($incidencias);
+    }
+
+    /**
+     * Get incidencias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncidencias()
+    {
+        return $this->incidencias;
+    }
+
+    /**
+     * Add actuaciones
+     *
+     * @param \EC\PrincipalBundle\Entity\Actuacion $actuaciones
+     * @return Usuario
+     */
+    public function addActuacione(\EC\PrincipalBundle\Entity\Actuacion $actuaciones)
+    {
+        $this->actuaciones[] = $actuaciones;
+    
+        return $this;
+    }
+
+    /**
+     * Remove actuaciones
+     *
+     * @param \EC\PrincipalBundle\Entity\Actuacion $actuaciones
+     */
+    public function removeActuacione(\EC\PrincipalBundle\Entity\Actuacion $actuaciones)
+    {
+        $this->actuaciones->removeElement($actuaciones);
+    }
+
+    /**
+     * Get actuaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getActuaciones()
+    {
+        return $this->actuaciones;
     }
 }

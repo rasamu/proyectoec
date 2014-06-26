@@ -1,31 +1,3 @@
-ec_propietario:
-    resource: "@ECPropietarioBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/propietario
-    defaults: { _locale: es }
-    requirements:
-        _locale: en|es
-
-ec_comunidad:
-    resource: "@ECComunidadBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}
-    defaults: { _locale: es }
-    requirements:
-        _locale: en|es
-
-ec_backend:
-    resource: "@ECBackendBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/root
-    defaults: { _locale: es }
-    requirements:
-        _locale: en|es
-
-ec_admin_fincas:
-    resource: "@ECAdminFincasBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/adminfincas
-    defaults: { _locale: es }
-    requirements:
-        _locale: en|es
-        
 home:
     pattern:  /{_locale}
     defaults: { _controller: ECPrincipalBundle:Default:index, _locale:es }
@@ -54,3 +26,6 @@ logout:
    defaults: { _locale: es }
    requirements:
         _locale: en|es
+        
+fos_js_routing:
+   resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

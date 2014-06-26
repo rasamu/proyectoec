@@ -1,0 +1,70 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Listado de incidencias{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
+	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
+	<script type='text/javascript' src="{{ asset('js/boton_acciones.js') }}"></script>    
+	<script type="text/javascript">
+			$(document).ready(function() {
+				$('#example').dataTable();
+			} );
+	</script>
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+	<h2 class="verde izquierda">{% trans %}Listado de incidencias{% endtrans %}</h2>
+
+	<div id="demo">
+		<table class="display" id="example">
+			<thead>
+				<tr>
+					<th>{% trans %}Fecha{% endtrans %}</th>
+					<th>{% trans %}Categoria{% endtrans %}</th>
+					<th>{% trans %}Asunto{% endtrans %}</th>
+					<th>{% trans %}Estado{% endtrans %}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for incidencia in incidencias %}
+					<tr class="gradeX">
+					   <td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.fecha | localizeddate('short')}}</td>
+       				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.categoria.nombre}}</td>
+       				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.asunto}}</td>
+       				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.estado.nombre}}</td>
+      			</tr> 
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>{% trans %}Fecha{% endtrans %}</th>
+					<th>{% trans %}Categoria{% endtrans %}</th>
+					<th>{% trans %}Asunto{% endtrans %}</th>
+					<th>{% trans %}Estado{% endtrans %}</th>
+				</tr>
+			</tfoot>
+		</table>
+</div>
+	
+{% endblock %}
