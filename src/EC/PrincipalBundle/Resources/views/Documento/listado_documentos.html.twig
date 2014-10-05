@@ -7,7 +7,7 @@
 
 {% block stylesheets %}
  {{ parent() }}
-      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones_documentos.css') }}" />
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 
 {% endblock %}
 
@@ -35,15 +35,23 @@
 	{% endfor %}
 	
 	<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
-	
+	{% if is_granted('ROLE_ADMINFINCAS') %}
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Documento{% endtrans %}</a>
+	{% endif %}
+								
 	{% for tipo in tipos %}
 	
-		<div onclick="javascript:mostrar({{tipo.id}});" style="cursor:pointer;"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta"></img><h2 class="verde inline"> {{tipo.nombre}} </h2>({{ tipo.documentos.count }} Ficheros)</div>
+		<div onclick="javascript:mostrar({{tipo.id}});" style="cursor:pointer;"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta"></img><h2 class="verde inline"> {{tipo.nombre}} </h2>
+			{% set count=0 %}
+			{% for documento in documentos if documento.tipo==tipo %}
+					{%set count=count+1 %}
+			{% endfor %}
+			({{count}} Ficheros)
+		</div>
 		<div id="{{tipo.id}}" class="oculto margen_izquierdo">
-			{% for documento in documentos %}
-				{% if documento.tipo==tipo %}
+			{% for documento in documentos if documento.tipo==tipo%}
 						<p><b>Descripción: </b>{{documento.descripcion}}</p>				
-						<p><b> Creado el: </b><i>{{documento.fecha | localizeddate('long')}}</i></p>
+						<p><b> Creado el: </b>{{documento.fecha | date("d/m/Y H:i:s a")}}</p>
 						<p>
 						<b> Formato: </b>
 						{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
@@ -65,7 +73,6 @@
 						{% endif %}
 						</p>
 					<hr class="verde"></hr>
-				{% endif %}
 			{% endfor %}
 			
 		</div>

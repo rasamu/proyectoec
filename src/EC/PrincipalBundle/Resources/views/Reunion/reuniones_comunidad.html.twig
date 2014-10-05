@@ -7,22 +7,24 @@
 
 {% block stylesheets %}
    {{ parent() }}
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 	<link rel='stylesheet' type='text/css' href="{{ asset('css/fullcalendar.css') }}" />
 	<style>
-
-	#calendar {
-		width: 700px;
-		margin: 10px auto;
-	}
 
 </style>
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	
    <script type='text/javascript' src="{{ asset('js/moment.min.js') }}"></script>
 	<script type='text/javascript' src="{{ asset('js/fullcalendar.min.js') }}"></script>
 	<script type='text/javascript' src="{{ asset('js/lang-all.js') }}"></script>
+	
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
 	<script>
 		$(document).ready(function() {
 			var date = new Date();
@@ -32,17 +34,23 @@
             
         $('#calendar').fullCalendar({
         			 lang: '{{app.getRequest().getLocale()}}',
+        			 height:725,
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
                 minTime: '09:00:00',
+                
                 events: [
-                {% for reunion in reuniones %}
-                {
+                	{% for reunion in reuniones %}
+                	{
                 	  id: {{ reunion.id }},
                     title: '{{ reunion.descripcion }}',
+                    {% if is_granted('ROLE_ADMINFINCAS') %}
+                    		comunidad: '{{reunion.comunidad.codigo}}',
+                    		cif: '{{reunion.comunidad.cif}}',
+                    {% endif %}
                     start: '{{ reunion.fecha_toString() }}',
                     selectable: true,
                     {% if (reunion.comunidad.id!=comunidad.id) %}
@@ -50,24 +58,125 @@
                     		color: '#E6E6E6',
                     		textColor: '#000',                    		
                     {% endif %}
-                },
-                {% endfor %}
+                	},
+                	{% endfor %}
             	],
-            	eventClick: function(event) {
-        				confirm('¿Estás seguro de eliminar la reunión'+event.title);
-    				},
-    				dayClick: function(date) {
-        					alert('Clicked on: ' + date.format());
-    				},
-        });
+            	
+            	eventClick: function(event) {    
+            		{% if is_granted('ROLE_ADMINFINCAS') %}  					
+    						window.location=Routing.generate('ec_ver_reunion_comunidad', { id: event.id, cif: event.cif });
+    					{% else %}
+    					   window.location=Routing.generate('ec_ver_reunion_comunidad', { id: event.id });
+    					{% endif %}
+    				},		
+    				
+            	{% if is_granted('ROLE_ADMINFINCAS') %}
+    					dayClick: function(date) {
+    							var d = new Date();
+    							document.getElementById('form_fecha').value=date.format('DD-MM-YYYY');
+    							document.getElementById('form_hora_hour').value=date.format('H');
+    							document.getElementById('form_hora_minute').value=date.format('m');
+        						if(date>d){
+        							$("#nueva_reunion").dialog({ <!--  ------> muestra la ventana  -->
+            						width: 430,  <!-- -------------> ancho de la ventana -->
+            						height: 420,<!--  -------------> altura de la ventana -->
+            						show: "scale", <!-- -----------> animación de la ventana al aparecer -->
+            						hide: "scale", <!-- -----------> animación al cerrar la ventana -->
+            						resizable: "false", <!-- ------> fija o redimensionable si ponemos este valor a "true" -->
+            						position: "center",<!--  ------> posicion de la ventana en la pantalla (left, top, right...) -->
+            						modal: "true", <!-- ------------> si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
+        								title: "Comunidad {{comunidad.codigo}}"
+        							});
 
+        						}else{
+        						    alert('No es posible añadir una reunión con fecha anterior a la actual.');
+        						}
+    					},
+    					
+    					eventMouseover: function(calEvent, jsEvent) {
+    						var tooltip = '<div class="tooltipevent info"><p class="verde negrita">Comunidad: ' + calEvent.comunidad + '</p><p>'+ calEvent.title +'</p></div>';
+    						$("body").append(tooltip);
+    						$(this).mouseover(function(e) {
+        						$(this).css('z-index', 10000);
+        						$('.tooltipevent').fadeIn('500');
+        						$('.tooltipevent').fadeTo('10', 1.9);
+    						}).mousemove(function(e) {
+        						$('.tooltipevent').css('top', e.pageY + 10);
+        						$('.tooltipevent').css('left', e.pageX + 10);
+    						});
+						},
+
+						eventMouseout: function(calEvent, jsEvent) {
+    						$(this).css('z-index', 8);
+    						$('.tooltipevent').remove();
+						},
+    				{% endif %}
+        });
+        
+        {% if is_granted('ROLE_ADMINFINCAS') %}
+        		$('#crear').click(function()
+  		  		{
+  					$('#crear').hide();
+      			$('#loading').show();
+  		  		});
+  		  {% endif %}
     });
 	</script>
 {% endblock %}
 
 {% block colder %}
 	{{ parent() }}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
 	<h2 class="verde centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
 	<br></br>
+	
 	<div id='calendar'></div>
+	
+	{% if is_granted('ROLE_ADMINFINCAS') %}
+		<div id="nueva_reunion" class="ventana">  
+			<section class="form">
+				<h2 class="verde centrado">{% trans %}Nueva Reunión{% endtrans %}</h2>
+
+            <form action="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
+    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.fecha) }}</div>
+        				{{ form_widget(form.fecha) }}
+        				<div class="error">{{ form_errors(form.fecha) }}</div>
+    				</div>
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.hora) }}</div>
+        				{{ form_widget(form.hora) }}
+        				<div class="error">{{ form_errors(form.hora) }}</div>
+    				</div>
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.descripcion) }}</div>
+        				{{ form_widget(form.descripcion) }}
+        				<div class="error">{{ form_errors(form.descripcion) }}</div>
+    				</div>
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.file) }}</div>
+        				{{ form_widget(form.file) }}
+        				<div class="error">{{ form_errors(form.file) }}</div>
+    				</div>
+
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Crear{% endtrans %}" id="crear" />
+    					<img id="loading" src="{{ asset('images/loading.gif') }}" alt="loading"/>
+    				</div>
+            </form>
+			</section>
+		</div>
+	{% endif %}
 {% endblock %}

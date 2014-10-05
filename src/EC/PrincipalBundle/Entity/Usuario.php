@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Entity
@@ -143,6 +144,11 @@ class Usuario implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="usuario")
      */
     protected $actuaciones;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Log", mappedBy="usuario")
+     */
+    protected $logs;
     
     /**
      * Set nombre
@@ -453,5 +459,49 @@ class Usuario implements UserInterface, \Serializable
     public function getActuaciones()
     {
         return $this->actuaciones;
+    }
+
+    /**
+     * Add logs
+     *
+     * @param \EC\PrincipalBundle\Entity\Log $logs
+     * @return Usuario
+     */
+    public function addLog(\EC\PrincipalBundle\Entity\Log $logs)
+    {
+        $this->logs[] = $logs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove logs
+     *
+     * @param \EC\PrincipalBundle\Entity\Log $logs
+     */
+    public function removeLog(\EC\PrincipalBundle\Entity\Log $logs)
+    {
+        $this->logs->removeElement($logs);
+    }
+
+    /**
+     * Get logs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLogs()
+    {
+        return $this->logs;
+    }
+    
+    /**
+     * Get log
+     *
+     * @return \EC\PrincipalBundle\Entity\Log 
+     */
+    public function getUltimoLog()
+    {
+        $logs=$this->logs;
+        return $logs->Last();
     }
 }

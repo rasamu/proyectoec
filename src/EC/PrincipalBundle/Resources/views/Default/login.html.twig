@@ -16,18 +16,22 @@
 			<h2 class="verde centrado">{% trans %}Formulario de acceso{% endtrans %}</h2>
 		
 			{% if error %}
-				<div class="mensaje" style="color:red;">Datos incorrectos</div>
+				<div class="mensaje" style="color:red;">{% trans %}Datos incorrectos{% endtrans %}</div>
 			{% endif %}
 		
 			<form method="post" action="{{ path('login_check') }}">
 				<div class="campo_login">
 					<div class="label_campo"><label for="username">{% trans %}Usuario{% endtrans %}</label></div>
-					<input type="text" name="_username" id="username"/>
+					<input type="text" name="_username" id="username" value="{{ last_username }}"/>
 				</div>
 				<div class="campo_login">
 					<div class="label_campo"><label for="password">{% trans %}Contraseña{% endtrans %}</label></div>
 					<input type="password" name="_password" id="password" maxlength="9"/>
 				</div>
+				<div class="campo_login">
+					<input type="checkbox" id="remember_me" name="_remember_me" />
+    				<div class="label_campo"><label for="remember_me">No cerrar sesión</label></div>
+    			</div>
 				<div class="campo_login"><div></div><input type="submit" value="{% trans %}Acceder{% endtrans %}"></div>
 			</form>
 		</section>

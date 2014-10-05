@@ -9,13 +9,13 @@
     {{ parent() }}
     <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 	<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
-	<script type='text/javascript' src="{{ asset('js/boton_acciones.js') }}"></script>    
 	<script type="text/javascript">
 			$(document).ready(function() {
 				$('#example').dataTable();
@@ -36,6 +36,7 @@
 <h2 class="verde izquierda">{% trans %}Listado de bloques{% endtrans %}</h2>
 <a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 <a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo bloque{% endtrans %}</a>
 <div id="demo">
 		<table class="display" id="example">
 			<thead>

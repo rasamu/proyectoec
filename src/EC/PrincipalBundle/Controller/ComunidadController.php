@@ -85,7 +85,21 @@ class ComunidadController extends Controller
 				
 			}
 			
-        	return $this->render('ECPrincipalBundle:Comunidad:tablon_comunidad.html.twig',array('comunidad' =>$comunidad,'incidencias'=>$incidencias));
+			/*Buscamos las próximas reuniones de la comunidad*/
+			$fecha_actual=new \DateTime('now');
+			$fecha_proximo_mes=new \DateTime('now');
+			$fecha_proximo_mes->modify('+1 month');
+			
+    		$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+    				'SELECT r
+					FROM ECPrincipalBundle:Reunion r
+					WHERE r.comunidad=:comunidad and (r.fecha>= :fecha_actual and r.fecha< :proximo_mes)'
+			)->setParameters(array('comunidad'=>$comunidad,'fecha_actual'=>$fecha_actual,'proximo_mes'=>$fecha_proximo_mes,));	
+							
+			$proximas_reuniones = $query->getResult();	
+			
+        	return $this->render('ECPrincipalBundle:Comunidad:tablon_comunidad.html.twig',array('comunidad' =>$comunidad,'incidencias'=>$incidencias,'reuniones'=>$proximas_reuniones));
     }
 	 
 	 /**
@@ -100,62 +114,79 @@ class ComunidadController extends Controller
     		$form->handleRequest($request);
     			
     		if ($form->isValid()) {
+    				 //Comprobamos el Cif
     				 $cif=$form->get('cif')->getData();
 					 $comprobacion=$this->getDoctrine()
         				->getRepository('ECPrincipalBundle:Comunidad')
         				->find($cif);
         				
-        			 if(!$comprobacion){
-							/*Alta nueva*/
-    				 		$comunidad->setAdministrador($this->getUser());
-    				 		$cuidad=$form->get('city')->getData();
-    				 		$comunidad->setCity($cuidad);
-    			      	$this->getUser()->addComunidade($comunidad);
-							$cuidad->addComunidade($comunidad);    			      	
+        		    //Comprobamos el código de despacho
+        			 $em = $this->getDoctrine()->getManager();
+					 $query = $em->createQuery(
+    					'SELECT c
+						FROM ECPrincipalBundle:Comunidad c
+						WHERE c.codigo= :codigo and c.administrador= :admin'
+					 )->setParameters(array('codigo'=>$form->get('codigo')->getData(),'admin'=>$this->getUser()));			
+        			 $comprobacion_codigo=$query->getResult();
+        				
+        			if(!$comprobacion_codigo){
+        			 		if(!$comprobacion){
+								/*Alta nueva*/
+    				 			$comunidad->setAdministrador($this->getUser());
+    				 			$cuidad=$form->get('city')->getData();
+    				 			$comunidad->setCity($cuidad);
+    			      		$this->getUser()->addComunidade($comunidad);
+								$cuidad->addComunidade($comunidad);    			      	
     			      	
-    				 		$em = $this->getDoctrine()->getManager();
-   				 		$em->persist($comunidad);
-   				 		$em->flush();
+    				 			$em = $this->getDoctrine()->getManager();
+   				 			$em->persist($comunidad);
+   				 			$em->flush();
    				 		
-   				 		$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
-   				 		$this->get('session')->getFlashBag()->add('notice',$flash);
-   				 		$this->get('session')->getFlashBag()->add('color','green');
-   				 		return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
-        			 }else{
-        			 	if($comprobacion->getAdministrador()){
-        			 		/*Ya existe*/
-        			 		$flash=$this->get('translator')->trans('Comunidad ya registrada.');
+   				 			$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
+   				 			$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 			$this->get('session')->getFlashBag()->add('color','green');
+   				 			return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
+        			 		}else{
+        			 			if($comprobacion->getAdministrador()){
+        			 					/*Ya existe*/
+        			 					$flash=$this->get('translator')->trans('Comunidad ya registrada.');
+        			 					$this->get('session')->getFlashBag()->add('notice',$flash);
+        			 					$this->get('session')->getFlashBag()->add('color','red');
+										return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
+   				 			}else{
+										/*Actualizacion*/
+										$cuidad=$form->get('city')->getData();
+							
+										$comprobacion->setCodigo($form->get('codigo')->getData());
+										$comprobacion->setNPiscinas($form->get('n_piscinas')->getData());
+										$comprobacion->setNPistas($form->get('n_pistas')->getData());
+										$comprobacion->setGimnasio($form->get('gimnasio')->getData());
+										$comprobacion->setAscensor($form->get('ascensor')->getData());
+										$comprobacion->setConserjeria($form->get('conserjeria')->getData());
+										$comprobacion->setFechaAlta();
+   				 					$comprobacion->setAdministrador($this->getUser());
+   				 					$this->getUser()->addComunidade($comprobacion);
+   				 		
+   				 					$cuidad_old=$comprobacion->getCity();
+   				 					$cuidad_old->removeComunidade($comprobacion);
+   				 					$comprobacion->setCity($cuidad);
+    			      				$cuidad->addComunidade($comprobacion);
+    			      	
+    			      				$em = $this->getDoctrine()->getManager();
+   				 					$em->persist($comprobacion);
+   				 					$em->flush();
+   				 		
+   				 					$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
+   				 					$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 					$this->get('session')->getFlashBag()->add('color','green');
+										return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
+   				 			}
+        					}
+        			}else{
+        					$flash=$this->get('translator')->trans('El código de despacho '.$form->get('codigo')->getData().' ya está siendo usado por otra comunidad.');
         			 		$this->get('session')->getFlashBag()->add('notice',$flash);
         			 		$this->get('session')->getFlashBag()->add('color','red');
 							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
-   				 	}else{
-							/*Actualizacion*/
-							$cuidad=$form->get('city')->getData();
-							
-							$comprobacion->setCodigo($form->get('codigo')->getData());
-							$comprobacion->setNPiscinas($form->get('n_piscinas')->getData());
-							$comprobacion->setNPistas($form->get('n_pistas')->getData());
-							$comprobacion->setGimnasio($form->get('gimnasio')->getData());
-							$comprobacion->setAscensor($form->get('ascensor')->getData());
-							$comprobacion->setConserjeria($form->get('conserjeria')->getData());
-							$comprobacion->setFechaAlta();
-   				 		$comprobacion->setAdministrador($this->getUser());
-   				 		$this->getUser()->addComunidade($comprobacion);
-   				 		
-   				 		$cuidad_old=$comprobacion->getCity();
-   				 		$cuidad_old->removeComunidade($comprobacion);
-   				 		$comprobacion->setCity($cuidad);
-    			      	$cuidad->addComunidade($comprobacion);
-    			      	
-    			      	$em = $this->getDoctrine()->getManager();
-   				 		$em->persist($comprobacion);
-   				 		$em->flush();
-   				 		
-   				 		$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
-   				 		$this->get('session')->getFlashBag()->add('notice',$flash);
-   				 		$this->get('session')->getFlashBag()->add('color','green');
-							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
-   				 	}
         			}
         	}      	
         	return $this->render('ECPrincipalBundle:Comunidad:alta_comunidad.html.twig',
@@ -217,6 +248,7 @@ class ComunidadController extends Controller
  	public function editar_comunidadAction($cif, Request $request)
     {
     		$comunidad=$this->comprobar_comunidad($cif); 
+    		$codigo_anterior=$comunidad->getCodigo();
 	
 			$form = $this ->createFormBuilder($comunidad,array('csrf_protection' => false))
 					->add('codigo','text',array('label' => 'Código Despacho'))
@@ -230,6 +262,16 @@ class ComunidadController extends Controller
     		$form->handleRequest($request);
     			
     		if ($form->isValid()) {	
+    				//Comprobamos el código de despacho
+        			 $em = $this->getDoctrine()->getManager();
+					 $query = $em->createQuery(
+    					'SELECT c
+						FROM ECPrincipalBundle:Comunidad c
+						WHERE c.codigo= :codigo and c.administrador= :admin'
+					 )->setParameters(array('codigo'=>$form->get('codigo')->getData(),'admin'=>$this->getUser()));			
+        			 $comprobacion_codigo=$query->getResult();
+        				
+        			if($codigo_anterior==$form->get('codigo')->getData() or !$comprobacion_codigo){
     				 	$em = $this->getDoctrine()->getManager();
    				 	$em->persist($comunidad);
    				 	$em->flush();
@@ -237,8 +279,13 @@ class ComunidadController extends Controller
    				   $flash=$this->get('translator')->trans('Comunidad modificada con éxito.');    					
 						$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','green');
-						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',
-								array('cif'=>$cif)));
+						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('cif'=>$cif)));
+					}else{
+						$flash=$this->get('translator')->trans('El código de despacho '.$form->get('codigo')->getData().' ya está siendo usado por otra comunidad.');
+        			 	$this->get('session')->getFlashBag()->add('notice',$flash);
+        			 	$this->get('session')->getFlashBag()->add('color','red');
+						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('cif'=>$cif)));
+					}
         	}
         	
         	return $this->render('ECPrincipalBundle:Comunidad:editar_comunidad.html.twig',

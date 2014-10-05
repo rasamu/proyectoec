@@ -76,7 +76,7 @@ class BloqueController extends Controller
     	$bloques=$comunidad->getBloques();    
     	$format = $this->get('request')->get('_format');
     	        
-    	$filename = "bloques_".$comunidad->getCif().".pdf";
+    	$filename = "bloques_".$comunidad->getCodigo().".pdf";
     	$response= $this->render(sprintf('ECPrincipalBundle:Bloque:comunidad_listado_bloques_pdf.%s.twig', $format), array(
         		'bloques' => $bloques, 'comunidad' => $comunidad
     		));
@@ -93,7 +93,7 @@ class BloqueController extends Controller
     		$comunidad=$this->comprobar_comunidad($cif); 
     		$bloques=$comunidad->getBloques();   
     	
-			$filename = "bloques_".$comunidad->getCif().".csv";
+			$filename = "bloques_".$comunidad->getCodigo().".csv";
 	
 			$response = $this->render('ECPrincipalBundle:Bloque:comunidad_listado_bloques_csv.html.twig', array('bloques' => $bloques));
 			$response->headers->set('Content-Type', 'text/csv');

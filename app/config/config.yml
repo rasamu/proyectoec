@@ -16,9 +16,11 @@ framework:
         engines: ['twig']
         #assets_version: SomeVersionScheme
         assets_base_urls: http://localhost/
-    default_locale:  "%locale%"
+    default_locale:  %locale%
     trusted_proxies: ~
-    session:         ~
+    session:
+        cookie_lifetime: 7200
+        gc_maxlifetime: 3600
     fragments:       ~
     http_method_override: true
     
@@ -28,10 +30,11 @@ twig:
     strict_variables: %kernel.debug%
     
 services:
-    twig.extension.intl:
-        class: Twig_Extensions_Extension_Intl
-        tags:
-           - { name: twig.extension }
+    ec.listener.login:  
+        class: EC\PrincipalBundle\Listener\UserLogin  
+        arguments: [ @doctrine, @service_container ]  
+        tags:  
+        - { name: kernel.event_listener, event: security.interactive_login, method: onLogin } 
 
 # Assetic Configuration
 assetic:

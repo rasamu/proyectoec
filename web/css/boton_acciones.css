@@ -1,49 +1,77 @@
-.sddm
-{	margin: 0;
-	padding: 0;
-	z-index: 30}
+.nav_acciones {
+	margin-top: 2px;
+}
+.nav_acciones nav {
+     font-family: arial, sans-serif;
+     position: relative;
+     font-size:1.000em;
+     color:#333;
+     margin: 0 auto;
+}
+ 
+.nav_acciones nav ul {
+     list-style-type: none;
+     margin: 0;
+}
+ 
+.nav_acciones nav ul li {
+     float: left;
+     position: relative;
+     top:0;
+}
+ 
+.nav_acciones nav ul li a {
+    text-align: center;
+    padding:5px 11px;
+    display:block;
+    text-decoration:none;
+    color:#FFF;
+    margin:0 0;
+    background: #316431;
+	border-radius: 5px;
+	-moz-border-top-left-radius: 5px;
+	-moz-border-top-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
 
-.sddm li
-{	margin: 0;
-	padding: 0;
-	list-style: none;
-	float: left;
-	font: bold 0.917em arial}
-
-.sddm li a
-{	display: block;
-	margin: 0 1px 0 0;
-	padding: 4px 10px;
-	width: 60px;
-	background: #316431;
-	color: #FFF;
-	text-align: center;
-	text-decoration: none}
-
-.sddm li a:hover
-{	background: #316431}
-
-.sddm div
-{	position: absolute;
-	visibility: hidden;
-	margin: 0;
-	padding: 0;
-	background: #EAEBD8;
-	border: 1px solid #316431}
-
-.sddm div a
-	{	position: relative;
-		display: block;
-		margin: 0;
-		padding: 5px 10px;
-		width: auto;
-		white-space: nowrap;
-		text-align: left;
-		text-decoration: none;
-		background: #D9E1E8;
-		color: #000;
-		font: 0.917em arial}
-
-.sddm div a:hover
-	{	background: #F7D118;
-		color: #000}
+}
+.nav_acciones nav ul li:hover > a {
+	background:#F7D118;
+	color:#316431;
+	text-shadow:none;
+   border-left: 2px solid #316431;
+   padding: 5px 10px;
+}
+.nav_acciones nav ul li ul {
+     display: none
+}
+ 
+.nav_acciones nav ul li:hover ul {
+     display: block;
+     position: absolute;
+     top:24px;
+     left:0;
+     padding:0;
+     margin:0;
+     width:auto;
+     z-index: 1;
+}
+.nav_acciones nav ul li:hover ul li a {
+     display:block;
+     background:#D9E1E8;
+     color:#316431;
+     text-align: left;
+     border-top: 2px solid #316431;
+     border-left: 2px solid #316431;
+     border-right: 2px solid #316431;
+     border-radius: 5px;
+     -moz-border-radius: 0;
+     -webkit-border-radius: 0;
+     font-weight:normal;
+     width:100px;
+}
+ 
+.nav_acciones nav ul li:hover ul li a:hover, nav ul li a:hover {
+	background:#F7D118;
+    color:#316431;
+}

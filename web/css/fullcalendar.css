@@ -275,7 +275,7 @@ html .fc,
 	background-color: #316431; /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
 	font-size: .85em;
-	cursor: default;
+	cursor: pointer;
 	}
 
 a.fc-event {
@@ -597,5 +597,13 @@ table.fc-border-separate {
 .fc-agenda .ui-resizable-resizing { /* TODO: better selector */
 	_overflow: hidden;
 	}
-	
-	
+
+.info{
+	width:auto;
+	height:auto;
+	background:#D9E1E8;
+	position:absolute;
+	z-index:10001;
+	padding: 5px;
+	border:1px solid #316431;
+	}

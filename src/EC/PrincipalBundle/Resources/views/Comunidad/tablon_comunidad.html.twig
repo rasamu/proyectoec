@@ -24,8 +24,23 @@
 			<p>No existen incidencias.</p>
 		{% else %}
 			{% for incidencia in incidencias %}
-				<p><a href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a><i> {{incidencia.fecha | localizeddate('short')}}</i> <b>Categoría: </b>{{incidencia.categoria.nombre}} <b>Bloque: </b>{{incidencia.usuario.propiedad.bloque.num}} <b>Piso: </b>{{incidencia.usuario.propiedad.piso}}</p>
+				<p><a href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> {{incidencia.fecha | date("d/m/Y")}} <b>Categoria: </b>{{incidencia.categoria.nombre}} <b>Bloque: </b>{{incidencia.usuario.propiedad.bloque.num}} <b>Piso: </b>{{incidencia.usuario.propiedad.piso}}</p>
 			{% endfor %}
 		{% endif %}
+				
+		<hr class="verde"></hr>
+		<h3 class="verde izquierda">{% trans %}Próximas reuniones:{% endtrans %}</h3>
+		{% if reuniones is empty%}
+			<p>No hay reuniones próximamente.</p>
+		{% else %}
+			{% for reunion in reuniones %}
+				{% if is_granted('ROLE_ADMINFINCAS') %}  					
+				   <p><a href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': comunidad.cif }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> {{reunion.fecha | date("d/m/Y h:i:s a")}} <b>Descripción: </b>{{reunion.descripcion}}</p>        		
+				{% else %}
+				   <p><a href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> {{reunion.fecha | date("d/m/Y h:i:s a")}} <b>Descripción: </b>{{reunion.descripcion}}</p>        		
+				{% endif %}
+			{% endfor %}
+		{% endif %}					
+							
 	
 {% endblock %}

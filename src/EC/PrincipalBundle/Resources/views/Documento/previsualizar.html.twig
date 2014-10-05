@@ -7,7 +7,7 @@
 
 {% block stylesheets %}
  {{ parent() }}
-      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones_documentos.css') }}" />
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 
 {% endblock %}
 
@@ -30,7 +30,7 @@
 	<h2 class="verde centrado">{% trans %}Documento{% endtrans %}</h2>
 	
    <p><b>Descripción: </b>{{documento.descripcion}}</p>
-	<p><b>Creado el: </b><i>{{documento.fecha | localizeddate('long')}}</i></p>
+	<p><b>Creado el: </b>{{documento.fecha | date("d/m/Y H:i:sa")}}</p>
 	<p><b> Formato: </b>
 		{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
 			<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}"></img>

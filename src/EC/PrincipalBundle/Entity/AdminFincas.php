@@ -584,4 +584,42 @@ class AdminFincas extends Usuario
     {
         return $this->actuaciones;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $logs;
+
+
+    /**
+     * Add logs
+     *
+     * @param \EC\PrincipalBundle\Entity\Log $logs
+     * @return AdminFincas
+     */
+    public function addLog(\EC\PrincipalBundle\Entity\Log $logs)
+    {
+        $this->logs[] = $logs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove logs
+     *
+     * @param \EC\PrincipalBundle\Entity\Log $logs
+     */
+    public function removeLog(\EC\PrincipalBundle\Entity\Log $logs)
+    {
+        $this->logs->removeElement($logs);
+    }
+
+    /**
+     * Get logs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLogs()
+    {
+        return $this->logs;
+    }
 }

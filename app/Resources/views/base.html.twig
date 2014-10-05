@@ -87,11 +87,7 @@
         						{% if is_granted('ROLE_ADMINFINCAS') %}	  
 								<div id='cssmenu'>
 									<ul>
-   									<li class="has-sub"><a href="#"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a>
-      									<ul>
-      	   								<li><a href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>{% trans %}Alta{% endtrans %}</span></a></li>
-   	      								<li class="last"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Listado{% endtrans %}</span></a></li>
-    	 									</ul>
+   									<li class="has-sub"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a>
  	  									</li>
 										<li class="has-sub"><a href="#"><span>{% trans %}Mi Perfil{% endtrans %}</span></a>
 											<ul>
@@ -105,16 +101,10 @@
 									{% if is_granted('ROLE_VECINO') %}
 										<div id='cssmenu'>
 											<ul>
-												<li class="has-sub"><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a>
-												<li class="has-sub"><a href="{{ path('ec_reuniones_comunidad') }}"><span>{% trans %}Reuniones{% endtrans %}</span></a>
-												<li class="has-sub"><a href="#"><span>{% trans %}Incidencias{% endtrans %}</span></a>
-													<ul>
-   													<li><a href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar{% endtrans %}</span></a></li>
-   													<li><a href="{{ path('ec_listado_incidencias') }}"><span>{% trans %}Listado{% endtrans %}</span></a></li>
-													</ul>
-												</li>
-												<li class="has-sub"><a href="{{ path('ec_listado_documentos') }}"><span>{% trans %}Documentos{% endtrans %}</span></a>
-												
+												<li class="has-sub"><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
+												<li class="has-sub"><a href="{{ path('ec_reuniones_comunidad') }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>
+												<li class="has-sub"><a href="{{ path('ec_listado_incidencias') }}"><span>{% trans %}Incidencias{% endtrans %}</span></a></li>
+												<li class="has-sub"><a href="{{ path('ec_listado_documentos') }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>												
 												</li>
 												<li class="has-sub"><a href="#"><span>{% trans %}Mi Perfil{% endtrans %}</span></a>
 													<ul>

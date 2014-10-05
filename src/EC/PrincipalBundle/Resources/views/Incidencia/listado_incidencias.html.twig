@@ -8,7 +8,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
 
@@ -16,7 +16,6 @@
 	{{ parent() }}
 	<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
-	<script type='text/javascript' src="{{ asset('js/boton_acciones.js') }}"></script>    
 	<script type="text/javascript">
 			$(document).ready(function() {
 				$('#example').dataTable();
@@ -35,7 +34,8 @@
 	{% endfor %}
 	
 	<h2 class="verde izquierda">{% trans %}Listado de incidencias{% endtrans %}</h2>
-
+   <a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar{% endtrans %}</span></a>
+   
 	<div id="demo">
 		<table class="display" id="example">
 			<thead>
@@ -49,7 +49,7 @@
 			<tbody>
 			{% for incidencia in incidencias %}
 					<tr class="gradeX">
-					   <td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.fecha | localizeddate('short')}}</td>
+					   <td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</td>
        				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.categoria.nombre}}</td>
        				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.asunto}}</td>
        				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.estado.nombre}}</td>

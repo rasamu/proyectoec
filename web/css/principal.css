@@ -29,6 +29,7 @@ p{
 .margen_izquierdo{
 	margin-left: 38px;	
 }
+
 h2{
 	font-size: 1.333em;
 	margin-bottom: 10px;
@@ -41,6 +42,11 @@ h2{
 .inline{
 	display:inline;	
 }
+
+.ventana{
+	display: none;	
+}
+
 /*Cabecera*/
 /*Topheader*/
 #topheader{
@@ -103,6 +109,10 @@ footer{
 
 .verde{
 	color: #316431;	
+}
+
+.negrita{
+	font-weight: bold;	
 }
 
 /*subheader*/
@@ -179,11 +189,12 @@ footer{
 /*Columna Derecha*/
 #col-der { 
 	text-align: left;
-	padding: 15px; 
+	padding: 8px; 
 	/*border-left: 2px solid #316431;*/
-	width: 72%;
+	width: 71%;
 	float: left;
 	min-height: 400px;
+	margin-bottom: 15px;
 }
 
 /*Mensajes de erros y éxito*/

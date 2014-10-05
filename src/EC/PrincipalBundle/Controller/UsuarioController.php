@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Ps\PdfBundle\Annotation\Pdf;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class UsuarioController extends Controller
 {  
@@ -262,12 +263,13 @@ class UsuarioController extends Controller
    							}
    							$em->persist($propietario);
    							$em->persist($role[0]);
-   							$em->flush();
-    			
-    							$flash=$this->get('translator')->trans('Propietario registrado con éxito.');
+   							$em->flush();  							   						
+   							  							
+   							$flash=$this->get('translator')->trans('Propietario registrado con éxito.');
 								$this->get('session')->getFlashBag()->add('notice',$flash.' Contraseña:'.$password);
    							$this->get('session')->getFlashBag()->add('color','green');
-   							return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
+   							
+   							return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));  							
    					}else{
    							$flash=$this->get('translator')->trans('Propietario ya registrado.');
    				 			$this->get('session')->getFlashBag()->add('notice',$flash);
@@ -339,7 +341,7 @@ class UsuarioController extends Controller
    				 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
    				 		}else{
    				 			if($aux==1){
-   				 				$flash=$this->get('translator')->trans('Algunos números de bloques del fichero no existen, por lo que no se han podido dar de alta.');
+   				 				$flash=$this->get('translator')->trans('Algunos números de bloques del fichero no existen, por lo que no se han podido dar de alta a todos los propietarios.');
    				 				$this->get('session')->getFlashBag()->add('notice',$flash);
    				 				$this->get('session')->getFlashBag()->add('color','red');
    				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
@@ -424,7 +426,7 @@ class UsuarioController extends Controller
     	$bloques=$comunidad->getBloques();    
     	$format = $this->get('request')->get('_format');
     	
-    	$filename = "propietarios_".$comunidad->getCif().".pdf";    	        
+    	$filename = "propietarios_".$comunidad->getCodigo().".pdf";    	        
     	$response=$this->render(sprintf('ECPrincipalBundle:Usuario:comunidad_listado_propietarios_pdf.%s.twig', $format), array(
         		'bloques' => $bloques, 'comunidad' => $comunidad
     		));
@@ -441,7 +443,7 @@ class UsuarioController extends Controller
     		$comunidad=$this->comprobar_comunidad($cif); 
     		$bloques=$comunidad->getBloques();   
     	
-			$filename = "propietarios_".$comunidad->getCif().".csv";
+			$filename = "propietarios_".$comunidad->getCodigo().".csv";
 	
 			$response = $this->render('ECPrincipalBundle:Usuario:comunidad_listado_propietarios_csv.html.twig', array('bloques' => $bloques));
 			$response->headers->set('Content-Type', 'text/csv');

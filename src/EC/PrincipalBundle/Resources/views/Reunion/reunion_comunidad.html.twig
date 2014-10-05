@@ -1,0 +1,51 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	{% trans %}Reunión{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+   {{ parent() }}
+   <link rel='stylesheet' type='text/css' href="{{ asset('css/botones_documentos.css') }}" />
+      
+</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+	<h2 class="verde centrado">{% trans %}Reunión{% endtrans %}</h2>
+	
+	<p><b>Descripción: </b>{{reunion.descripcion}}</p>
+	<p><b>Fecha: </b><i>{{reunion.fecha | date("d/m/Y H:i a")}}</i></p>
+	<p><b> Formato: </b>
+		{% if reunion.getFormat()=='pdf' or reunion.getFormat()=='odt' or reunion.getFormat()=='odp' or reunion.getFormat()=='ods' or reunion.getFormat()=='doc' or reunion.getFormat()=='txt' %}
+			<img src="{{ asset('images/'~reunion.getFormat()~'-icon.png') }}" alt="{{reunion.getFormat()}}"></img>
+		{% endif %}
+		{{reunion.getFormat()}}
+	</p>
+	<p><b>Tamaño: </b>{{reunion.getSize()}}</p>
+	<p>
+		<a class="boton_documento btn_download" href="{{ path('ec_reunion_descargar', { 'id': reunion.id })  }}">Descargar</a>
+		{% if is_granted('ROLE_ADMINFINCAS') %}
+			<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_eliminar_reunion', { 'cif': comunidad.cif, 'id': reunion.id}) }}" onclick="return confirm('¿Estás seguro de eliminar la reunión {{reunion.descripcion}}?')">Eliminar</a>
+		{% endif %}
+	</p>
+	
+	<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/reuniones/'~reunion.path~'') }}" width='700' height='900' allowfullscreen webkitallowfullscreen></iframe>
+
+	
+{% endblock %}

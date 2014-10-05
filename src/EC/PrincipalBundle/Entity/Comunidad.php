@@ -98,7 +98,6 @@ class Comunidad
      */
     protected $reuniones;
  
- 
     public function __construct()
     {
         $this->bloques = new ArrayCollection();

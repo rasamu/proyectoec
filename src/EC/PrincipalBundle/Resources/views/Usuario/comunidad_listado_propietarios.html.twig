@@ -9,13 +9,13 @@
     {{ parent() }}
     <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 	<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
-	<script type='text/javascript' src="{{ asset('js/boton_acciones.js') }}"></script>    
 	<script type="text/javascript">
 			$(document).ready(function() {
 				$('#example').dataTable();
@@ -36,14 +36,17 @@
 <h2 class="verde izquierda">{% trans %}Listado de propietarios{% endtrans %}</h2>
 <a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 <a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo propietario{% endtrans %}</a>
+
 <div id="demo">
 		<table class="display" id="example">
 			<thead>
 				<tr>
-					<th>{% trans %}Nº Bloque{% endtrans %}</th>
+					<th>{% trans %}Bloque{% endtrans %}</th>
 					<th>{% trans %}Dirección{% endtrans %}</th>
 					<th>{% trans %}Nombre{% endtrans %}</th>
 					<th>{% trans %}Propiedad{% endtrans %}</th>
+					<th>{% trans %}Conexión{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
@@ -55,16 +58,28 @@
 					   <td>{{bloque.direccion}}</td>
        				<td>{{propiedad.propietario.nombre}}</td>
        				<td>{{propiedad.piso}}</td>
+       				<td>{% if propiedad.propietario.getUltimoLog() is empty %}
+								-
+       					{% else %}
+       						 {{propiedad.propietario.getUltimoLog().fecha | date("d/m/Y H:i") }}
+       					{% endif %}
+       				</td>
        				<td>
-       					<a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
-							<ul class="sddm">
-    							<li><a href="" onmouseover="mopen({{propiedad.propietario.id}})" onmouseout="mclosetime()">{% trans %}Acciones{% endtrans %}</a>
-        							<div id="{{propiedad.propietario.id}}" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-        							<a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Nombrar presidente{% endtrans %}</a>
-        							<a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">{% trans %}Nombrar vicepresidente{% endtrans %}</a>
-        							</div>
-    							</li>
-							</ul>
+							<div class="nav_acciones" id="{{propiedad.propietario.id}}">
+								<nav>
+								<ul>
+									<li>
+										<a href="#">{% trans %}Acciones{% endtrans %}</a>
+										<ul>
+											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"> Eliminar Propietario</a></li>
+											<li><a href="#" onclick="alert('La contraseña de {{propiedad.propietario.nombre}} es {{propiedad.propietario.password}}')">Ver contraseña</a></li>
+										</ul>
+									</li>
+								</ul>
+								</nav>
+							</div>
 							<div style="clear:both"></div>
        				</td>
       			</tr>
@@ -73,10 +88,11 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th>{% trans %}Nº Bloque{% endtrans %}</th>
+					<th>{% trans %}Bloque{% endtrans %}</th>
 					<th>{% trans %}Dirección{% endtrans %}</th>
 					<th>{% trans %}Nombre{% endtrans %}</th>
 					<th>{% trans %}Propiedad{% endtrans %}</th>
+					<th>{% trans %}Conexión{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</tfoot>

@@ -51,9 +51,23 @@ ec_tablon_comunidad:
     defaults: { _controller: ECPrincipalBundle:Comunidad:ver_tablon_comunidad, cif: null }
 
 #REUNIONES
+ec_ver_reunion_comunidad:
+    pattern:  /comunidad/reunion/{id}/{cif}
+    defaults: { _controller: ECPrincipalBundle:Reunion:ver_reunion_comunidad, cif: null }
+    options:
+        expose: true
+    
 ec_reuniones_comunidad:
     pattern:  /comunidad/reuniones/{cif}
     defaults: { _controller: ECPrincipalBundle:Reunion:ver_reuniones_comunidad, cif: null }
+    
+ec_reunion_descargar:
+    pattern:  /reunion/descargar/{id}
+    defaults: { _controller: ECPrincipalBundle:Reunion:descargar_documento_reunion }
+
+ec_adminfincas_eliminar_reunion:
+    pattern:  /adminfincas/comunidad/{cif}/eliminar/reunion/{id}
+    defaults: { _controller: ECPrincipalBundle:Reunion:eliminar_reunion }
    
 #BLOQUES
 ec_adminfincas_comunidad_listado_bloques:
