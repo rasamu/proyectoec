@@ -1,7 +1,7 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Listado de comunidades{% endtrans %}
+	{% trans %}Mis Comunidades{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -31,10 +31,11 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
-<h2 class="verde izquierda">{% trans %}Listado de comunidades{% endtrans %}</h2>
+<h2 class="verde izquierda">{% trans %}Mis Comunidades{% endtrans %}</h2>
 <a href="{{ path('ec_adminfincas_listado_comunidades_pdf') }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 <a href="{{ path('ec_adminfincas_listado_comunidades_csv') }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 <a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>{% trans %}Nueva Comunidad{% endtrans %}</span></a>
+<a class="boton_estadistica btn_estadistica" href="{{ path('ec_adminfincas_comunidad_estadisticas_incidencias') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a>
 <div id="demo">
 		<table class="display" id="example">
 			<thead>

@@ -2,7 +2,7 @@ body {
 	font-family: serif, Arial, Helvetica;
 	font-size: 0.750em; /*12px*/
 	color: #000; 
-	background-color:  #d9e1e8;
+	background-color:  #f4f9fd;
 	margin: 0;
 }
 
@@ -32,7 +32,8 @@ p{
 
 h2{
 	font-size: 1.333em;
-	margin-bottom: 10px;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 .oculto{
@@ -49,10 +50,22 @@ h2{
 
 /*Cabecera*/
 /*Topheader*/
+#header{
+	width: 962px;
+	margin:0 auto;
+	border: 1px solid #F7D118;
+	margin-bottom: 10px;
+	margin-top: 25px;
+	box-shadow:3px 3px 3px 3px #316431;
+	border-radius:10px;
+}
+
 #topheader{
 	height: 60px; 
 	background-color: #316431; 
 	color:#fff;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
 }
 
 #tituloheader{
@@ -79,7 +92,11 @@ footer{
 	padding: 12px;
  	background-color: #316431; 
  	color:#fff;
-	box-shadow:0 4px 4px 0 #000000;
+	box-shadow:3px 3px 3px 3px #316431;
+	width: 962px;
+	margin:0 auto;
+	border: 1px solid #F7D118;
+	border-radius:10px;
 }
 
 #footer{
@@ -117,8 +134,9 @@ footer{
 
 /*subheader*/
 #subheader{
-	border-bottom: 2px solid #316431;
-	background-color:  #d9e1e8;
+	background-color:  #D9E1E8;
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
 }
 
 #botones{
@@ -166,7 +184,6 @@ footer{
 
 /*Contenido*/
 #wrapper{
-		background-color: #fff;
 		clear: both;
 }
 
@@ -175,26 +192,35 @@ footer{
 	margin:0 auto;
 	overflow:hidden;
 	clear: both;
-	background-color: #fff;
+
 }
 
 /*Columna Izquierda*/
 #sidebar { 
-	width: 20%;
-	padding: 15px; 
+	width: 23%;
+	padding: 10px; 
 	float: left;
 	clear: both;
+	border: 1px solid #316431;
+	background-color: #fff;
+	box-shadow:3px 3px 3px 3px #316431;
+	min-height: 400px;
+	border-radius:10px;
 }
 
 /*Columna Derecha*/
 #col-der { 
 	text-align: left;
-	padding: 8px; 
-	/*border-left: 2px solid #316431;*/
+	padding: 10px; 
+	border: 1px solid #316431;
 	width: 71%;
 	float: left;
 	min-height: 400px;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
+	float:right;
+	background-color: #fff;
+	box-shadow:3px 3px 3px 3px #316431;
+	border-radius:10px;
 }
 
 /*Mensajes de erros y éxito*/
@@ -217,12 +243,11 @@ input, select, textarea
    border: 1px solid rgba(0,0,0, 0.2);
    color: #316431;
    background-color: #d9e1e8;
-   padding: 3px;
    margin-left: 20px;
-   padding: 5px;
    resize: none;
    cursor:pointer;
    text-align:left;
+   padding: 2px;
 }
 
 input:focus,textarea:focus,select:focus
@@ -263,7 +288,7 @@ input:focus,textarea:focus,select:focus
 }
 
 .campo{
-    margin-top: 15px;
+    margin-top: 10px;
     /*width: 300px;*/
     float: left;
     margin-left: 10px;

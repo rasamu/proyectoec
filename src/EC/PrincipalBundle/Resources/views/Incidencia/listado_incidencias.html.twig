@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Listado de incidencias{% endtrans %}
+	{% trans %}Incidencias{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -33,8 +33,14 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde izquierda">{% trans %}Listado de incidencias{% endtrans %}</h2>
+	<h2 class="verde centrado">{% trans %}Incidencias{% endtrans %}</h2>
+	
+	{% if is_granted('ROLE_VECINO')%}
    <a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar{% endtrans %}</span></a>
+   {% endif %}
+   {% if is_granted('ROLE_ADMINFINCAS')%}
+   <a class="boton_estadistica btn_estadistica" href="{{ path('ec_adminfincas_comunidad_estadisticas_incidencias', {'cif':comunidad.cif}) }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a>
+   {% endif %}
    
 	<div id="demo">
 		<table class="display" id="example">

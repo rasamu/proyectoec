@@ -1,0 +1,18 @@
+{% extends 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}¿Eres administrador de fincas?{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	<h2 class="verde centrado">{% trans %}¿Eres administrador de fincas?{% endtrans %}</h2>
+   <a href="{{ path('ec_principal_alta_adminfincas') }}">{% trans %}Alta Administrador{% endtrans %}</a>
+{% endblock %}

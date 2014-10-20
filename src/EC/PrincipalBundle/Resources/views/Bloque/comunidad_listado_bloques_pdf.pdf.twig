@@ -2,10 +2,16 @@
 <!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
 <pdf>
 	<dynamic-page>
-		<h1>Listado de bloques</h1>
-		<h3>Comunidad: {{comunidad.codigo}}</h3>
-		<table>
+		<h1 padding="10px" background-color="#316431" width="100%"><span color="yellow">Entre</span><span color="white">Comunidades</span></h1>
+		<h2>Comunidad: {{comunidad.codigo}}</h2>
+		<p>Listado de bloques</p>
 
+		<table>
+			<tr padding="5px">
+				<td text-align="center" font-style="bold">NºBloque</td>
+				<td text-align="center" font-style="bold">Dirección</td>
+			</tr>
+			
 			{% for bloque in bloques %}
 				<tr>
 				   <td>{{bloque.num}}</td>
@@ -14,5 +20,6 @@
 			{% endfor %}
 
 		</table>
+		<p text-align="right">{{ "now"|date("d/m/Y") }}</p>
 	</dynamic-page>
 </pdf>

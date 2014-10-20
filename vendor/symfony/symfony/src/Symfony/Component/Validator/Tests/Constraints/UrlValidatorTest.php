@@ -13,7 +13,6 @@ namespace Symfony\Component\Validator\Tests\Constraints;
 
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Constraints\UrlValidator;
-use Symfony\Component\Validator\Validation;
 
 class UrlValidatorTest extends AbstractConstraintValidatorTest
 {
@@ -114,14 +113,14 @@ class UrlValidatorTest extends AbstractConstraintValidatorTest
     public function testInvalidUrls($url)
     {
         $constraint = new Url(array(
-            'message' => 'myMessage'
+            'message' => 'myMessage',
         ));
 
         $this->validator->validate($url, $constraint);
 
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => '"'.$url.'"',
-        ));
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', '"'.$url.'"')
+            ->assertRaised();
     }
 
     public function getInvalidUrls()
@@ -155,7 +154,7 @@ class UrlValidatorTest extends AbstractConstraintValidatorTest
     public function testCustomProtocolIsValid($url)
     {
         $constraint = new Url(array(
-            'protocols' => array('ftp', 'file', 'git')
+            'protocols' => array('ftp', 'file', 'git'),
         ));
 
         $this->validator->validate($url, $constraint);

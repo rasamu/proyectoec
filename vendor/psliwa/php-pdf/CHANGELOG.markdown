@@ -1,9 +1,15 @@
 CHANGELOG
 =========
 
-* 1.2.4-DEV (???)
+* 1.2.5-DEV (???)
 
   * (nothing)
+
+* 1.2.4 (2014-09-28)
+
+  * [#52] fix document-template support
+  * [#64] fix dependencies versions in composer.json
+  * [#77] fix placeholders support when document template is used
 
 * 1.2.3 (2014-03-15)
 

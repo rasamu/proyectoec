@@ -36,7 +36,7 @@
 	{% endfor %}
 		<section class="form">
 			<h2 class="verde centrado">{% trans %}Alta propietario{% endtrans %}</h2>
-         <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}" method="post">
+         <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post">
     				<div style="color:red;">{{ form_errors(form) }}</div>
  			
     				<div class="campo">
@@ -81,7 +81,7 @@
 
 		<section class="form">
 			<h2 class="verde centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
-            <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form_csv) }}>
+            <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post" {{ form_enctype(form_csv) }}>
     				<div style="color:red;">{{ form_errors(form_csv) }}</div>
 
     				<div class="campo_login">

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new EC\PrincipalBundle\ECPrincipalBundle(),
             new Ps\PdfBundle\PsPdfBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Gremo\HighchartsBundle\GremoHighchartsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

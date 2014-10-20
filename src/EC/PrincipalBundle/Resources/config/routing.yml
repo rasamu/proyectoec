@@ -7,6 +7,10 @@ ec_principal_check:
     pattern:  /check
     defaults: { _controller: ECPrincipalBundle:Default:check}
     
+ec_principal_eres_adminfincas:
+    pattern:  /adfincas
+    defaults: { _controller: ECPrincipalBundle:Default:eres_adminfincas}
+    
 ec_principal_contacto:
     pattern:  /contacto
     defaults: { _controller: ECPrincipalBundle:Default:contacto}
@@ -115,8 +119,16 @@ ec_documento_previsualizar:
 
 #USUARIOS-PROPIETARIOS
 ec_adminfincas_comunidad_alta_propietario:
-    pattern:  /adminfincas/comunidad/{cif}/alta/propietario
-    defaults: { _controller: ECPrincipalBundle:Usuario:alta_propietario }  
+    pattern:  /adminfincas/comunidad/{cif}/alta/propietario/{_format}
+    defaults: { _controller: ECPrincipalBundle:Usuario:alta_propietario, _format: html }
+    requirements:
+      _format: pdf|html
+    
+ec_adminfincas_comunidad_generar_password_propietario:
+    pattern:  /adminfincas/comunidad/{cif}/propietario/password/{id}
+    defaults: { _controller: ECPrincipalBundle:Usuario:comunidad_generar_password_propietario_pdf, _format:pdf }
+    requirements:
+      _format: pdf
     
 ec_adminfincas_comunidad_listado_propietarios:
     pattern:  /adminfincas/comunidad/{cif}/listado/propietarios
@@ -157,13 +169,17 @@ ec_incidencia:
     pattern:  /incidencia/{id}
     defaults: { _controller: ECPrincipalBundle:Incidencia:ver_incidencia }
     
+ec_adminfincas_comunidad_estadisticas_incidencias:
+   pattern:  /adminfincas/comunidad/estadisticas/incidencias/{cif}
+   defaults: { _controller: ECPrincipalBundle:Incidencia:estadisticasIncidencias, cif: null }
+    
 #ROLE   
 ec_adminfincas_nombrar_presidente:
-    pattern:  /comunidad/{cif}/nombrarpresidente/{id}
+    pattern:  /adminfincas/comunidad/{cif}/nombrarpresidente/{id}
     defaults: { _controller: ECPrincipalBundle:Role:nombrar_presidente }
 
 ec_adminfincas_nombrar_vicepresidente:
-    pattern:  /comunidad/{cif}/nombrarvicepresidente/{id}
+    pattern:  /adminfincas/comunidad/{cif}/nombrarvicepresidente/{id}
     defaults: { _controller: ECPrincipalBundle:Role:nombrar_vicepresidente }
 
 #ADMINFINCAS

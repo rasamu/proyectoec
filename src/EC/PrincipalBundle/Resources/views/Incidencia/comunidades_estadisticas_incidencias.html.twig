@@ -1,0 +1,83 @@
+{% extends comunidad!=NULL ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Estadísticas{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script>
+	$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Incidencias por categorías',
+            style: {
+					color: 'orange',
+            }
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -66,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Número de incidencias'
+            },
+            minTickInterval: 1
+        },
+        legend: {
+            enabled: false
+        },
+        series: [{
+            name: 'Incidencias',
+            data: [
+            	{% for cat in categorias %}
+            		['{{cat.nombre}}',{{cat.total}}],
+					{% endfor %}
+            ],
+            dataLabels: {
+                enabled: false,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                x: 4,
+                y: 10,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif',
+                    textShadow: '0 0 3px black'
+                }
+            }
+        }]
+    });
+	});
+	</script>
+	   
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	<h2 class="verde centrado">{% trans %}Estadísticas{% endtrans %}</h2>
+	
+	<div id="container" style="min-width: 500px; min-height: 450px; margin: 0 auto"></div>
+
+
+{% endblock %}

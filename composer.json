@@ -13,6 +13,7 @@
         "doctrine/doctrine-bundle": "1.2.*",
         "twig/extensions": "1.0.*",
         "symfony/assetic-bundle": "2.3.*",
+        "kriswallsmith/assetic": "1.1.x@stable",
         "symfony/swiftmailer-bundle": "2.3.*",
         "symfony/monolog-bundle": "2.3.*",
         "sensio/distribution-bundle": "2.3.*",
@@ -21,7 +22,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "psliwa/pdf-bundle": "dev-master",
         "jwage/easy-csv": "0.0.1",
-        "friendsofsymfony/jsrouting-bundle": "dev-master"
+        "friendsofsymfony/jsrouting-bundle": "dev-master",
+        "gremo/highcharts-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [

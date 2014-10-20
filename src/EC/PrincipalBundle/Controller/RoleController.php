@@ -35,7 +35,7 @@ class RoleController extends Controller
 	 }
     
     /**
-	  * @Route("/comunidad/{cif}/nombrarpresidente/{dni}", name="ec_adminfincas_nombrar_presidente")
+	  * @Route("/adminfincas/comunidad/{cif}/nombrarpresidente/{id}", name="ec_adminfincas_nombrar_presidente")
 	  * @Template()
 	  */
     public function nombrar_presidenteAction($cif, $id){
@@ -103,7 +103,7 @@ class RoleController extends Controller
     }
     
     /**
-	  * @Route("/comunidad/{cif}/nombrarvicepresidente/{dni}", name="ec_adminfincas_nombrar_vicepresidente")
+	  * @Route("/adminfincas/comunidad/{cif}/nombrarvicepresidente/{id}", name="ec_adminfincas_nombrar_vicepresidente")
 	  * @Template()
 	  */
     public function nombrar_vicepresidenteAction($cif, $id){

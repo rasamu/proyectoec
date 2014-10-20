@@ -41,6 +41,15 @@ class DefaultController extends Controller
     }
     
     /**
+	  * @Route("/adfincas", name="ec_principal_eres_adminfincas")
+	  * @Template("ECPrincipalBundle:Default:eres_adminfincas.html.twig")
+	  */
+    public function eres_adminfincasAction()
+    {   		
+        	return $this->render('ECPrincipalBundle:Default:eres_adminfincas.html.twig');
+    }
+    
+    /**
 	  * @Route("/contacto", name="ec_principal_contacto")
 	  * @Template("ECPrincipalBundle:Default:contacto.html.twig")
 	  */

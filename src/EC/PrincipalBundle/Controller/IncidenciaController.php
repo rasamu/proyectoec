@@ -98,7 +98,7 @@ class IncidenciaController extends Controller
     
     /**
 	  * @Route("/propietario/incidencia/nueva", name="ec_propietario_nueva_incidencia")
-	  * @Template("ECPrincipalBundle:Incidencias:nueva_incidencia.html.twig")
+	  * @Template("ECPrincipalBundle:Incidencia:nueva_incidencia.html.twig")
 	  */
     public function nueva_incidenciaAction(Request $request)
     {
@@ -153,7 +153,7 @@ class IncidenciaController extends Controller
     
     /**
 	  * @Route("/incidencias/listado", name="ec_listado_incidencias")
-	  * @Template("ECPrincipalBundle:Incidencias:listado_incidencias.html.twig")
+	  * @Template("ECPrincipalBundle:Incidencia:listado_incidencias.html.twig")
 	  */
     public function listado_incidenciasAction($cif=null)
     {
@@ -208,7 +208,7 @@ class IncidenciaController extends Controller
     
     /**
 	  * @Route("/incidencia/{id}", name="ec_incidencia")
-	  * @Template("ECPrincipalBundle:Incidencias:ver_incidencia.html.twig")
+	  * @Template("ECPrincipalBundle:Incidencia:ver_incidencia.html.twig")
 	  */
     public function ver_incidenciaAction($id, Request $request)
     {
@@ -339,6 +339,48 @@ class IncidenciaController extends Controller
 			return $this->render('ECPrincipalBundle:Incidencia:ver_incidencia.html.twig',
 					array('incidencia'=>$incidencia, 'actuaciones'=>$actuaciones, 'form' => $form->createView(), 'form_estado' => $form_estado->createView(), 'form_privacidad' => $form_privacidad->createView(),'comunidad'=>$comunidad
 					));
+    }
+    
+    /**
+	  * @Route("/adminfincas/comunidad/estadisticas/incidencias/{cif}", name="ec_adminfincas_comunidad_estadisticas_incidencias")
+	  * @Template("ECPrincipalBundle:Incidencia:comunidades_estadisticas_incidencias.html.twig")
+	  */
+    public function estadisticasIncidenciasAction($cif=null)
+    {   			
+    		if($cif!=null){
+    			$comunidad=$this->comprobar_comunidad($cif);
+    			/*Contamos las incidencias de la comunidad $cif que administra el administrador por categorias*/
+    			$em = $this->getDoctrine()->getManager();	
+				$query = $em->createQuery(
+    				'SELECT cat.nombre,(SELECT COUNT(i) FROM ECPrincipalBundle:Incidencia i
+    				WHERE i.categoria=cat and i.usuario IN
+					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad=:comunidad)))) as total
+					FROM ECPrincipalBundle:Categoria cat'
+				)->setParameters(array('comunidad'=>$comunidad));			
+				$categorias = $query->getResult();	
+				
+    		}else{
+    			$comunidad=null;
+				/*Contamos las incidencias de todas las comunidades que administra el administrador por categorias*/
+    			$em = $this->getDoctrine()->getManager();	
+				$query = $em->createQuery(
+    				'SELECT cat.nombre,(SELECT COUNT(i) FROM ECPrincipalBundle:Incidencia i
+    				WHERE i.categoria=cat and i.usuario IN
+					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
+					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))))) as total
+					FROM ECPrincipalBundle:Categoria cat'
+				)->setParameters(array('admin'=>$this->getUser()));			
+				$categorias = $query->getResult();		
+    		}  		
+    		
+    		return $this->render('ECPrincipalBundle:Incidencia:comunidades_estadisticas_incidencias.html.twig',
+					array('categorias'=>$categorias,'comunidad'=>$comunidad
+					));
+			
     }
     
 }

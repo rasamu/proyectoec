@@ -206,7 +206,8 @@ class UsuarioController extends Controller
 	 }
 
 	/**
-	  * @Route("/comunidad/{cif}/alta/propietario", name="ec_adminfincas_comunidad_alta_propietario")
+	  * @Pdf()
+	  * @Route("/comunidad/{cif}/alta/propietario/{_format}", name="ec_adminfincas_comunidad_alta_propietario")
 	  * @Template("ECPrincipalBundle:Usuario:alta_propietario.html.twig")
 	  */
     public function alta_propietarioAction(Request $request, $cif)
@@ -263,13 +264,22 @@ class UsuarioController extends Controller
    							}
    							$em->persist($propietario);
    							$em->persist($role[0]);
-   							$em->flush();  							   						
-   							  							
-   							$flash=$this->get('translator')->trans('Propietario registrado con éxito.');
-								$this->get('session')->getFlashBag()->add('notice',$flash.' Contraseña:'.$password);
-   							$this->get('session')->getFlashBag()->add('color','green');
+   							$em->flush();
    							
-   							return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));  							
+   							$imprimir="<tr>
+   												<td>".$propietario->getPropiedad()->getBloque()->getNum()."</td>
+   												<td>".$propietario->getPropiedad()->getPiso()."</td>
+   												<td>".$propietario->getNombre()."</td>
+													<td>".$propietario->getUser()."</td>
+													<td>".$password."</td>
+      										</tr>";
+      										
+      						$mensaje="Se han dado de alta los siguientes propietarios:";				
+      						$format = $this->get('request')->get('_format');
+    							$filename = "nuevos_propietarios_".$comunidad->getCodigo().".pdf";    	        
+    							$response=$this->render(sprintf('ECPrincipalBundle:Usuario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
+    							$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+								return $response;							   						   							  							
    					}else{
    							$flash=$this->get('translator')->trans('Propietario ya registrado.');
    				 			$this->get('session')->getFlashBag()->add('notice',$flash);
@@ -283,81 +293,92 @@ class UsuarioController extends Controller
         				$reader->setDelimiter(';');
         				$headers=$reader->getHeaders();
         				$aux=0;
+        				//--Recorremos el fichero csv haciendo todas las comprobaciones--
+        				//Comprobamos si las cabeceras del fichero csv son válidas
         				if($headers[0]=='nfinca' && $headers[1]=='piso' && $headers[2]=='razon') {
         					while($row = $reader->getRow()){  			
         						//Comprobamos que existe el bloque
-    							$bloque_csv = $this->comprobar_bloque($comunidad,$row[$headers[0]]);
-    							        				
+    							$bloque_csv = $this->comprobar_bloque($comunidad,$row[$headers[0]]);   							        				
     							if($bloque_csv){
     								//Comprobamos si ya existe el propietario
     								$propiedad_existente=$this->comprobar_propiedad($bloque_csv,$row[$headers[1]]);
-    								if(!$propiedad_existente or $propiedad_existente->getPropietario()->getNombre()!=$row[$headers[2]]){   
-    										$propietario_csv=new Usuario();									
-    										if(!$propiedad_existente){
-    												$propiedad_csv=new Propiedad();
-													$propietario_csv->setPropiedad($propiedad_csv);
-													$propiedad_csv->setPropietario($propietario_csv);
-													$propiedad_csv->setBloque($bloque_csv);
-													$bloque_csv->addPropiedade($propiedad_csv);
-													$propiedad_csv->setPiso($row[$headers[1]]);							
-											}else{
-												//Eliminamos el antiguo propietario
-												$this->eliminar_propietario($propiedad_existente->getPropietario());					
-												$propiedad_existente->setPropietario($propietario_csv);
-												$propietario_csv->setPropiedad($propiedad_existente);							
-											}
-		
-											$propietario_csv->setNombre($row[$headers[2]]);
-											$password=$this->generar_password();
-											$nombre_usuario=$this->generar_nombre_usuario($propietario_csv->getNombre());
-											$propietario_csv->setUser($nombre_usuario);
-											$propietario_csv->setPassword($password);
-											$this->setSecurePassword($propietario_csv);
-											$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('2');
-											$propietario_csv->setRole($role[0]);
-											$role[0]->addUsuario($propietario_csv);
-								
-											$em = $this->getDoctrine()->getManager();
-											if(!$propiedad_existente){
-   				 							$em->persist($bloque_csv);
-   				 							$em->persist($propiedad_csv);
-   				 						}else{
-   				 							$em->persist($propiedad_existente);
-   				 						}
-   				 						$em->persist($propietario_csv);
-   				 						$em->persist($role[0]);
-   				 						$em->flush();
-   				 				}else{
-   				 					$aux=2;	
+    								if($propiedad_existente!=null and $propiedad_existente->getPropietario()->getNombre()==$row[$headers[2]]){
+   				 					$flash=$this->get('translator')->trans('Error: Existen propietarios que ya han sido dados de alta.');
+   				 					$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 					$this->get('session')->getFlashBag()->add('color','red');
+   				 					return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));		
    				 				}
    				 			}else{
-   				 				$aux=1;	
+   				 				$flash=$this->get('translator')->trans('Error: Existen bloques que no están dados de alta');
+   				 				$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 				$this->get('session')->getFlashBag()->add('color','red');
+   				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
    				 			}
     						}
-    						if($aux==0){
-    							$flash=$this->get('translator')->trans('Registro de propietarios realizado con éxito.');
-    							$this->get('session')->getFlashBag()->add('notice',$flash);
-   				 			$this->get('session')->getFlashBag()->add('color','green');
-   				 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
-   				 		}else{
-   				 			if($aux==1){
-   				 				$flash=$this->get('translator')->trans('Algunos números de bloques del fichero no existen, por lo que no se han podido dar de alta a todos los propietarios.');
-   				 				$this->get('session')->getFlashBag()->add('notice',$flash);
-   				 				$this->get('session')->getFlashBag()->add('color','red');
-   				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
-   				 			}else{
-   				 				$flash=$this->get('translator')->trans('Algunos propietarios ya están registrados, por lo que no todos se han dado de alta.');
-   				 				$this->get('session')->getFlashBag()->add('notice',$flash);
-   				 				$this->get('session')->getFlashBag()->add('color','red');
-   				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
-   				 			}
-   				 		}
-            		}else{
+        				}else{
             			$flash=$this->get('translator')->trans('Cabeceras del fichero CSV no válidas.');
             			$this->get('session')->getFlashBag()->add('notice',$flash);
    				 		$this->get('session')->getFlashBag()->add('color','red');
    				 		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
-            		}				
+            		}	
+            		
+            		//Recorremos el fichero dando de alta a todos los usuarios
+            		$reader = new \EasyCSV\Reader($csv->getFile());
+        				$reader->setDelimiter(';');
+        				$headers=$reader->getHeaders();
+            		$imprimir="";
+        				while($row = $reader->getRow()){  			
+    							$propietario_csv=new Usuario();									
+    							if(!$propiedad_existente){
+    									$propiedad_csv=new Propiedad();
+										$propietario_csv->setPropiedad($propiedad_csv);
+										$propiedad_csv->setPropietario($propietario_csv);
+										$propiedad_csv->setBloque($bloque_csv);
+										$bloque_csv->addPropiedade($propiedad_csv);
+										$propiedad_csv->setPiso($row[$headers[1]]);							
+								}else{
+									//Eliminamos el antiguo propietario
+									$this->eliminar_propietario($propiedad_existente->getPropietario());					
+									$propiedad_existente->setPropietario($propietario_csv);
+									$propietario_csv->setPropiedad($propiedad_existente);							
+								}
+		
+								$propietario_csv->setNombre($row[$headers[2]]);
+								$password=$this->generar_password();
+								$nombre_usuario=$this->generar_nombre_usuario($propietario_csv->getNombre());
+								$propietario_csv->setUser($nombre_usuario);
+								$propietario_csv->setPassword($password);
+								$this->setSecurePassword($propietario_csv);
+								$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('2');
+								$propietario_csv->setRole($role[0]);
+								$role[0]->addUsuario($propietario_csv);
+								
+								$em = $this->getDoctrine()->getManager();
+								if(!$propiedad_existente){
+   				 				$em->persist($bloque_csv);
+   				 				$em->persist($propiedad_csv);
+   				 			}else{
+   				 				$em->persist($propiedad_existente);
+   				 			}
+   				 			$em->persist($propietario_csv);
+   				 			$em->persist($role[0]);
+   				 			$em->flush();     
+   				 			
+   				 			$imprimir=$imprimir."<tr>
+   												<td>".$propietario_csv->getPropiedad()->getBloque()->getNum()."</td>
+   												<td>".$propietario_csv->getPropiedad()->getPiso()."</td>
+   												<td>".$propietario_csv->getNombre()."</td>
+													<td>".$propietario_csv->getUser()."</td>
+													<td>".$password."</td>
+      										</tr>";
+   				 	}
+   				 	
+   				 	$mensaje="Se han dado de alta los siguientes propietarios:";
+   				 	$format = $this->get('request')->get('_format');
+    					$filename = "nuevos_propietarios_".$comunidad->getCodigo().".pdf";    	        
+    					$response=$this->render(sprintf('ECPrincipalBundle:Usuario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
+    					$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);				
+						return $response;	 					
         			}
         		}
         		return $this->render('ECPrincipalBundle:Usuario:alta_propietario.html.twig',
@@ -369,6 +390,48 @@ class UsuarioController extends Controller
    			$this->get('session')->getFlashBag()->add('color','red');
    			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_bloque', array('cif'=>$comunidad->getCif())));
         	}
+    }
+    
+    /**
+     * @Pdf()
+     * @Route("/adminfincas/comunidad/{cif}/propietario/password/{id}", name="ec_adminfincas_comunidad_generar_password_propietario")
+     */
+    public function comunidad_generar_password_propietario_pdfAction($cif, $id)
+    {
+    	$comunidad=$this->comprobar_comunidad($cif); 
+    	
+    	$em = $this->getDoctrine()->getManager();
+		$query = $em->createQuery(
+    		'SELECT p
+       	FROM ECPrincipalBundle:Usuario p
+      	WHERE p.id = :id'
+		)->setParameters(array('id' => $id));		
+		try {
+    		$propietario = $query->getSingleResult();
+		} catch (\Doctrine\Orm\NoResultException $e) {
+        	throw new AccessDeniedException();
+		}
+		
+		$password_generado=$this->generar_password();
+		$propietario->setPassword($password_generado);
+		$this->setSecurePassword($propietario);
+   	$em->persist($propietario);
+   	$em->flush();     
+   	   				 			
+    	$imprimir="<tr>
+   						<td>".$propietario->getPropiedad()->getBloque()->getNum()."</td>
+   						<td>".$propietario->getPropiedad()->getPiso()."</td>
+   						<td>".$propietario->getNombre()."</td>
+							<td>".$propietario->getUser()."</td>
+							<td>".$password_generado."</td>
+      			</tr>";
+      									
+      $mensaje="Nuevas contraseñas generadas:";										
+      $format = $this->get('request')->get('_format');
+    	$filename = "nueva_contraseña_".$propietario->getId()."_".$comunidad->getCodigo().".pdf";    	        
+    	$response=$this->render(sprintf('ECPrincipalBundle:Usuario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
+    	$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+		return $response;	
     }
     
 	/**

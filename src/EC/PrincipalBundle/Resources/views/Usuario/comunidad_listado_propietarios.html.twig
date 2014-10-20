@@ -2,7 +2,7 @@
 
 {% block title %}
 	{{ parent() }}
-	{% trans %}Listado de propietarios{% endtrans %}
+	{% trans %}Propietarios{% endtrans %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -33,7 +33,7 @@
     		{% endfor %}
 	{% endfor %}
 
-<h2 class="verde izquierda">{% trans %}Listado de propietarios{% endtrans %}</h2>
+<h2 class="verde centrado">{% trans %}Propietarios{% endtrans %}</h2>
 <a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 <a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 <a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo propietario{% endtrans %}</a>
@@ -71,10 +71,10 @@
 									<li>
 										<a href="#">{% trans %}Acciones{% endtrans %}</a>
 										<ul>
-											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
 											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
 											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"> Eliminar Propietario</a></li>
-											<li><a href="#" onclick="alert('La contraseña de {{propiedad.propietario.nombre}} es {{propiedad.propietario.password}}')">Ver contraseña</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de generar una nueva contraseña a {{propiedad.propietario.nombre}}?')">Generar contraseña</a></li>
 										</ul>
 									</li>
 								</ul>

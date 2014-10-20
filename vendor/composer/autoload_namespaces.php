@@ -28,6 +28,7 @@ return array(
     'JsonpCallbackValidator' => array($vendorDir . '/willdurand/jsonp-callback-validator/src'),
     'Incenteev\\ParameterHandler' => array($vendorDir . '/incenteev/composer-parameter-handler'),
     'Imagine' => array($vendorDir . '/psliwa/php-pdf/lib'),
+    'Gremo\\HighchartsBundle' => array($vendorDir . '/gremo/highcharts-bundle'),
     'FOS\\JsRoutingBundle' => array($vendorDir . '/friendsofsymfony/jsrouting-bundle'),
     'EasyCSV' => array($vendorDir . '/jwage/easy-csv/lib'),
     'Doctrine\\ORM' => array($vendorDir . '/doctrine/orm/lib'),

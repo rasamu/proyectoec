@@ -2,7 +2,7 @@
 
 {% block title %}
 	{{ parent() }}
-	{% trans %}Listado de bloques{% endtrans %}
+	{% trans %}Bloques{% endtrans %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -33,7 +33,7 @@
     		{% endfor %}
 	{% endfor %}
 	
-<h2 class="verde izquierda">{% trans %}Listado de bloques{% endtrans %}</h2>
+<h2 class="verde centrado">{% trans %}Bloques{% endtrans %}</h2>
 <a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 <a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 <a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo bloque{% endtrans %}</a>

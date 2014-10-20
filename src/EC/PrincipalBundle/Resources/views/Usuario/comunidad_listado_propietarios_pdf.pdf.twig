@@ -2,21 +2,29 @@
 <!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
 <pdf>
 	<dynamic-page>
-		<h1>Listado de propietarios</h1>
-		<h3>Comunidad: {{comunidad.codigo}}</h3>
+		<h1 padding="10px" background-color="#316431" width="100%"><span color="yellow">Entre</span><span color="white">Comunidades</span></h1>
+		<h2>Comunidad: {{comunidad.codigo}}</h2>
+		<p>Listado de propietarios</p>
 		<table>
-
+			<tr padding="5px">
+				<td text-align="center" font-style="bold">NºBloque</td>
+				<td text-align="center" font-style="bold">Dirección</td>
+				<td text-align="center" font-style="bold">Piso</td>
+				<td text-align="center" font-style="bold">Propietario</td>
+			</tr>
+			
 			{% for bloque in bloques %}
 				{% for propiedad in bloque.propiedades%}
 					<tr>
 						<td>{{bloque.num}}</td>
 						<td>{{bloque.direccion}}</td>
+						<td>{{propiedad.piso}}</td>
        				<td>{{propiedad.propietario.nombre}}</td>
-       				<td>{{propiedad.piso}}</td>
       			</tr>
       		{% endfor %}
 			{% endfor %}
 
 		</table>
+		<p text-align="right">{{ "now"|date("d/m/Y") }}</p>
 	</dynamic-page>
 </pdf>
