@@ -16,9 +16,12 @@
     		{% endfor %}
 	{% endfor %}
 	
-		<section class="form">
+	<section class="form">
+		<hgroup>
 			<h2 class="verde centrado">{% trans %}Editar comunidad{% endtrans %}</h2>
-         <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
+		</hgroup>
+		
+      <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
     		<div style="color:red;">{{ form_errors(form) }}</div>
 		
 			<div class="campo">
@@ -58,10 +61,10 @@
     		</div>    		
 
     		<div class="campo">
-    		<input type="submit" value="{% trans %}Guardar{% endtrans %}"/>
-    		<input type="button" value="{% trans %}Volver{% endtrans %}" onclick="history.back()"/>
+    			<input type="submit" value="{% trans %}Guardar{% endtrans %}"/>
+    			<input type="button" value="{% trans %}Volver{% endtrans %}" onclick="history.back()"/>
     		</div>
  
-			</form>
-		</section>
+		</form>
+	</section>
 {% endblock %}

@@ -35,6 +35,7 @@
 	clear: both;
 	margin-top:5px; 
 	zoom: 1; /* Feeling sorry for IE */
+	margin-bottom: 50px;
 }
 
 .dataTables_processing {
@@ -175,7 +176,7 @@ table.display tr.heading2 td {
 }
 
 table.display td {
-	padding: 3px 5px;
+	padding: 5px 5px;
 }
 
 table.display td.center {

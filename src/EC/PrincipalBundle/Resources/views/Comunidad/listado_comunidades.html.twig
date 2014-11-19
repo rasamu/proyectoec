@@ -24,6 +24,7 @@
 
 {% block colder %}
 	{{ parent() }}
+	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -31,12 +32,15 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
-<h2 class="verde izquierda">{% trans %}Mis Comunidades{% endtrans %}</h2>
-<a href="{{ path('ec_adminfincas_listado_comunidades_pdf') }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-<a href="{{ path('ec_adminfincas_listado_comunidades_csv') }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
-<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>{% trans %}Nueva Comunidad{% endtrans %}</span></a>
-<a class="boton_estadistica btn_estadistica" href="{{ path('ec_adminfincas_comunidad_estadisticas_incidencias') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a>
-<div id="demo">
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Mis Comunidades{% endtrans %}</h2>
+	</hgroup>
+	
+	<a href="{{ path('ec_adminfincas_listado_comunidades_pdf') }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_adminfincas_listado_comunidades_csv') }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_alta_comunidad') }}"><span>{% trans %}Nueva Comunidad{% endtrans %}</span></a>
+	
+	<div id="demo">
 		<table class="display" id="example">
 			<thead>
 				<tr>
@@ -53,8 +57,8 @@
        			<td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
        			<td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
        			<td>
-       			<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
-       			<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
+       				<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
+       				<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
        			</td>
       		</tr> 
 			{% endfor %}
@@ -68,5 +72,5 @@
 				</tr>
 			</tfoot>
 		</table>
-</div>
+	</div>
 {% endblock %}

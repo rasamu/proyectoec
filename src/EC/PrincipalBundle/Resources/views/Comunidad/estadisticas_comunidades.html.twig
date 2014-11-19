@@ -1,0 +1,92 @@
+{% extends 'ECPrincipalBundle::layout_estadisticas.html.twig' %}
+
+{% block title %}
+	{% trans %}Estadísticas{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/highcharts.js') }}"></script>
+	<script src="{{ asset('js/exporting.js') }}"></script>
+	<script>
+	$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'bar',
+            backgroundColor:'rgba(255, 255, 255, 0.1)'
+        },
+        title: {
+            text: 'Comunidades',
+            style: {
+					color: '#355664'
+            }
+        },
+        xAxis: {
+            categories: [{%for comu in comunidades%}'Comunidad {{comu.codigo}}',{%endfor%}],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            labels: {
+                overflow: 'justify'
+            },
+            title: {
+                text: 'Total'
+            }
+        },
+        tooltip: {
+       		pointFormat: '<span style="color:{series.color}"></span> {series.name}: <b>{point.y}</b><br/>'
+		  },
+        credits: {
+      		enabled: false
+  		  },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+				name: 'Incidencias',
+            data: [{%for incidencias in totales_incidencias%}{{incidencias.total}},{%endfor%}],
+            color: '#93c1d4'
+        },{
+            name: 'Propietarios',
+            data: [{%for propietarios in totales_propietarios%}{{propietarios.total}},{%endfor%}],
+				color: '#355664'
+        }]
+    });
+	});
+	</script>
+	   
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	
+	<div id="container" class="grafica_estadisticas"></div>
+
+{% endblock %}

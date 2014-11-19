@@ -21,15 +21,18 @@
     		{% endfor %}
 	{% endfor %}
 	
-
-	<h2 class="verde centrado">{% trans %}Incidencia{% endtrans %}</h2>
-	<p><b>Categoría:</b> {{incidencia.categoria.nombre}}</p>
-	<p><b>Asunto:</b> {{incidencia.asunto}}</p>
-	<p><b>Fecha:</b> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</p>
-	<p><b>Propietario:</b> {{incidencia.usuario.nombre}}</p>
-	<p><b>Bloque:</b> {{incidencia.usuario.propiedad.bloque.direccion}}	<b>Piso:</b> {{incidencia.usuario.propiedad.piso}}</p>
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Incidencia{% endtrans %}</h2>
+	<hgroup>
+	
+	<section class="form">
+			<p><b>Categoría:</b> {{incidencia.categoria.nombre}}</p>
+			<p><b>Asunto:</b> {{incidencia.asunto}}</p>
+			<p><b>Fecha:</b> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</p>
+			<p><b>Propietario:</b> {{incidencia.usuario.nombre}}</p>
+			<p><b>Bloque:</b> {{incidencia.usuario.propiedad.bloque.direccion}}	<b>Piso:</b> {{incidencia.usuario.propiedad.piso}}</p>
 		
-		{% if is_granted('ROLE_ADMINFINCAS') %}
+			{% if is_granted('ROLE_ADMINFINCAS') %}
 		
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_privacidad) }}>
     				   <div style="color:red;">{{ form_errors(form_privacidad) }}</div>
@@ -51,20 +54,27 @@
     					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
 				</form>
 				
-		{% else %}
+			{% else %}
 				<p><b>Privacidad:</b> {{incidencia.privacidad.nombre}}</b></p>
 				<p><b>Estado:</b> {{incidencia.estado.nombre}}</b></p>
-		{% endif %}		
-	<section class="form">
-		<p><b>Descripción:</b> {{incidencia.descripcion}}</p>
-		<p><b>Actuaciones:</b></p>
-		{% for actuacion in actuaciones %}
-			<p>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  {{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} {% if is_granted('ROLE_ADMINFINCAS') %}(Administrador){% endif %}{% if is_granted('ROLE_PRESIDENTE') %}(Presidente){% endif %}{% if is_granted('ROLE_VICEPRESIDENTE') %}(Vicepresidente){% endif %}:</p>
-			<p style="margin-left:30px;">{{actuacion.mensaje}}</p>
-		{% endfor %}
+			{% endif %}		
 
-	{% if ( incidencia.estado.id !='3') %}	
+			<p><b>Descripción:</b> {{incidencia.descripcion}}</p>
+			<p><b>Actuaciones:</b></p>
+			{% for actuacion in actuaciones %}
+				<p>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
+				{%if actuacion.usuario is not empty%}
+					{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} 
+					{% if actuacion.usuario.role.nombre=='ROLE_ADMINFINCAS' %}(Administrador){% endif %}
+					{% if actuacion.usuario.role.nombre=='ROLE_PRESIDENTE' %}(Presidente){% endif %}
+					{% if actuacion.usuario.role.nombre=='ROLE_VICEPRESIDENTE' %}(Vicepresidente){% endif %}:</p>
+				{% else %}
+					Antiguo propietario
+				{% endif %}
+				<p style="margin-left:30px;">{{actuacion.mensaje}}</p>
+			{% endfor %}
 
+			{% if ( incidencia.estado.id !='3') %}	
             <form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post">
     				<div style="color:red;">{{ form_errors(form) }}</div>
     				
@@ -79,6 +89,6 @@
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
 				</form>
-		</section>
-	{% endif %}
+			{% endif %}
+	</section>
 {% endblock %}

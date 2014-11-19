@@ -44,11 +44,13 @@
 {% endblock %}
 
 {% block colder %}
-	   {{ parent() }}
+	  {{ parent() }}
 	    
-		<section class="form">
+	<section class="form">
+		<hgroup>
 			<h2 class="verde centrado">{% trans %}Alta Comunidad{% endtrans %}</h2>
-            <form action="{{ path('ec_adminfincas_alta_comunidad') }}" method="POST">
+		</hgroup>
+      <form action="{{ path('ec_adminfincas_alta_comunidad') }}" method="POST">
     		<div style="color:red;">{{ form_errors(form) }}</div>
 
     		<div class="campo">
@@ -118,6 +120,6 @@
     		<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
-            </form>
-		</section>
+       </form>
+	</section>
 {% endblock %}

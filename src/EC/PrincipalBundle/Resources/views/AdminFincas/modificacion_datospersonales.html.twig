@@ -5,12 +5,20 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+
+{% endblock %}
+
 {% block sidebar %}
 	{{ parent() }}
+	
 {% endblock %}
 
 {% block colder %}
 	{{ parent() }}
+	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -19,8 +27,12 @@
     		{% endfor %}
 	{% endfor %}
 	
-		<section class="form">
-			<h2 class="verde centrado">{% trans %}Modificar datos personales{% endtrans %}</h2>
+	<section class="form">
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Datos Personales{% endtrans %}</h2>
+			</hgroup>
+			
+			<a class="boton_alta btn_password" href="{{ path('ec_adminfincas_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
  
@@ -87,5 +99,5 @@
     		</div>
  
 		{{ form_end(form) }}
-		</section>
+	</section>
 {% endblock %}

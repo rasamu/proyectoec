@@ -13,14 +13,29 @@
     background-image: url('../images/ico_preview.png');
 }
 
-.btn_estadistica {
-    background-color: orange;
+.btn_estadistica_incidencia_categoria {
+    background-color: #7cb5ec;
     background-image: url('../images/ico_estadisticas.png');
+}
+
+.btn_estadistica_incidencia_fecha {
+    background-color: #425f9c;
+    background-image: url('../images/ico_estadisticas.png');
+}
+
+.btn_estadistica_comunidades {
+    background-color: #355664;
+    background-image: url('../images/ico_estadisticas.png');
+}
+
+.btn_password {
+    background-color: orange;
+    background-image: url('../images/ico_password.png');
 }
 
 .btn_nuevo {
 	 margin-bottom: 8px;
-    background-color: #F7D118;
+    background-color: orange;
     background-image: url('../images/ico_add.png');
 }
 
@@ -46,7 +61,7 @@ a.boton_alta {
     text-decoration: none;
     background-repeat: no-repeat;
     border-radius: 5px;
-    color: #316431;
+    color: #fff;
     cursor: pointer;
     display: inline-block;
     margin-left: 2px;
@@ -65,7 +80,7 @@ a.boton_estadistica {
     text-decoration: none;
     background-repeat: no-repeat;
     border-radius: 5px;
-    color: #316431;
+    color: #fff;
     cursor: pointer;
     display: inline-block;
     margin-left: 2px;

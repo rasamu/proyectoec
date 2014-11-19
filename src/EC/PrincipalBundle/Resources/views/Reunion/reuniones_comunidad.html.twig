@@ -78,8 +78,8 @@
     							document.getElementById('form_hora_minute').value=date.format('m');
         						if(date>d){
         							$("#nueva_reunion").dialog({ <!--  ------> muestra la ventana  -->
-            						width: 430,  <!-- -------------> ancho de la ventana -->
-            						height: 420,<!--  -------------> altura de la ventana -->
+            						width: "auto",  <!-- -------------> ancho de la ventana -->
+            						height: "auto",<!--  -------------> altura de la ventana -->
             						show: "scale", <!-- -----------> animación de la ventana al aparecer -->
             						hide: "scale", <!-- -----------> animación al cerrar la ventana -->
             						resizable: "false", <!-- ------> fija o redimensionable si ponemos este valor a "true" -->
@@ -133,8 +133,9 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
-	
-	<h2 class="verde centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
+	</hgroup>
 	<br></br>
 	
 	<div id='calendar'></div>
@@ -142,8 +143,10 @@
 	{% if is_granted('ROLE_ADMINFINCAS') %}
 		<div id="nueva_reunion" class="ventana">  
 			<section class="form">
-				<h2 class="verde centrado">{% trans %}Nueva Reunión{% endtrans %}</h2>
-
+				<hgroup>
+					<h2 class="verde centrado">{% trans %}Nueva Reunión{% endtrans %}</h2>
+				</hgroup>
+				
             <form action="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
     				<div style="color:red;">{{ form_errors(form) }}</div>
     				

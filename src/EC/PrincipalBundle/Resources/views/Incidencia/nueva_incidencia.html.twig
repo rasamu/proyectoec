@@ -22,7 +22,10 @@
 	{% endfor %}
 	
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Nueva incidencia{% endtrans %}</h2>
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Nueva incidencia{% endtrans %}</h2>
+			</hgroup>
+
 			{{ form_start(form) }}
     				<div style="color:red;">{{ form_errors(form) }}</div>
 
@@ -48,6 +51,7 @@
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
-		{{ form_end(form) }}
+			{{ form_end(form) }}
+
 		</section>
 {% endblock %}

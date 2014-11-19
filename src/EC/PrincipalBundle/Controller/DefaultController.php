@@ -30,7 +30,7 @@ class DefaultController extends Controller
     public function checkAction()
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-				return $this->redirect($this->generateUrl('ec_adminfincas_homepage'), 301);
+				return $this->redirect($this->generateUrl('ec_tablon_comunidad'), 301);
 			}else{
 				if($this->get('security.context')->isGranted('ROLE_VECINO')){
 						return $this->redirect($this->generateUrl('ec_tablon_comunidad'), 301);

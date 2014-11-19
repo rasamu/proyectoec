@@ -34,7 +34,10 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
+	</hgroup>
+	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
 		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Documento{% endtrans %}</a>
 	{% endif %}
@@ -48,6 +51,7 @@
 			{% endfor %}
 			({{count}} Ficheros)
 		</div>
+		
 		<div id="{{tipo.id}}" class="oculto margen_izquierdo">
 			{% for documento in documentos if documento.tipo==tipo%}
 						<p><b>Descripción: </b>{{documento.descripcion}}</p>				
@@ -73,11 +77,8 @@
 						{% endif %}
 						</p>
 					<hr class="verde"></hr>
-			{% endfor %}
-			
+			{% endfor %}		
 		</div>
-
 		
 	{% endfor %}
-
 {% endblock %}

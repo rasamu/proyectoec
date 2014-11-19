@@ -13,7 +13,10 @@
 {% block colder %}
 	{{ parent() }}
 	<section id="form_login">
-		<h2 class="verde centrado">{% trans %}Formulario de Contacto{% endtrans %}</h2>
+		<hgroup>
+			<h2 class="verde centrado">{% trans %}Formulario de Contacto{% endtrans %}</h2>
+		</hgroup>
+		
 		{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
  

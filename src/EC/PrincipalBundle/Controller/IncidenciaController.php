@@ -62,7 +62,7 @@ class IncidenciaController extends Controller
 				//Comprobamos que el presidente o vicepresidente pertenezca a la misma comunidad de la incidencia
 				if($this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
 					$comunidad=$incidencia->getUsuario()->getPRopiedad()->getBloque()->getComunidad();
-					if($comunidad!=$this->getUser()->getPropiedad()->getBloque()-getComunidad()){
+					if($comunidad!=$this->getUser()->getPropiedad()->getBloque()->getComunidad()){
 						throw new AccessDeniedException();
 					}
 				}else{
@@ -342,45 +342,56 @@ class IncidenciaController extends Controller
     }
     
     /**
-	  * @Route("/adminfincas/comunidad/estadisticas/incidencias/{cif}", name="ec_adminfincas_comunidad_estadisticas_incidencias")
-	  * @Template("ECPrincipalBundle:Incidencia:comunidades_estadisticas_incidencias.html.twig")
+	  * @Route("/adminfincas/estadisticas/incidencias/categorias", name="ec_adminfincas_estadisticas_incidencias_categorias")
+	  * @Template("ECPrincipalBundle:Incidencia:estadisticas_incidencias_categoria.html.twig")
 	  */
-    public function estadisticasIncidenciasAction($cif=null)
+    public function estadisticasIncidenciasCategoriasAction()
     {   			
-    		if($cif!=null){
-    			$comunidad=$this->comprobar_comunidad($cif);
-    			/*Contamos las incidencias de la comunidad $cif que administra el administrador por categorias*/
-    			$em = $this->getDoctrine()->getManager();	
-				$query = $em->createQuery(
-    				'SELECT cat.nombre,(SELECT COUNT(i) FROM ECPrincipalBundle:Incidencia i
-    				WHERE i.categoria=cat and i.usuario IN
-					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
-					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad=:comunidad)))) as total
-					FROM ECPrincipalBundle:Categoria cat'
-				)->setParameters(array('comunidad'=>$comunidad));			
-				$categorias = $query->getResult();	
-				
-    		}else{
-    			$comunidad=null;
-				/*Contamos las incidencias de todas las comunidades que administra el administrador por categorias*/
-    			$em = $this->getDoctrine()->getManager();	
-				$query = $em->createQuery(
-    				'SELECT cat.nombre,(SELECT COUNT(i) FROM ECPrincipalBundle:Incidencia i
-    				WHERE i.categoria=cat and i.usuario IN
-					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
-					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
-					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))))) as total
-					FROM ECPrincipalBundle:Categoria cat'
-				)->setParameters(array('admin'=>$this->getUser()));			
-				$categorias = $query->getResult();		
-    		}  		
+			/*Contamos las incidencias de todas las comunidades que administra el administrador por categorias*/
+    		$em = $this->getDoctrine()->getManager();	
+			$query = $em->createQuery(
+    			'SELECT cat.nombre,(SELECT COUNT(i) FROM ECPrincipalBundle:Incidencia i
+    			WHERE i.categoria=cat and i.usuario IN
+				(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+				(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
+				(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))))) as total
+				FROM ECPrincipalBundle:Categoria cat'
+			)->setParameters(array('admin'=>$this->getUser()));			
+			$categorias = $query->getResult();		  				
     		
-    		return $this->render('ECPrincipalBundle:Incidencia:comunidades_estadisticas_incidencias.html.twig',
-					array('categorias'=>$categorias,'comunidad'=>$comunidad
+    		return $this->render('ECPrincipalBundle:Incidencia:estadisticas_incidencias_categorias.html.twig',
+					array('categorias'=>$categorias,
 					));
-			
     }
     
+    /**
+	  * @Route("/adminfincas/estadisticas/incidencias/fecha", name="ec_adminfincas_estadisticas_incidencias_fecha")
+	  * @Template("ECPrincipalBundle:Incidencia:estadisticas_incidencias_fecha.html.twig")
+	  */
+    public function estadisticasIncidenciasFechaAction()
+    {   			
+			/*Contamos las incidencias de todas las comunidades que administra el administrador agrupadas por meses*/
+    		$em = $this->getDoctrine()->getManager();	
+			$query = $em->createQuery(
+    			'SELECT MONTH(i.fecha) as mes, COUNT(i) as total 
+    			FROM ECPrincipalBundle:Incidencia i
+    			WHERE i.usuario IN
+				(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+				(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
+				(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin)))) group by mes'
+			)->setParameters(array('admin'=>$this->getUser()));			
+			$totales = $query->getResult();
+			
+			$meses=array('1'=>'0','2'=>'0','3'=>'0','4'=>'0','5'=>'0','6'=>'0','7'=>'0','8'=>'0','9'=>'0','10'=>'0','11'=>'0','12'=>'0');		    
+    		
+    		foreach($totales as $total){
+    			$meses[$total['mes']]=$total['total'];	
+    		}
+    		
+    		return $this->render('ECPrincipalBundle:Incidencia:estadisticas_incidencias_fecha.html.twig',
+    				array('meses'=>$meses,
+    				));	
+    }
 }

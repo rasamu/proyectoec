@@ -23,7 +23,9 @@
         "psliwa/pdf-bundle": "dev-master",
         "jwage/easy-csv": "0.0.1",
         "friendsofsymfony/jsrouting-bundle": "dev-master",
-        "gremo/highcharts-bundle": "*"
+        "gremo/highcharts-bundle": "*",
+        "stof/doctrine-extensions-bundle": "~1.1@dev",
+        "beberlei/DoctrineExtensions": "*"
     },
     "scripts": {
         "post-install-cmd": [

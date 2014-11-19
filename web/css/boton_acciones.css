@@ -1,77 +1,50 @@
-.nav_acciones {
-	margin-top: 2px;
+.myMenu {
+    margin: 2px;
+    padding: 0;
 }
-.nav_acciones nav {
-     font-family: arial, sans-serif;
-     position: relative;
-     font-size:1.000em;
-     color:#333;
-     margin: 0 auto;
-}
- 
-.nav_acciones nav ul {
-     list-style-type: none;
-     margin: 0;
-}
- 
-.nav_acciones nav ul li {
-     float: left;
-     position: relative;
-     top:0;
-}
- 
-.nav_acciones nav ul li a {
-    text-align: center;
-    padding:5px 11px;
-    display:block;
-    text-decoration:none;
-    color:#FFF;
-    margin:0 0;
-    background: #316431;
-	border-radius: 5px;
-	-moz-border-top-left-radius: 5px;
-	-moz-border-top-right-radius: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
 
+.myMenu li {
+    float: left;
+    list-style: none outside none;
 }
-.nav_acciones nav ul li:hover > a {
-	background:#F7D118;
-	color:#316431;
-	text-shadow:none;
-   border-left: 2px solid #316431;
-   padding: 5px 10px;
+
+.myMenu li a:link, .myMenu li a:visited {
+    background-color: #ACC6AC;
+    color: #316431;
+    display: block;
+    margin: 0;
+    padding: 0.3em 0.8em;
+    text-decoration: none;
 }
-.nav_acciones nav ul li ul {
-     display: none
+
+.myMenu li a:hover {
+    background-color: #316431;
+    color:#fff;
 }
- 
-.nav_acciones nav ul li:hover ul {
-     display: block;
-     position: absolute;
-     top:24px;
-     left:0;
-     padding:0;
-     margin:0;
-     width:auto;
-     z-index: 1;
+
+.myMenu li ul {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    visibility: hidden;
+    width: 130px;
+    border: 1px solid #316431;
+    font-size: 12px;
 }
-.nav_acciones nav ul li:hover ul li a {
-     display:block;
-     background:#D9E1E8;
-     color:#316431;
-     text-align: left;
-     border-top: 2px solid #316431;
-     border-left: 2px solid #316431;
-     border-right: 2px solid #316431;
-     border-radius: 5px;
-     -moz-border-radius: 0;
-     -webkit-border-radius: 0;
-     font-weight:normal;
-     width:100px;
+
+.myMenu li ul li {
+    display: inline;
+    float: none;
+    z-index: 1;
+    padding:0;
 }
- 
-.nav_acciones nav ul li:hover ul li a:hover, nav ul li a:hover {
-	background:#F7D118;
-    color:#316431;
+
+.myMenu li ul li a:link, .myMenu li ul li a:visited {
+    background-color: #D9E1E8;
+    width: auto;
+}
+
+.myMenu li ul li a:hover {
+    background-color: #316431;
+    color: #fff;
 }

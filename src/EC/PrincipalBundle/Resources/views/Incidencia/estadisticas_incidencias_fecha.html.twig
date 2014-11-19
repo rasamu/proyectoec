@@ -1,0 +1,65 @@
+{% extends 'ECPrincipalBundle::layout_estadisticas.html.twig' %}
+
+{% block title %}
+	{% trans %}Estadísticas{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	
+	<script src="{{ asset('js/highcharts.js') }}"></script>
+	<script src="{{ asset('js/exporting.js') }}"></script>
+	<script>
+	$(function () {
+    $('#container').highcharts({
+    	  chart: {
+            backgroundColor:'rgba(255, 255, 255, 0.1)'
+        },
+        title: {
+            text: 'Incidencias por fecha',
+				style: {
+					color: '#425f9c'
+            },
+        },
+         xAxis: {
+            categories: ['{% trans %}Enero{% endtrans %}', '{% trans %}Febrero{% endtrans %}', '{% trans %}Marzo{% endtrans %}', '{% trans %}Abril{% endtrans %}', 
+            '{% trans %}Mayo{% endtrans %}', '{% trans %}Junio{% endtrans %}','{% trans %}Julio{% endtrans %}', '{% trans %}Agosto{% endtrans %}', 
+            '{% trans %}Septiembre{% endtrans %}', '{% trans %}Octubre{% endtrans %}','{% trans %}Noviembre{% endtrans %}', '{% trans %}Diciembre{% endtrans %}']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Nº Incidencias'
+            },
+            minTickInterval: 1
+        },
+        tooltip: {
+       		pointFormat: '<span style="color:{series.color}"></span> {series.name}: <b>{point.y}</b><br/>'
+		  },
+        credits: {
+      		enabled: false
+  		  },
+         legend: {
+            enabled: false
+        },
+        series: [{
+            name: 'NºIncidencias',
+            color: '#425f9c',
+            data: [{{meses[1]}},{{meses[2]}},{{meses[3]}},{{meses[4]}},{{meses[5]}},{{meses[6]}},{{meses[7]}},{{meses[8]}},{{meses[9]}},{{meses[10]}},{{meses[11]}},{{meses[12]}}],
+        }]
+    });
+	});
+	</script>
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	
+	<div id="container" class="grafica_estadisticas"></div>
+{% endblock %}

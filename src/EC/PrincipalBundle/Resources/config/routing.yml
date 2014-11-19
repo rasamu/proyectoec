@@ -53,6 +53,10 @@ ec_adminfincas_listado_comunidades_csv:
 ec_tablon_comunidad:
     pattern:  /comunidad/tablon/{cif}
     defaults: { _controller: ECPrincipalBundle:Comunidad:ver_tablon_comunidad, cif: null }
+    
+ec_adminfincas_estadisticas_comunidades:
+   pattern:  /adminfincas/estadisticas/comunidades
+   defaults: { _controller: ECPrincipalBundle:Comunidad:estadisticasComunidades }
 
 #REUNIONES
 ec_ver_reunion_comunidad:
@@ -169,9 +173,13 @@ ec_incidencia:
     pattern:  /incidencia/{id}
     defaults: { _controller: ECPrincipalBundle:Incidencia:ver_incidencia }
     
-ec_adminfincas_comunidad_estadisticas_incidencias:
-   pattern:  /adminfincas/comunidad/estadisticas/incidencias/{cif}
-   defaults: { _controller: ECPrincipalBundle:Incidencia:estadisticasIncidencias, cif: null }
+ec_adminfincas_estadisticas_incidencias_categorias:
+   pattern:  /adminfincas/estadisticas/incidencias/categorias
+   defaults: { _controller: ECPrincipalBundle:Incidencia:estadisticasIncidenciasCategorias }
+   
+ec_adminfincas_estadisticas_incidencias_fecha:
+   pattern:  /adminfincas/estadisticas/incidencias/fecha
+   defaults: { _controller: ECPrincipalBundle:Incidencia:estadisticasIncidenciasFecha }
     
 #ROLE   
 ec_adminfincas_nombrar_presidente:
@@ -186,15 +194,11 @@ ec_adminfincas_nombrar_vicepresidente:
 ec_principal_alta_adminfincas:
     pattern:  /alta
     defaults: { _controller: ECPrincipalBundle:AdminFincas:alta_adminfincas}
-    
-ec_adminfincas_homepage:
-    pattern:  /
-    defaults: { _controller: ECPrincipalBundle:AdminFincas:index }
 
 ec_adminfincas_perfil:
-    pattern:  /perfil
+    pattern:  /adminfincas/perfil
     defaults: { _controller: ECPrincipalBundle:AdminFincas:modificacion_perfil }
     
 ec_adminfincas_contraseña:
-    pattern:  /contraseña
+    pattern:  /adminfincas/contraseña
     defaults: { _controller: ECPrincipalBundle:AdminFincas:modificacion_contraseña }

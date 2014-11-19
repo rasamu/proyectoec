@@ -34,8 +34,12 @@
     			</div>
     		{% endfor %}
 	{% endfor %}
+	
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Alta propietario{% endtrans %}</h2>
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Alta propietario{% endtrans %}</h2>
+			</hgroup>
+
          <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post">
     				<div style="color:red;">{{ form_errors(form) }}</div>
  			
@@ -77,10 +81,14 @@
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
 			</form>
+
 		</section>
 
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
+			</hgroup>
+
             <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post" {{ form_enctype(form_csv) }}>
     				<div style="color:red;">{{ form_errors(form_csv) }}</div>
 
@@ -95,5 +103,6 @@
     					<img id="loading" src="{{ asset('images/loading.gif') }}" />
     				</div>
             </form>
+
 		</section>
 {% endblock %}

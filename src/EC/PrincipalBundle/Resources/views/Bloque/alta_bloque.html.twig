@@ -32,44 +32,48 @@ $(document).ready(function()
     		{% endfor %}
 	{% endfor %}
 	
-		<section class="form">
-			<h2 class="verde centrado">{% trans %}Alta de bloque{% endtrans %}</h2>
+	<section class="form">
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Alta de bloque{% endtrans %}</h2>
+			</hgroup>
             <form action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post">
     				<div style="color:red;">{{ form_errors(form) }}</div>
 
-    				<div class="campo_login">
+    				<div class="campo">
        		 		<div class="label_campo">{{ form_label(form.num) }} *</div>
         				{{ form_widget(form.num) }}
         				<div class="error">{{ form_errors(form.num) }}</div>
     				</div>
     		
-    				<div class="campo_login">
+    				<div class="campo">
         				<div class="label_campo">{{ form_label(form.direccion) }} *</div>
         				{{ form_widget(form.direccion) }}
        		 		<div class="error">{{ form_errors(form.direccion) }}</div>        
     				</div>    
 
-    				<div class="campo_login">
+    				<div class="campo">
     					(*) {% trans %}Campo obligatorio{% endtrans %}
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
             </form>
-		</section>
+	</section>
 		
 		<!--CSV-->
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Importar bloques mediante CSV{% endtrans %}</h2>
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Importar bloques mediante CSV{% endtrans %}</h2>
+			</hgroup>
             <form action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form_csv) }}>
     				<div style="color:red;">{{ form_errors(form_csv) }}</div>
 
-    				<div class="campo_login">
+    				<div class="campo">
        		 		<div class="label_campo">{{ form_label(form_csv.file) }}</div>
         				{{ form_widget(form_csv.file) }}
         				<div class="error">{{ form_errors(form_csv.file) }}</div>
     				</div>   
 
-    				<div class="campo_login">
+    				<div class="campo">
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}" id="enviar" />
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     					<img id="loading" src="{{ asset('images/loading.gif') }}" alt="loading"/>

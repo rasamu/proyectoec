@@ -33,13 +33,12 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Incidencias{% endtrans %}</h2>
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Incidencias{% endtrans %}</h2>
+	</hgroup>
 	
 	{% if is_granted('ROLE_VECINO')%}
-   <a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar{% endtrans %}</span></a>
-   {% endif %}
-   {% if is_granted('ROLE_ADMINFINCAS')%}
-   <a class="boton_estadistica btn_estadistica" href="{{ path('ec_adminfincas_comunidad_estadisticas_incidencias', {'cif':comunidad.cif}) }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a>
+   	<a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar{% endtrans %}</span></a>
    {% endif %}
    
 	<div id="demo">
@@ -71,6 +70,6 @@
 				</tr>
 			</tfoot>
 		</table>
-</div>
+	</div>
 	
 {% endblock %}

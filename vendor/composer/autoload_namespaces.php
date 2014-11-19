@@ -29,6 +29,7 @@ return array(
     'Incenteev\\ParameterHandler' => array($vendorDir . '/incenteev/composer-parameter-handler'),
     'Imagine' => array($vendorDir . '/psliwa/php-pdf/lib'),
     'Gremo\\HighchartsBundle' => array($vendorDir . '/gremo/highcharts-bundle'),
+    'Gedmo\\' => array($vendorDir . '/gedmo/doctrine-extensions/lib'),
     'FOS\\JsRoutingBundle' => array($vendorDir . '/friendsofsymfony/jsrouting-bundle'),
     'EasyCSV' => array($vendorDir . '/jwage/easy-csv/lib'),
     'Doctrine\\ORM' => array($vendorDir . '/doctrine/orm/lib'),
@@ -40,6 +41,7 @@ return array(
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib'),
     'Doctrine\\Bundle\\DoctrineBundle' => array($vendorDir . '/doctrine/doctrine-bundle'),
+    'DoctrineExtensions' => array($vendorDir . '/beberlei/DoctrineExtensions/lib'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
     '' => array($baseDir . '/src'),
 );

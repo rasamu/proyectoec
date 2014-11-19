@@ -9,24 +9,23 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         {% block stylesheets %}
-            <link href="{{ asset('css/principal.css') }}" type="text/css" rel="stylesheet" />
-            <link rel='stylesheet' type='text/css' href="{{ asset('css/menu.css') }}" />
-            <link href='http://fonts.googleapis.com/css?family=Miltonian+Tattoo' rel='stylesheet' type='text/css'>
+            <link type="text/css" rel="stylesheet" href="{{ asset('css/principal.css') }}" />
+            <link type='text/css' rel='stylesheet' href="{{ asset('css/menu.css') }}" />
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         {% block javascripts %}
-				<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
-				<script type='text/javascript' src="{{ asset('js/menu_jquery.js') }}"></script>        
+				<script src="{{ asset('js/jquery.min.js') }}"></script>
         {% endblock %}
     </head>
     <body>
+    		<section id="box">
             <header id="header">
             		  <section id="topheader">
             		  		<section id="tituloheader">
             		  			<a href="{{ path('ec_principal_homepage') }}">
-            		  				<h1>
-            		  					<em class="amarillo">Entre</em><em class="blanco">Comunidades</em>
-            		  				</h1>
+            		  				<hgroup>
+            		  					<h1><em class="amarillo">Entre</em><em class="blanco">Comunidades</em></h1>
+            		  				</hgroup>
             		  			</a>
             		  			<section id="idiomas">
 										<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Idioma Español" height="21" width="21" /></a>
@@ -36,14 +35,15 @@
             		  </section>
                 	  <section id="subheader">	
                 			<section id="botones">
-                			   <nav>
                     			{% block navigation %}
 									<section id="menu">
-                            	<ul class="navigation">
-                                <li><a href="{{ path('ec_principal_homepage') }}">{% trans %}Inicio{% endtrans %}</a></li>
-                                <li><a href="{{ path('ec_principal_eres_adminfincas') }}">{% trans %}¿Eres administrador?{% endtrans %}</a></li>
-                                <li><a href="{{ path('ec_principal_contacto') }}">{% trans %}Contacto{% endtrans %}</a></li>
-                            	</ul>
+										<nav>
+                            		<ul class="navigation">
+                                		<li><a href="{{ path('ec_principal_homepage') }}">{% trans %}Inicio{% endtrans %}</a></li>
+                                		<li><a href="{{ path('ec_principal_eres_adminfincas') }}">{% trans %}¿Eres administrador?{% endtrans %}</a></li>
+                                		<li><a href="{{ path('ec_principal_contacto') }}">{% trans %}Contacto{% endtrans %}</a></li>
+                            		</ul>
+                            	</nav>
                         	</section>
                     			{% endblock %}
           			
@@ -51,30 +51,29 @@
 										{% if is_granted('ROLE_ADMINFINCAS') %}	  
 											<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
 											<div style="clear:both">{% trans %}Administrador de Fincas{% endtrans %}</div>
-											<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+											<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 										{% else %}
 											{% if is_granted('ROLE_PRESIDENTE') %}
 												<div style="clear:both">{{ app.user.nombre }}</div>
 												<div style="clear:both">{% trans %}Presidente{% endtrans %}</div>
-												<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+												<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 											{% else %} 
 												{% if is_granted('ROLE_VICEPRESIDENTE') %}
 													<div style="clear:both">{{ app.user.nombre }}</div>
 													<div style="clear:both">{% trans %}Vicepresidente{% endtrans %}</div>
-													<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+													<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 												{% else %}
 													{% if is_granted('ROLE_VECINO') %}
 														<div style="clear:both">{{ app.user.nombre }}</div>
 														<div style="clear:both">{% trans %}Propietario{% endtrans %}</div>
-														<a style="clear:both" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+														<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
 													{% else %}
-														<a  href="{{ path('login') }}" >{% trans %}Acceder{% endtrans %}</a>
+														<a class="letra_miltonian" href="{{ path('login') }}" >{% trans %}Acceder{% endtrans %}</a>
 													{% endif %}
 												{% endif %}
 											{% endif %}
 										{% endif %}
 									</section>
-									</nav>
 								</section>
 						  </section>
             </header>
@@ -85,35 +84,29 @@
 
         						{% endblock %}
         						{% if is_granted('ROLE_ADMINFINCAS') %}	  
-								<div id='cssmenu'>
-									<ul>
-   									<li class="has-sub"><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a>
- 	  									</li>
-										<li class="has-sub"><a href="#"><span>{% trans %}Mi Perfil{% endtrans %}</span></a>
-											<ul>
-   											<li><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Datos Personales{% endtrans %}</span></a></li>
-   											<li><a href="{{ path('ec_adminfincas_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a></li>
-											</ul>
-										</li>
-									</ul>
-								</div>
+								<section id='submenu'>
+									<nav>
+										<ul class="navigation">
+											<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
+   										<li><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a></li>
+   										<li><a href="{{ path('ec_adminfincas_estadisticas_comunidades') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a></li>
+											<li><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
+										</ul>
+									</nav>
+								</section>
 								{% else %}
 									{% if is_granted('ROLE_VECINO') %}
-										<div id='cssmenu'>
-											<ul>
-												<li class="has-sub"><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
-												<li class="has-sub"><a href="{{ path('ec_reuniones_comunidad') }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>
-												<li class="has-sub"><a href="{{ path('ec_listado_incidencias') }}"><span>{% trans %}Incidencias{% endtrans %}</span></a></li>
-												<li class="has-sub"><a href="{{ path('ec_listado_documentos') }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>												
-												</li>
-												<li class="has-sub"><a href="#"><span>{% trans %}Mi Perfil{% endtrans %}</span></a>
-													<ul>
-   													<li><a href="{{ path('ec_propietario_perfil') }}"><span>{% trans %}Datos Personales{% endtrans %}</span></a></li>
-   													<li><a href="{{ path('ec_propietario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a></li>
-													</ul>
-												</li>
-											</ul>
-										</div>
+										<section id='submenu'>
+											<nav>
+												<ul class="navigation">
+													<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
+													<li><a href="{{ path('ec_reuniones_comunidad') }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>
+													<li><a href="{{ path('ec_listado_incidencias') }}"><span>{% trans %}Incidencias{% endtrans %}</span></a></li>
+													<li><a href="{{ path('ec_listado_documentos') }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>																							
+													<li><a href="{{ path('ec_propietario_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
+												</ul>
+											</nav>
+										</section>
 									{% endif %}
 								{% endif %}
    						</section>
@@ -130,12 +123,13 @@
                 <section id="footer">
                 		<section id="titulofooter">
                      	<a href="{{ path('ec_principal_homepage') }}">
-                     		<em class="amarillo titulofooter">Entre</em><em class="blanco titulofooter">Comunidades</em>
+                     		<em class="amarillo titulofooter letra_miltonian">Entre</em><em class="blanco titulofooter letra_miltonian">Comunidades</em>
                      	</a>
-                     	<em>&nbsp;- Rafael Sánchez Muñoz</em>
+                     	<em class="letra_miltonian">&nbsp;- Rafael Sánchez Muñoz</em>
                      </section>
                 </section>
                 {% endblock %}
             </footer>
+        </section>
     </body>
 </html>

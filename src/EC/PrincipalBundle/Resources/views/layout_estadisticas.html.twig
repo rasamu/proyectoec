@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	 {{ parent() }}
+	 
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+ 
+   <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+     
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+
+{% endblock %}
+
+{% block colder %}    
+	 {{ parent() }}
+	 
+	 <hgroup>
+	 	<h2 class="verde centrado">{% trans %}Estadísticas{% endtrans %}</h2>
+	 </hgroup>
+	 
+	 <nav>
+	 	<a class="boton_estadistica btn_estadistica_comunidades" href="{{ path('ec_adminfincas_estadisticas_comunidades') }}">Comunidades</a>
+	 	<a class="boton_estadistica btn_estadistica_incidencia_categoria" href="{{ path('ec_adminfincas_estadisticas_incidencias_categorias') }}">Incidencias por Categorías</a>
+	 	<a class="boton_estadistica btn_estadistica_incidencia_fecha" href="{{ path('ec_adminfincas_estadisticas_incidencias_fecha') }}">Incidencias por Fecha</a>
+	</nav>
+	
+{% endblock %}

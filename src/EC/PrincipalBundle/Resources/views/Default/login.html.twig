@@ -13,12 +13,14 @@
 {% block colder %}
 	{{ parent() }}
 		<section id="form_login">
-			<h2 class="verde centrado">{% trans %}Formulario de acceso{% endtrans %}</h2>
-		
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Formulario de acceso{% endtrans %}</h2>
+			</hgroup>
+			
 			{% if error %}
 				<div class="mensaje" style="color:red;">{% trans %}Datos incorrectos{% endtrans %}</div>
 			{% endif %}
-		
+
 			<form method="post" action="{{ path('login_check') }}">
 				<div class="campo_login">
 					<div class="label_campo"><label for="username">{% trans %}Usuario{% endtrans %}</label></div>

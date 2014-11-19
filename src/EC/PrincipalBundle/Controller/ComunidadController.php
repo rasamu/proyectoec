@@ -42,25 +42,46 @@ class ComunidadController extends Controller
     public function ver_tablon_comunidadAction($cif=null)
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
-    			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    				$comunidad=$this->comprobar_comunidad($cif);
-    			}else{
-    				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
-    			}
-    		
-				/*Buscamos las incidencias de la comunidad no finalizadas*/
-    			$em = $this->getDoctrine()->getManager();
-				$query = $em->createQuery(
-    				'SELECT i
-					FROM ECPrincipalBundle:Incidencia i
-					WHERE i.estado!=3 and i.usuario IN
-					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
-					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)) order by i.fecha)'
-				)->setParameters(array('comunidad'=>$comunidad,));	
+    			/*TABLON GENERAL DE TODAS LAS COMUNIDADES PARA ADMINISTRADOR*/
+    			if($cif==null && $this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+    				$comunidad=null;
+    				
+    				/*Buscamos las incidencias de todas las comunidades del administrador*/
+    				$em = $this->getDoctrine()->getManager();
+					$query = $em->createQuery(
+    					'SELECT i
+						FROM ECPrincipalBundle:Incidencia i
+						WHERE i.estado!=3 and i.usuario IN
+						(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
+						(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))) order by i.fecha)'
+					)->setParameters(array('admin'=>$this->getUser()));	
 							
-				$incidencias = $query->getResult();	
+					$incidencias = $query->getResult();
+    			}else{
+    				/*TABLON DE UNA COMUNIDAD PARA ADMINISTRADOR, PRESIDENTE O VIDEPRESIDENTE*/
+    				if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+    					$comunidad=$this->comprobar_comunidad($cif);
+    				}else{
+    					$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    				}
+    		
+					/*Buscamos las incidencias de la comunidad no finalizadas*/
+    				$em = $this->getDoctrine()->getManager();
+					$query = $em->createQuery(
+    					'SELECT i
+						FROM ECPrincipalBundle:Incidencia i
+						WHERE i.estado!=3 and i.usuario IN
+						(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)) order by i.fecha)'
+					)->setParameters(array('comunidad'=>$comunidad,));	
+							
+					$incidencias = $query->getResult();	
+				}
 			}else{
+				/*TABLON DE UNA COMUNIDAD PARA PROPIETARIOS*/
 				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
 				$bloque=$this->getUser()->getPropiedad()->getBloque();
     			$privacidad_bloque_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
@@ -81,23 +102,37 @@ class ComunidadController extends Controller
 					or (i.usuario= :usuario))'
 				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'usuario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
 				
-				$incidencias = $query->getResult();	
-				
+				$incidencias = $query->getResult();					
 			}
 			
-			/*Buscamos las próximas reuniones de la comunidad*/
-			$fecha_actual=new \DateTime('now');
-			$fecha_proximo_mes=new \DateTime('now');
-			$fecha_proximo_mes->modify('+1 month');
+			/*PROXIMAS REUNIONES DE TODAS LAS COMUNIDADES*/
+			if($cif==null && $this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+				$fecha_actual=new \DateTime('now');
+				$fecha_proximo_mes=new \DateTime('now');
+				$fecha_proximo_mes->modify('+1 month');
 			
-    		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
+    			$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
+    				'SELECT r FROM ECPrincipalBundle:Reunion r WHERE (r.fecha>= :fecha_actual and r.fecha< :proximo_mes) and r.comunidad IN
+    				(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin) order by r.fecha'
+				)->setParameters(array('admin'=>$this->getUser(),'fecha_actual'=>$fecha_actual,'proximo_mes'=>$fecha_proximo_mes,));	
+							
+				$proximas_reuniones = $query->getResult();
+			}else{
+				/*PROXIMAS REUNIONES DE UNA COMUNIDAD*/
+				$fecha_actual=new \DateTime('now');
+				$fecha_proximo_mes=new \DateTime('now');
+				$fecha_proximo_mes->modify('+1 month');
+			
+    			$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
     				'SELECT r
 					FROM ECPrincipalBundle:Reunion r
-					WHERE r.comunidad=:comunidad and (r.fecha>= :fecha_actual and r.fecha< :proximo_mes)'
-			)->setParameters(array('comunidad'=>$comunidad,'fecha_actual'=>$fecha_actual,'proximo_mes'=>$fecha_proximo_mes,));	
+					WHERE r.comunidad=:comunidad and (r.fecha>= :fecha_actual and r.fecha< :proximo_mes) order by r.fecha'
+				)->setParameters(array('comunidad'=>$comunidad,'fecha_actual'=>$fecha_actual,'proximo_mes'=>$fecha_proximo_mes,));	
 							
-			$proximas_reuniones = $query->getResult();	
+				$proximas_reuniones = $query->getResult();	
+			}
 			
         	return $this->render('ECPrincipalBundle:Comunidad:tablon_comunidad.html.twig',array('comunidad' =>$comunidad,'incidencias'=>$incidencias,'reuniones'=>$proximas_reuniones));
     }
@@ -314,4 +349,59 @@ class ComunidadController extends Controller
 			return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
     }
 
+	 /**
+	  * @Route("/adminfincas/estadisticas/comunidades", name="ec_adminfincas_estadisticas_comunidades")
+	  * @Template("ECPrincipalBundle:Comunidad:estadisticas_comunidades.html.twig")
+	  */
+    public function estadisticasComunidadesAction()
+    {   			
+			/*Comunidades del administrador*/
+    		$em = $this->getDoctrine()->getManager();	
+			$query = $em->createQuery(
+    			'SELECT c.codigo as codigo FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin order by codigo'
+			)->setParameters(array('admin'=>$this->getUser()));			
+			$comunidades = $query->getResult();
+    		
+    		$totales_propietarios=array();
+    		$totales_incidencias=array();
+    		
+    		foreach($comunidades as $comunidad){
+    				/*TOTALES DE PROPIETARIOS*/
+    				$em = $this->getDoctrine()->getManager();	
+					$query = $em->createQuery(
+    					'SELECT COUNT(u) as total FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+    					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+    					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
+    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin)))'
+					)->setParameters(array('admin'=>$this->getUser(),'comunidad'=>$comunidad['codigo']));							
+					$propietarios = $query->getSingleResult();
+					
+					if($propietarios==null){
+						$totales_propietarios[]=0;
+					}else{
+						$totales_propietarios[]=$propietarios;
+					}
+					
+					/*TOTALES DE INCIDENCIAS*/
+					$em = $this->getDoctrine()->getManager();	
+					$query = $em->createQuery(
+    					'SELECT COUNT(i) as total FROM ECPrincipalBundle:Incidencia i WHERE i.usuario IN
+    					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+    					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+    					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
+    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin))))'
+					)->setParameters(array('admin'=>$this->getUser(),'comunidad'=>$comunidad['codigo']));							
+					$incidencias = $query->getSingleResult();
+					
+					if($incidencias==null){
+						$totales_incidencias[]=0;
+					}else{
+						$totales_incidencias[]=$incidencias;
+					}
+    		}
+    		
+    		return $this->render('ECPrincipalBundle:Comunidad:estadisticas_comunidades.html.twig',
+    				array('comunidades'=>$comunidades,'totales_propietarios'=>$totales_propietarios,'totales_incidencias'=>$totales_incidencias,
+    				));	
+    }
 }

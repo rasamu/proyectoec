@@ -5,6 +5,12 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+
+{% endblock %}
+
 {% block sidebar %}
 	{{ parent() }}
 	
@@ -19,9 +25,13 @@
     			</div>
     		{% endfor %}
 		{% endfor %}	
-	
+
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Modificar datos personales{% endtrans %}</h2>
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Modificar datos personales{% endtrans %}</h2>
+			</hgroup>
+			
+			<a class="boton_alta btn_password" href="{{ path('ec_propietario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
  
@@ -48,6 +58,6 @@
     		<input type="reset" value="Borrar"/>
     		</div>
  
-		{{ form_end(form) }}
+			{{ form_end(form) }}
 		</section>
 {% endblock %}

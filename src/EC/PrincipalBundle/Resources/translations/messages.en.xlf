@@ -398,6 +398,54 @@
                 <source>Listado de incidencias</source>
                 <target>List of incidents</target>
             </trans-unit>
+            <trans-unit id="100">
+                <source>Enero</source>
+                <target>January</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Febrero</source>
+                <target>February</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>Marzo</source>
+                <target>March</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>Abril</source>
+                <target>April</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>Mayo</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Junio</source>
+                <target>June</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Julio</source>
+                <target>July</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>Agosto</source>
+                <target>August</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Septiembre</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Octubre</source>
+                <target>October</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Noviembre</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>Diciembre</source>
+                <target>December</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

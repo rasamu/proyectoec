@@ -14,14 +14,6 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class AdminFincasController extends Controller
 {  
-   /**
-	  * @Route("/", name="ec_adminfincas_homepage")
-	  * @Template("ECPrincipalBundle:AdminFincas:index.html.twig")
-	  */
-	public function indexAction(){
-		 return $this->render('ECPrincipalBundle:AdminFincas:index.html.twig');
-	}	
-	
 	 private function setSecurePassword($entity) {
 			$entity->setSalt(md5(time()));
 			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
@@ -149,7 +141,7 @@ class AdminFincasController extends Controller
     }
     
     /**
-	  * @Route("/perfil", name="ec_adminfincas_perfil")
+	  * @Route("/adminfincas/perfil", name="ec_adminfincas_perfil")
 	  * @Template("ECPrincipalBundle:AdminFincas:modificacion_datospersonales.html.twig")
 	  */
     public function modificacion_perfilAction(Request $request)
@@ -188,7 +180,7 @@ class AdminFincasController extends Controller
     }
     
     /**
-	  * @Route("/contraseña", name="ec_adminfincas_contraseña")
+	  * @Route("/adminfincas/contraseña", name="ec_adminfincas_contraseña")
 	  * @Template("ECPrincipalBundle:AdminFincas:modificacion_contraseña.html.twig")
 	  */
     public function modificacion_contraseñaAction(Request $request)

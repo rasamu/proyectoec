@@ -121,6 +121,7 @@ html .fc,
 .fc-widget-header,    /* <th>, usually */
 .fc-widget-content {  /* <td>, usually */
 	border: 1px solid #ddd;
+	background: white;
 	}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
@@ -529,7 +530,7 @@ table.fc-border-separate {
 	}
 	
 .fc-agenda-slots tr.fc-minor th.ui-widget-header {
-	*border-top-style: solid; /* doesn't work with background in IE6/7 */
+	border-top-style: solid; /* doesn't work with background in IE6/7 */
 	}
 	
 

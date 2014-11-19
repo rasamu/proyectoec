@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Ps\PdfBundle\PsPdfBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Gremo\HighchartsBundle\GremoHighchartsBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

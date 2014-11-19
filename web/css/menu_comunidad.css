@@ -1,13 +1,30 @@
-.nav_comunidad {
-	background:#fff;
-	padding:36px 0 18px 0;
+#menu_comunidad{
+	width: 100%;
+	height: 28px;
+	background-color: #F7D118;
 }
+
+.titulo_comunidad{
+	width: auto;
+	float: left;
+	font-size: 1.75em;
+	margin-left: 5px;
+}
+
+.nav_comunidad {
+	width: auto;
+	float: right;
+	background: #316431;
+	border-top-left-radius: 3em;
+	-moz-border-top-right-radius: 3em;
+	-webkit-border-top-right-radius: 3em;
+}
+
 .nav_comunidad nav {
-     font-family: arial, sans-serif;
+     font-family: sans-serif;
      position: relative;
      font-size:1.000em;
      color:#333;
-     margin: 0 auto;
 }
  
 .nav_comunidad nav ul {
@@ -18,30 +35,22 @@
 .nav_comunidad nav ul li {
      float: left;
      position: relative;
-     top:-34px;
 }
  
 .nav_comunidad nav ul li a {
     text-align: center;
-    padding:10px 15px;
+    padding:6px 15px;
     display:block;
     text-decoration:none;
     color:#FFF;
-    margin:0 2px;
-    background: #316431;
-	 border-radius: 10px;
-	 -moz-border-top-left-radius: 5px;
-	 -moz-border-top-right-radius: 5px;
-	 -webkit-border-top-left-radius: 5px;
-	 -webkit-border-top-right-radius: 5px;
 }
+
 .nav_comunidad nav ul li:hover > a {
-	background:#F7D118;
-	color:#316431;
-	text-shadow:none;
-   border-left: 2px solid #316431;
-   padding: 10px 14px;
+	background: #F7D118;
+	color: #316431;
+   padding: 6px 15px;
 }
+
 .nav_comunidad nav ul li ul {
      display: none
 }
@@ -49,28 +58,23 @@
 .nav_comunidad nav ul li:hover ul {
      display: block;
      position: absolute;
-     top:68px;
-     left:0;
-     padding:0;
-     margin:0;
-     width:auto;
+     left: 0;
+     padding: 0;
+     margin: 0;
+     width: auto;
      z-index: 1;
 }
+
 .nav_comunidad nav ul li:hover ul li a {
-     display:block;
-     background:#D9E1E8;
-     color:#316431;
+     display: block;
+     background: #D9E1E8;
+     color: #316431;
      text-align: left;
-     border-top: 2px solid #316431;
-     border-radius: 0;
-     -moz-border-radius: 0;
-     -webkit-border-radius: 0;
-     font-weight:normal;
-     width:100px;
-     border-left: 2px solid #316431;
+     font-weight: normal;
+     width: 100px;
 }
  
 .nav_comunidad nav ul li:hover ul li a:hover, nav ul li a:hover {
-	background:#F7D118;
-    color:#316431;
+	background: #F7D118;
+   color: #316431;
 }

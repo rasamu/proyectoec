@@ -14,7 +14,10 @@
  {{ parent() }}
  
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Alta administrador de fincas{% endtrans %}</h2>
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Alta administrador de fincas{% endtrans %}</h2>
+			</hgroup>
+			
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
     		<div class="campo">
@@ -95,6 +98,6 @@
     			<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
-		{{ form_end(form) }}
+			{{ form_end(form) }}
 		</section>
 {% endblock %}

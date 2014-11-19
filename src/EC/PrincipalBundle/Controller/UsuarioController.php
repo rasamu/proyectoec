@@ -68,24 +68,6 @@ class UsuarioController extends Controller
 			return $propiedad;
 	 }
 	 
-	 private function eliminar_propietario($propietario){
-	 		$propiedad=$propietario->getPropiedad();
-	 		$role=$propietario->getRole();
-			$role->removeUsuario($propietario);	 		
-	 		
-	 		$this->eliminar_actuaciones($propietario);
-	 		$this->eliminar_incidencias($propietario);
-	 		
-	 		$em = $this->getDoctrine()->getEntityManager();
-	 		if($propiedad){
-	 			$propiedad->setPropietario();	
-	 			$em->persist($propiedad);
-	 		}
-	 		$em->persist($role);
-    		$em->remove($propietario);
-    		$em->flush();	
-	 }
-	 
 	 private function eliminar_propiedad($propiedad){
 	 		$bloque=$propiedad->getBloque();
 	 		$bloque->removePropiedade($propiedad);
@@ -101,18 +83,48 @@ class UsuarioController extends Controller
     		$em->flush();	
 	 }
 	 
+	 private function eliminar_propietario($propietario){
+	 		$propiedad=$propietario->getPropiedad();
+	 		$role=$propietario->getRole();
+			$role->removeUsuario($propietario);	 		
+	 		
+	 		$this->eliminar_actuaciones($propietario);
+	 		$this->eliminar_incidencias($propietario);
+	 		$this->eliminar_logs($propietario);
+	 		
+	 		$em = $this->getDoctrine()->getEntityManager();
+	 		if($propiedad){
+	 			$propiedad->setPropietario();	
+	 			$em->persist($propiedad);
+	 		}
+	 		$em->persist($role);
+    		$em->remove($propietario);
+    		$em->flush();	
+	 }
+	 
+	 //Elimina los logs de un propietario
+	 private function eliminar_logs($propietario){
+	 		$logs=$propietario->getLogs();
+  			foreach($logs as $log){
+  					$propietario->removeLog($log);
+  					
+  					$em = $this->getDoctrine()->getEntityManager();
+   				$em->persist($propietario);
+   				$em->remove($log);
+    				$em->flush();
+  			}
+	 }
+	 
 	 //Elimina las actuaciones de un propietario dado en cualquier incidencia
 	 private function eliminar_actuaciones($propietario) {
   			$actuaciones=$propietario->getActuaciones();
   			foreach($actuaciones as $actuacion){
-  					$incidencia=$actuacion->getIncidencia();
-  					$incidencia->removeActuacione($actuacion);
+  					$actuacion->setUsuario();//Ponemos a null
   					$propietario->removeActuacione($actuacion);
-  					
   					$em = $this->getDoctrine()->getEntityManager();
-  					$em->persist($propietario);
-  					$em->persist($incidencia);
-   				$em->remove($actuacion);
+  					
+   				$em->persist($actuacion);
+   				$em->persist($propietario);
     				$em->flush();
   			}	
 	 }
@@ -128,14 +140,15 @@ class UsuarioController extends Controller
   				
   				foreach($actuaciones as $actuacion){
   					$propietario_actuacion=$actuacion->getUsuario();
-  					$propietario_actuacion->removeActuacione($actuacion);
+  					 $em2 = $this->getDoctrine()->getEntityManager();
+  					if($propietario_actuacion){
+  						$propietario_actuacion->removeActuacione($actuacion);	
+  						$em2->persist($propietario_actuacion);
+  					}	 					
   					$incidencia->removeActuacione($actuacion);
-  					
-  					$em2 = $this->getDoctrine()->getEntityManager();
   					$em2->persist($incidencia);
-  					$em2->persist($propietario_actuacion);
   					$em2->remove($actuacion);
-  					$em2->flush();	
+  					$em2->flush();
   				}
   				
   				$em = $this->getDoctrine()->getEntityManager();
@@ -441,6 +454,7 @@ class UsuarioController extends Controller
     {
     		$comunidad=$this->comprobar_comunidad($cif);
     		
+    		/*Buscamos al propietario*/
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT p
@@ -453,14 +467,30 @@ class UsuarioController extends Controller
 			} catch (\Doctrine\Orm\NoResultException $e) {
         			throw new AccessDeniedException();
 			}
-			
-			$flash1=$this->get('translator')->trans('El propietario ');
-			$flash2=$this->get('translator')->trans(' ha sido eliminado.');
-			$this->get('session')->getFlashBag()->add('notice',$flash1.$propietario->getNombre().$flash2);
-        	$this->get('session')->getFlashBag()->add('color','green');
         	
-        	$this->eliminar_propiedad($propietario->getPropiedad());
-        	$this->eliminar_propietario($propietario);
+        	/*Buscamos si tiene incidencias abiertas*/
+        	$em = $this->getDoctrine()->getManager();	
+			$query = $em->createQuery(
+    			'SELECT i FROM ECPrincipalBundle:Incidencia i
+    			WHERE i.usuario=:usuario and i.estado!=3'
+			)->setParameters(array('usuario'=>$propietario));			
+			$incidencias_abiertas = $query->getResult();
+        	
+        	if($incidencias_abiertas){
+        		$flash1=$this->get('translator')->trans('El propietario ');
+				$flash2=$this->get('translator')->trans(' no se ha podido dar de baja. Tiene incidencias no finalizadas.');
+				$this->get('session')->getFlashBag()->add('notice',$flash1.$propietario->getNombre().$flash2);
+        		$this->get('session')->getFlashBag()->add('color','red');
+        	}else{
+        		$this->eliminar_propiedad($propietario->getPropiedad());
+        		$this->eliminar_propietario($propietario);
+        	
+        		$flash1=$this->get('translator')->trans('El propietario ');
+				$flash2=$this->get('translator')->trans(' ha sido eliminado.');
+				$this->get('session')->getFlashBag()->add('notice',$flash1.$propietario->getNombre().$flash2);
+        		$this->get('session')->getFlashBag()->add('color','green');
+        	}
+        	
     		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }    
     

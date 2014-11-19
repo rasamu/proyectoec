@@ -12,7 +12,13 @@
 
 {% block colder %}
 	{{ parent() }}
-
-	<h2 class="verde centrado">{% trans %}¿Eres administrador de fincas?{% endtrans %}</h2>
-   <a href="{{ path('ec_principal_alta_adminfincas') }}">{% trans %}Alta Administrador{% endtrans %}</a>
+	
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}¿Eres administrador de fincas?{% endtrans %}</h2>
+   </hgroup>
+   
+   <article>
+   	<a href="{{ path('ec_principal_alta_adminfincas') }}">{% trans %}Alta Administrador{% endtrans %}</a>
+	</article>
+	
 {% endblock %}

@@ -27,7 +27,9 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Reunión{% endtrans %}</h2>
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Reunión{% endtrans %}</h2>
+	</hgroup>
 	
 	<p><b>Descripción: </b>{{reunion.descripcion}}</p>
 	<p><b>Fecha: </b><i>{{reunion.fecha | date("d/m/Y H:i a")}}</i></p>
@@ -46,6 +48,5 @@
 	</p>
 	
 	<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/reuniones/'~reunion.path~'') }}" width='700' height='900' allowfullscreen webkitallowfullscreen></iframe>
-
 	
 {% endblock %}

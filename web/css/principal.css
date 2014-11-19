@@ -1,9 +1,39 @@
 body { 
-	font-family: serif, Arial, Helvetica;
-	font-size: 0.750em; /*12px*/
+	font-family: sans-serif, serif, Arial, Helvetica;
+	font-size: 0.80em; /*12px*/
 	color: #000; 
-	background-color:  #f4f9fd;
-	margin: 0;
+   background: -webkit-linear-gradient(#acc6ac, #D9E1E8);
+   background: -moz-linear-gradient(#acc6ac, #D9E1E8);
+   background: -o-linear-gradient(#acc6ac, #D9E1E8);
+   /*background: -webkit-linear-gradient(#93c1d4, white);
+   background: -moz-linear-gradient(#93c1d4, white);
+   background: -o-linear-gradient(#93c1d4, white);*/
+	height: 100%;
+   margin: 0;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+  /* background-image: url('../images/background.jpg');*/
+
+}
+
+/*TIPO_LETRA_TITULO*/
+@font-face {
+  font-family: 'Miltonian Tattoo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Miltonian Tattoo'), local('MiltonianTattoo'), url('../css/1oU_8OGYwW46eh02YHydnzhIoxOGKXnDP3ByRnzCG7U.woff') format('woff');
+}
+
+.letra_miltonian{
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
+}
+
+#box{
+	width: 962px;
+	margin:0 auto;
+	margin-top: 20px;
+	border-radius:14px;
+	box-shadow: 10px 10px 5px #888888;
 }
 
 p{
@@ -32,8 +62,8 @@ p{
 
 h2{
 	font-size: 1.333em;
-	margin-bottom: 8px;
-	margin-top: 8px;
+	margin-bottom: 12px;
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
 }
 
 .oculto{
@@ -51,33 +81,30 @@ h2{
 /*Cabecera*/
 /*Topheader*/
 #header{
-	width: 962px;
-	margin:0 auto;
-	border: 1px solid #F7D118;
-	margin-bottom: 10px;
-	margin-top: 25px;
-	box-shadow:3px 3px 3px 3px #316431;
-	border-radius:10px;
+	width: 100%;
+	border-top-left-radius:14px;
+	border-top-right-radius:14px;
 }
 
 #topheader{
 	height: 60px; 
-	background-color: #316431; 
+	background-color: #316431;
 	color:#fff;
-	border-top-left-radius:10px;
-	border-top-right-radius:10px;
+	padding-left:1%;
+	padding-right: 1%;
+	border-top-left-radius:14px;
+	border-top-right-radius:14px;
 }
 
 #tituloheader{
-	width: 962px;
 	margin:0 auto;	
 }
 
 h1{
-	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
 	font-size: 4.167em; 	
 	margin:0;
 	float: left;
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
 }
 
 #idiomas{
@@ -89,28 +116,24 @@ h1{
 
 /*Pie*/
 footer{ 
-	padding: 12px;
- 	background-color: #316431; 
- 	color:#fff;
-	box-shadow:3px 3px 3px 3px #316431;
-	width: 962px;
-	margin:0 auto;
-	border: 1px solid #F7D118;
-	border-radius:10px;
+
 }
 
 #footer{
-	width: 962px;
-	margin:0 auto;	
+ 	background-color: #316431; 
+ 	color:#fff;
+	width: 100%;
+	border-bottom-left-radius:14px;
+	border-bottom-right-radius:14px;
 }
 
 #titulofooter{
+	padding: 12px;
 	margin:0 auto;	
 	width: 33%;
 }
 
 .titulofooter{
-	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
 	font-size: 15px; 
 	margin:0;
 	float: left;
@@ -135,92 +158,51 @@ footer{
 /*subheader*/
 #subheader{
 	background-color:  #D9E1E8;
-	border-bottom-left-radius:10px;
-	border-bottom-right-radius:10px;
+	padding-right: 1%;
+	height: 60px;
 }
 
 #botones{
 	margin: 0 auto;
-	width: 962px;
 	clear: both;
-	height: 60px;
-}
-
-#menu{
-	float:left;
-	clear: both;
-	width: 600px;
-	margin-top:25px;
-	padding: 0;
-	margin-left: 4px;
-}
-
-#menu ul.navigation{ 
-	list-style: none; 
-	padding: 0;
-	margin:0;
-}
-
-#menu .navigation li { 
-	display: inline ;
-}
-
-#menu .navigation li a { 
-	display: inline-block;
- 	padding: 10px 15px; 
- 	background-color: #316431; 
- 	border-top-left-radius: 1em;
-   border-top-right-radius: 1em;
-   text-decoration: none;
-   color:#fff;
-}
-
-#menu .navigation li:hover > a {
-	background:#F7D118;
-	color:#316431;
-   border-left: 2px solid #316431;
-   padding: 10px 14px;
 }
 
 /*Contenido*/
 #wrapper{
-		clear: both;
+	clear: both;
 }
 
 #contenido{
-	width: 962px;
-	margin:0 auto;
+	width: 100%;
 	overflow:hidden;
 	clear: both;
-
 }
 
 /*Columna Izquierda*/
 #sidebar { 
-	width: 23%;
-	padding: 10px; 
-	float: left;
 	clear: both;
-	border: 1px solid #316431;
 	background-color: #fff;
-	box-shadow:3px 3px 3px 3px #316431;
-	min-height: 400px;
-	border-radius:10px;
+	height: 34px;
+	background: -webkit-linear-gradient(white, #D9E1E8);
+   background: -moz-linear-gradient(white, #D9E1E8);
+   background: -o-linear-gradient(white, #D9E1E8);
+   background-repeat: no-repeat;
+   background-attachment: fixed;
 }
 
 /*Columna Derecha*/
 #col-der { 
 	text-align: left;
-	padding: 10px; 
-	border: 1px solid #316431;
-	width: 71%;
-	float: left;
-	min-height: 400px;
-	margin-bottom: 10px;
-	float:right;
-	background-color: #fff;
-	box-shadow:3px 3px 3px 3px #316431;
-	border-radius:10px;
+	padding-top: 20px;
+	padding-bottom: 40px;
+	padding-left: 45px;
+	padding-right: 45px;
+	min-height: 350px;
+	background: -webkit-linear-gradient(white, #D9E1E8);
+   background: -moz-linear-gradient(white, #D9E1E8);
+   background: -o-linear-gradient(white, #D9E1E8);
+   background-repeat: no-repeat;
+   background-attachment: fixed;
 }
 
 /*Mensajes de erros y éxito*/
@@ -230,24 +212,40 @@ footer{
 	border-width: 1px;
 	padding: 5px;
 	margin-bottom: 5px;
+	margin-top:15px;
 }
 
 /*FORMULARIO*/
+input[type="submit"],input[type="reset"],input[type="button"]{
+	background-color: #316431;
+   color: #D9E1E8;
+   border-radius: 10px;
+}
+
+input[type="submit"]:hover,input[type="reset"]:hover,input[type="button"]:hover{
+	background-color: #F7D118;
+   color: #316431;
+   border-radius: 10px;
+}
+
 input, select, textarea
 {
 	font-size: 1.167em;
    font-family: Arial, helvetica;
    outline: none;
    transition: all 0.75s ease-in-out;
-   border-radius: 3px;
+   -webkit-transition: all 0.75s ease-in-out;
+	-moz-transition: all 0.75s ease-in-out;
+	-o-transition: all 0.75s ease-in-out;
    border: 1px solid rgba(0,0,0, 0.2);
    color: #316431;
-   background-color: #d9e1e8;
-   margin-left: 20px;
+   background-color: #eaeff3;
+   margin-left: 10px;
    resize: none;
    cursor:pointer;
    text-align:left;
    padding: 2px;
+   border-radius:8px;
 }
 
 input:focus,textarea:focus,select:focus
@@ -259,8 +257,8 @@ input:focus,textarea:focus,select:focus
 
 #entrar{
 	float:right;
-	width: 250px;
-	margin-top:5px;
+	width: auto;
+	display: inline;
 }
 
 #entrar > a{
@@ -284,15 +282,20 @@ input:focus,textarea:focus,select:focus
 	border: 2px outset #316431;
 	padding: 20px;
 	margin-bottom: 20px;
-	display: inline-block;
+	display: table;
+	background: -webkit-linear-gradient(#D9E1E8, #ACC6AC);
+   background: -moz-linear-gradient(#D9E1E8, #ACC6AC);
+   background: -o-linear-gradient(#D9E1E8, #ACC6AC);
+   border-radius:14px;
+   width: 600px;
+   box-shadow: 10px 10px 5px #888888;
 }
 
 .campo{
-    margin-top: 10px;
-    /*width: 300px;*/
-    float: left;
-    margin-left: 10px;
-    height: 35px;
+   margin-top: 10px;
+   /*width: 300px;*/
+   float: left;
+	margin-bottom: 5px;
 }
 
 #form_login{
@@ -302,17 +305,22 @@ input:focus,textarea:focus,select:focus
 	padding: 20px;
 	margin-bottom: 20px;
 	width: 350px;
+	background: -webkit-linear-gradient(#D9E1E8, #ACC6AC);
+   background: -moz-linear-gradient(#D9E1E8, #ACC6AC);
+   background: -o-linear-gradient(#D9E1E8, #ACC6AC);
+   border-radius:14px;
+   box-shadow: 10px 10px 5px #888888;
 }
 
 .campo_login{
     margin-top: 15px;
     /*width: 300px;*/
-    margin-left: 10px;
+    margin-left: 30px;
 }
 
 .label_campo{
 	width: 80px;	
-	display: inline-block; 
+	display: -moz-stack;
 }
 
 .error{
@@ -330,4 +338,12 @@ input:focus,textarea:focus,select:focus
 #loading{
 	display: none;
 	float: left;	
+}
+
+/*ESTADÍSTICAS*/
+.grafica_estadisticas{
+	min-width: 500px;
+	min-height: 450px;
+	margin: 0 auto;
+	margin-top:20px;
 }
