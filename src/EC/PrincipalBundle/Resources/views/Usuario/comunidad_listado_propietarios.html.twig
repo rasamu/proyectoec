@@ -8,13 +8,12 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/menu_acciones.css') }}" type="text/css" rel="stylesheet" />
     <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>    
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
 	<script type="text/javascript">
 			$(document).ready(function() {
@@ -22,16 +21,16 @@
 			} );
 	</script>
 	<script type="text/javascript"> 
-	$(document).ready(function() { 
-		$('.myMenu > li').bind('mouseover', openSubMenu); 
-		$('.myMenu > li').bind('mouseout', closeSubMenu); 
-		function openSubMenu() { 
-			$(this).find('ul').css('visibility', 'visible'); 
-		}; 
-		function closeSubMenu() { 
-			$(this).find('ul').css('visibility', 'hidden'); 
-		}; 
-	}); 
+	$(function() {
+  if ($.browser.msie && $.browser.version.substr(0,1)<7)
+  {
+    $('li').has('ul').mouseover(function(){
+        $(this).children('ul').css('visibility','visible');
+        }).mouseout(function(){
+        $(this).children('ul').css('visibility','hidden');
+        })
+  }
+}); 
 	</script>
 {% endblock %}
 
@@ -60,7 +59,7 @@
 					<th>{% trans %}Bloque{% endtrans %}</th>
 					<th>{% trans %}Dirección{% endtrans %}</th>
 					<th>{% trans %}Propiedad{% endtrans %}</th>
-					<th>{% trans %}Nombre{% endtrans %}</th>
+					<th>{% trans %}Nombre/Razón Social{% endtrans %}</th>
 					<th>{% trans %}Conexión{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
@@ -80,19 +79,16 @@
        					{% endif %}
        				</td>
        				<td>
-							<div class="myMenu" id="{{propiedad.propietario.id}}">
+								<ul id="menu_acciones">
 									<li><a href="#">{% trans %}Acciones{% endtrans %}</a>
 										<ul>
 											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
 											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"> Eliminar Propietario</a></li>
 											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de generar una nueva contraseña a {{propiedad.propietario.nombre}}?')">Generar contraseña</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')">Eliminar</a></li>
 										</ul>
 									</li>
 								</ul>
-								</nav>
-							</div>
-							<div style="clear:both"></div>
        				</td>
       			</tr>
       		{% endfor %} 
@@ -103,7 +99,7 @@
 					<th>{% trans %}Bloque{% endtrans %}</th>
 					<th>{% trans %}Dirección{% endtrans %}</th>
 					<th>{% trans %}Propiedad{% endtrans %}</th>
-					<th>{% trans %}Nombre{% endtrans %}</th>
+					<th>{% trans %}Nombre/Razón Social{% endtrans %}</th>
 					<th>{% trans %}Conexión{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>

@@ -20,7 +20,7 @@ class Reunion
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    protected $id;
     
     /**
 	* @var string $asunto
@@ -38,7 +38,7 @@ class Reunion
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    public $path;
+    private $path;
     
     private $temp;
     

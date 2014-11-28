@@ -29,13 +29,13 @@
 }
 
 .btn_password {
-    background-color: orange;
+    background-color: #759E1A;
     background-image: url('../images/ico_password.png');
 }
 
 .btn_nuevo {
 	 margin-bottom: 8px;
-    background-color: orange;
+    background-color: #f17e4d;
     background-image: url('../images/ico_add.png');
 }
 
@@ -43,6 +43,9 @@ a.boton_documento {
     text-decoration: none;
     background-repeat: no-repeat;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
     color: #FFFFFF;
     cursor: pointer;
     display: inline;
@@ -51,16 +54,27 @@ a.boton_documento {
     font-size: 0.9em;
     padding: 3px 7px 3px 29px;
     background-position: 5px center;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 a.boton_documento:hover{
 	background-color: #F7D118;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 a.boton_alta {
     text-decoration: none;
     background-repeat: no-repeat;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
     color: #fff;
     cursor: pointer;
     display: inline-block;
@@ -69,17 +83,28 @@ a.boton_alta {
     font-size: 0.9em;
     padding: 3px 7px 3px 28px;
     background-position: 2px center;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 a.boton_alta:hover{
 	background-color: #316431;
 	color:#fff;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 a.boton_estadistica {
     text-decoration: none;
     background-repeat: no-repeat;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
     color: #fff;
     cursor: pointer;
     display: inline-block;
@@ -88,9 +113,17 @@ a.boton_estadistica {
     font-size: 0.9em;
     padding: 3px 7px 3px 28px;
     background-position: 2px center;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 a.boton_estadistica:hover{
 	background-color: #316431;
 	color:#fff;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }

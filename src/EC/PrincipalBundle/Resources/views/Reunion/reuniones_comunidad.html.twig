@@ -7,7 +7,7 @@
 
 {% block stylesheets %}
    {{ parent() }}
-   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+   <link rel="stylesheet" href="{{ asset('css/jquery-ui-dialog.css') }}" />
 	<link rel='stylesheet' type='text/css' href="{{ asset('css/fullcalendar.css') }}" />
 	<style>
 
@@ -16,7 +16,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script type='text/javascript' src="{{ asset('js/jquery-ui.min.js') }}"></script>
 	
    <script type='text/javascript' src="{{ asset('js/moment.min.js') }}"></script>
 	<script type='text/javascript' src="{{ asset('js/fullcalendar.min.js') }}"></script>

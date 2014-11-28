@@ -279,7 +279,7 @@
                 <target>Contact</target>
             </trans-unit>
             <trans-unit id="70">
-                <source>Acceder</source>
+                <source>Iniciar sesión</source>
                 <target>Login</target>
             </trans-unit>
             <trans-unit id="71">

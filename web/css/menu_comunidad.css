@@ -1,4 +1,4 @@
-#menu_comunidad{
+/*#menu_comunidad{
 	width: 100%;
 	height: 28px;
 	background-color: #F7D118;
@@ -77,4 +77,180 @@
 .nav_comunidad nav ul li:hover ul li a:hover, nav ul li a:hover {
 	background: #F7D118;
    color: #316431;
+}*/
+
+/**
+ *********************************************
+ * Prototype of styles for horizontal CSS-menu
+ * @data 25.01.2010
+ *********************************************
+ * (X)HTML-scheme:
+ *  <div id="menu">
+ *      <ul class="menu">
+ *          <li><a href="#" class="parent"><span>level 1</span></a>
+ *              <div><ul>
+ *                  <li><a href="#" class="parent"><span>level 2</span></a>
+ *                      <div><ul><li><a href="#"><span>level 3</span></a></li></ul></div>
+ *                  </li>
+ *              </ul></div>
+ *          </li>
+ *          <li class="last"><a href="#"><span>level 1</span></a></li>
+ *      </ul>
+ *  </div>
+ *********************************************
+ */
+ 
+#menu_comunidad_general{
+	width: 100%;
+	height: 32px;
+	background: -webkit-linear-gradient(white,#F7D118);
+   background: -moz-linear-gradient(white,#F7D118);
+   background: -o-linear-gradient(white,#F7D118);
+   background: linear-gradient(white,#F7D118);
+	border-radius:1em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	-o-border-radius: 1em;
+}
+
+.titulo_comunidad{
+	width: auto;
+	float: left;
+	font-size: 1.75em;
+	margin-left: 5px;
+}
+
+.titulo_comunidad em{
+	text-shadow: 0.06em 0.06em 0.02em #316431;
+	-webkit-text-shadow: 0.06em 0.06em 0.02em #316431;
+	-moz-text-shadow: 0.06em 0.06em 0.02em #316431;
+	-o-text-shadow: 0.06em 0.06em 0.02em #316431;
+}
+
+/* menu_comunidad::base */
+#menu_comunidad {
+    z-index:100;
+    height:32px;
+    font-weight: bold;
+	 /*background: #316431;*/
+	 background: transparent url(../images/menu_comunidad/menu_m.png) repeat-x;
+	 width: auto;
+	 float: right;
+	 border-top-left-radius: 3em;
+	 -moz-border-left-radius: 3em;
+	 -webkit-border-left-radius: 3em;
+	 -o-border-left-radius: 3em;
+	 padding-left: 30px;
+	 padding-right: 10px;
+	 border-top-right-radius:1em;
+	 border-bottom-right-radius:1em;
+	 -moz-border-top-right-radius:1em;
+	 -moz-border-bottom-right-radius:1em;
+	 -webkit-border-top-right-radius:1em;
+	 -webkit-border-bottom-right-radius:1em;
+	 -o-border-top-right-radius:1em;
+	 -o-border-bottom-right-radius:1em;
+}
+#menu_comunidad .menu_comunidad {
+    position:relative;;
+}
+#menu_comunidad * {
+    list-style:none;
+    border:0;
+    padding:0;
+    margin:0;
+}
+#menu_comunidad a {
+    display:block;
+    padding:7px 14px 7px 14px;
+    white-space:nowrap;
+}
+#menu_comunidad li {
+    float:left;
+    background:#fff;
+}
+#menu_comunidad li li {
+    float:none;
+    _border:1px solid #494949; /** fix for ie6 */
+}
+#menu_comunidad div {
+    visibility:hidden;
+    position:absolute;
+    background:url(../images/menu_comunidad/pix.gif);
+}
+#menu_comunidad div div {
+    margin:-24px 0 0 -1px;
+    left:100%;
+}
+#menu_comunidad li:hover>div { visibility:visible; }
+
+/* menu_comunidad::special styles */
+/* menu_comunidad::level 1 */
+#menu_comunidad a {
+    text-decoration:none;
+    color:#fff;
+    position:relative;
+    z-index:77;
+}
+#menu_comunidad a:hover, #menu_comunidad li.selected  {
+	background: transparent url(../images/menu/submenu_m.png) repeat-x scroll 0 0;
+    color:#6bb90d;
+}
+#menu_comunidad a:hover span { color:#6bb90d; }
+#menu_comunidad>ul>li:hover>a, #menu_comunidad li.selected  {
+	background: transparent url(../images/menu/submenu_m.png) repeat-x scroll 0 0;
+    color:#6bb90d;
+}
+#menu_comunidad>ul>li:hover>a span { color:#316431; }
+
+#menu_comunidad span {
+    text-transform:uppercase;
+    color:#fff;
+    font:10px/18px 'Miltonian Tattoo','Trebuchet MS', Arial, Helvetica, Sans-serif;
+    font-weight: bold;
+}
+#menu_comunidad li { background:none; }
+/* menu::level >= 2 */
+#menu_comunidad li li a {
+    padding:0;
+    position:static;
+}
+#menu_comunidad li li a:hover { background:#57ac3c; }
+#menu_comunidad li li a span { color:#fff; }
+#menu_comunidad li li a:hover span { color:#ffffff; }
+#menu_comunidad li li a.parent span { background:url(../images/menu_comunidad/pointer.gif) no-repeat right 9px; _background-position:right 10px; }
+*+html #menu_comunidad li li a.parent span { background-position:right 10px; }
+#menu_comunidad li li span {
+    display:block;
+    text-transform:none;
+    line-height:16px;
+    padding:4px 25px 4px 14px;
+    font-size:11px;
+}
+#menu_comunidad li div { background: transparent url(../images/menu/submenu_m.png) repeat-x scroll 0 0; }
+/** <fix for ie6> */
+#menu_comunidad div div {
+    _margin-top:-25px;
+    _background:#393939;
+}
+#menu_comunidad li li li { _border:1px solid #393939; }
+#menu_comunidad div div div { _background:#292929; }
+#menu_comunidad li li li li { _border:1px solid #292929; }
+/** </fix for ie6> */
+
+/* lava lamp */
+div#menu_comunidad li.back {
+    width:10px;
+    height:32px;
+    z-index:8;
+    position:absolute;
+}
+div#menu_comunidad li.back .left {
+    width:auto;
+    height:32px;
+    float:none;
+    position:relative;
+    top:0;
+    left:0;
+    visibility:visible;
 }

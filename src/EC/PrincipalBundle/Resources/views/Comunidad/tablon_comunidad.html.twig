@@ -33,7 +33,7 @@
 		{% else %}
 			{% for incidencia in incidencias %}
 				<p>
-					<a href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> 
+					<a href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> 
 					{{incidencia.fecha | date("d/m/Y")}} 
 					{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}<b>Comunidad: </b>{{incidencia.usuario.propiedad.bloque.comunidad.codigo}}{% endif %}
 					<b>Categoria: </b>{{incidencia.categoria.nombre}} 

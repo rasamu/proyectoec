@@ -24,6 +24,7 @@ html .fc,
 .fc th {
 	padding: 0;
 	vertical-align: top;
+	color: #316431;
 	}
 
 
@@ -57,6 +58,7 @@ html .fc,
 .fc-header-title h2 {
 	margin-top: 0;
 	white-space: nowrap;
+	color: #4c804c;
 	}
 	
 .fc .fc-header-space {
@@ -72,6 +74,8 @@ html .fc,
 
 .fc-header .fc-button {
 	margin-right: -1px;
+	background: #acc6ac;
+   color: #316431;
 	}
 	
 .fc-header .fc-corner-right,  /* non-theme */
@@ -120,12 +124,12 @@ html .fc,
 
 .fc-widget-header,    /* <th>, usually */
 .fc-widget-content {  /* <td>, usually */
-	border: 1px solid #ddd;
+	border: 1px solid #C7D4DE;
 	background: white;
 	}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
-	background: #D9E1E8;
+	background: #fdf5d0;
 	}
 	
 .fc-cell-overlay { /* semi-transparent rectangle while dragging */
@@ -380,6 +384,9 @@ table.fc-border-separate {
 .fc-border-separate tr.fc-last th,
 .fc-border-separate tr.fc-last td {
 	border-bottom-width: 1px;
+	color: #316431;
+	   font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
+   font-weight: bold;
 	}
 	
 .fc-border-separate tbody tr.fc-first td,
@@ -458,6 +465,8 @@ table.fc-border-separate {
 	vertical-align: middle;
 	text-align: right;
 	font-weight: normal;
+	color: #316431;
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
 	}
 
 .fc-agenda-slots .fc-agenda-axis {
