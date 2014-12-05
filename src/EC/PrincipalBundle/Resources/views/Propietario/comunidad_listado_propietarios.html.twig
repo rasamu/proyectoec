@@ -57,10 +57,10 @@
 			<thead>
 				<tr>
 					<th>{% trans %}Bloque{% endtrans %}</th>
-					<th>{% trans %}Dirección{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Dirección{% endtrans %}</th>
 					<th>{% trans %}Propiedad{% endtrans %}</th>
-					<th>{% trans %}Nombre/Razón Social{% endtrans %}</th>
-					<th>{% trans %}Conexión{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Nombre/Razón Social{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Conexión{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
@@ -69,10 +69,10 @@
 				{% for propiedad in bloque.propiedades%}
 					<tr class="gradeX">
 					   <td>{{bloque.num}}</td>
-					   <td>{{bloque.direccion}}</td>
+					   <td class="no_mostrar">{{bloque.direccion}}</td>
 					   <td>{{propiedad.piso}}</td>
-       				<td>{{propiedad.propietario.nombre}}</td>
-       				<td>{% if propiedad.propietario.getUltimoLog() is empty %}
+       				<td class="no_mostrar">{{propiedad.propietario.razon}}</td>
+       				<td class="no_mostrar">{% if propiedad.propietario.getUltimoLog() is empty %}
 								-
        					{% else %}
        						 {{propiedad.propietario.getUltimoLog().fecha | date("d/m/Y H:i") }}
@@ -82,10 +82,10 @@
 								<ul id="menu_acciones">
 									<li><a href="#">{% trans %}Acciones{% endtrans %}</a>
 										<ul>
-											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.nombre}} como nuevo vicepresidente?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de generar una nueva contraseña a {{propiedad.propietario.nombre}}?')">Generar contraseña</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.nombre}}?')">Eliminar</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.razon}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.razon}} como nuevo vicepresidente?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de generar una nueva contraseña a {{propiedad.propietario.razon}}?')">Generar contraseña</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.razon}}?')">Eliminar</a></li>
 										</ul>
 									</li>
 								</ul>
@@ -97,10 +97,10 @@
 			<tfoot>
 				<tr>
 					<th>{% trans %}Bloque{% endtrans %}</th>
-					<th>{% trans %}Dirección{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Dirección{% endtrans %}</th>
 					<th>{% trans %}Propiedad{% endtrans %}</th>
-					<th>{% trans %}Nombre/Razón Social{% endtrans %}</th>
-					<th>{% trans %}Conexión{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Nombre/Razón Social{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Conexión{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</tfoot>

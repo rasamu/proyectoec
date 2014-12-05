@@ -100,14 +100,23 @@ class AdminFincasController extends Controller
     			
     		if ($form->isValid()) {
     				$num=$form->get('dni')->getData();
-					$comprobacion=$this->getDoctrine()
-        				->getRepository('ECPrincipalBundle:AdminFincas')
-        				->find($num);
-            	
-            	if($comprobacion){
-            		$this->get('session')->getFlashBag()->add('notice','Administrador de Fincas ya registrado.');
-   				 	$this->get('session')->getFlashBag()->add('color','red');   				 	
-						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
+        			$em = $this->getDoctrine()->getManager();
+					$query = $em->createQuery(
+    					'SELECT b
+       				FROM ECPrincipalBundle:AdminFincas b
+      				WHERE b.dni = :dni'
+					)->setParameters(array('dni' => $num));    			
+    		
+    				try{
+    					$comprobacion=$query->getSingleResult();	
+					} catch (\Doctrine\Orm\NoResultException $e) {
+						$comprobacion=null;
+					}
+            	if($comprobacion){						
+						$flash=$this->get('translator')->trans('Administrador de Fincas ya registrado.');
+        				$this->get('session')->getFlashBag()->add('notice',$flash);
+   					$this->get('session')->getFlashBag()->add('color','red');
+   					return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));
             	}else{    				     				 
 						$this->setSecurePassword($adminfincas);
 						$nombre_usuario=$this->generar_usuario($adminfincas->getNombre().' '.$adminfincas->getApellidos());
@@ -126,12 +135,13 @@ class AdminFincasController extends Controller
         				->setFrom('info@proyectoec.hol.es')
         				->setTo($form->get('email')->getData())
         				->setContentType('text/html')
-        				->setBody($this->renderView('ECPrincipalBundle:Default:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
+        				->setBody($this->renderView('ECPrincipalBundle:AdminFincas:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
     					$this->get('mailer')->send($message);
-    			
-						$this->get('session')->getFlashBag()->add('notice','Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso.');
-   				 	$this->get('session')->getFlashBag()->add('color','green');   				 	
-						return $this->render('ECPrincipalBundle:Default:mensaje.html.twig');
+						
+						$flash=$this->get('translator')->trans('Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso. Contraseña:'.$form->get('password')->getData());
+        				$this->get('session')->getFlashBag()->add('notice',$flash);
+   					$this->get('session')->getFlashBag()->add('color','green');
+   					return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));
         			}
         	}
         	
@@ -178,63 +188,4 @@ class AdminFincasController extends Controller
         	       		array('form' => $form->createView(),
         	      		));
     }
-    
-    /**
-	  * @Route("/adminfincas/contraseña", name="ec_adminfincas_contraseña")
-	  * @Template("ECPrincipalBundle:AdminFincas:modificacion_contraseña.html.twig")
-	  */
-    public function modificacion_contraseñaAction(Request $request)
-    {
-    		$form = $this->createFormBuilder()
-    		   ->setAction($this->generateUrl('ec_adminfincas_contraseña'))
-        		->add('pass', 'password', array('label' => 'Contraseña actual','max_length' =>9))
-				->add('password', 'repeated', array(
-                'type' => 'password',
-                'invalid_message' => 'Las dos contraseñas deben coincidir',
-                'required' => true,
-                'first_options'  => array('label' => 'Nueva contraseña','max_length' =>9),
-    				 'second_options' => array('label' => 'Confirmación contraseña','max_length' =>9),
-    				))
-       		->getForm();
- 
-    		$form->handleRequest($request);
- 
-    		if ($form->isValid()) {
-       		 	$em = $this->getDoctrine()->getManager();
-					$query = $em->createQuery(
-    					'SELECT u
-       				FROM ECPrincipalBundle:AdminFincas u
-      				WHERE u.id = :id'
-					)->setParameter('id', $this->getUser());
-					$adminfincas = $query->getSingleResult();
-					
-					$encoder_old = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
-					$clave_old = $encoder_old->encodePassword($form->get('pass')->getData(),$adminfincas->getSalt());
-					
-            	if($adminfincas->getPassword()==$clave_old){
-						$adminfincas->setSalt(md5(time()));
-            		$encoder_new = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
-						$clave_new = $encoder_new->encodePassword($form->get('password')->getData(),$adminfincas->getSalt());
-						$adminfincas->setPassword($clave_new);
-						
-   				 	$em->persist($adminfincas);
-    					$em->flush();
-    					
-    					$flash=$this->get('translator')->trans('Su contraseña ha sido actualizada.');
-						$this->get('session')->getFlashBag()->add('notice',$flash);
-        			 	$this->get('session')->getFlashBag()->add('color','green');
-						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
-            	}else{    				     				 
-            		$flash=$this->get('translator')->trans('Contraseña no válida.');
-    				 	$this->get('session')->getFlashBag()->add('notice',$flash);
-        			 	$this->get('session')->getFlashBag()->add('color','red');
-						return $this->redirect($this->generateUrl('ec_adminfincas_contraseña'));
-        			}
-    		}
-    	
-    		return $this->render('ECPrincipalBundle:AdminFincas:modificacion_contraseña.html.twig',
-        	       		array('form' => $form->createView(),
-        	      		));
- 	}
-
 }

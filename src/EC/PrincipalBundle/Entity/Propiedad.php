@@ -35,7 +35,7 @@ class Propiedad
     protected $bloque;
     
     /**
-     * @ORM\OneToOne(targetEntity="EC\PrincipalBundle\Entity\Usuario", mappedBy="propiedad")
+     * @ORM\OneToOne(targetEntity="EC\PrincipalBundle\Entity\Propietario", mappedBy="propiedad")
      **/
     private $propietario;
 
@@ -88,10 +88,10 @@ class Propiedad
     /**
      * Set propietario
      *
-     * @param \EC\PrincipalBundle\Entity\Usuario $propietario
+     * @param \EC\PrincipalBundle\Entity\Propietario $propietario
      * @return Propiedad
      */
-    public function setPropietario(\EC\PrincipalBundle\Entity\Usuario $propietario = null)
+    public function setPropietario(\EC\PrincipalBundle\Entity\Propietario $propietario = null)
     {
         $this->propietario = $propietario;
     
@@ -101,7 +101,7 @@ class Propiedad
     /**
      * Get propietario
      *
-     * @return \EC\PrincipalBundle\Entity\Usuario
+     * @return \EC\PrincipalBundle\Entity\Propietario
      */
     public function getPropietario()
     {

@@ -31,14 +31,14 @@
 				<h2 class="verde centrado">{% trans %}Datos personales{% endtrans %}</h2>
 			</hgroup>
 			
-			<a class="boton_alta btn_password" href="{{ path('ec_propietario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
+			<a class="boton_alta btn_password" href="{{ path('ec_usuario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
 			{{ form_start(form) }}
     		<div style="color:red;">{{ form_errors(form) }}</div>
  
     		<div class="campo">
-        		<div class="label_campo">{{ form_label(form.nombre) }}</div>
-       		 {{ form_widget(form.nombre) }}
-        		<div class="error">{{ form_errors(form.nombre) }}</div>
+        		<div class="label_campo">{{ form_label(form.razon) }}</div>
+       		 {{ form_widget(form.razon) }}
+        		<div class="error">{{ form_errors(form.razon) }}</div>
     		</div>
 
     		<div class="campo">

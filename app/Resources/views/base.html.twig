@@ -4,14 +4,16 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <meta content="Herramienta web para la administración de comunidades de propietarios" name="description"/>
 		  <meta content="administrador, fincas, gestión, comunidades, vecinos, propiedades, propietarios, bloques, segunda mano" name="keywords"/>
+		  <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>{% block title %}- EntreComunidades{% endblock %}</title>
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         {% block stylesheets %}
-            <link type="text/css" rel="stylesheet" href="{{ asset('css/principal.css') }}" />
-            <link type='text/css' rel='stylesheet' href="{{ asset('css/menu.css') }}" />
-            <link type='text/css' rel='stylesheet' href="{{ asset('css/submenu.css') }}" />
+            <link type="text/css" rel="stylesheet" href="{{ asset('css/principal.css') }}"/>
+            <link type='text/css' rel='stylesheet' href="{{ asset('css/menu.css') }}"/>
+            <link type='text/css' rel='stylesheet' href="{{ asset('css/submenu.css') }}"/>
+            <link rel='stylesheet' type='text/css' href="{{ asset('css/slicknav_submenu.css') }}" />
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         {% block javascripts %}
@@ -57,17 +59,17 @@
 										{% else %}
 											{% if is_granted('ROLE_PRESIDENTE') %}
 												<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-												<div style="clear:both">{{ app.user.nombre }}</div>
+												<div style="clear:both">{{ app.user.razon }}</div>
 												<div style="clear:both">{% trans %}Presidente{% endtrans %}</div>
 											{% else %} 
 												{% if is_granted('ROLE_VICEPRESIDENTE') %}
 													<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-													<div style="clear:both">{{ app.user.nombre }}</div>
+													<div style="clear:both">{{ app.user.razon }}</div>
 													<div style="clear:both">{% trans %}Vicepresidente{% endtrans %}</div>
 												{% else %}
 													{% if is_granted('ROLE_VECINO') %}
 														<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-														<div style="clear:both">{{ app.user.nombre }}</div>
+														<div style="clear:both">{{ app.user.razon }}</div>
 														<div style="clear:both">{% trans %}Propietario{% endtrans %}</div>
 													{% else %}
 														<a class="letra_miltonian" href="{{ path('login') }}" >{% trans %}Iniciar sesión{% endtrans %}</a>
@@ -87,18 +89,20 @@
         						{% endblock %}
         						{% if is_granted('ROLE_ADMINFINCAS') %}	  
 								<div id='submenu'>
-										<ul class="submenu">
+										<ul id="submenu_movil" class="submenu">
 											<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
    										<li><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a></li>
    										<li><a href="{{ path('ec_adminfincas_estadisticas_comunidades') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a></li>
+   										<li><a href="{{ path('ec_listado_anuncios') }}"><span>{% trans %}Mis Anuncios{% endtrans %}</span></a></li>
 											<li class="last"><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
 										</ul>
 								</div>
 								{% else %}
 									{% if is_granted('ROLE_VECINO') %}
 										<div id='submenu'>
-												<ul class="submenu">
+												<ul id="submenu_movil" class="submenu">
 													<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
+													<li><a href="{{ path('ec_listado_anuncios') }}"><span>{% trans %}Mis Anuncios{% endtrans %}</span></a></li>
 													<li><a href="{{ path('ec_reuniones_comunidad') }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>
 													<li><a href="{{ path('ec_listado_incidencias') }}"><span>{% trans %}Incidencias{% endtrans %}</span></a></li>
 													<li><a href="{{ path('ec_listado_documentos') }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>																							
@@ -132,5 +136,11 @@
                 {% endblock %}
             </footer>
         </section>
+        <script type='text/javascript' src="{{ asset('js/jquery.slicknav_submenu.min.js') }}"></script>	
+		  <script>
+				$(function(){
+					$('#submenu_movil').slicknav_submenu();
+				});
+		  </script>
     </body>
 </html>

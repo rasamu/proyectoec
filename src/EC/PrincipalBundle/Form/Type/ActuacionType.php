@@ -9,7 +9,7 @@ class ActuacionType extends AbstractType
 {	
     public function buildForm(FormBuilderInterface $builder, array $options)
     {	 
-         $builder->add('mensaje', 'textarea',array('label'=>'Mensaje','max_length'=>500, 'attr'=>array('rows' => 3 , 'cols' => 73)));		
+         $builder->add('mensaje', 'textarea',array('label'=>'Mensaje','max_length'=>500));		
     }
  
     public function setDefaultOptions(OptionsResolverInterface $resolver)

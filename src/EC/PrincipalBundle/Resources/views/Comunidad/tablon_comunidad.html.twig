@@ -8,6 +8,7 @@
 {% block stylesheets %}
     {{ parent() }}
 
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/tablon.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
@@ -32,14 +33,16 @@
 			<p>No existen incidencias.</p>
 		{% else %}
 			{% for incidencia in incidencias %}
-				<p>
-					<a href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> 
-					{{incidencia.fecha | date("d/m/Y")}} 
-					{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}<b>Comunidad: </b>{{incidencia.usuario.propiedad.bloque.comunidad.codigo}}{% endif %}
-					<b>Categoria: </b>{{incidencia.categoria.nombre}} 
-					<b>Bloque: </b>{{incidencia.usuario.propiedad.bloque.num}} 
-					<b>Piso: </b>{{incidencia.usuario.propiedad.piso}}
-				</p>
+				<a class="enlace" href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}">
+					<article class="entrada">
+							<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
+							{{incidencia.fecha | date("d/m/Y")}} 
+							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}<b>Comunidad: </b>{{incidencia.propietario.propiedad.bloque.comunidad.codigo}}{% endif %}
+							<b>Categoria: </b>{{incidencia.categoria.nombre}} 
+							<b>Bloque: </b>{{incidencia.propietario.propiedad.bloque.num}} 
+							<b>Piso: </b>{{incidencia.propietario.propiedad.piso}}
+					</article>
+				</a>
 			{% endfor %}
 		{% endif %}
 	
@@ -53,17 +56,25 @@
 			<p>No hay reuniones próximamente.</p>
 		{% else %}
 			{% for reunion in reuniones %}
-				{% if is_granted('ROLE_ADMINFINCAS') %}  					
-				   <p>
-				   	<a href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> 
-				   	{{reunion.fecha | date("d/m/Y h:i:s a")}} 
-				   	{% if comunidad is empty %}
-				   		<b>Comunidad: </b>{{reunion.comunidad.codigo}}
-				   	{% endif %}
-				   	<b>Descripción: </b>{{reunion.descripcion}}</p>        		
-				{% else %}
-				   <p><a href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}" style="cursor:pointer;"><img src="{{ asset('images/lupa.gif') }}" alt="ver"></a> {{reunion.fecha | date("d/m/Y h:i:s a")}} <b>Descripción: </b>{{reunion.descripcion}}</p>        		
-				{% endif %}
+					{% if is_granted('ROLE_ADMINFINCAS') %}  					
+				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}" style="cursor:pointer;">
+				   		<article class="entrada">
+				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/> 
+				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} 
+				   			{% if comunidad is empty %}
+				   				<b>Comunidad: </b>{{reunion.comunidad.codigo}}
+				   			{% endif %}
+				   			<b>Descripción: </b>{{reunion.descripcion}} 
+				   		</article>
+				   	</a>      		
+					{% else %}
+				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}" style="cursor:pointer;">
+				   		<article class="entrada">
+				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
+				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} <b>Descripción: </b>{{reunion.descripcion}} 
+				   		</article>  
+				   	</a>   		
+					{% endif %}
 			{% endfor %}
 		{% endif %}												
 {% endblock %}

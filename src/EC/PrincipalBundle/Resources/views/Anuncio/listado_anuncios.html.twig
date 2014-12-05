@@ -1,21 +1,21 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
+	{% trans %}Anuncios{% endtrans %}
 	{{ parent() }}
-	
 {% endblock %}
-	
-{% block sidebar %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
 	{{ parent() }}
-	
+	   
 {% endblock %}
 
 {% block colder %}
 	{{ parent() }}
-	
-	{% for flashMessage in app.session.flashbag.get('notice') %}
-    	<div class="flash-notice">
-        {{ flashMessage }}
-    	</div>
-	{% endfor %}
+		
 {% endblock %}

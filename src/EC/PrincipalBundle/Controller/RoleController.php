@@ -46,7 +46,7 @@ class RoleController extends Controller
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT u
-					FROM ECPrincipalBundle:Usuario u
+					FROM ECPrincipalBundle:Propietario u
 					WHERE u.role = :role_presidente and u.propiedad IN
 					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
@@ -76,7 +76,7 @@ class RoleController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT u
-       			FROM ECPrincipalBundle:Usuario u
+       			FROM ECPrincipalBundle:Propietario u
       			WHERE u.id = :id'
 			)->setParameters(array('id' => $id,));
 			
@@ -115,7 +115,7 @@ class RoleController extends Controller
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT u
-					FROM ECPrincipalBundle:Usuario u
+					FROM ECPrincipalBundle:Propietario u
 					WHERE u.role = :role and u.propiedad IN
 					(SELECT p.id FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 					(SELECT b.id FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
@@ -145,7 +145,7 @@ class RoleController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
     				'SELECT u
-       			FROM ECPrincipalBundle:Usuario u
+       			FROM ECPrincipalBundle:Propietario u
       			WHERE u.id = :id'
 			)->setParameters(array('id' => $id,));
 			

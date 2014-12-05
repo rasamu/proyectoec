@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\PrincipalBundle\Form\Type\ComunidadType;
 use EC\PrincipalBundle\Entity\Comunidad;
 use EC\PrincipalBundle\Entity\AdminFincas;
+use EC\PrincipalBundle\Entity\Propietario;
 use EC\PrincipalBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -51,8 +52,8 @@ class ComunidadController extends Controller
 					$query = $em->createQuery(
     					'SELECT i
 						FROM ECPrincipalBundle:Incidencia i
-						WHERE i.estado!=3 and i.usuario IN
-						(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+						WHERE i.estado!=3 and i.propietario IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
 						(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))) order by i.fecha)'
@@ -72,8 +73,8 @@ class ComunidadController extends Controller
 					$query = $em->createQuery(
     					'SELECT i
 						FROM ECPrincipalBundle:Incidencia i
-						WHERE i.estado!=3 and i.usuario IN
-						(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+						WHERE i.estado!=3 and i.propietario IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)) order by i.fecha)'
 					)->setParameters(array('comunidad'=>$comunidad,));	
@@ -87,20 +88,20 @@ class ComunidadController extends Controller
     			$privacidad_bloque_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
         		$privacidad_comunidad_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('3');
         				
-    			/*Buscamos las incidencias del usuario privadas y de la comunidad o bloque publicas no finalizadas*/
+    			/*Buscamos las incidencias del propietario privadas y de la comunidad o bloque publicas no finalizadas*/
     			$em = $this->getDoctrine()->getManager();
 				$query = $em->createQuery(
     				'SELECT i
 					FROM ECPrincipalBundle:Incidencia i
-					WHERE i.estado!=3 and ((i.privacidad= :privacidad_comunidad_publica and i.usuario IN
-						(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+					WHERE i.estado!=3 and ((i.privacidad= :privacidad_comunidad_publica and i.propietario IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))))
-					or (i.privacidad= :privacidad_bloque_publica and i.usuario IN
-						(SELECT s FROM ECPrincipalBundle:Usuario s WHERE s.propiedad IN
+					or (i.privacidad= :privacidad_bloque_publica and i.propietario IN
+						(SELECT s FROM ECPrincipalBundle:Propietario s WHERE s.propiedad IN
 						(SELECT t FROM ECPrincipalBundle:Propiedad t WHERE t.bloque= :bloque)))
-					or (i.usuario= :usuario))'
-				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'usuario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
+					or (i.propietario= :propietario))'
+				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'propietario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
 				
 				$incidencias = $query->getResult();					
 			}
@@ -369,7 +370,7 @@ class ComunidadController extends Controller
     				/*TOTALES DE PROPIETARIOS*/
     				$em = $this->getDoctrine()->getManager();	
 					$query = $em->createQuery(
-    					'SELECT COUNT(u) as total FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+    					'SELECT COUNT(u) as total FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
     					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
     					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
     					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin)))'
@@ -385,8 +386,8 @@ class ComunidadController extends Controller
 					/*TOTALES DE INCIDENCIAS*/
 					$em = $this->getDoctrine()->getManager();	
 					$query = $em->createQuery(
-    					'SELECT COUNT(i) as total FROM ECPrincipalBundle:Incidencia i WHERE i.usuario IN
-    					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+    					'SELECT COUNT(i) as total FROM ECPrincipalBundle:Incidencia i WHERE i.propietario IN
+    					(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
     					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
     					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
     					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin))))'

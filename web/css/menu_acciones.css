@@ -55,7 +55,7 @@
 }
 
 #menu_acciones {
-    width: auto;
+    width: 85px;
     margin: 0 auto;
     border: 1px solid #316431;
 	 background: radial-gradient(white,#ACC6AC);
@@ -128,10 +128,10 @@
     left: -2px;
     z-index: 1;    
     background: linear-gradient(#ACC6AC, #316431);
-    box-shadow: 0 -1px 0 rgba(255,255,255,.3);  
-    -webkit-box-shadow: 0 -1px 0 rgba(255,255,255,.3);  
-    -moz-box-shadow: 0 -1px 0 rgba(255,255,255,.3);  
-    -o-box-shadow: 0 -1px 0 rgba(255,255,255,.3);  
+    box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.75);  
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.75);
+	 -moz-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.75);
+	 box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.75);
     border-radius: 8px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -193,10 +193,10 @@
     color: #316431;
 }
 #menu_acciones ul li:first-child > a {
-    border-radius: 3px 3px 0 0;
-    -webkit-border-radius: 3px 3px 0 0;
-    -moz-border-radius: 3px 3px 0 0;
-    -o-border-radius: 3px 3px 0 0;
+    border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    -o-border-radius: 8px 8px 0 0;
 }
 
 #menu_acciones ul li:first-child > a:after {
@@ -229,8 +229,8 @@
 }
 
 #menu_acciones ul li:last-child > a {
-    border-radius: 0 0 3px 3px;
-    -webkit-border-radius: 0 0 3px 3px;
-    -moz-border-radius: 0 0 3px 3px;
-    -o-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 8px 8px;
+    -webkit-border-radius: 0 0 8px 8px;
+    -moz-border-radius: 0 0 8px 8px;
+    -o-border-radius: 0 0 8px 8px;
 }

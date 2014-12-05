@@ -1,7 +1,7 @@
 body { 
 	font-family: sans-serif, serif, Arial, Helvetica;
 	font-size: 0.80em; /*12px*/
-	color: #000; 
+   color: #2c4853;
    /*background: -webkit-linear-gradient(#acc6ac, #D9E1E8);
    background: -moz-linear-gradient(#acc6ac, #D9E1E8);
    background: -o-linear-gradient(#acc6ac, #D9E1E8);
@@ -409,6 +409,10 @@ input, select, textarea
 	-o-border-radius:8px;
 }
 
+textarea{
+	width: 95%;	
+}
+
 input:focus,textarea:focus,select:focus
 {
 	box-shadow: 0 0 10px #aaa;
@@ -593,4 +597,79 @@ input:focus,textarea:focus,select:focus
 	min-height: 450px;
 	margin: 0 auto;
 	margin-top:20px;
+}
+
+/*VERSION MOVIL*/
+@media (max-width: 767px) {
+	#box {
+   	width: auto !important;
+   	min-width: 360px;
+	}
+	#col-der{
+		min-height: auto !important;
+		padding:5px 10px 8px !important;
+	}
+	#topheader{
+		height: 40px;
+		min-width: 100%;
+		position: fixed;
+		z-index: 1000;
+		top: 0;
+		width: 400px;
+	}
+	#subheader{
+		height: 48px;	
+		margin-top: 40px;
+	}
+	#entrar > a{
+		padding: 1px 5px;	
+	}
+	#entrar > div{
+		display: none;	
+	}
+	#titulofooter{
+		left:2% !important;
+	}
+	#topheader:after{
+		display: none;	
+	}
+	#form_login{
+		padding: 2px !important;	
+		margin:2px auto !mportant;
+		width: 295px;
+	}
+	.form{
+		width: auto;
+		padding: 2px !important;	
+		margin:2px auto !mportant;	
+	}
+	h1{
+		font-size: 2.7em !important;	
+	}
+	
+	input,select,textarea{
+		margin-left: 2px;	
+	}
+	
+	.campo_login{
+		margin-left: 5px;
+		margin-top: 5px;	
+	}
+	#viewer{
+		display: none;	
+	}
+	#idiomas{
+		display: none;	
+	}
+	#sidebar{
+		height: auto;	
+	}
+	.grafica_estadisticas{
+		min-width: 360px;
+		margin: 0 auto;
+		margin-top:5px;
+	}
+	.no_mostrar{
+		display: none;	
+	}
 }

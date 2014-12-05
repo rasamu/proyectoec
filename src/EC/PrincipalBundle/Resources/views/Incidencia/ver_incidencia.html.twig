@@ -29,8 +29,8 @@
 			<p><b>Categoría:</b> {{incidencia.categoria.nombre}}</p>
 			<p><b>Asunto:</b> {{incidencia.asunto}}</p>
 			<p><b>Fecha:</b> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</p>
-			<p><b>Propietario:</b> {{incidencia.usuario.nombre}}</p>
-			<p><b>Bloque:</b> {{incidencia.usuario.propiedad.bloque.direccion}}	<b>Piso:</b> {{incidencia.usuario.propiedad.piso}}</p>
+			<p><b>Propietario:</b> {{incidencia.propietario.razon}}</p>
+			<p><b>Bloque:</b> {{incidencia.propietario.propiedad.bloque.direccion}}	<b>Piso:</b> {{incidencia.propietario.propiedad.piso}}</p>
 		
 			{% if is_granted('ROLE_ADMINFINCAS') %}
 		
@@ -64,13 +64,23 @@
 			{% for actuacion in actuaciones %}
 				<p>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
 				{%if actuacion.usuario is not empty%}
-					{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} 
-					{% if actuacion.usuario.role.nombre=='ROLE_ADMINFINCAS' %}(Administrador){% endif %}
-					{% if actuacion.usuario.role.nombre=='ROLE_PRESIDENTE' %}(Presidente){% endif %}
-					{% if actuacion.usuario.role.nombre=='ROLE_VICEPRESIDENTE' %}(Vicepresidente){% endif %}:</p>
+					{% if actuacion.usuario.role.nombre=='ROLE_ADMINFINCAS' %}
+						{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} (Administrador)
+					{% else %}
+						{% if actuacion.usuario.role.nombre=='ROLE_PRESIDENTE' %}
+							{{actuacion.usuario.razon}} (Presidente)
+						{% else %}
+							{% if actuacion.usuario.role.nombre=='ROLE_VICEPRESIDENTE' %}
+								{{actuacion.usuario.razon}} (Vicepresidente)
+							{% else %}
+								{{actuacion.usuario.razon}}
+							{%endif%}
+						{%endif%}
+					{% endif %}			
 				{% else %}
 					Antiguo propietario
 				{% endif %}
+				:</p>
 				<p style="margin-left:30px;">{{actuacion.mensaje}}</p>
 			{% endfor %}
 

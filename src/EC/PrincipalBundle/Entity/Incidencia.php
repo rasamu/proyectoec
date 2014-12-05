@@ -45,10 +45,10 @@ class Incidencia
     protected $fecha;
     
     /**
-     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Usuario", inversedBy="incidencias")
-     * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Propietario", inversedBy="incidencias")
+     * @ORM\JoinColumn(name="propietario", referencedColumnName="id")
      */
-    protected $usuario;
+    protected $propietario;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Estado", inversedBy="incidencias")
@@ -109,26 +109,26 @@ class Incidencia
 
 
     /**
-     * Set usuario
+     * Set propietario
      *
-     * @param \EC\PrincipalBundle\Entity\Usuario $usuario
+     * @param \EC\PrincipalBundle\Entity\Propietario $propietario
      * @return Incidencia
      */
-    public function setUsuario(\EC\PrincipalBundle\Entity\Usuario $usuario = null)
+    public function setPropietario(\EC\PrincipalBundle\Entity\Propietario $propietario = null)
     {
-        $this->usuario = $usuario;
+        $this->propietario = $propietario;
     
         return $this;
     }
 
     /**
-     * Get usuario
+     * Get propietario
      *
-     * @return \EC\PrincipalBundle\Entity\Usuario 
+     * @return \EC\PrincipalBundle\Entity\Propietario
      */
-    public function getUsuario()
+    public function getPropietario()
     {
-        return $this->usuario;
+        return $this->propietario;
     }
 
     /**

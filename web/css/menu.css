@@ -203,3 +203,20 @@ div#menu span:hover {
 div#menu li ul span:hover {
 	color: #316431;
 }
+
+/*VERSION MOVIL*/
+@media (max-width: 767px) {
+	div#menu{
+		margin-top: 23px !important;	
+	}
+	div#menu li{
+		height: 25px !important;	
+	}
+	div#menu li span{
+		padding: 0 10px;	
+	}
+	div#menu li a{
+		height: 25px!important;
+		line-height: 25px !important;	
+	}
+}

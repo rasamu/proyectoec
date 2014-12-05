@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use EC\PrincipalBundle\Entity\Usuario;
+use EC\PrincipalBundle\Entity\Propietario;
 use EC\PrincipalBundle\Entity\Incidencia;
 use EC\PrincipalBundle\Entity\Actuacion;
 use EC\PrincipalBundle\Entity\Estado;
@@ -52,16 +52,16 @@ class IncidenciaController extends Controller
         			throw new AccessDeniedException();
 			}
 			
-			//Comprobamos que la incidencia pertenezca a un usuario de una comunidad cuyo administrador de fincas sea el usuario activo
+			//Comprobamos que la incidencia pertenezca a un propietario de una comunidad cuyo administrador de fincas sea el usuario activo
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-					$admin=$incidencia->getUsuario()->getPropiedad()->getBloque()->getComunidad()->getAdministrador();
+					$admin=$incidencia->getPropietario()->getPropiedad()->getBloque()->getComunidad()->getAdministrador();
 					if($admin!=$this->getUser()){
 						throw new AccessDeniedException();
 					}
 			}else{
 				//Comprobamos que el presidente o vicepresidente pertenezca a la misma comunidad de la incidencia
 				if($this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
-					$comunidad=$incidencia->getUsuario()->getPRopiedad()->getBloque()->getComunidad();
+					$comunidad=$incidencia->getPropietario()->getPRopiedad()->getBloque()->getComunidad();
 					if($comunidad!=$this->getUser()->getPropiedad()->getBloque()->getComunidad()){
 						throw new AccessDeniedException();
 					}
@@ -70,21 +70,21 @@ class IncidenciaController extends Controller
 					if($this->get('security.context')->isGranted('ROLE_VECINO')){
 						$bloque=$this->getUser()->getPropiedad()->getBloque();
 						$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
-						$usuario=$this->getUser();
+						$propietario=$this->getUser();
 						
-						$privado_usuario=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('1');
+						$privado_propietario=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('1');
 						$privado_bloque=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
         				$privado_comunidad=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('3');
         				
-        				$usuario_incidencia=$incidencia->getUsuario();
-        				$bloque_incidencia=$usuario_incidencia->getPropiedad()->getBloque();
+        				$propietario_incidencia=$incidencia->getPropietario();
+        				$bloque_incidencia=$propietario_incidencia->getPropiedad()->getBloque();
         				$comunidad_incidencia=$bloque_incidencia->getComunidad();
         				$privacidad_incidencia=$incidencia->getPrivacidad();
         				
 						if(($comunidad_incidencia!=$comunidad) or //Es de otra comunidad
-							($usuario_incidencia!=$usuario and $privacidad_incidencia==$privado_usuario[0]) or //Es de otro usuario y es privado
+							($propietario_incidencia!=$propietario and $privacidad_incidencia==$privado_propietario[0]) or //Es de otro propietario y es privado
 							($bloque_incidencia!=$bloque and $privacidad_incidencia!=$privado_comunidad[0]) or
-							($bloque_incidencia==$bloque and ($privacidad_incidencia==$privado_usuario[0] and $usuario_incidencia!=$usuario)))
+							($bloque_incidencia==$bloque and ($privacidad_incidencia==$privado_propietario[0] and $propietario_incidencia!=$propietario)))
 							{ 
 							throw new AccessDeniedException();
 						}
@@ -115,13 +115,15 @@ class IncidenciaController extends Controller
 					$incidencia->setCategoria($categoria);
 					$incidencia->setEstado($estado[0]);
 					$incidencia->setPrivacidad($privacidad[0]);
-					$incidencia->setUsuario($this->getUser());
+					$incidencia->setPropietario($this->getUser());
+					$this->getUser()->addIncidencia($incidencia);
 					$categoria->addIncidencia($incidencia);
 					$estado[0]->addIncidencia($incidencia);
 					$privacidad[0]->addIncidencia($incidencia);
 					
     				$em = $this->getDoctrine()->getManager();
 					$em->persist($incidencia);
+					$em->persist($this->getUser());
    				$em->persist($categoria);
    				$em->persist($estado[0]);
    				$em->persist($privacidad[0]);
@@ -169,8 +171,8 @@ class IncidenciaController extends Controller
 				$query = $em->createQuery(
     				'SELECT i
 					FROM ECPrincipalBundle:Incidencia i
-					WHERE i.usuario IN
-					(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+					WHERE i.propietario IN
+					(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)))'
 				)->setParameters(array('comunidad'=>$comunidad,));
@@ -182,20 +184,20 @@ class IncidenciaController extends Controller
     			$privacidad_bloque_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
         		$privacidad_comunidad_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('3');
         				
-    			/*Buscamos las incidencias del usuario privadas y de la comunidad o bloque publicas*/
+    			/*Buscamos las incidencias del propietario privadas y de la comunidad o bloque publicas*/
     			$em = $this->getDoctrine()->getManager();
 				$query = $em->createQuery(
     				'SELECT i
 					FROM ECPrincipalBundle:Incidencia i
-					WHERE (i.privacidad= :privacidad_comunidad_publica and i.usuario IN
-						(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+					WHERE (i.privacidad= :privacidad_comunidad_publica and i.propietario IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))))
-					or (i.privacidad= :privacidad_bloque_publica and i.usuario IN
-						(SELECT s FROM ECPrincipalBundle:Usuario s WHERE s.propiedad IN
+					or (i.privacidad= :privacidad_bloque_publica and i.propietario IN
+						(SELECT s FROM ECPrincipalBundle:Propietario s WHERE s.propiedad IN
 						(SELECT t FROM ECPrincipalBundle:Propiedad t WHERE t.bloque= :bloque)))
-					or (i.usuario= :usuario)'
-				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'usuario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
+					or (i.propietario= :propietario)'
+				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'propietario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
 				
 				$incidencias = $query->getResult();	
 				
@@ -215,7 +217,7 @@ class IncidenciaController extends Controller
     		$incidencia=$this->comprobar_incidencia($id);
     		$estado=$incidencia->getEstado();//lo almacenamos pq se cambia con el form
     		$privacidad=$incidencia->getPrivacidad();//lo almacenamos pq se cambia con el form
-		   $comunidad=$incidencia->getUsuario()->getPropiedad()->getBloque()->getComunidad();
+		   $comunidad=$incidencia->getPropietario()->getPropiedad()->getBloque()->getComunidad();
     		$actuaciones=$incidencia->getActuaciones();
     		
     		$form_estado = $this ->createFormBuilder($incidencia,array('csrf_protection' => false))
@@ -351,8 +353,8 @@ class IncidenciaController extends Controller
     		$em = $this->getDoctrine()->getManager();	
 			$query = $em->createQuery(
     			'SELECT cat.nombre,(SELECT COUNT(i) FROM ECPrincipalBundle:Incidencia i
-    			WHERE i.categoria=cat and i.usuario IN
-				(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+    			WHERE i.categoria=cat and i.propietario IN
+				(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 				(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
 				(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))))) as total
@@ -376,8 +378,8 @@ class IncidenciaController extends Controller
 			$query = $em->createQuery(
     			'SELECT MONTH(i.fecha) as mes, COUNT(i) as total 
     			FROM ECPrincipalBundle:Incidencia i
-    			WHERE i.usuario IN
-				(SELECT u FROM ECPrincipalBundle:Usuario u WHERE u.propiedad IN
+    			WHERE i.propietario IN
+				(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
 				(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
 				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
 				(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin)))) group by mes'

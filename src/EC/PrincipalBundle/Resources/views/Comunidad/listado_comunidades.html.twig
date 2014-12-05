@@ -44,7 +44,7 @@
 			<thead>
 				<tr>
 					<th>{% trans %}Código Despacho{% endtrans %}</th>
-					<th>Cif</th>
+					<th class="no_mostrar">Cif</th>
 					<th>{% trans %}Cuidad{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
@@ -53,7 +53,7 @@
 			{% for comunidad in comunidades %}
 				<tr class="gradeX">
 				   <td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
-       			<td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
+       			<td class="no_mostrar" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
        			<td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
        			<td>
        				<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
@@ -65,7 +65,7 @@
 			<tfoot>
 				<tr>
 					<th>{% trans %}Código Despacho{% endtrans %}</th>
-					<th>{% trans %}Cif{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}Cif{% endtrans %}</th>
 					<th>{% trans %}Cuidad{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>

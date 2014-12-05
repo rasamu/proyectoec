@@ -22,6 +22,11 @@ select_cities:
 select_provinces:
    pattern:  /provinces
    defaults: { _controller: ECPrincipalBundle:Default:provinces}
+   
+#ANUNCIOS
+ec_listado_anuncios:
+   pattern: /anuncios/listado
+   defaults: { _controller: ECPrincipalBundle:Anuncio:listado }
 
 #COMUNIDAD
 ec_adminfincas_alta_comunidad:
@@ -120,45 +125,46 @@ ec_documento_descargar:
 ec_documento_previsualizar:
     pattern:  /documento/previsualizar/{id}/{cif}
     defaults: { _controller: ECPrincipalBundle:Documento:previsualizar, cif: null }
+    
+#USUARIO
+ec_usuario_contraseña:
+    pattern:  /usuario/contraseña
+    defaults: { _controller: ECPrincipalBundle:Usuario:modificacion_contraseña }
 
-#USUARIOS-PROPIETARIOS
+#PROPIETARIOS
 ec_adminfincas_comunidad_alta_propietario:
     pattern:  /adminfincas/comunidad/{cif}/alta/propietario/{_format}
-    defaults: { _controller: ECPrincipalBundle:Usuario:alta_propietario, _format: html }
+    defaults: { _controller: ECPrincipalBundle:Propietario:alta_propietario, _format: html }
     requirements:
       _format: pdf|html
     
 ec_adminfincas_comunidad_generar_password_propietario:
     pattern:  /adminfincas/comunidad/{cif}/propietario/password/{id}
-    defaults: { _controller: ECPrincipalBundle:Usuario:comunidad_generar_password_propietario_pdf, _format:pdf }
+    defaults: { _controller: ECPrincipalBundle:Propietario:comunidad_generar_password_propietario_pdf, _format:pdf }
     requirements:
       _format: pdf
     
 ec_adminfincas_comunidad_listado_propietarios:
     pattern:  /adminfincas/comunidad/{cif}/listado/propietarios
-    defaults: { _controller: ECPrincipalBundle:Usuario:comunidad_listado_propietarios }
+    defaults: { _controller: ECPrincipalBundle:Propietario:comunidad_listado_propietarios }
     
 ec_adminfincas_comunidad_listado_propietarios_pdf:
     pattern:  /adminfincas/comunidad/{cif}/listado/propietarios/pdf
-    defaults: { _controller: ECPrincipalBundle:Usuario:comunidad_listado_propietarios_pdf, _format: pdf }
+    defaults: { _controller: ECPrincipalBundle:Propietario:comunidad_listado_propietarios_pdf, _format: pdf }
     requirements:
       _format: pdf
       
 ec_adminfincas_comunidad_listado_propietarios_csv:
     pattern: /adminfincas/comunidad/{cif}/listado/propietarios/csv
-    defaults: { _controller: ECPrincipalBundle:Usuario:comunidad_listado_propietarios_csv }
+    defaults: { _controller: ECPrincipalBundle:Propietario:comunidad_listado_propietarios_csv }
     
 ec_adminfincas_comunidad_eliminar_propietario:
     pattern:  /adminfincas/comunidad/{cif}/propietario/eliminar/{id}
-    defaults: { _controller: ECPrincipalBundle:Usuario:comunidad_eliminar_propietario } 
+    defaults: { _controller: ECPrincipalBundle:Propietario:comunidad_eliminar_propietario } 
     
 ec_propietario_perfil:
     pattern:  /propietario/perfil
-    defaults: { _controller: ECPrincipalBundle:Usuario:modificacion_perfil }
-    
-ec_propietario_contraseña:
-    pattern:  /propietario/contraseña
-    defaults: { _controller: ECPrincipalBundle:Usuario:modificacion_contraseña }
+    defaults: { _controller: ECPrincipalBundle:Propietario:modificacion_perfil }
     
 #INCIDENCIAS
 ec_propietario_nueva_incidencia:
@@ -198,7 +204,3 @@ ec_principal_alta_adminfincas:
 ec_adminfincas_perfil:
     pattern:  /adminfincas/perfil
     defaults: { _controller: ECPrincipalBundle:AdminFincas:modificacion_perfil }
-    
-ec_adminfincas_contraseña:
-    pattern:  /adminfincas/contraseña
-    defaults: { _controller: ECPrincipalBundle:AdminFincas:modificacion_contraseña }

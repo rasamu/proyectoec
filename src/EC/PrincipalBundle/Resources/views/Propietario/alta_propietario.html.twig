@@ -7,16 +7,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type='text/javascript'>
-	$(document).ready(function()
-	{
-  		$('#enviar').click(function()
-  		{
-  			$('#enviar').hide();
-      	$('#loading').show();
-  		});
-	});
-	</script>
+	
 {% endblock %}
 
 {% block sidebar %}
@@ -44,9 +35,9 @@
     				<div style="color:red;">{{ form_errors(form) }}</div>
  			
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.propietario.nombre) }} *</div>
-       				 {{ form_widget(form.propietario.nombre) }}
-        				<div class="error">{{ form_errors(form.propietario.nombre) }}</div>
+        				<div class="label_campo">{{ form_label(form.propietario.razon) }} *</div>
+       				 {{ form_widget(form.propietario.razon) }}
+        				<div class="error">{{ form_errors(form.propietario.razon) }}</div>
     				</div>
     				
     				<div class="campo">
@@ -100,7 +91,6 @@
     				<div class="campo_login">
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}" id="enviar"/>
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
-    					<img id="loading" src="{{ asset('images/loading.gif') }}" />
     				</div>
             </form>
 

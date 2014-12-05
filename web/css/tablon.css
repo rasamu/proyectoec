@@ -1,0 +1,25 @@
+.entrada{
+	width: 100%;
+	background: -webkit-linear-gradient(#D9E1E8, white);
+   background: -moz-linear-gradient(#D9E1E8, white);
+   background: -o-linear-gradient(#D9E1E8, white);
+   background: linear-gradient(#D9E1E8, white);
+   padding:4px;
+   border-radius:6px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	-o-border-radius:6px;
+	margin-bottom: 10px;
+}
+
+.entrada:hover{
+	background: -webkit-linear-gradient(#acc6ac, white);
+   background: -moz-linear-gradient(#acc6ac, white);
+   background: -o-linear-gradient(#acc6ac, white);
+   background: linear-gradient(#acc6ac, white);
+}
+
+.enlace{
+	text-decoration: none;
+	color: #2C4853;	
+}

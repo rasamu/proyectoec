@@ -7,12 +7,13 @@
 {% block stylesheets %}
  {{ parent() }}
     <link rel='stylesheet' type='text/css' href="{{ asset('css/menu_comunidad.css') }}" />
-
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/slicknav_comunidad.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
-    <script type='text/javascript' src="{{ asset('js/dropdown-menu.min_comunidad.js') }}"></script>
+   <script type='text/javascript' src="{{ asset('js/dropdown-menu.min_comunidad.js') }}"></script>
+
 	<script>
 		$(document).ready(function() {
  
@@ -21,19 +22,19 @@
  
 			// apply selected states depending on current page
 			if (current_page.match('.*tablon.*')) {
-				$("menu_comunidad ul li:eq(0)").addClass('selected');
+				$("#menu_comunidad li:eq(0)").addClass('selected');
 			} else if (current_page.match('.*reunion.*')) {
-				$("#menu_comunidad ul li:eq(1)").addClass('selected');
+				$("#menu_comunidad li:eq(1)").addClass('selected');
 			} else if (current_page.match('.*incidencia.*')) {
-				$("#menu_comunidad ul li:eq(2)").addClass('selected');
+				$("#menu_comunidad li:eq(2)").addClass('selected');
 			} else if (current_page.match('.*documento.*')) {
-				$("#menu_comunidad ul li:eq(3)").addClass('selected');
+				$("#menu_comunidad li:eq(3)").addClass('selected');
 			} else if (current_page.match('.*propietario.*')) {
-				$("#menu_comunidad ul li:eq(4)").addClass('selected');
+				$("#menu_comunidad li:eq(4)").addClass('selected');
 			} else if (current_page.match('.*bloque.*')) {
-				$("#menu_comunidad ul li:eq(5)").addClass('selected');
+				$("#menu_comunidad li:eq(5)").addClass('selected');
 			} else { // don't mark any nav links as selected
-				$("#menu_comunidad ul li").removeClass('selected');
+				$("#menu_comunidad li").removeClass('selected');
 			};
 		});
 	</script>
@@ -42,7 +43,8 @@
 		$(document).ready(function(e) {
  			$('a[href="http://apycom.com/"]').parent().parent().remove();
 		});
-	</script>              
+	</script>
+	         
 {% endblock %}
 
 {% block sidebar %}
@@ -52,12 +54,11 @@
 
 {% block colder %} 
 	{{ parent() }}
-	      
-	<div id="menu_comunidad_general"> 
+	<div id="menu_comunidad_general">
 		<div class="verde titulo_comunidad letra_miltonian"><em>{% trans %}Comunidad{% endtrans %}: </em><em>{{comunidad.codigo}}</em></div>
-
+		
 		<div id="menu_comunidad">
-				<ul class="menu_comunidad">
+				<ul id="menu_comunidad_movil" class="menu_comunidad">
 					<li class="first"><a href="{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
 					<li><a href="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>		
 					<li><a href="{{ path('ec_listado_incidencias', { 'cif': comunidad.cif }) }}"><span>{% trans %}Incidencias{% endtrans %}</span></a></li>	
@@ -67,6 +68,14 @@
 				</ul>	
 		</div>
 	</div>
-	
+
 	<div class="clear"></div>
+	
+	   <script type='text/javascript' src="{{ asset('js/jquery.slicknav_comunidad.min.js') }}"></script>	
+	<script>
+		$(function(){
+			$('#menu_comunidad_movil').slicknav_comunidad();
+			document.getElementById('label_comunidad').innerHTML = 'Comunidad {{comunidad.codigo}}';
+		});
+</script>  
 {% endblock %}

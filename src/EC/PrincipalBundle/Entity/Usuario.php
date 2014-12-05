@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\Criteria;
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"propietario"="Usuario","adminfincas" = "EC\PrincipalBundle\Entity\AdminFincas"})
+ * @ORM\DiscriminatorMap({"propietario"="EC\PrincipalBundle\Entity\Propietario","adminfincas" = "EC\PrincipalBundle\Entity\AdminFincas"})
  */
 class Usuario implements UserInterface, \Serializable
 {
@@ -73,17 +73,6 @@ class Usuario implements UserInterface, \Serializable
      */
     protected $id;
 
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="nombre",type="string", length=100)
-     */
-    protected $nombre;
-
-	/**
-     * @ORM\Column(name="apellidos",type="string", length=100,nullable=true)
-     */
-    protected $apellidos;
-
 	/**
      * @ORM\Column(name="telefono",type="string",length=9,nullable=true)
      */
@@ -128,18 +117,7 @@ class Usuario implements UserInterface, \Serializable
      * @ORM\JoinColumn(name="role", referencedColumnName="id")
      */
     protected $role;
-    
-    /**
-     * @ORM\OneToOne(targetEntity="EC\PrincipalBundle\Entity\Propiedad", inversedBy="propietario")
-     * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
-     **/
-    private $propiedad;
 
-	 /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Incidencia", mappedBy="usuario")
-     */
-    protected $incidencias;
-    
     /**
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="usuario")
      */
@@ -149,52 +127,6 @@ class Usuario implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Log", mappedBy="usuario")
      */
     protected $logs;
-    
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     * @return AdminFincas
-     */
-    public function setNombre($name)
-    {
-        $this->nombre = $name;
-    
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string 
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-    
-    /**
-     * Set apellidos
-     *
-     * @param string $apellidos
-     * @return AdminFincas
-     */
-    public function setApellidos($apellidos)
-    {
-        $this->apellidos = $apellidos;
-    
-        return $this;
-    }
-
-    /**
-     * Get apellidos
-     *
-     * @return string 
-     */
-    public function getApellidos()
-    {
-        return $this->apellidos;
-    }
 
     /**
      * Set telefono
@@ -364,69 +296,6 @@ class Usuario implements UserInterface, \Serializable
     {
         return $this->role;
     }
-    
-    /**
-     * Set propiedad
-     *
-     * @param \EC\PrincipalBundle\Entity\Propiedad $propiedad
-     * @return Usuario
-     */
-    public function setPropiedad(\EC\PrincipalBundle\Entity\Propiedad $propiedad = null)
-    {
-        $this->propiedad = $propiedad;
-    
-        return $this;
-    }
-
-    /**
-     * Get propiedad
-     *
-     * @return \EC\PrincipalBundle\Entity\Propiedad 
-     */
-    public function getPropiedad()
-    {
-        return $this->propiedad;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->incidencias = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add incidencias
-     *
-     * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
-     * @return Usuario
-     */
-    public function addIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
-    {
-        $this->incidencias[] = $incidencias;
-    
-        return $this;
-    }
-
-    /**
-     * Remove incidencias
-     *
-     * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
-     */
-    public function removeIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
-    {
-        $this->incidencias->removeElement($incidencias);
-    }
-
-    /**
-     * Get incidencias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIncidencias()
-    {
-        return $this->incidencias;
-    }
 
     /**
      * Add actuaciones
@@ -504,4 +373,13 @@ class Usuario implements UserInterface, \Serializable
         $logs=$this->logs;
         return $logs->Last();
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
 }

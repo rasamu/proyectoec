@@ -35,6 +35,17 @@ class AdminFincas extends Usuario
      * @ORM\Column(name="n_colegiado_admin",type="string",unique=true,length=9,nullable=true)
      */
     protected $n_colegiado=NULL;
+      
+    /**
+	  * @Assert\NotNull()
+     * @ORM\Column(name="nombre",type="string", length=100)
+     */
+    protected $nombre;
+
+	/**
+     * @ORM\Column(name="apellidos",type="string", length=100,nullable=true)
+     */
+    protected $apellidos;
     
     /**
      * @ORM\Column(name="fax_admin",type="string",length=9,nullable=true)
@@ -68,8 +79,6 @@ class AdminFincas extends Usuario
     {
         $this->comunidades = new ArrayCollection();
     }
-    
-
 
     /**
      * Set n_colegiado
@@ -246,16 +255,6 @@ class AdminFincas extends Usuario
      * @var integer
      */
     protected $id;
-    
-    /**
-     * @var string
-     */
-    protected $nombre;
-
-    /**
-     * @var string
-     */
-    protected $apellidos;
 
     /**
      * @var string
@@ -291,17 +290,16 @@ class AdminFincas extends Usuario
      * @var \EC\PrincipalBundle\Entity\Role
      */
     protected $role;
-
-
+    
     /**
      * Set nombre
      *
      * @param string $nombre
      * @return AdminFincas
      */
-    public function setNombre($nombre)
+    public function setNombre($name)
     {
-        $this->nombre = $nombre;
+        $this->nombre = $name;
     
         return $this;
     }
@@ -315,7 +313,7 @@ class AdminFincas extends Usuario
     {
         return $this->nombre;
     }
-
+    
     /**
      * Set apellidos
      *
