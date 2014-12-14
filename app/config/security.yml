@@ -35,6 +35,8 @@ security:
         - { path: ^/.*/reunion/descargar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/reunion/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/reuniones/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/anuncio/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/anuncios/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
 
     providers:
         usuarios:

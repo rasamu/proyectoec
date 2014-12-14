@@ -93,6 +93,11 @@ class Comunidad
      */
     protected $documentos;
     
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Anuncio", mappedBy="comunidad")
+     */
+    protected $anuncios;
+    
 	 /**
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Reunion", mappedBy="comunidad")
      */
@@ -438,5 +443,38 @@ class Comunidad
     public function getReuniones()
     {
         return $this->reuniones;
+    }
+
+    /**
+     * Add anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     * @return Comunidad
+     */
+    public function addAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios[] = $anuncios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     */
+    public function removeAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios->removeElement($anuncios);
+    }
+
+    /**
+     * Get anuncios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnuncios()
+    {
+        return $this->anuncios;
     }
 }

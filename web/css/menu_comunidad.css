@@ -1,84 +1,3 @@
-/*#menu_comunidad{
-	width: 100%;
-	height: 28px;
-	background-color: #F7D118;
-}
-
-.titulo_comunidad{
-	width: auto;
-	float: left;
-	font-size: 1.75em;
-	margin-left: 5px;
-}
-
-.nav_comunidad {
-	width: auto;
-	float: right;
-	background: #316431;
-	border-top-left-radius: 3em;
-	-moz-border-top-right-radius: 3em;
-	-webkit-border-top-right-radius: 3em;
-}
-
-.nav_comunidad nav {
-     font-family: sans-serif;
-     position: relative;
-     font-size:1.000em;
-     color:#333;
-}
- 
-.nav_comunidad nav ul {
-     list-style-type: none;
-     margin: 0;
-}
- 
-.nav_comunidad nav ul li {
-     float: left;
-     position: relative;
-}
- 
-.nav_comunidad nav ul li a {
-    text-align: center;
-    padding:6px 15px;
-    display:block;
-    text-decoration:none;
-    color:#FFF;
-}
-
-.nav_comunidad nav ul li:hover > a {
-	background: #F7D118;
-	color: #316431;
-   padding: 6px 15px;
-}
-
-.nav_comunidad nav ul li ul {
-     display: none
-}
- 
-.nav_comunidad nav ul li:hover ul {
-     display: block;
-     position: absolute;
-     left: 0;
-     padding: 0;
-     margin: 0;
-     width: auto;
-     z-index: 1;
-}
-
-.nav_comunidad nav ul li:hover ul li a {
-     display: block;
-     background: #D9E1E8;
-     color: #316431;
-     text-align: left;
-     font-weight: normal;
-     width: 100px;
-}
- 
-.nav_comunidad nav ul li:hover ul li a:hover, nav ul li a:hover {
-	background: #F7D118;
-   color: #316431;
-}*/
-
 /**
  *********************************************
  * Prototype of styles for horizontal CSS-menu
@@ -101,16 +20,13 @@
  */
  
 #menu_comunidad_general{
-	width: 100%;
+	width: 110.4%;
+	margin-left: -45px;
 	height: 32px;
 	background: -webkit-linear-gradient(white,#F7D118);
    background: -moz-linear-gradient(white,#F7D118);
    background: -o-linear-gradient(white,#F7D118);
    background: linear-gradient(white,#F7D118);
-	border-radius:1em;
-	-moz-border-radius: 1em;
-	-webkit-border-radius: 1em;
-	-o-border-radius: 1em;
 }
 
 .titulo_comunidad{
@@ -141,15 +57,6 @@
 	 -webkit-border-left-radius: 3em;
 	 -o-border-left-radius: 3em;
 	 padding-left: 30px;
-	 padding-right: 10px;
-	 border-top-right-radius:1em;
-	 border-bottom-right-radius:1em;
-	 -moz-border-top-right-radius:1em;
-	 -moz-border-bottom-right-radius:1em;
-	 -webkit-border-top-right-radius:1em;
-	 -webkit-border-bottom-right-radius:1em;
-	 -o-border-top-right-radius:1em;
-	 -o-border-bottom-right-radius:1em;
 }
 #menu_comunidad .menu_comunidad {
     position:relative;;

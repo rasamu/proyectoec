@@ -99,6 +99,10 @@ h3{
 	display: none;	
 }
 
+#contador{
+	text-align: right;	
+}
+
 /*Cabecera*/
 /*Topheader*/
 #header{
@@ -283,6 +287,14 @@ footer{
 	color: #316431;	
 }
 
+.rojo{
+	color: red;	
+}
+
+.naranja{
+	color:orange;	
+}
+
 .negrita{
 	font-weight: bold;	
 }
@@ -410,7 +422,14 @@ input, select, textarea
 }
 
 textarea{
-	width: 95%;	
+	width: 90%;	
+}
+
+textarea:focus{
+	-ms-transform: scale(1.2,1.2); 
+    -webkit-transform: scale(1.2,1.2); 
+    transform: scale(1.2,1.2);
+    margin-top: 8px;
 }
 
 input:focus,textarea:focus,select:focus
@@ -644,7 +663,9 @@ input:focus,textarea:focus,select:focus
 		margin:2px auto !mportant;	
 	}
 	h1{
-		font-size: 2.7em !important;	
+		font-size: 2.59em !important;	
+		margin-left: 0;
+		margin-right: 0;
 	}
 	
 	input,select,textarea{
@@ -671,5 +692,14 @@ input:focus,textarea:focus,select:focus
 	}
 	.no_mostrar{
 		display: none;	
+	}
+	.titulofooter{
+		font-size: 14px; 
+	}
+	textarea:focus{
+		-ms-transform: scale(1,1); 
+    	-webkit-transform: scale(1,1); 
+    	transform: scale(1,1);
+   	margin-top: 1px;
 	}
 }

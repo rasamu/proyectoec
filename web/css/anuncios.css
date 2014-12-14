@@ -1,0 +1,109 @@
+.anuncio{
+	width: 80%;
+	background: -webkit-linear-gradient(#D9E1E8, white);
+   background: -moz-linear-gradient(#D9E1E8, white);
+   background: -o-linear-gradient(#D9E1E8, white);
+   background: linear-gradient(#D9E1E8, white);
+   padding:6px;
+   border-radius:14px;
+	-webkit-border-radius:14px;
+	-moz-border-radius:14px;
+	-o-border-radius:14px;
+	margin-bottom: 20px;
+	height: auto;
+	overflow: hidden;
+	margin: 0 auto 20px;
+}
+
+.anuncio a{
+	text-decoration: none;
+	margin-left: 20px;	
+}
+
+.anuncio a:hover{
+	text-decoration: underline;	
+}
+
+.verdecito{
+	color: #b9d4b9;	
+}
+
+.enlace{
+	text-decoration: none;
+	color: #2C4853;	
+}
+
+.titulo_anuncio{
+	width: 100%;
+	height: auto;
+	border-bottom: 1px #316431 solid;
+	padding-bottom: 4px;
+	margin-bottom: 4px;
+}
+
+.referencia_anuncio{
+	float: right;
+}
+
+.descripcion_anuncio{
+	float: left;
+	position: relative;
+	text-align: left;
+	padding: 5px;
+	margin-left: 10px;
+}
+
+.foto_anuncio{
+	float: left;
+	position: relative;
+	width: 25%;
+}
+
+.foto_anuncio img{
+	max-height: 120px;
+	max-width: 100%;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	-o-border-radius:10px;
+}
+
+.footer_anuncio{
+	width: 100%;
+	float: right;
+	position: relative;
+	clear: both;
+	text-align: right;
+	margin-top: 2px;
+}
+
+.precio{
+	width: auto;
+	float: left;
+	position: relative;
+	color:#316431;
+	background: -webkit-linear-gradient(white, #b9d4b9);
+   background: -moz-linear-gradient(white, #b9d4b9);
+   background: -o-linear-gradient(white, #b9d4b9);
+   background: linear-gradient(white, #b9d4b9);
+   padding:2px;
+   border-radius:6px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	-o-border-radius:6px;
+	border:1px green solid;
+}
+
+/*VERSION MOVIL*/
+@media (max-width: 767px) {
+	.anuncio{
+		margin: 0 auto 10px;
+		padding: 2px;
+		width: 100%
+	}
+	
+	.foto_anuncio img{
+		max-height: 60px;
+		max-width: 100%;
+	}
+}

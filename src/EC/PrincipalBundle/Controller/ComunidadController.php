@@ -365,6 +365,7 @@ class ComunidadController extends Controller
     		
     		$totales_propietarios=array();
     		$totales_incidencias=array();
+    		$totales_anuncios=array();
     		
     		foreach($comunidades as $comunidad){
     				/*TOTALES DE PROPIETARIOS*/
@@ -399,10 +400,24 @@ class ComunidadController extends Controller
 					}else{
 						$totales_incidencias[]=$incidencias;
 					}
+					
+					/*TOTALES DE ANUNCIOS*/
+					$em = $this->getDoctrine()->getManager();	
+					$query = $em->createQuery(
+    					'SELECT COUNT(a) as total FROM ECPrincipalBundle:Anuncio a WHERE a.comunidad IN
+    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin)'
+					)->setParameters(array('admin'=>$this->getUser(),'comunidad'=>$comunidad['codigo']));							
+					$anuncios = $query->getSingleResult();
+					
+					if($anuncios==null){
+						$totales_anuncios[]=0;
+					}else{
+						$totales_anuncios[]=$anuncios;
+					}
     		}
     		
     		return $this->render('ECPrincipalBundle:Comunidad:estadisticas_comunidades.html.twig',
-    				array('comunidades'=>$comunidades,'totales_propietarios'=>$totales_propietarios,'totales_incidencias'=>$totales_incidencias,
+    				array('comunidades'=>$comunidades,'totales_propietarios'=>$totales_propietarios,'totales_incidencias'=>$totales_incidencias,'totales_anuncios'=>$totales_anuncios,
     				));	
     }
 }

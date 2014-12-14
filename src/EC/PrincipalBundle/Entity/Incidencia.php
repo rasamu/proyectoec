@@ -35,7 +35,7 @@ class Incidencia
 	* @var string $descripcion
 	* @Assert\NotNull()
 	* @Assert\Type(type="string")
-	* @ORM\Column(name="descripcion", type="text")
+	* @ORM\Column(name="descripcion", type="string", length=500)
 	*/
     protected $descripcion;
     

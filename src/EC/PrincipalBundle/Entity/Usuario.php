@@ -74,11 +74,13 @@ class Usuario implements UserInterface, \Serializable
     protected $id;
 
 	/**
+	  * @Assert\NotNull()
      * @ORM\Column(name="telefono",type="string",length=9,nullable=true)
      */
     protected $telefono;
     
     /**
+     * @Assert\NotNull()
      * @Assert\Email(
      *     message = "El email '{{ value }}' no es un email válido.",
      *     checkMX = true
@@ -127,6 +129,11 @@ class Usuario implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Log", mappedBy="usuario")
      */
     protected $logs;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Anuncio", mappedBy="usuario")
+     */
+    protected $anuncios;
 
     /**
      * Set telefono
@@ -373,13 +380,47 @@ class Usuario implements UserInterface, \Serializable
         $logs=$this->logs;
         return $logs->Last();
     }
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->anuncios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    /**
+     * Add anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     * @return Usuario
+     */
+    public function addAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios[] = $anuncios;
     
+        return $this;
+    }
+
+    /**
+     * Remove anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     */
+    public function removeAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios->removeElement($anuncios);
+    }
+
+    /**
+     * Get anuncios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnuncios()
+    {
+        return $this->anuncios;
+    }
 }

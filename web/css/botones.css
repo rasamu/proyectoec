@@ -18,6 +18,11 @@
     background-image: url('../images/ico_estadisticas.png');
 }
 
+.btn_estadistica_anuncio_categoria {
+    background-color: #078cc3;
+    background-image: url('../images/ico_estadisticas.png');
+}
+
 .btn_estadistica_incidencia_fecha {
     background-color: #425f9c;
     background-image: url('../images/ico_estadisticas.png');
@@ -109,6 +114,7 @@ a.boton_estadistica {
     cursor: pointer;
     display: inline-block;
     margin-left: 2px;
+    margin-bottom: 2px;
     text-decoration: none;
     font-size: 0.9em;
     padding: 3px 7px 3px 28px;

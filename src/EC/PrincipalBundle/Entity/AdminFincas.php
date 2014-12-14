@@ -505,44 +505,6 @@ class AdminFincas extends Usuario
     {
         return $this->id;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $incidencias;
-
-
-    /**
-     * Add incidencias
-     *
-     * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
-     * @return AdminFincas
-     */
-    public function addIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
-    {
-        $this->incidencias[] = $incidencias;
-    
-        return $this;
-    }
-
-    /**
-     * Remove incidencias
-     *
-     * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
-     */
-    public function removeIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
-    {
-        $this->incidencias->removeElement($incidencias);
-    }
-
-    /**
-     * Get incidencias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIncidencias()
-    {
-        return $this->incidencias;
-    }
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -619,5 +581,44 @@ class AdminFincas extends Usuario
     public function getLogs()
     {
         return $this->logs;
+    }
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $anuncios;
+
+
+    /**
+     * Add anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     * @return AdminFincas
+     */
+    public function addAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios[] = $anuncios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     */
+    public function removeAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios->removeElement($anuncios);
+    }
+
+    /**
+     * Get anuncios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnuncios()
+    {
+        return $this->anuncios;
     }
 }

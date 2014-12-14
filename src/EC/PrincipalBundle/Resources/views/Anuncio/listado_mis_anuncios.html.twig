@@ -1,0 +1,111 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Anuncios{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/anuncios.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	   
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+	<hgroup>
+		<h2 class="verde centrado">{% trans %}Mis Anuncios{% endtrans %}</h2>
+	</hgroup>
+	{% if is_granted('ROLE_ADMINFINCAS') %}
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_nuevo_anuncio', {'cif': comunidad.cif}) }}"><span>{% trans %}Nuevo Anuncio{% endtrans %}</span></a>
+	{% else %}
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_nuevo_anuncio') }}"><span>{% trans %}Nuevo Anuncio{% endtrans %}</span></a>
+	{% endif %}
+	
+	{% if mis_anuncios is empty%}
+		<p>No tiene anuncios publicados.</p>
+	{% else %}
+		{% for mi_anuncio in mis_anuncios %}
+			<article class="anuncio">
+				<section class="titulo_anuncio">
+					{{mi_anuncio.fecha | date("d/m/Y H:i:s")}} {{mi_anuncio.comunidad.city.name}} ({{mi_anuncio.comunidad.city.province.name}})
+					<b>{{mi_anuncio.categoria.nombre}}</b>: {{mi_anuncio.titulo}}
+					<section class="referencia_anuncio">
+						r{{mi_anuncio.id}}
+					</section>
+				</section>
+				<div>
+					<section class="foto_anuncio">
+						<img src="{{ asset('uploads/anuncios/'~mi_anuncio.getPath1()~'') }}" alt="Imagen anuncio"/>
+					</section>
+					<section class="descripcion_anuncio">
+						{{mi_anuncio.descripcion}}
+					</section>
+				</div>
+				<section class="footer_anuncio">
+					<section class="precio">
+						Precio: <b>{{mi_anuncio.precio}} €</b>
+					</section>
+					<a class="verde" href="#">{% trans %}Contactar{% endtrans %}</a>
+					<a class="naranja" href="#">{% trans %}Denunciar{% endtrans %}</a>
+					<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('¿Estás seguro de eliminar el anuncio {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
+				</section>
+			</article>
+		{% endfor %}		
+	{% endif %}
+	
+	{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_PRESIDENTE') or is_granted('ROLE_VICEPRESIDENTE')%}
+		<hr class="verdecito"></hr>
+		<hgroup>
+			<h2 class="verde centrado">{% trans %}Anuncios de la Comunidad{% endtrans %}</h2>
+		</hgroup>
+		{% if anuncios_comunidad is empty%}
+			<p>La comunidad no tiene anuncios publicados.</p>
+		{% else %}
+			{% for anuncio_comunidad in anuncios_comunidad %}
+				<article class="anuncio">
+					<section class="titulo_anuncio">
+						{{anuncio_comunidad.fecha | date("d/m/Y H:i:s")}} {{anuncio_comunidad.comunidad.city.name}} ({{anuncio_comunidad.comunidad.city.province.name}})
+						<b>{{anuncio_comunidad.categoria.nombre}}</b>: {{anuncio_comunidad.titulo}}
+						<section class="referencia_anuncio">
+							r{{anuncio_comunidad.id}}
+						</section>
+					</section>
+					<div>
+						<section class="foto_anuncio">
+							<img src="{{ asset('uploads/anuncios/'~anuncio_comunidad.getPath1()~'') }}" alt="Imagen anuncio" />
+						</section>
+						<section class="descripcion_anuncio">
+							{{anuncio_comunidad.descripcion}}
+						</section>
+					</div>
+					<section class="footer_anuncio">
+						<section class="precio">
+							Precio: <b>{{anuncio_comunidad.precio}} €</b>
+						</section>
+						{% if is_granted('ROLE_ADMINFINCAS') %}
+							<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('¿Estás seguro de eliminar el anuncio {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
+						{% endif %}
+					</section>
+				</article>
+			{% endfor %}		
+		{% endif %}
+	{% endif %}
+		
+		
+{% endblock %}

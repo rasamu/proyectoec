@@ -77,6 +77,10 @@
             name: 'Propietarios',
             data: [{%for propietarios in totales_propietarios%}{{propietarios.total}},{%endfor%}],
 				color: '#355664'
+        },{
+            name: 'Anuncios',
+            data: [{%for anuncios in totales_anuncios%}{{anuncios.total}},{%endfor%}],
+				color: '#078cc3'
         }]
     });
 	});

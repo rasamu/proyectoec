@@ -7,7 +7,39 @@
 
 {% block javascripts %}
     {{ parent() }}
-
+	
+	 <script type="text/javascript">
+		$(document).ready( function(){
+		
+			var idtextarea="incidencia_descripcion";
+			var idcontador="contador";
+			var max="500";
+			
+			$("#"+idtextarea).keyup(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+			
+			$("#"+idtextarea).keydown(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+ 
+			$("#"+idtextarea).change(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+		});
+ 
+		function updateContadorTa(idtextarea, idcontador,max){
+			var contador = $("#"+idcontador);
+			var ta =     $("#"+idtextarea);
+			contador.html("0/"+max);
+ 
+			contador.html(ta.val().length+"/"+max);
+			if(parseInt(ta.val().length)>max){
+				ta.val(ta.val().substring(0,max-1));
+				contador.html(max+"/"+max);
+			}
+		};
+	</script>
 {% endblock %}
 
 {% block colder %}
@@ -42,7 +74,7 @@
     				</div> 
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.descripcion) }}</div>
+       		 		<div class="label_campo">{{ form_label(form.descripcion) }}  (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
         				<p>{{ form_widget(form.descripcion) }}</p>
         				<div class="error">{{ form_errors(form.descripcion) }}</div>
     				</div> 		

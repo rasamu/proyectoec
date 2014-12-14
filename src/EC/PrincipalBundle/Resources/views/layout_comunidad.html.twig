@@ -14,7 +14,7 @@
   {{ parent() }}
    <script type='text/javascript' src="{{ asset('js/dropdown-menu.min_comunidad.js') }}"></script>
 
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function() {
  
 			// store url for current page as global variable
@@ -29,10 +29,12 @@
 				$("#menu_comunidad li:eq(2)").addClass('selected');
 			} else if (current_page.match('.*documento.*')) {
 				$("#menu_comunidad li:eq(3)").addClass('selected');
-			} else if (current_page.match('.*propietario.*')) {
+			} else if (current_page.match('.*anuncio.*')) {
 				$("#menu_comunidad li:eq(4)").addClass('selected');
-			} else if (current_page.match('.*bloque.*')) {
+			} else if (current_page.match('.*propietario.*')) {
 				$("#menu_comunidad li:eq(5)").addClass('selected');
+			} else if (current_page.match('.*bloque.*')) {
+				$("#menu_comunidad li:eq(6)").addClass('selected');
 			} else { // don't mark any nav links as selected
 				$("#menu_comunidad li").removeClass('selected');
 			};
@@ -62,7 +64,8 @@
 					<li class="first"><a href="{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
 					<li><a href="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>		
 					<li><a href="{{ path('ec_listado_incidencias', { 'cif': comunidad.cif }) }}"><span>{% trans %}Incidencias{% endtrans %}</span></a></li>	
-					<li><a href="{{ path('ec_listado_documentos', { 'cif': comunidad.cif }) }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>	
+					<li><a href="{{ path('ec_listado_documentos', { 'cif': comunidad.cif }) }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>
+					<li><a href="{{ path('ec_listado_mis_anuncios', { 'cif': comunidad.cif }) }}"><span>{% trans %}Anuncios{% endtrans %}</span></a></li>	
 					<li><a href="{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}"><span>{% trans %}Propietarios{% endtrans %}</span></a></li>
 					<li class="last"><a href="{{ path('ec_adminfincas_comunidad_listado_bloques', { 'cif': comunidad.cif }) }}"><span>{% trans %}Bloques{% endtrans%}</span></a></li>	
 				</ul>	

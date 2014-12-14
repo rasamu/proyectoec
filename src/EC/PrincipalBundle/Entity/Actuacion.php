@@ -26,7 +26,7 @@ class Actuacion
 	* @var string $mensaje
 	* @Assert\NotNull()
 	* @Assert\Type(type="string")
-	* @ORM\Column(name="mensaje", type="text")
+	* @ORM\Column(name="mensaje", type="string", length=500)
 	*/
     protected $mensaje;
     

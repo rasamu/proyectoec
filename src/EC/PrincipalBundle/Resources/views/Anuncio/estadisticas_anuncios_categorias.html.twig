@@ -1,0 +1,87 @@
+{% extends 'ECPrincipalBundle::layout_estadisticas.html.twig' %}
+
+{% block title %}
+	{% trans %}Estadísticas{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/highcharts.js') }}"></script>
+	<script src="{{ asset('js/exporting.js') }}"></script>
+	<script>
+	$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'column',
+            backgroundColor:'rgba(255, 255, 255, 0.1)'
+        },
+        title: {
+            text: 'Anuncios/Categorías',
+            style: {
+					color: '#7CB5EC'
+            },
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -66,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Número de anuncios'
+            },
+            minTickInterval: 1
+        },
+        tooltip: {
+       		pointFormat: '<span style="color:{series.color}"></span> {series.name}: <b>{point.y}</b><br/>'
+		  },
+        credits: {
+      		enabled: false
+  		  },
+        legend: {
+            enabled: false
+        },
+        series: [{
+            name: 'Anuncios',
+            data: [
+            	{% for cat in categorias %}
+            		['{{cat.nombre}}',{{cat.total}}],
+					{% endfor %}
+            ],
+            dataLabels: {
+                enabled: false,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                x: 4,
+                y: 10,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif',
+                    textShadow: '0 0 3px black'
+                }
+            }
+        }]
+    });
+	});
+	</script>
+	   
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+		
+	<div id="container" class="grafica_estadisticas"></div>
+{% endblock %}

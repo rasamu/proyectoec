@@ -29,9 +29,10 @@
 	 </hgroup>
 	 
 	 <nav>
-	 	<a class="boton_estadistica btn_estadistica_comunidades" href="{{ path('ec_adminfincas_estadisticas_comunidades') }}">Comunidades</a>
-	 	<a class="boton_estadistica btn_estadistica_incidencia_categoria" href="{{ path('ec_adminfincas_estadisticas_incidencias_categorias') }}">Incidencias/Categorías</a>
-	 	<a class="boton_estadistica btn_estadistica_incidencia_fecha" href="{{ path('ec_adminfincas_estadisticas_incidencias_fecha') }}">Incidencias/Fecha</a>
+	 	<a class="boton_estadistica btn_estadistica_comunidades" href="{{ path('ec_adminfincas_estadisticas_comunidades') }}">{% trans %}Comunidades{% endtrans %}</a>
+	 	<a class="boton_estadistica btn_estadistica_incidencia_categoria" href="{{ path('ec_adminfincas_estadisticas_incidencias_categorias') }}">{% trans %}Incidencias/Categorías{% endtrans %}</a>
+	 	<a class="boton_estadistica btn_estadistica_incidencia_fecha" href="{{ path('ec_adminfincas_estadisticas_incidencias_fecha') }}">{% trans %}Incidencias/Fecha{% endtrans %}</a>
+	 	<a class="boton_estadistica btn_estadistica_anuncio_categoria" href="{{ path('ec_adminfincas_estadisticas_anuncios_categorias') }}">{% trans %}Anuncios/Categorías{% endtrans %}</a>
 	</nav>
 	
 {% endblock %}

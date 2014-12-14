@@ -406,4 +406,43 @@ class Propietario extends Usuario
     {
         return $this->incidencias;
     }
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $anuncios;
+
+
+    /**
+     * Add anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     * @return Propietario
+     */
+    public function addAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios[] = $anuncios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove anuncios
+     *
+     * @param \EC\PrincipalBundle\Entity\Anuncio $anuncios
+     */
+    public function removeAnuncio(\EC\PrincipalBundle\Entity\Anuncio $anuncios)
+    {
+        $this->anuncios->removeElement($anuncios);
+    }
+
+    /**
+     * Get anuncios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnuncios()
+    {
+        return $this->anuncios;
+    }
 }

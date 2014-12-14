@@ -24,9 +24,21 @@ select_provinces:
    defaults: { _controller: ECPrincipalBundle:Default:provinces}
    
 #ANUNCIOS
-ec_listado_anuncios:
-   pattern: /anuncios/listado
-   defaults: { _controller: ECPrincipalBundle:Anuncio:listado }
+ec_nuevo_anuncio:
+   pattern: /nuevo/anuncio/{cif}
+   defaults: { _controller: ECPrincipalBundle:Anuncio:nuevo_anuncio, cif: null }
+   
+ec_listado_mis_anuncios:
+   pattern: /anuncios/listado/{cif}
+   defaults: { _controller: ECPrincipalBundle:Anuncio:listado_mis_anuncios, cif: null }
+   
+ec_eliminar_anuncio:
+   pattern: /eliminar/anuncio/{id}
+   defaults: { _controller: ECPrincipalBundle:Anuncio:Eliminar }
+   
+ec_adminfincas_estadisticas_anuncios_categorias:
+   pattern:  /adminfincas/estadisticas/anuncios/categorias
+   defaults: { _controller: ECPrincipalBundle:Anuncio:estadisticasAnunciosCategorias }
 
 #COMUNIDAD
 ec_adminfincas_alta_comunidad:
