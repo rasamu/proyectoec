@@ -44,6 +44,12 @@
     background-image: url('../images/ico_add.png');
 }
 
+.btn_return {
+	 margin-bottom: 8px;
+    background-color: #f17e4d;
+    background-image: url('../images/ico_return.png');
+}
+
 a.boton_documento {
     text-decoration: none;
     background-repeat: no-repeat;

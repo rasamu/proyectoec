@@ -14,16 +14,7 @@ use EC\PrincipalBundle\Entity\City;
 use EC\PrincipalBundle\Entity\Province;
 
 class DefaultController extends Controller
-{
-	/**
-	  * @Route("/", name="ec_principal_homepage")
-	  * @Template("ECPrincipalBundle:Default:index.html.twig")
-	  */
-    public function indexAction()
-    {
-        	return $this->render('ECPrincipalBundle:Default:index.html.twig');
-    }
-    
+{   
     /**
 	  * @Route("/check", name="ec_principal_check")
 	  */
@@ -35,7 +26,7 @@ class DefaultController extends Controller
 				if($this->get('security.context')->isGranted('ROLE_VECINO')){
 						return $this->redirect($this->generateUrl('ec_tablon_comunidad'), 301);
 				}else{
-					return $this->redirect($this->generateUrl('ec_principal_homepage'), 301);
+					return $this->redirect($this->generateUrl('ec_buscador_anuncios'), 301);
 				}	
 			}
     }

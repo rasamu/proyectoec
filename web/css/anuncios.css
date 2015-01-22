@@ -20,6 +20,26 @@
 	margin-left: 20px;	
 }
 
+fieldset{
+	background-color: white;
+	border-radius:14px;
+	-webkit-border-radius:14px;
+	-moz-border-radius:14px;
+	-o-border-radius:14px;
+	border: #316431 1px outset;
+}
+
+.foto_anuncio a{
+	margin-left: 0;	
+}
+
+.foto_anuncio a img:hover{
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  transform: none;
+}
+
 .anuncio a:hover{
 	text-decoration: underline;	
 }
@@ -77,6 +97,15 @@
 	margin-top: 2px;
 }
 
+.num_fotos{
+	width: auto;
+	float: left;
+	position: relative;
+	color:#316431;	
+	padding: 2px;
+	margin-left: 10px;
+}
+
 .precio{
 	width: auto;
 	float: left;
@@ -92,6 +121,60 @@
 	-moz-border-radius:6px;
 	-o-border-radius:6px;
 	border:1px green solid;
+}
+
+ol#ordenable{
+	 list-style-type: none;
+    list-style-type: decimal !ie; /*IE 7- hack*/	
+    
+    margin: 0;
+    margin-left: 3em;
+    padding: 0;
+     
+    counter-reset: li-counter;
+}
+
+ol#ordenable > li:before{
+	 position: absolute;
+    top: 0;
+    left: -0.95em;
+    width: 1em;
+ 
+    font-size: 2em;
+    line-height: 1;
+    font-weight: bold;
+    text-align: right;
+    color: #759E1A;
+     
+    transform: rotate(-25deg);
+    -ms-transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+    z-index: 1000;
+    overflow: hidden;
+     
+    content: counter(li-counter);
+    counter-increment: li-counter;	
+}
+
+ol#ordenable > li img{
+	max-height: 120px;
+	max-width: 135px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	-o-border-radius:10px;
+}
+
+ol#ordenable > li{
+	display: inline-table;	
+	position: relative;
+	margin-bottom: 10px;
+	margin-right: 25px;
+}
+
+ol#ordenable > li a{
+	position: relative;
+	float: right;
 }
 
 /*VERSION MOVIL*/

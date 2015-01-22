@@ -10,7 +10,7 @@ security:
                default_target_path: ec_principal_check
             logout:
                path: logout
-               target: ec_principal_homepage
+               target: ec_buscador_anuncios
             remember_me:
                key:     "%secret%"
                lifetime: 31536000

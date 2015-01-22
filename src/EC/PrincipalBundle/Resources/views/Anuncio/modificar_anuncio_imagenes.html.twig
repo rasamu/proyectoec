@@ -1,0 +1,105 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Modificar Imágenes Anuncio{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+    	<link rel='stylesheet' type='text/css' href="{{ asset('css/anuncios.css') }}" />
+    	<link rel='stylesheet' type='text/css' href="{{ asset('css/jquery.fancybox-1.3.4.css') }}" media="screen"/>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+	<script type='text/javascript' src="{{ asset('js/jquery-ui.js') }}" ></script>
+	<script type='text/javascript' src="{{ asset('js/jquery.fancybox-1.3.4.pack.js') }}" ></script>
+	<script type='text/javascript' src="{{ asset('js/jquery.easing-1.3.pack.js') }}" ></script>
+	<script type='text/javascript'>	
+		$(document).ready(function() {
+			/* Apply fancybox to multiple items */
+			$("a.grouped_elements").fancybox({
+				'transitionIn'	:	'elastic',
+				'transitionOut'	:	'elastic',
+				'speedIn'		:	600, 
+				'speedOut'		:	200, 
+				'overlayShow'	:	false,
+			});
+		});
+	</script>
+	<script>
+		$(function() {
+	 		$("#ordenable").sortable({
+				update: function(event, ui) {
+        			JSONArray = new Array;
+        			$("#ordenable li").each(
+		      		function(index){
+		    	  			JSONArray[index] = $(this).attr('id');
+			   		}
+		   		);
+        			JSONstring = JSON.stringify(JSONArray);
+        			$.ajax({
+            	   type: "GET",
+            	   url: "{{ path('ec_modificar_anuncio_orden_imagenes_ajax') }}",
+            	   data: "json=" + JSONstring + "&anuncio=" + {{anuncio.id}}
+            	});
+            }
+         });
+		});
+	</script>
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+		
+		<section class="form">
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Modificar Imágenes{% endtrans %}</h2>
+			</hgroup>
+			
+			<fieldset>
+			<legend class="verde">{% trans %}Arrastre para ordenar{% endtrans %}</legend>
+			<ol id="ordenable">
+				{% for imagen in imagenes %}
+				<li id="{{imagen.id}}">
+					<img src="{{ image(asset(imagen.getWebPath())).cropResize(200,150) }}" alt="Imagen anuncio" />
+					<a href="{{ path('ec_eliminar_imagen_anuncio', {'id_imagen': imagen.id, 'id': anuncio.id}) }}" onclick="return confirm('¿Estás seguro de eliminar la imagen?')" ><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete" /></a>
+				</li>
+				{% endfor %}
+			</ol>
+			</fieldset>
+			
+			{% if imagenes|length()<=5 %}
+				<form action="{{ path('ec_modificar_anuncio_imagenes', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
+    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				
+    				<div class="campo_login">
+        				<div class="label_campo">{{ form_label(form.file) }}</div>
+        				{{ form_widget(form.file) }}
+       		 		<div class="error">{{ form_errors(form.file) }}</div>        
+    				</div> 
+   				   
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Añadir{% endtrans %}"/>
+    				</div>
+				</form>
+			{% endif %}
+			
+			<div class="campo_login">
+				<a href="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" class="boton_alta btn_return">Volver</a>
+			</div>
+
+		</section>
+{% endblock %}

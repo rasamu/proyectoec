@@ -12,7 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use EC\PrincipalBundle\Entity\Usuario;
 use EC\PrincipalBundle\Entity\Anuncio;
+use EC\PrincipalBundle\Entity\Imagen;
+use EC\PrincipalBundle\Entity\CategoriaAnuncios;
 use EC\PrincipalBundle\Form\Type\AnuncioType;
+use EC\PrincipalBundle\Form\Type\ImagenType;
+use Gregwar\Image\GarbageCollect;
 
 class AnuncioController extends Controller
 {
@@ -48,6 +52,23 @@ class AnuncioController extends Controller
 			}			
     		return $comunidad;	
 	 }
+	 
+	 /**
+	  * @Route("/", name="ec_buscador_anuncios")
+	  * @Template("ECPrincipalBundle:Anuncio:buscador.html.twig")
+	  */
+    public function buscadorAction()
+    {
+    		$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+    			'SELECT a
+				FROM ECPrincipalBundle:Anuncio a'
+			);	
+			$anuncios = $query->getResult();
+		
+    		 			
+    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('anuncios'=>$anuncios,));
+    }
 	
 	/**
 	  * @Route("/nuevo/anuncio/", name="ec_nuevo_anuncio")
@@ -75,6 +96,7 @@ class AnuncioController extends Controller
 			//NUEVO ANUNCIO
 			$anuncio = new Anuncio();
     		$form=$this->createForm(new AnuncioType(),$anuncio);
+    		//$formView->getChild('fotos')->set('full_name', 'form_anuncio[fotos][]');
     				
     		$form->handleRequest($request);
     			
@@ -88,7 +110,23 @@ class AnuncioController extends Controller
 					$categoria->addAnuncio($anuncio);
 					$comunidad->addAnuncio($anuncio);
 					
-    				$em = $this->getDoctrine()->getManager();
+					$em = $this->getDoctrine()->getManager();
+					
+					$imagenes=$anuncio->getImagenes();
+					$orden=1;
+					foreach($imagenes as $imagen){
+						if($imagen->getFile()!=null){
+							$anuncio->AddImagene($imagen);
+							$imagen->SetAnuncio($anuncio);
+							$imagen->setOrden($orden);
+							$em->persist($imagen);	
+							$orden++;
+						}else{
+							$anuncio->removeImagene($imagen);
+							$em->remove($imagen);	
+						}
+					}
+					
 					$em->persist($anuncio);
 					$em->persist($this->getUser());
    				$em->persist($categoria);
@@ -160,9 +198,162 @@ class AnuncioController extends Controller
     		}
     	}				 	
 	}
+	
+	/**
+	  * @Route("/modificar/anuncio/{id}", name="ec_modificar_anuncio")
+	  * @Template("ECPrincipalBundle:Anuncio:modificar_anuncio.html.twig")
+	  */
+	public function modificarAction(Request $request, $id)
+	{ 		
+		$anuncio=$this->comprobar_anuncio($id);
+		$comunidad=$anuncio->getComunidad();
+    	$usuario=$anuncio->getUsuario();	
+	
+    	if($usuario!=$this->getUser()){
+    		throw new AccessDeniedException();
+    	}	
+
+    	$form=$this->createForm(new AnuncioType(),$anuncio);
+    	$formView=$form->createView();
+    				
+    	$form->handleRequest($request);
+    			
+    	if ($form->isValid()) {					
+    			$categoria=$form->get('categoria')->getData();
+					
+				$anuncio->setCategoria($categoria);
+				$categoria->addAnuncio($anuncio);
+					
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($anuncio);
+   			$em->persist($categoria);
+   			$em->flush();		
+    			
+				$flash=$this->get('translator')->trans('Anuncio modificado con éxito.');
+				$this->get('session')->getFlashBag()->add('notice',$flash);
+        		$this->get('session')->getFlashBag()->add('color','green');
+        		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+					return $this->redirect($this->generateUrl('ec_listado_mis_anuncios', array('cif'=>$comunidad->getCif())));
+				}else{
+					return $this->redirect($this->generateUrl('ec_listado_mis_anuncios'));
+				}
+        	}
+			
+		return $this->render('ECPrincipalBundle:Anuncio:modificar_anuncio.html.twig',array('form' => $formView, 'anuncio'=>$anuncio,'comunidad'=>$comunidad));				 	
+	}
+	
+	/**
+	  * @Route("/modificar/anuncio/imagenes/{id}", name="ec_modificar_anuncio_imagenes")
+	  * @Template("ECPrincipalBundle:Anuncio:modificar_anuncio_imagenes.html.twig")
+	  */
+	public function modificarImagenesAction(Request $request, $id)
+	{ 		
+		$anuncio=$this->comprobar_anuncio($id);
+		$comunidad=$anuncio->getComunidad();
+    	$usuario=$anuncio->getUsuario();
+		
+    	if($usuario!=$this->getUser()){
+    		throw new AccessDeniedException();
+    	}	
+    	
+		$imagen = new Imagen();
+    	$form=$this->createForm(new ImagenType(),$imagen);
+    				
+    	$form->handleRequest($request);
+    			
+    	if ($form->isValid()) {									
+				$em = $this->getDoctrine()->getManager();	
+				$anuncio->AddImagene($imagen);
+				$imagen->setAnuncio($anuncio);
+				$imagen->setOrden($anuncio->getImagenes()->count());
+				$em->persist($imagen);
+				$em->persist($anuncio);		
+   			$em->flush();		
+    			
+				$flash=$this->get('translator')->trans('Imagen añadida con éxito.');
+				$this->get('session')->getFlashBag()->add('notice',$flash);
+        		$this->get('session')->getFlashBag()->add('color','green');
+				return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes', array('id'=>$id)));
+      }
+      
+	   $imagenes_anuncio=$anuncio->getImagenes();		
+		return $this->render('ECPrincipalBundle:Anuncio:modificar_anuncio_imagenes.html.twig',array('form' => $form->createView(), 'imagenes'=>$imagenes_anuncio, 'anuncio'=>$anuncio,'comunidad'=>$comunidad));				 	
+	}
+	
+	public function modificarImagenesOrdenAction(Request $request)
+	{ 		
+	  	$imagenes = json_decode($request->get('json'));
+	  	$id_anuncio = json_decode($request->get('anuncio'));
+	  	 	
+    	if (!$imagenes || !$id_anuncio) {
+        	return new Response(null, 200);
+    	}
+    	
+		$anuncio=$this->comprobar_anuncio($id_anuncio);
+		$usuario=$anuncio->getUsuario();
+    	if($usuario!=$this->getUser()){
+    		throw new AccessDeniedException();
+    	}
+     	
+     	$orden=1;
+     	$em = $this->getDoctrine()->getManager();
+		foreach($imagenes as $imagen){
+			$query = $em->createQuery(
+				'UPDATE ECPrincipalBundle:Imagen i 
+				SET i.orden = :orden 
+				WHERE i.id= :id_imagen and i.anuncio= :id_anuncio'
+			)->setParameters(array('orden'=>$orden,'id_imagen'=>$imagen,'id_anuncio'=>$id_anuncio));
+			$query->execute();
+			
+			$orden++;
+		}
+		
+      $response = array("code" => 100, "success" => true);
+  		return new Response(json_encode($response)); 
+	}
+	
+	/**
+	  * @Route("/eliminar/imagen/{id_imagen}/anuncio/{id}", name="ec_eliminar_imagen_anuncio")
+	  */
+	public function eliminarImagenAnuncioAction($id_imagen, $id)
+	{ 		
+		$anuncio=$this->comprobar_anuncio($id);
+		$comunidad=$anuncio->getComunidad();
+    	$usuario=$anuncio->getUsuario();
+    	
+    	if($usuario!=$this->getUser()){
+    		throw new AccessDeniedException();
+    	}
+    	
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->createQuery(
+    		'SELECT i
+      	 FROM ECPrincipalBundle:Imagen i
+      	 WHERE i.id= :id and i.anuncio= :anuncio'
+		)->setParameters(array('id'=> $id_imagen,'anuncio'=>$anuncio));
+ 
+		try {
+    		$imagen = $query->getSingleResult();
+		} catch (\Doctrine\Orm\NoResultException $e) {
+        	throw new AccessDeniedException();
+		}
+    	
+		$anuncio->removeImagene($imagen);
+		$em->remove($imagen);	
+		$em->flush();
+    			
+    	$flash=$this->get('translator')->trans('Imagen eliminada con éxito.');
+    	$this->get('session')->getFlashBag()->add('notice',$flash);
+   	$this->get('session')->getFlashBag()->add('color','green');
+		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+			return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes', array('cif'=>$comunidad->getCif(),'id'=>$id)));
+		}else{
+			return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes',array('id'=>$id)));
+		}
+	}
 
 	 /**
-	  * @Route("/eliminar/anuncio/", name="ec_eliminar_anuncio")
+	  * @Route("/eliminar/anuncio/{id}", name="ec_eliminar_anuncio")
 	  */
 	public function eliminarAction($id)
 	{ 		
@@ -170,6 +361,7 @@ class AnuncioController extends Controller
 		$comunidad=$anuncio->getComunidad();		
     	$categoria=$anuncio->getCategoria();
     	$usuario=$anuncio->getUsuario();
+    	$imagenes=$anuncio->getImagenes();
 		
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
 			if($comunidad->getAdministrador()!=$this->getUser()){
@@ -181,10 +373,16 @@ class AnuncioController extends Controller
     		}	
     	}
     	
+    	$em = $this->getDoctrine()->getManager();
+		foreach($imagenes as $imagen){
+			$anuncio->removeImagene($imagen);
+			$em->remove($imagen);	
+		}
+		//Eliminamos la cache de imagenes reducidas con una antiguedad de más de 30 días
+		GarbageCollect::dropOldFiles($this->getRequest()->server->get('DOCUMENT_ROOT') .'/uploads/anuncios/cache', 30, true);
     	$usuario->removeAnuncio($anuncio);
     	$categoria->removeAnuncio($anuncio);
     	$comunidad->removeAnuncio($anuncio);
-    	$em = $this->getDoctrine()->getManager();
     	$em->remove($anuncio);
     	$em->persist($usuario);
     	$em->persist($categoria);

@@ -425,20 +425,13 @@ textarea{
 	width: 90%;	
 }
 
-textarea:focus{
-	-ms-transform: scale(1.2,1.2); 
-    -webkit-transform: scale(1.2,1.2); 
-    transform: scale(1.2,1.2);
-    margin-top: 8px;
-}
-
 input:focus,textarea:focus,select:focus
 {
 	box-shadow: 0 0 10px #aaa;
 	-webkit-box-shadow: 0 0 10px #aaa;
 	-moz-box-shadow: 0 0 10px #aaa;
 	-o-box-shadow: 0 0 10px #aaa;
-	border: 1px solid #999;
+	border: 1px solid #316431;
 	/*background-color: white;*/
 }
 
@@ -591,6 +584,12 @@ input:focus,textarea:focus,select:focus
 	display:inline-table;
 	width: 124px;
 	color: #316431;	
+}
+
+label {
+    color: #316431;
+    display: inline;
+    width: 80px;
 }
 
 .error{

@@ -1,8 +1,4 @@
 #FRONTEND
-ec_principal_homepage:
-    pattern:  /
-    defaults: { _controller: ECPrincipalBundle:Default:index}
-    
 ec_principal_check:
     pattern:  /check
     defaults: { _controller: ECPrincipalBundle:Default:check}
@@ -24,6 +20,10 @@ select_provinces:
    defaults: { _controller: ECPrincipalBundle:Default:provinces}
    
 #ANUNCIOS
+ec_buscador_anuncios:
+    pattern:  /
+    defaults: { _controller: ECPrincipalBundle:Anuncio:buscador}
+    
 ec_nuevo_anuncio:
    pattern: /nuevo/anuncio/{cif}
    defaults: { _controller: ECPrincipalBundle:Anuncio:nuevo_anuncio, cif: null }
@@ -31,6 +31,22 @@ ec_nuevo_anuncio:
 ec_listado_mis_anuncios:
    pattern: /anuncios/listado/{cif}
    defaults: { _controller: ECPrincipalBundle:Anuncio:listado_mis_anuncios, cif: null }
+   
+ec_modificar_anuncio:
+   pattern: /modificar/anuncio/{id}
+   defaults: { _controller: ECPrincipalBundle:Anuncio:modificar }
+   
+ec_modificar_anuncio_imagenes:
+   pattern: /modificar/anuncio/imagenes/{id}
+   defaults: { _controller: ECPrincipalBundle:Anuncio:modificarImagenes }
+   
+ec_modificar_anuncio_orden_imagenes_ajax:
+   pattern: /modificar/anuncio/orden/imagenes
+   defaults: { _controller: ECPrincipalBundle:Anuncio:modificarImagenesOrden }
+   
+ec_eliminar_imagen_anuncio:
+   pattern: /eliminar/imagen/{id_imagen}/anuncio/{id}
+   defaults: { _controller: ECPrincipalBundle:Anuncio:eliminarImagenAnuncio }
    
 ec_eliminar_anuncio:
    pattern: /eliminar/anuncio/{id}

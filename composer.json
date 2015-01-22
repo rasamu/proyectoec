@@ -25,7 +25,8 @@
         "friendsofsymfony/jsrouting-bundle": "dev-master",
         "gremo/highcharts-bundle": "*",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
-        "beberlei/DoctrineExtensions": "*"
+        "beberlei/DoctrineExtensions": "*",
+        "gregwar/image-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

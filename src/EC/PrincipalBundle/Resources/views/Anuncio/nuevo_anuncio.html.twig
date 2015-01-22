@@ -5,6 +5,12 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
 
@@ -39,6 +45,59 @@
 				contador.html(max+"/"+max);
 			}
 		};
+	</script>
+	<script>
+		var $collectionHolder;
+
+		// setup an "add a tag" link
+		var $addImagenLink = $('<a id="add" href="#" class="add_imagen_link campo_login boton_alta btn_nuevo">Añadir Imagen</a>');
+		var $newLinkLi = $('<div></div>').append($addImagenLink);
+
+		jQuery(document).ready(function() {
+    			// Get the ul that holds the collection of tags
+    			$collectionHolder = $('#subida_imagenes');
+
+    			// add the "add a tag" anchor and li to the tags ul
+    			$collectionHolder.append($newLinkLi);
+
+    			// count the current form inputs we have (e.g. 2), use that as the new
+    			// index when inserting a new item (e.g. 2)
+    			$collectionHolder.data('index', $collectionHolder.find(':input').length);
+    			$contador=0;
+						
+    			$addImagenLink.on('click', function(e) {
+    					if($contador<5){
+        					// prevent the link from creating a "#" on the URL
+        					e.preventDefault();
+
+        					// add a new tag form (see next code block)
+        					addImagenForm($collectionHolder, $newLinkLi);
+        					$contador=$contador+1;
+        					if($contador>=5){
+        						document.getElementById('add').style.display = 'none';
+        					}
+        				}
+    			});
+		});
+		
+		function addImagenForm($collectionHolder, $newLinkLi) {
+    			// Get the data-prototype explained earlier
+   		 	var prototype = $collectionHolder.data('prototype');
+
+    			// get the new index
+    			var index = $collectionHolder.data('index');
+
+    			// Replace '__name__' in the prototype's HTML to
+    			// instead be a number based on how many items we have
+    			var newForm = prototype.replace(/__name__/g, index);
+
+    			// increase the index with one for the next item
+    			$collectionHolder.data('index', index + 1);
+
+    			// Display the form in the page in an li, before the "Add a tag" link li
+    			var $newFormLi = $('<div class="campo_login"></div>').append(newForm);
+    			$newLinkLi.before($newFormLi);
+		}
 	</script>
 {% endblock %}
 
@@ -89,24 +148,10 @@
         				<div class="error">{{ form_errors(form.descripcion) }}</div>
     				</div> 
     				
-    				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.file_1) }}</div>
-        				{{ form_widget(form.file_1) }}
-        				<div class="error">{{ form_errors(form.file_1) }}</div>
-    				</div> 	
-    				
-    				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.file_2) }}</div>
-        				{{ form_widget(form.file_2) }}
-        				<div class="error">{{ form_errors(form.file_2) }}</div>
-    				</div> 	
-    				
-    				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.file_3) }}</div>
-        				{{ form_widget(form.file_3) }}
-        				<div class="error">{{ form_errors(form.file_3) }}</div>
-    				</div> 	 		
+    				<div id="subida_imagenes" data-prototype="{% filter escape %}{{ include('ECPrincipalBundle:Anuncio:prototype.html.twig', { 'form': form.imagenes.vars.prototype }) }}{% endfilter %}">
     				   
+    				</div>	
+   				   
     				<div class="campo_login">
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
     					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>

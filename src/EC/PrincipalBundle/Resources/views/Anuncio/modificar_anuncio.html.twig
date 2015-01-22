@@ -1,0 +1,104 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Modificar Anuncio{% endtrans %}
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+ {{ parent() }}
+      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+	<script type="text/javascript">
+		$(document).ready( function(){
+		
+			var idtextarea="anuncio_descripcion";
+			var idcontador="contador";
+			var max="255";
+			
+			$("#"+idtextarea).keyup(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+			
+			$("#"+idtextarea).keydown(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+ 
+			$("#"+idtextarea).change(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+		});
+ 
+		function updateContadorTa(idtextarea, idcontador,max){
+			var contador = $("#"+idcontador);
+			var ta =     $("#"+idtextarea);
+			contador.html("0/"+max);
+ 
+			contador.html(ta.val().length+"/"+max);
+			if(parseInt(ta.val().length)>max){
+				ta.val(ta.val().substring(0,max-1));
+				contador.html(max+"/"+max);
+			}
+		};
+	</script>
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+		<section class="form">
+			<hgroup>
+				<h2 class="verde centrado">{% trans %}Modificar Anuncio{% endtrans %}</h2>
+			</hgroup>
+			
+			<form action="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
+    				<div style="color:red;">{{ form_errors(form) }}</div>
+
+					<div class="campo_login">
+        				<div class="label_campo">{{ form_label(form.categoria) }}</div>
+        				{{ form_widget(form.categoria) }}
+       		 		<div class="error">{{ form_errors(form.categoria) }}</div>        
+    				</div> 
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.titulo) }}</div>
+        				{{ form_widget(form.titulo) }}
+        				<div class="error">{{ form_errors(form.titulo) }}</div>
+    				</div> 
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.precio) }}</div>
+        				{{ form_widget(form.precio) }}
+        				<div class="error">{{ form_errors(form.precio) }}</div>
+    				</div>
+    				
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.descripcion) }}  (<span id="contador">0/255</span> {% trans %}Caracteres{% endtrans %})</div>
+        				{{ form_widget(form.descripcion) }}
+        				<div class="error">{{ form_errors(form.descripcion) }}</div>
+    				</div> 	
+   				   
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    				</div>
+			</form>
+    		<div class="campo_login">
+				<a href="{{ path('ec_modificar_anuncio_imagenes', { 'id': anuncio.id }) }}" class="boton_alta btn_nuevo">Modificar Imágenes</a>
+			</div>
+
+		</section>
+{% endblock %}
