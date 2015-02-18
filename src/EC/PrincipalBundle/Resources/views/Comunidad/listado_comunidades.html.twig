@@ -13,6 +13,20 @@
 
 {% block javascripts %}
 	{{ parent() }}
+	<script type="text/javascript">
+       	var Buscar = '{%trans%}Buscar{%endtrans%}';
+       	var Mostrando = '{%trans%}Mostrando{%endtrans%}';
+       	var entradas = '{%trans%}entradas{%endtrans%}';
+       	var de = '{%trans%}de{%endtrans%}';
+       	var a = '{%trans%}a{%endtrans%}';
+			var Anterior = '{%trans%}Anterior{%endtrans%}';
+			var Siguiente = '{%trans%}Siguiente{%endtrans%}';
+			var NoDatos = '{%trans%}No hay datos{%endtrans%}';
+			var NoRegistros = '{%trans%}No hay registros coincidentes encontrados{%endtrans%}';
+			var Cargando = '{%trans%}Cargando...{%endtrans%}';
+			var Procesando = '{%trans%}Procesando...{%endtrans%}';
+			var filtrado = '{%trans%}filtrado{%endtrans%}';
+	</script>
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>    
 	<script type="text/javascript">
 			$(document).ready(function() {
@@ -45,19 +59,23 @@
 				<tr>
 					<th>{% trans %}Código Despacho{% endtrans %}</th>
 					<th class="no_mostrar">Cif</th>
-					<th>{% trans %}Cuidad{% endtrans %}</th>
+					<th>{% trans %}Ciudad{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}NºBloques{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}NºPropietarios{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for comunidad in comunidades %}
 				<tr class="gradeX">
-				   <td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.codigo}}</td>
-       			<td class="no_mostrar" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.cif}}</td>
-       			<td onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';" style="cursor:pointer;">{{comunidad.city.name}}</td>
+				   <td class="cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.codigo}}</td>
+       			<td class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.cif}}</td>
+       			<td class="cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.city.name}}</td>
+       			<td class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.getNBloques()}}</td>
+       			<td class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.getNPropietarios()}}</td>
        			<td>
        				<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
-       				<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('¿Estás seguro?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
+       				<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar la comunidad{%endtrans%} {{comunidad.codigo}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
        			</td>
       		</tr> 
 			{% endfor %}
@@ -66,7 +84,9 @@
 				<tr>
 					<th>{% trans %}Código Despacho{% endtrans %}</th>
 					<th class="no_mostrar">{% trans %}Cif{% endtrans %}</th>
-					<th>{% trans %}Cuidad{% endtrans %}</th>
+					<th>{% trans %}Ciudad{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}NºBloques{% endtrans %}</th>
+					<th class="no_mostrar">{% trans %}NºPropietarios{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</tfoot>

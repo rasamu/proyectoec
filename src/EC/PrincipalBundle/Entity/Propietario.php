@@ -18,8 +18,7 @@ class Propietario extends Usuario
 	 /**
 	  * @Assert\NotNull()
      * @ORM\Column(name="razon",type="string", length=100)
-     */
-     
+     */ 
     protected $razon;
     
     /**

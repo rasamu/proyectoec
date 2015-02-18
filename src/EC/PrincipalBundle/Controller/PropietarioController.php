@@ -288,7 +288,7 @@ class PropietarioController extends Controller
 													<td>".$password."</td>
       										</tr>";
       										
-      						$mensaje="Se han dado de alta los siguientes propietarios:";				
+      						$mensaje=$this->get('translator')->trans('Se han dado de alta los siguientes propietarios').':';				
       						$format = $this->get('request')->get('_format');
     							$filename = "nuevos_propietarios_".$comunidad->getCodigo().".pdf";    	        
     							$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
@@ -323,7 +323,7 @@ class PropietarioController extends Controller
    				 					return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));		
    				 				}
    				 			}else{
-   				 				$flash=$this->get('translator')->trans('Error: Existen bloques que no están dados de alta');
+   				 				$flash=$this->get('translator')->trans('Error: Existen bloques que no están dados de alta.');
    				 				$this->get('session')->getFlashBag()->add('notice',$flash);
    				 				$this->get('session')->getFlashBag()->add('color','red');
    				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
@@ -387,7 +387,7 @@ class PropietarioController extends Controller
       										</tr>";
    				 	}
    				 	
-   				 	$mensaje="Se han dado de alta los siguientes propietarios:";
+   				 	$mensaje=$this->get('translator')->trans('Se han dado de alta los siguientes propietarios').':';
    				 	$format = $this->get('request')->get('_format');
     					$filename = "nuevos_propietarios_".$comunidad->getCodigo().".pdf";    	        
     					$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
@@ -440,7 +440,7 @@ class PropietarioController extends Controller
 							<td>".$password_generado."</td>
       			</tr>";
       									
-      $mensaje="Nuevas contraseñas generadas:";										
+      $mensaje=$this->get('translator')->trans('Nuevas contraseñas generadas').':';										
       $format = $this->get('request')->get('_format');
     	$filename = "nueva_contraseña_".$propietario->getId()."_".$comunidad->getCodigo().".pdf";    	        
     	$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
@@ -478,17 +478,17 @@ class PropietarioController extends Controller
 			$incidencias_abiertas = $query->getResult();
         	
         	if($incidencias_abiertas){
-        		$flash1=$this->get('translator')->trans('El propietario ');
-				$flash2=$this->get('translator')->trans(' no se ha podido dar de baja. Tiene incidencias no finalizadas.');
-				$this->get('session')->getFlashBag()->add('notice',$flash1.$propietario->getRazon().$flash2);
+        		$flash1=$this->get('translator')->trans('El propietario');
+				$flash2=$this->get('translator')->trans('no se ha podido dar de baja. Tiene incidencias no finalizadas.');
+				$this->get('session')->getFlashBag()->add('notice',$flash1.' '.$propietario->getRazon().' '.$flash2);
         		$this->get('session')->getFlashBag()->add('color','red');
         	}else{
         		$this->eliminar_propiedad($propietario->getPropiedad());
         		$this->eliminar_propietario($propietario);
         	
-        		$flash1=$this->get('translator')->trans('El propietario ');
-				$flash2=$this->get('translator')->trans(' ha sido eliminado.');
-				$this->get('session')->getFlashBag()->add('notice',$flash1.$propietario->getRazon().$flash2);
+        		$flash1=$this->get('translator')->trans('El propietario');
+				$flash2=$this->get('translator')->trans('ha sido eliminado.');
+				$this->get('session')->getFlashBag()->add('notice',$flash1.' '.$propietario->getRazon().' '.$flash2);
         		$this->get('session')->getFlashBag()->add('color','green');
         	}
         	
@@ -563,8 +563,7 @@ class PropietarioController extends Controller
     		$form->handleRequest($request);
     			
     		if ($form->isValid()) {
-    				 	$em = $this->getDoctrine()->getManager();
-               	
+    				 	$em = $this->getDoctrine()->getManager();          	
    					$em->persist($propietario);
    					$em->flush();
     			

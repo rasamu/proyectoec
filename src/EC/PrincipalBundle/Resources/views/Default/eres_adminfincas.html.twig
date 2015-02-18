@@ -5,9 +5,10 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block sidebar %}
-	{{ parent() }}
-	
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
 {% block colder %}
@@ -18,7 +19,21 @@
    </hgroup>
    
    <article>
-   	<a href="{{ path('ec_principal_alta_adminfincas') }}">{% trans %}Alta Administrador{% endtrans %}</a>
+   	<p>{% trans %}EntreComunidades es una sistema de comunicación web donde administradores de fincas podrán gestionar comunidades de propietarios
+   	de una manera sencilla, rápida e intuitiva. Ésta aplicación tiene el objetivo de mejorar la comunicación con los propietarios 
+   	de una comunidad, para que los administradores de fincas puedan ofrecer un mejor servicio.{% endtrans %}</p>
+   	
+   	<p>{% trans %}Para ello, ésta plataforma web ofrece funcionalidades tales como la gestión de incidencias, gestión de documentos, gestión de reuniones,
+   	valoración de los servicios de la comunidad, y la creación de un espacio específico para el intercambio de objetos de segunda mano 
+   	propios de comunidades de propietarios.{% endtrans %}</p>
+   	
+   	<p>{% trans %}De igual forma, para poder hacer uso de todas éstas funcionalidades, el administrador de fincas dispondrá de una herramienta sencilla para la importación
+   	de los propietarios de las comunidades que administra desde el software de gestión que utilice. Si eres administrador de fincas y estás interesado en 
+  	   usar ésta aplicación, podrás darte de alta en {% endtrans %} <a class="boton_alta_admin" href="{{ path('ec_principal_alta_adminfincas') }}"><span>{% trans %}Alta Administrador{% endtrans %}</span></a>.</p>
 	</article>
+	
+	<div id="skyline">
+		<img src="{{ asset('images/skyline2.png') }}" alt="skyline" />
+	</div>
 	
 {% endblock %}

@@ -96,8 +96,8 @@ class RoleController extends Controller
    	   	$em->flush();  
 			}
 			
-			$flash=$this->get('translator')->trans(' ha sido nombrado nuevo Presidente.');
-			$this->get('session')->getFlashBag()->add('notice',$presidente->getRazon().$flash);
+			$flash=$this->get('translator')->trans('ha sido nombrado nuevo Presidente.');
+			$this->get('session')->getFlashBag()->add('notice',$presidente->getRazon().' '.$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }
@@ -164,8 +164,8 @@ class RoleController extends Controller
    	 		$em->persist($role_vicepresidente[0]);
    	   	$em->flush();  
 			}
-			$flash=$this->get('translator')->trans(' ha sido nombrado nuevo Vicepresidente.');
-			$this->get('session')->getFlashBag()->add('notice',$vicepresidente->getRazon().$flash);
+			$flash=$this->get('translator')->trans('ha sido nombrado nuevo Vicepresidente.');
+			$this->get('session')->getFlashBag()->add('notice',$vicepresidente->getRazon().' '.$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
     }

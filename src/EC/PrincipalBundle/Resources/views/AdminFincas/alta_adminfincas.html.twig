@@ -5,11 +5,6 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block sidebar %}
- {{ parent() }}
- 
-{% endblock %}
-
 {% block colder %}
  {{ parent() }}
  
@@ -27,7 +22,7 @@
 			</hgroup>
 			
 			{{ form_start(form) }}
-    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="rojo">{{ form_errors(form) }}</div>
     		<div class="campo">
        		 <div class="label_campo">{{ form_label(form.dni) }} *</div>
         		{{ form_widget(form.dni) }}
@@ -108,4 +103,8 @@
  
 			{{ form_end(form) }}
 		</section>
+		
+		<div id="skyline">
+			<img src="{{ asset('images/skyline2.png') }}" alt="skyline" />
+		</div>
 {% endblock %}

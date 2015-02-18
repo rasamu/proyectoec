@@ -75,6 +75,7 @@ class AdminFincasController extends Controller
     {
     		$adminfincas = new AdminFincas();
     		
+    		$invalid_message=$this->get('translator')->trans('Las contraseñas deben coincidir');
     		$form = $this ->createFormBuilder($adminfincas)
     				->setAction($this->generateUrl('ec_principal_alta_adminfincas'))
     				->add('dni','text', array('label' => 'DNI','max_length' =>9))
@@ -89,7 +90,7 @@ class AdminFincasController extends Controller
     				->add('localidad','text')
     				->add('password', 'repeated', array(
                 'type' => 'password',
-                'invalid_message' => 'Las dos contraseñas deben coincidir',
+                'invalid_message' => $invalid_message,
                 'required' => true,
                 'first_options'  => array('label' => 'Contraseña','max_length' =>9),
     				 'second_options' => array('label' => 'Confirmación','max_length' =>9),
@@ -132,13 +133,13 @@ class AdminFincasController extends Controller
    				 	
    				 	$message = \Swift_Message::newInstance()
         				->setSubject('Alta EntreComunidades')
-        				->setFrom('info@proyectoec.hol.es')
+        				->setFrom('info.entrecomunidades@gmail.com')
         				->setTo($form->get('email')->getData())
         				->setContentType('text/html')
         				->setBody($this->renderView('ECPrincipalBundle:AdminFincas:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
     					$this->get('mailer')->send($message);
 						
-						$flash=$this->get('translator')->trans('Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso. Contraseña:'.$form->get('password')->getData());
+						$flash=$this->get('translator')->trans('Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso.');
         				$this->get('session')->getFlashBag()->add('notice',$flash);
    					$this->get('session')->getFlashBag()->add('color','green');
    					return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));

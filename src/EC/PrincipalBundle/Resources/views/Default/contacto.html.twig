@@ -1,24 +1,28 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Formulario de Contacto{% endtrans %}
+	{% trans %}Contacto{% endtrans %}
 	{{ parent() }}
-{% endblock %}
-
-{% block sidebar %}
-	{{ parent() }}
-	
 {% endblock %}
 
 {% block colder %}
 	{{ parent() }}
+	
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+        		{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
 	<section id="form_login">
 		<hgroup>
-			<h2 class="verde centrado">{% trans %}Formulario de Contacto{% endtrans %}</h2>
+			<h2 class="verde centrado">{% trans %}Contacto{% endtrans %}</h2>
 		</hgroup>
 		
 		{{ form_start(form) }}
-    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="rojo">{{ form_errors(form) }}</div>
  
     		<div class="campo_login">
         		<div class="label_campo">{{ form_label(form.Nombre) }}</div>
@@ -39,10 +43,14 @@
     		</div>
 
     		<div class="campo_login">
-    		<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    		<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    			<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    			<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
 		{{ form_end(form) }}
 	</section>
+	
+	<div id="skyline">
+		<img src="{{ asset('images/skyline3.png') }}" alt="skyline" />
+	</div>
 {% endblock %}

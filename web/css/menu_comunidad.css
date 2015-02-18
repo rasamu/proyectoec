@@ -27,6 +27,7 @@
    background: -moz-linear-gradient(white,#F7D118);
    background: -o-linear-gradient(white,#F7D118);
    background: linear-gradient(white,#F7D118);
+   margin-top: 10px;
 }
 
 .titulo_comunidad{

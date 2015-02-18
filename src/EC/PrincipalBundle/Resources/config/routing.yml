@@ -11,6 +11,10 @@ ec_principal_contacto:
     pattern:  /contacto
     defaults: { _controller: ECPrincipalBundle:Default:contacto}
     
+ec_principal_olvido_password:
+    pattern:  /olvido/password
+    defaults: { _controller: ECPrincipalBundle:Default:olvido_password}
+    
 select_cities:
    pattern:  /cities
    defaults: { _controller: ECPrincipalBundle:Default:cities}
@@ -23,6 +27,22 @@ select_provinces:
 ec_buscador_anuncios:
     pattern:  /
     defaults: { _controller: ECPrincipalBundle:Anuncio:buscador}
+    
+ec_buscador_contactar:
+    pattern:  /contactar
+    defaults: { _controller: ECPrincipalBundle:Anuncio:contactar}
+    requirements:
+        _method:  POST
+    options:
+        expose: true
+        
+ec_buscador_denunciar:
+    pattern:  /denunciar
+    defaults: { _controller: ECPrincipalBundle:Anuncio:denunciar}
+    requirements:
+        _method:  POST
+    options:
+        expose: true
     
 ec_nuevo_anuncio:
    pattern: /nuevo/anuncio/{cif}

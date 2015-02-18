@@ -14,6 +14,20 @@
 
 {% block javascripts %}
 	{{ parent() }}
+	<script type="text/javascript">
+       	var Buscar = '{%trans%}Buscar{%endtrans%}';
+       	var Mostrando = '{%trans%}Mostrando{%endtrans%}';
+       	var entradas = '{%trans%}entradas{%endtrans%}';
+       	var de = '{%trans%}de{%endtrans%}';
+       	var a = '{%trans%}a{%endtrans%}';
+			var Anterior = '{%trans%}Anterior{%endtrans%}';
+			var Siguiente = '{%trans%}Siguiente{%endtrans%}';
+			var NoDatos = '{%trans%}No hay datos{%endtrans%}';
+			var NoRegistros = '{%trans%}No hay registros coincidentes encontrados{%endtrans%}';
+			var Cargando = '{%trans%}Cargando...{%endtrans%}';
+			var Procesando = '{%trans%}Procesando...{%endtrans%}';
+			var filtrado = '{%trans%}filtrado{%endtrans%}';
+	</script>
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
 	<script type="text/javascript">
 			$(document).ready(function() {
@@ -38,7 +52,7 @@
 	
 	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
-	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo bloque{% endtrans %}</a>
+	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Bloque{% endtrans %}</a>
 	
 	<div id="demo">
 		<table class="display" id="example">
@@ -46,6 +60,7 @@
 				<tr>
 					<th>{% trans %}Nº Bloque{% endtrans %}</th>
 					<th>{% trans %}Dirección{% endtrans %}</th>
+					<th>{% trans %}NºPropietarios{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
@@ -54,7 +69,8 @@
 				<tr class="gradeX">
        			<td>{{bloque.num}}</td>
        			<td>{{bloque.direccion}}</td>
-       			<td><a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'cif': comunidad.cif, 'num': bloque.num}) }}" onclick="return confirm('¿Estás seguro de eliminar el bloque {{bloque.direccion}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a></td>
+       			<td>{{bloque.getPropiedades()|length}}</td>
+       			<td><a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'cif': comunidad.cif, 'num': bloque.num}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el bloque{%endtrans%} {{bloque.direccion}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a></td>
       		</tr> 
 			{% endfor %}
 			</tbody>
@@ -62,6 +78,7 @@
 				<tr>
 					<th>{% trans %}Nº Bloque{% endtrans %}</th>
 					<th>{% trans %}Dirección{% endtrans %}</th>
+					<th>{% trans %}NºPropietarios{% endtrans %}</th>
 					<th>{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</tfoot>

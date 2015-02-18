@@ -17,6 +17,7 @@ use EC\PrincipalBundle\Entity\CategoriaAnuncios;
 use EC\PrincipalBundle\Form\Type\AnuncioType;
 use EC\PrincipalBundle\Form\Type\ImagenType;
 use Gregwar\Image\GarbageCollect;
+use FOS\ElasticaBundle\FOSElasticaBundle;
 
 class AnuncioController extends Controller
 {
@@ -54,20 +55,188 @@ class AnuncioController extends Controller
 	 }
 	 
 	 /**
+	  * @Route("/contactar", name="ec_buscador_contactar")
+	  */
+    public function contactarAction(Request $request)
+    {
+     		$request = $this->get('request');		
+     		$nombre=$request->request->get('Nombre');
+   		$mensaje=$request->request->get('Mensaje');
+   		$email=$request->request->get('Email');
+   		$id_anuncio=$request->request->get('idAnuncio');
+   
+   		if ($request->isXmlHttpRequest()) {
+   			if($mensaje!="" and $email!="" and $nombre!=""){
+   				$anuncio=$this->comprobar_anuncio($id_anuncio);
+   				$email_anunciante=$anuncio->getUsuario()->getEmail();
+   			
+   				//Enviamos email
+   				$message = \Swift_Message::newInstance()
+        				->setSubject('Mensaje anuncio EntreComunidades')
+        				->setFrom('info.entrecomunidades@gmail.com')
+        				->setTo($email_anunciante)
+        				->setContentType('text/html')
+        				->setBody($this->renderView('ECPrincipalBundle:Anuncio:email_contacto_anuncio.txt.twig', array('anuncio'=>$anuncio,'nombre'=>$nombre,'mensaje'=>$mensaje, 'email'=>$email)));
+    				$this->get('mailer')->send($message);
+    					
+   				$flash=$this->get('translator')->trans('Mensaje enviado con éxito.');
+      			$return=array("responseCode"=>200,  "greeting"=>$flash);
+   			}else{
+   				$flash=$this->get('translator')->trans('El mensaje no se ha enviado correctamente.');
+   		   	$return=array("responseCode"=>400, "greeting"=>$flash);
+   			}
+   		}else{
+   			$flash=$this->get('translator')->trans('Error.');
+   		   $return=array("responseCode"=>400, "greeting"=>$flash);
+   		}
+
+   		$return=json_encode($return);
+  			return new Response($return,200,array('Content-Type'=>'application/json'));
+    }
+    
+    /**
+	  * @Route("/denunciar", name="ec_buscador_denunciar")
+	  */
+    public function denunciarAction(Request $request)
+    {
+     		$request = $this->get('request'); 		
+     		$denuncia=$request->request->get('Denuncia');
+   		$id_anuncio=$request->request->get('idAnuncio');
+   		
+   		if ($request->isXmlHttpRequest()) {
+   			if($denuncia!=""){
+   				$anuncio=$this->comprobar_anuncio($id_anuncio);
+   				$usuario=$anuncio->getUsuario();
+   				if($usuario->getRole()->getId()!='1'){//Anuncio escrito por propietario
+   					$email=$anuncio->getComunidad()->getAdministrador()->getEmail();
+   				}else{//Anuncio escrito por el administrador de la comunidad
+   					$email='info.entrecomunidades@gmail.com';
+   				}
+   				//Enviamos email
+   				$message = \Swift_Message::newInstance()
+        				->setSubject('Denuncia anuncio EntreComunidades')
+        				->setFrom('info.entrecomunidades@gmail.com')
+        				->setTo($email)
+        				->setContentType('text/html')
+        				->setBody($this->renderView('ECPrincipalBundle:Anuncio:email_denuncia_anuncio.txt.twig', array('anuncio'=>$anuncio,'denuncia'=>$denuncia)));
+    				$this->get('mailer')->send($message);
+    					
+   				$flash=$this->get('translator')->trans('Denuncia enviada con éxito.');
+      			$return=array("responseCode"=>200,  "greeting"=>$flash);
+   			}else{
+   				$flash=$this->get('translator')->trans('Tienes que escribir el mensaje.');
+   		   	$return=array("responseCode"=>400, "greeting"=>$flash);
+   			}
+   		}else{
+   			$flash=$this->get('translator')->trans('Error.');
+   		   $return=array("responseCode"=>400, "greeting"=>$flash);
+   		}
+
+   		$return=json_encode($return);
+  			return new Response($return,200,array('Content-Type'=>'application/json'));
+    }
+	 
+	 /**
 	  * @Route("/", name="ec_buscador_anuncios")
 	  * @Template("ECPrincipalBundle:Anuncio:buscador.html.twig")
 	  */
-    public function buscadorAction()
+    public function buscadorAction(Request $request)
     {
-    		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    			'SELECT a
-				FROM ECPrincipalBundle:Anuncio a'
-			);	
-			$anuncios = $query->getResult();
+    		$results=null;
+    		
+			$defaultData = array('message' => 'Type your message here');
+    		$form = $this->container
+    			->get('form.factory')
+    			->createNamedBuilder('form','form',null)
+    			->setAction($this->generateUrl('ec_buscador_anuncios'))
+        		->add('palabras', 'text',array('label'=>'Palabras','required' => false))
+        		->add('categoria', 'entity', array(
+            		'class' => 'ECPrincipalBundle:CategoriaAnuncios',
+            		'property'=>'nombre',
+            		'label' => 'Categoría',
+            		'required' => false,
+            		'empty_value' => 'Cualquier categoría'))
+            ->add('province', 'entity', array(
+            		'class' => 'ECPrincipalBundle:Province',
+            		'property'=>'name',
+            		'label' => 'Provincia',
+            		'required' => false,
+            		'empty_value' => 'En toda España'))
+            ->add('orden', 'choice', array(
+                'choices' => array(
+                    'desc' => 'Fecha descendente',
+                    'asc' => 'Fecha ascendente'
+                ),
+                'data' => 'desc'))
+        		->getForm();
+        	
+        	$form_contacto = $this->container
+    			->get('form.factory')
+    			->createNamedBuilder('form_contacto','form',null)
+    			->setAction($this->generateUrl('ec_buscador_contactar'))
+        		->add('email','email', array('label'=>'Email','required' => true))
+        		->add('nombre','text', array('label'=>'Nombre','required' => true))
+        		->add('mensaje', 'textarea',array('label'=>'Mensaje','required' => true))
+        		->getForm();
+        		
+        	$form_denuncia = $this->container
+    			->get('form.factory')
+    			->createNamedBuilder('form_denuncia','form',null)
+    			->setAction($this->generateUrl('ec_buscador_denunciar'))
+        		->add('denuncia', 'textarea',array('label'=>'Denuncia','required' => true))
+        		->getForm();
+
+     		$form=$form->handleRequest($request);		
+ 
+       	$palabras=$form->get('palabras')->getData();
+       	$categoria=$form->get('categoria')->getData();
+       	$orden_fecha=$form->get('orden')->getData();
+       	$province=$form->get('province')->getData();
+
+			$finder = $this->container->get('fos_elastica.finder.search.anuncio');
+			$boolQuery = new \Elastica\Query\Bool();
+			
+			//Filtramos por categoria
+			if($categoria!=null){
+				$categoryQuery = new \Elastica\Query\Term();
+				$categoryQuery->setTerm('categoria.id', $categoria->getId());
+				$boolQuery->addMust($categoryQuery);
+			}
+			
+			//Filtramos por provincia
+			if($province!=null){
+				$provinceQuery = new \Elastica\Query\Term();
+				$provinceQuery->setTerm('comunidad.city.province.id', $province->getId());
+				$boolQuery->addMust($provinceQuery);	
+			}
+			
+			//Filtramos por palabras
+			if($palabras!=null){
+				/*$fieldQuery1 = new \Elastica\Query\Match();
+				$fieldQuery1->setFieldQuery('titulo', $palabras);
+				$boolQuery->addShould($fieldQuery1);*/
+				
+				$fieldQuery2 = new \Elastica\Query\Match();
+				$fieldQuery2->setFieldQuery('descripcion', $palabras);
+				$boolQuery->addMust($fieldQuery2);
+			}else{
+				$fieldQuery = new \Elastica\Query\MatchAll();
+				$boolQuery->addShould($fieldQuery);
+			}
 		
-    		 			
-    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('anuncios'=>$anuncios,));
+			$finalQuery = new \Elastica\Query($boolQuery);
+			//Ordenamos
+			$finalQuery->setSort(array('fecha' => array('order'=>$orden_fecha)));
+			$results = $finder->find($finalQuery);
+			
+			//Paginamos
+			$anuncios  = $this->get('knp_paginator')->paginate(
+         	$results,
+         	$request->query->get('page', 1)/*page number*/,
+         	2/*limit per page*/
+    		);
+				
+    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('form' => $form->createView(),'form_contacto'=>$form_contacto->createView(),'form_denuncia'=>$form_denuncia->createView(),'anuncios'=>$anuncios,));
     }
 	
 	/**
@@ -84,7 +253,7 @@ class AnuncioController extends Controller
 		
 		//Comprobamos que el usuario tiene registrado su telefono e email
     	if($this->getUser()->getTelefono()==null || $this->getUser()->getEmail()==null){
-    		$flash=$this->get('translator')->trans('Para publicar anuncios debe añadir primero su Teléfono e Email');
+    		$flash=$this->get('translator')->trans('Para publicar anuncios debe añadir primero su Teléfono e Email.');
         	$this->get('session')->getFlashBag()->add('notice',$flash);
    		$this->get('session')->getFlashBag()->add('color','red');
    		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){

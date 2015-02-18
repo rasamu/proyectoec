@@ -2,20 +2,19 @@
 
 {% block title %}
 	{{ parent() }}
-	{% trans %}Calendario{% endtrans %}
+	{% trans %}Calendario de reuniones{% endtrans %}
 {% endblock %}
 
 {% block stylesheets %}
    {{ parent() }}
+   
    <link rel="stylesheet" href="{{ asset('css/jquery-ui-dialog.css') }}" />
 	<link rel='stylesheet' type='text/css' href="{{ asset('css/fullcalendar.css') }}" />
-	<style>
-
-</style>
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
+	
 	<script type='text/javascript' src="{{ asset('js/jquery-ui.min.js') }}"></script>
 	
    <script type='text/javascript' src="{{ asset('js/moment.min.js') }}"></script>
@@ -85,16 +84,16 @@
             						resizable: "false", <!-- ------> fija o redimensionable si ponemos este valor a "true" -->
             						position: "center",<!--  ------> posicion de la ventana en la pantalla (left, top, right...) -->
             						modal: "true", <!-- ------------> si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
-        								title: "Comunidad {{comunidad.codigo}}"
+        								title: "{%trans%}Comunidad{%endtrans%} {{comunidad.codigo}}"
         							});
 
         						}else{
-        						    alert('No es posible añadir una reunión con fecha anterior a la actual.');
+        						    alert('{%trans%}No es posible añadir una reunión con fecha anterior a la actual.{%endtrans%}');
         						}
     					},
     					
     					eventMouseover: function(calEvent, jsEvent) {
-    						var tooltip = '<div class="tooltipevent info"><p class="verde negrita">Comunidad: ' + calEvent.comunidad + '</p><p>'+ calEvent.title +'</p></div>';
+    						var tooltip = '<div class="tooltipevent info"><div class="verde negrita">{%trans%}Comunidad{%endtrans%}: ' + calEvent.comunidad + '</div><div>'+ calEvent.title +'</div></div>';
     						$("body").append(tooltip);
     						$(this).mouseover(function(e) {
         						$(this).css('z-index', 10000);
@@ -129,7 +128,7 @@
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
@@ -148,7 +147,7 @@
 				</hgroup>
 				
             <form action="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
-    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				<div class="rojo">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.fecha) }}</div>
@@ -176,7 +175,6 @@
 
     				<div class="campo_login">
     					<input type="submit" value="{% trans %}Crear{% endtrans %}" id="crear" />
-    					<img id="loading" src="{{ asset('images/loading.gif') }}" alt="loading"/>
     				</div>
             </form>
 			</section>

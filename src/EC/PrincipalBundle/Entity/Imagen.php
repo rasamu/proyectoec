@@ -41,10 +41,10 @@ class Imagen
      * @Assert\NotNull()
      * @Assert\File(
      *	maxSize="1000000",
-     *	maxSizeMessage = "El fichero ocupa demasiado.",
-     *	notFoundMessage = "Seleccione una imagen.",
+     *	maxSizeMessage = "El fichero ocupa demasiado",
+     *	notFoundMessage = "Seleccione una imagen",
      *   mimeTypes = {"image/jpeg"},
-     *   mimeTypesMessage = "Por favor, suba un imagen JPG válida."
+     *   mimeTypesMessage = "Por favor, suba un imagen JPG válida"
      * )
      */
     private $file;

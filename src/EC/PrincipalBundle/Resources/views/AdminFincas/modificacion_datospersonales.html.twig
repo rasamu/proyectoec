@@ -1,7 +1,7 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Modificar datos personales{% endtrans %}
+	{% trans %}Mi Perfil{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -9,11 +9,6 @@
  {{ parent() }}
       <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 
-{% endblock %}
-
-{% block sidebar %}
-	{{ parent() }}
-	
 {% endblock %}
 
 {% block colder %}
@@ -29,12 +24,12 @@
 	
 	<section class="form">
 			<hgroup>
-				<h2 class="verde centrado">{% trans %}Datos Personales{% endtrans %}</h2>
+				<h2 class="verde centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
 			</hgroup>
 			
 			<a class="boton_alta btn_password" href="{{ path('ec_usuario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
 			{{ form_start(form) }}
-    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="rojo">{{ form_errors(form) }}</div>
  
  			<div class="campo">
         		<div class="label_campo">{{ form_label(form.n_colegiado) }}</div>
@@ -94,8 +89,7 @@
     			(*) {% trans %}Campo obligatorio{% endtrans %}
     		</div>
     		<div class="campo">
-    		<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
-    		<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    			<input type="submit" value="{% trans %}Save{% endtrans %}"/>
     		</div>
  
 		{{ form_end(form) }}

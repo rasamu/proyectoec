@@ -6,9 +6,9 @@ parameters:
     database_name: entre_comunidades
     database_user: root
     database_password: null
-    mailer_transport: smtp
-    mailer_host: mx1.hostinger.es
-    mailer_user: info@proyectoec.hol.es
+    mailer_transport: gmail
+    mailer_host: null
+    mailer_user: info.entrecomunidades@gmail.com
     mailer_password: '08091987'
     locale: es
     secret: a67f71ad704f1c1229c3abc91a16e1cb9bc8fded

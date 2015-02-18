@@ -3,14 +3,14 @@
 <pdf>
 	<dynamic-page>
 		<h1 padding="10px" background-color="#316431" width="100%"><span color="yellow">Entre</span><span color="white">Comunidades</span></h1>
-		<h2>Comunidad: {{comunidad.codigo}}</h2>
-		<p>Listado de propietarios</p>
+		<h2>{%trans%}Comunidad{%endtrans%}: {{comunidad.codigo}}</h2>
+		<p>{%trans%}Listado de propietarios{%endtrans%}</p>
 		<table>
 			<tr padding="5px">
-				<td text-align="center" font-style="bold">NºBloque</td>
-				<td text-align="center" font-style="bold">Dirección</td>
-				<td text-align="center" font-style="bold">Piso</td>
-				<td text-align="center" font-style="bold">Propietario</td>
+				<td text-align="center" font-style="bold">{%trans%}NºBloque{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Dirección{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Piso{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Propietario{%endtrans%}</td>
 			</tr>
 			
 			{% for bloque in bloques %}

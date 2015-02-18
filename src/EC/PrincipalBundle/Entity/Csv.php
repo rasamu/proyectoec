@@ -13,10 +13,10 @@ class Csv
      * @Assert\NotBlank
      * @Assert\File(
      *	maxSize = "100k",
-     *	maxSizeMessage = "El fichero ocupa demasiado.",
-     *	notFoundMessage = "Seleccione un fichero.",
+     *	maxSizeMessage = "El fichero ocupa demasiado",
+     *	notFoundMessage = "Seleccione un fichero",
      *   mimeTypes = {"text/plain", "text/plain"},
-     *   mimeTypesMessage = "Por favor, suba un fichero CSV válido."
+     *   mimeTypesMessage = "Por favor, suba un fichero CSV válido"
      * )
      */
     private $file;

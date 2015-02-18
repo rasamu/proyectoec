@@ -477,4 +477,21 @@ class Comunidad
     {
         return $this->anuncios;
     }
+    
+    public function getNBloques()
+    {
+    	  $bloques=$this->getBloques();
+    	  return $bloques->count();
+    }
+    
+    public function getNPropietarios()
+    {
+    	  $bloques=$this->getBloques();
+    	  $count=0;
+    	  foreach($bloques as $bloque){
+    	  		$propietarios=$bloque->getPropiedades();
+    	  		$count=$count + $propietarios->count();	
+    	  }
+        return $count;
+    }
 }

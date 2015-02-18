@@ -135,10 +135,10 @@ class IncidenciaController extends Controller
    				/*Correo al administrador*/
    				$message = \Swift_Message::newInstance()
         			->setSubject('Incidencia Comunidad: '.$comunidad->getCodigo())
-        			->setFrom('info@proyectoec.hol.es')
+        			->setFrom('info.entrecomunidades@gmail.com')
         			->setTo($administrador->getEmail())
         			->setContentType('text/html')
-        			->setBody($this->renderView('ECPrincipalBundle:Incidencia:email_nueva_incidencia.txt.twig', array('categoria'=>$categoria->getNombre(),'descripcion'=>$incidencia->getDescripcion())));
+        			->setBody($this->renderView('ECPrincipalBundle:Incidencia:email_nueva_incidencia.txt.twig', array('comunidad'=>$comunidad,'categoria'=>$categoria->getNombre(),'descripcion'=>$incidencia->getDescripcion())));
     				$this->get('mailer')->send($message);
     			
     			

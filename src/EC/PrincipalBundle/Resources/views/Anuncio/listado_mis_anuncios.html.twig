@@ -53,10 +53,10 @@
 	{% endif %}
 	
 	{% if mis_anuncios is empty%}
-		<p>No tiene anuncios publicados.</p>
+		<p>{%trans%}No tiene anuncios publicados.{%endtrans%}</p>
 	{% else %}
 		{% for mi_anuncio in mis_anuncios %}
-			<article class="anuncio">
+			<article class="anuncio anuncio_color">
 				<section class="titulo_anuncio">
 					{{mi_anuncio.fecha | date("d/m/Y")}} {{mi_anuncio.comunidad.city.name}} ({{mi_anuncio.comunidad.city.province.name}})
 					<b>{{mi_anuncio.categoria.nombre}}</b>: {{mi_anuncio.titulo}}
@@ -89,14 +89,13 @@
 				</div>
 				<section class="footer_anuncio">
 					<section class="precio">
-						Precio: <b>{{mi_anuncio.precio}} €</b>
+						{%trans%}Precio{%endtrans%}: <b>{{mi_anuncio.precio}} €</b>
 					</section>
 					<section class="num_fotos">
 						<b>{{mi_anuncio.getImagenes().count()}}</b> {% trans %}Fotos{% endtrans %}
 					</section>
-					<a class="verde" href="#">{% trans %}Contactar{% endtrans %}</a>
-					<a class="naranja" href="{{ path('ec_modificar_anuncio', { 'id': mi_anuncio.id }) }}">{% trans %}Modificar{% endtrans %}</a>
-					<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('¿Estás seguro de eliminar el anuncio {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
+					<a class="naranja" href="{{ path('ec_modificar_anuncio', { 'id': mi_anuncio.id }) }}">{% trans %}Editar{% endtrans %}</a>
+					<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el anuncio{%endtrans%} {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
 				</section>
 			</article>
 		{% endfor %}		
@@ -108,10 +107,10 @@
 			<h2 class="verde centrado">{% trans %}Anuncios de la Comunidad{% endtrans %}</h2>
 		</hgroup>
 		{% if anuncios_comunidad is empty%}
-			<p>La comunidad no tiene anuncios publicados.</p>
+			<p>{%trans%}La comunidad no tiene anuncios publicados.{%endtrans%}</p>
 		{% else %}
 			{% for anuncio_comunidad in anuncios_comunidad %}
-				<article class="anuncio">
+				<article class="anuncio anuncio_color">
 					<section class="titulo_anuncio">
 						{{anuncio_comunidad.fecha | date("d/m/Y")}} {{anuncio_comunidad.comunidad.city.name}} ({{anuncio_comunidad.comunidad.city.province.name}})
 						<b>{{anuncio_comunidad.categoria.nombre}}</b>: {{anuncio_comunidad.titulo}}
@@ -122,17 +121,21 @@
 					<div>
 						<section class="foto_anuncio">
 							{% set fotos = anuncio_comunidad.getImagenes() %}
-							{% set count=0 %}
-							{% for foto in fotos%}
-								{% if count==0 %}
-									<a class="grouped_elements" rel="group{{anuncio_comunidad.id}}" href="{{ asset(foto.getWebPath()) }}">
-										<img src="{{ image(asset(foto.getWebPath())).cropResize(200,150) }}" alt="Imagen anuncio" />
-									</a>
-									{% set count=count+1%}
-								{% else %}
-									<a class="grouped_elements no_mostrar" rel="group{{anuncio_comunidad.id}}" href="{{ asset(foto.getWebPath()) }}"></a>
-								{% endif %}
-							{% endfor %}
+							{% if fotos|length()!=0 %}
+								{% set count=0 %}
+								{% for foto in fotos%}
+									{% if count==0 %}
+										<a class="grouped_elements" rel="group{{anuncio_comunidad.id}}" href="{{ asset(foto.getWebPath()) }}">
+											<img src="{{ image(asset(foto.getWebPath())).cropResize(200,150) }}" alt="Imagen anuncio" />
+										</a>
+										{% set count=count+1%}
+									{% else %}
+										<a class="grouped_elements no_mostrar" rel="group{{anuncio_comunidad.id}}" href="{{ asset(foto.getWebPath()) }}"></a>
+									{% endif %}
+								{% endfor %}
+							{% else %}
+								<img src="{{ asset('images/no_foto.jpg') }}" alt="No foto" />
+							{% endif %}
 						</section>
 						<section class="descripcion_anuncio">
 							{{anuncio_comunidad.descripcion}}
@@ -140,13 +143,13 @@
 					</div>
 					<section class="footer_anuncio">
 						<section class="precio">
-							Precio: <b>{{anuncio_comunidad.precio}} €</b>
+							{%trans%}Precio{%endtrans%}: <b>{{anuncio_comunidad.precio}} €</b>
 						</section>
 						<section class="num_fotos">
 							<b>{{anuncio_comunidad.getImagenes().count()}}</b> {% trans %}Fotos{% endtrans %}
 						</section>
 						{% if is_granted('ROLE_ADMINFINCAS') %}
-							<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('¿Estás seguro de eliminar el anuncio {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
+							<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el anuncio{%endtrans%} {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
 						{% endif %}
 					</section>
 				</article>

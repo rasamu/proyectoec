@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Modificar Imágenes Anuncio{% endtrans %}
+	{% trans %}Editar Imágenes{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -66,7 +66,7 @@
 		
 		<section class="form">
 			<hgroup>
-				<h2 class="verde centrado">{% trans %}Modificar Imágenes{% endtrans %}</h2>
+				<h2 class="verde centrado">{% trans %}Editar Imágenes{% endtrans %}</h2>
 			</hgroup>
 			
 			<fieldset>
@@ -83,7 +83,7 @@
 			
 			{% if imagenes|length()<=5 %}
 				<form action="{{ path('ec_modificar_anuncio_imagenes', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
-    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				<div class="rojo">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
         				<div class="label_campo">{{ form_label(form.file) }}</div>
@@ -98,7 +98,7 @@
 			{% endif %}
 			
 			<div class="campo_login">
-				<a href="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" class="boton_alta btn_return">Volver</a>
+				<a href="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" class="boton_alta btn_return">{% trans %}Volver{% endtrans %}</a>
 			</div>
 
 		</section>

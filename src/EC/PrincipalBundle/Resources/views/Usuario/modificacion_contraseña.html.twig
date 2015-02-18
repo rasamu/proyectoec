@@ -5,13 +5,9 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block sidebar %}
-	{{ parent() }}
-	
-{% endblock %}
-
 {% block colder %}
 	{{ parent() }}
+	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -26,7 +22,7 @@
 		</hgroup>
 
 		{{ form_start(form) }}
-    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="rojo">{{ form_errors(form) }}</div>
  
     		<div class="campo_login">
         		<div class="label_campo2">{{ form_label(form.pass) }}</div>
@@ -47,8 +43,8 @@
     		</div>  
 
     		<div class="campo_login">
-    		<input type="submit" value="Actualizar"/>
-    		<input type="reset" value="Borrar"/>
+    			<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
+    			<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
 		{{ form_end(form) }}

@@ -22,13 +22,13 @@
             backgroundColor:'rgba(255, 255, 255, 0.1)'
         },
         title: {
-            text: 'Comunidades',
+            text: '{%trans%}Comunidades{%endtrans%}',
             style: {
 					color: '#355664'
             }
         },
         xAxis: {
-            categories: [{%for comu in comunidades%}'Comunidad {{comu.codigo}}',{%endfor%}],
+            categories: [{%for comu in comunidades%}'{%trans%}Comunidad{%endtrans%} {{comu.codigo}}',{%endfor%}],
             title: {
                 text: null
             }
@@ -39,7 +39,7 @@
                 overflow: 'justify'
             },
             title: {
-                text: 'Total'
+                text: '{%trans%}Total{%endtrans%}'
             }
         },
         tooltip: {
@@ -70,15 +70,15 @@
             enabled: false
         },
         series: [{
-				name: 'Incidencias',
+				name: '{%trans%}Incidencias{%endtrans%}',
             data: [{%for incidencias in totales_incidencias%}{{incidencias.total}},{%endfor%}],
             color: '#93c1d4'
         },{
-            name: 'Propietarios',
+            name: '{%trans%}Propietarios{%endtrans%}',
             data: [{%for propietarios in totales_propietarios%}{{propietarios.total}},{%endfor%}],
 				color: '#355664'
         },{
-            name: 'Anuncios',
+            name: '{%trans%}Anuncios{%endtrans%}',
             data: [{%for anuncios in totales_anuncios%}{{anuncios.total}},{%endfor%}],
 				color: '#078cc3'
         }]

@@ -1,7 +1,7 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Editar comunidad{% endtrans %}
+	{% trans %}Editar Comunidad{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -18,11 +18,11 @@
 	
 	<section class="form">
 		<hgroup>
-			<h2 class="verde centrado">{% trans %}Editar comunidad{% endtrans %}</h2>
+			<h2 class="verde centrado">{% trans %}Editar Comunidad{% endtrans %}</h2>
 		</hgroup>
 		
       <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
-    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="rojo">{{ form_errors(form) }}</div>
 		
 			<div class="campo">
         		<div class="label_campo3">{{ form_label(form.codigo) }}</div>

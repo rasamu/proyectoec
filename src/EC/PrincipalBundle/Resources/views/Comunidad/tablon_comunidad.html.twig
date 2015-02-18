@@ -27,20 +27,20 @@
 	</hgroup>
 
 	<hgroup>	
-		<h3 class="verde izquierda">{% trans %}Incidencias abiertas:{% endtrans %}</h3>
+		<h3 class="verde izquierda">{% trans %}Incidencias abiertas{% endtrans %}:</h3>
 	</hgroup>
 		{% if incidencias is empty%}
-			<p>No existen incidencias.</p>
+			<p>{%trans%}No hay incidencias abiertas.{%endtrans%}.</p>
 		{% else %}
 			{% for incidencia in incidencias %}
 				<a class="enlace" href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}">
 					<article class="entrada">
 							<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
 							{{incidencia.fecha | date("d/m/Y")}} 
-							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}<b>Comunidad: </b>{{incidencia.propietario.propiedad.bloque.comunidad.codigo}}{% endif %}
-							<b>Categoria: </b>{{incidencia.categoria.nombre}} 
-							<b>Bloque: </b>{{incidencia.propietario.propiedad.bloque.num}} 
-							<b>Piso: </b>{{incidencia.propietario.propiedad.piso}}
+							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}<b>{%trans%}Comunidad{%endtrans%}: </b>{{incidencia.propietario.propiedad.bloque.comunidad.codigo}}{% endif %}
+							<b>{%trans%}Categoría{%endtrans%}: </b>{{incidencia.categoria.nombre}} 
+							<b>{%trans%}Bloque{%endtrans%}: </b>{{incidencia.propietario.propiedad.bloque.num}} 
+							<b>{%trans%}Piso{%endtrans%}: </b>{{incidencia.propietario.propiedad.piso}}
 					</article>
 				</a>
 			{% endfor %}
@@ -49,29 +49,29 @@
 		<hr class="verde"></hr>
 	
 		<hgroup>
-			<h3 class="verde izquierda">{% trans %}Próximas reuniones:{% endtrans %}</h3>
+			<h3 class="verde izquierda">{% trans %}Próximas reuniones{% endtrans %}:</h3>
 		</hgroup>
 		
 		{% if reuniones is empty%}
-			<p>No hay reuniones próximamente.</p>
+			<p>{%trans%}No hay reuniones próximamente.{%endtrans%}</p>
 		{% else %}
 			{% for reunion in reuniones %}
 					{% if is_granted('ROLE_ADMINFINCAS') %}  					
-				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}" style="cursor:pointer;">
+				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}">
 				   		<article class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/> 
 				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} 
 				   			{% if comunidad is empty %}
-				   				<b>Comunidad: </b>{{reunion.comunidad.codigo}}
+				   				<b>{%trans%}Comunidad{%endtrans%}: </b>{{reunion.comunidad.codigo}}
 				   			{% endif %}
-				   			<b>Descripción: </b>{{reunion.descripcion}} 
+				   			<b>{%trans%}Descripción{%endtrans%}: </b>{{reunion.descripcion}} 
 				   		</article>
 				   	</a>      		
 					{% else %}
-				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}" style="cursor:pointer;">
+				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}">
 				   		<article class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
-				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} <b>Descripción: </b>{{reunion.descripcion}} 
+				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} <b>{%trans%}Descripción{%endtrans%}: </b>{{reunion.descripcion}} 
 				   		</article>  
 				   	</a>   		
 					{% endif %}

@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new Gremo\HighchartsBundle\GremoHighchartsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Gregwar\ImageBundle\GregwarImageBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

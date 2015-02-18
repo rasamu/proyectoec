@@ -1,7 +1,7 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Alta Comunidad{% endtrans %}
+	{% trans %}Nueva Comunidad{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -48,10 +48,10 @@
 	    
 	<section class="form">
 		<hgroup>
-			<h2 class="verde centrado">{% trans %}Alta Comunidad{% endtrans %}</h2>
+			<h2 class="verde centrado">{% trans %}Nueva Comunidad{% endtrans %}</h2>
 		</hgroup>
       <form action="{{ path('ec_adminfincas_alta_comunidad') }}" method="POST">
-    		<div style="color:red;">{{ form_errors(form) }}</div>
+    		<div class="rojo">{{ form_errors(form) }}</div>
 
     		<div class="campo">
        		 <div class="label_campo3">{{ form_label(form.cif) }} *</div>
@@ -112,12 +112,14 @@
         		{{ form_widget(form.conserjeria) }}
        		 <div class="error">{{ form_errors(form.conserjeria) }}</div>        
     		</div> 
+    		
 			<div class="campo">
 				(*) {% trans %}Campo obligatorio{% endtrans %}			
 			</div>
+			
     		<div class="campo">
-    		<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    		<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    			<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    			<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
        </form>

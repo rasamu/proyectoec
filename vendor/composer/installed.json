@@ -2456,5 +2456,348 @@
             "Symfony2",
             "image"
         ]
+    },
+    {
+        "name": "ruflin/elastica",
+        "version": "v1.3.4.0",
+        "version_normalized": "1.3.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ruflin/Elastica.git",
+            "reference": "ffbfa5dd391bd097434e1c8262d7a1df1d2555f8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ruflin/Elastica/zipball/ffbfa5dd391bd097434e1c8262d7a1df1d2555f8",
+            "reference": "ffbfa5dd391bd097434e1c8262d7a1df1d2555f8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "munkie/elasticsearch-thrift-php": "1.4.*",
+            "phpunit/phpunit": "4.1.*",
+            "psr/log": "~1.0",
+            "satooshi/php-coveralls": "dev-master"
+        },
+        "suggest": {
+            "guzzlehttp/guzzle": "Allow using guzzle 4.x as the http transport (requires php 5.4)",
+            "monolog/monolog": "Logging request",
+            "munkie/elasticsearch-thrift-php": "Allow using thrift transport",
+            "psr/log": "for logging"
+        },
+        "time": "2014-10-04 20:15:58",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Elastica": "lib/",
+                "Elastica\\Test": "test/lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Ruflin",
+                "homepage": "http://ruflin.com/"
+            }
+        ],
+        "description": "Elasticsearch Client",
+        "homepage": "http://elastica.io/",
+        "keywords": [
+            "client",
+            "search"
+        ]
+    },
+    {
+        "name": "friendsofsymfony/elastica-bundle",
+        "version": "v3.0.7",
+        "version_normalized": "3.0.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/FriendsOfSymfony/FOSElasticaBundle.git",
+            "reference": "32d190f554d4a9efa68cadeae3974c77d14b349f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/FriendsOfSymfony/FOSElasticaBundle/zipball/32d190f554d4a9efa68cadeae3974c77d14b349f",
+            "reference": "32d190f554d4a9efa68cadeae3974c77d14b349f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "psr/log": "~1.0",
+            "ruflin/elastica": ">=0.90.10.0, <1.4-dev",
+            "symfony/console": "~2.1",
+            "symfony/form": "~2.1",
+            "symfony/framework-bundle": "~2.3",
+            "symfony/property-access": "~2.2"
+        },
+        "require-dev": {
+            "doctrine/doctrine-bundle": "~1.2@beta",
+            "doctrine/orm": "~2.2",
+            "jms/serializer-bundle": "@stable",
+            "knplabs/knp-components": "~1.2",
+            "knplabs/knp-paginator-bundle": "~2.4",
+            "pagerfanta/pagerfanta": "1.0.*@dev",
+            "phpunit/phpunit": "~4.1",
+            "propel/propel1": "1.6.*",
+            "symfony/browser-kit": "~2.3",
+            "symfony/expression-language": "~2.4",
+            "symfony/twig-bundle": "~2.3"
+        },
+        "suggest": {
+            "doctrine/mongodb-odm": "1.0.*@dev",
+            "doctrine/orm": "~2.2",
+            "knplabs/knp-components": "~1.2",
+            "pagerfanta/pagerfanta": "1.0.*@dev",
+            "propel/propel1": "1.6.*",
+            "symfony/expression-language": "~2.4"
+        },
+        "time": "2015-01-21 17:10:33",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "FOS\\ElasticaBundle\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Tim Nagel",
+                "email": "tim@nagel.com.au"
+            },
+            {
+                "name": "Richard Miller",
+                "email": "richard.miller@limethinking.co.uk"
+            },
+            {
+                "name": "FriendsOfSymfony Community",
+                "homepage": "https://github.com/FriendsOfSymfony/FOSElasticaBundle/contributors"
+            },
+            {
+                "name": "Jeremy Mikola",
+                "email": "jmikola@gmail.com"
+            }
+        ],
+        "description": "Elasticsearch PHP integration for your Symfony2 project using Elastica",
+        "homepage": "https://github.com/FriendsOfSymfony/FOSElasticaBundle",
+        "keywords": [
+            "doctrine2",
+            "elastica",
+            "elasticsearch",
+            "mongodb",
+            "propel",
+            "search"
+        ]
+    },
+    {
+        "name": "knplabs/knp-components",
+        "version": "1.3.1",
+        "version_normalized": "1.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/KnpLabs/knp-components.git",
+            "reference": "6d091c2f16eec2769db38f38e08c7bd5847ce072"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/6d091c2f16eec2769db38f38e08c7bd5847ce072",
+            "reference": "6d091c2f16eec2769db38f38e08c7bd5847ce072",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "doctrine/mongodb-odm": "~1.0@beta",
+            "doctrine/orm": "~2.4",
+            "phpunit/phpunit": "~4.2",
+            "ruflin/elastica": "~1.0",
+            "symfony/event-dispatcher": "~2.5"
+        },
+        "suggest": {
+            "doctrine/common": "to allow usage pagination with Doctrine ArrayCollection",
+            "doctrine/mongodb-odm": "to allow usage pagination with Doctrine ODM MongoDB",
+            "doctrine/orm": "to allow usage pagination with Doctrine ORM",
+            "propel/propel1": "to allow usage pagination with Propel ORM",
+            "ruflin/Elastica": "to allow usage pagination with ElasticSearch Client",
+            "solarium/solarium": "to allow usage pagination with Solarium Client"
+        },
+        "time": "2014-10-06 10:38:10",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Knp\\Component": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "KnpLabs Team",
+                "homepage": "http://knplabs.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://github.com/KnpLabs/knp-components/contributors"
+            }
+        ],
+        "description": "Knplabs component library",
+        "homepage": "http://github.com/KnpLabs/knp-components",
+        "keywords": [
+            "components",
+            "knp",
+            "knplabs",
+            "pager",
+            "paginator"
+        ]
+    },
+    {
+        "name": "knplabs/knp-paginator-bundle",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "target-dir": "Knp/Bundle/PaginatorBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
+            "reference": "b51aa32f129711fa76f853b7536efefd8c5dbf07"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/b51aa32f129711fa76f853b7536efefd8c5dbf07",
+            "reference": "b51aa32f129711fa76f853b7536efefd8c5dbf07",
+            "shasum": ""
+        },
+        "require": {
+            "knplabs/knp-components": "~1.2",
+            "php": ">=5.3.3",
+            "symfony/framework-bundle": "~2.0",
+            "twig/twig": "~1.5"
+        },
+        "time": "2014-11-29 17:18:09",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Knp\\Bundle\\PaginatorBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "KnpLabs Team",
+                "homepage": "http://knplabs.com"
+            },
+            {
+                "name": "Symfony2 Community",
+                "homepage": "http://github.com/KnpLabs/KnpPaginatorBundle/contributors"
+            }
+        ],
+        "description": "Paginator bundle for Symfony2 to automate pagination and simplify sorting and other features",
+        "homepage": "http://github.com/KnpLabs/KnpPaginatorBundle",
+        "keywords": [
+            "Symfony2",
+            "bundle",
+            "knp",
+            "knplabs",
+            "pager",
+            "pagination",
+            "paginator"
+        ]
+    },
+    {
+        "name": "willdurand/js-translation-bundle",
+        "version": "v2.2.0",
+        "version_normalized": "2.2.0.0",
+        "target-dir": "Bazinga/Bundle/JsTranslationBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/willdurand/BazingaJsTranslationBundle.git",
+            "reference": "5b37606184528c4fca6a2e540926bb4516180137"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/5b37606184528c4fca6a2e540926bb4516180137",
+            "reference": "5b37606184528c4fca6a2e540926bb4516180137",
+            "shasum": ""
+        },
+        "require": {
+            "symfony/console": "~2.3",
+            "symfony/finder": "~2.3",
+            "symfony/framework-bundle": "~2.3",
+            "symfony/intl": "~2.3"
+        },
+        "replace": {
+            "willdurand/expose-translation-bundle": "2.2.*"
+        },
+        "require-dev": {
+            "symfony/browser-kit": "~2.3",
+            "symfony/twig-bundle": "~2.3",
+            "symfony/yaml": "~2.3"
+        },
+        "time": "2015-01-02 23:15:20",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Bazinga\\Bundle\\JsTranslationBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "William Durand",
+                "email": "william.durand1@gmail.com"
+            }
+        ],
+        "description": "A pretty nice way to expose your translation messages to your JavaScript.",
+        "keywords": [
+            "javascript",
+            "symfony",
+            "translation"
+        ]
     }
 ]

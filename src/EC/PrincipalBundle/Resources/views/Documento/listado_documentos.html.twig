@@ -29,7 +29,7 @@
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
@@ -39,7 +39,7 @@
 	</hgroup>
 	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
-		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Documento{% endtrans %}</a>
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{%trans%}Nuevo Documento{%endtrans%}</a>
 	{% endif %}
 								
 	{% for tipo in tipos %}
@@ -54,31 +54,32 @@
 		
 		<div id="{{tipo.id}}" class="oculto margen_izquierdo">
 			{% for documento in documentos if documento.tipo==tipo%}
-						<p><b>Descripción: </b>{{documento.descripcion}}</p>				
-						<p><b> Creado el: </b>{{documento.fecha | date("d/m/Y H:i:s a")}}</p>
-						<p>
-						<b> Formato: </b>
+				<section class="documento">
+						<div><b>{%trans%}Descripción{%endtrans%}: </b>{{documento.descripcion}}</div>				
+						<div><b>{%trans%}Fecha de creación{%endtrans%}: </b>{{documento.fecha | date("d/m/Y H:i:s a")}}</div>
+						<div><b>{%trans%}Formato{%endtrans%}: </b>
 						{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
 								<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}"></img>
 						{% endif %}
 						{{documento.getFormat()}}
-						<b> Tamaño: </b>{{documento.getSize()}}
-						<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">Descargar</a>
+						<b>{%trans%}Tamaño{%endtrans%}: </b>{{documento.getSize()}}
+						<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
 						
 						{% if is_granted('ROLE_ADMINFINCAS') %}
 							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
-						  		<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'cif': comunidad.cif, 'id': documento.id }) }}">Previsualizar</a>
+						  		<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'cif': comunidad.cif, 'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
 							{% endif %}
-							<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('¿Estás seguro de eliminar el documento {{documento.descripcion}}?')">Eliminar</a>
+							<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
 						{% else %}
 							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
-								<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', {'id': documento.id }) }}">Previsualizar</a>
+								<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', {'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
 							{% endif %}
 						{% endif %}
-						</p>
+						</div>
+					</section>
 					<hr class="verde"></hr>
 			{% endfor %}		
 		</div>
-		
+	
 	{% endfor %}
 {% endblock %}

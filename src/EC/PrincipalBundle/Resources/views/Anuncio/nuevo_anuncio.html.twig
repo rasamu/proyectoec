@@ -50,7 +50,7 @@
 		var $collectionHolder;
 
 		// setup an "add a tag" link
-		var $addImagenLink = $('<a id="add" href="#" class="add_imagen_link campo_login boton_alta btn_nuevo">Añadir Imagen</a>');
+		var $addImagenLink = $('<a id="add" href="#" class="add_imagen_link campo_login boton_alta btn_nuevo">{% trans %}Añadir Imagen{% endtrans %}</a>');
 		var $newLinkLi = $('<div></div>').append($addImagenLink);
 
 		jQuery(document).ready(function() {
@@ -107,7 +107,7 @@
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
@@ -122,7 +122,7 @@
 			{% else %}
 			   <form action="{{ path('ec_nuevo_anuncio') }}" method="post" {{ form_enctype(form) }}>	
     		{% endif %}
-    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				<div class="rojo">{{ form_errors(form) }}</div>
 
 					<div class="campo_login">
         				<div class="label_campo">{{ form_label(form.categoria) }}</div>

@@ -22,7 +22,7 @@
             backgroundColor:'rgba(255, 255, 255, 0.1)'
         },
         title: {
-            text: 'Incidencias/Categorías',
+            text: '{%trans%}Incidencias/Categorías{%endtrans%}',
             style: {
 					color: '#7CB5EC'
             },
@@ -40,7 +40,7 @@
         yAxis: {
             min: 0,
             title: {
-                text: 'Número de incidencias'
+                text: '{%trans%}Número de incidencias{%endtrans%}'
             },
             minTickInterval: 1
         },
@@ -54,7 +54,7 @@
             enabled: false
         },
         series: [{
-            name: 'Incidencias',
+            name: '{%trans%}Incidencias{%endtrans%}',
             data: [
             	{% for cat in categorias %}
             		['{{cat.nombre}}',{{cat.total}}],

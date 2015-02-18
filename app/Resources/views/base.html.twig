@@ -53,24 +53,24 @@
           			
                     			<section id="entrar">
 										{% if is_granted('ROLE_ADMINFINCAS') %}	
-											<a style="clear:both" class="letra_miltonian login" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>  
-											<div style="clear:both">{{ app.user.nombre }} {{app.user.apellidos}}</div>
-											<div style="clear:both">{% trans %}Administrador de Fincas{% endtrans %}</div>
+											<a class="letra_miltonian login" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>  
+											<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
+											<div>{% trans %}Administrador{% endtrans %}</div>
 										{% else %}
 											{% if is_granted('ROLE_PRESIDENTE') %}
-												<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-												<div style="clear:both">{{ app.user.razon }}</div>
-												<div style="clear:both">{% trans %}Presidente{% endtrans %}</div>
+												<a class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+												<div>{{ app.user.razon }}</div>
+												<div>{% trans %}Presidente{% endtrans %}</div>
 											{% else %} 
 												{% if is_granted('ROLE_VICEPRESIDENTE') %}
-													<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-													<div style="clear:both">{{ app.user.razon }}</div>
-													<div style="clear:both">{% trans %}Vicepresidente{% endtrans %}</div>
+													<a class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+													<div>{{ app.user.razon }}</div>
+													<div>{% trans %}Vicepresidente{% endtrans %}</div>
 												{% else %}
 													{% if is_granted('ROLE_VECINO') %}
-														<a style="clear:both" class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-														<div style="clear:both">{{ app.user.razon }}</div>
-														<div style="clear:both">{% trans %}Propietario{% endtrans %}</div>
+														<a class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
+														<div>{{ app.user.razon }}</div>
+														<div>{% trans %}Propietario{% endtrans %}</div>
 													{% else %}
 														<a class="letra_miltonian" href="{{ path('login') }}" >{% trans %}Iniciar sesión{% endtrans %}</a>
 													{% endif %}
@@ -83,19 +83,17 @@
             </header>
             <section id="wrapper">
             	<section id="contenido">
+            		{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_VECINO')%}
                 		<section id="sidebar">
-                			{% block sidebar %}
-
-        						{% endblock %}
         						{% if is_granted('ROLE_ADMINFINCAS') %}	  
-								<div id='submenu'>
+									<div id='submenu'>
 										<ul id="submenu_movil" class="submenu">
 											<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
    										<li><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a></li>
    										<li><a href="{{ path('ec_adminfincas_estadisticas_comunidades') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a></li>
 											<li class="last"><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
 										</ul>
-								</div>
+									</div>
 								{% else %}
 									{% if is_granted('ROLE_VECINO') %}
 										<div id='submenu'>
@@ -108,15 +106,18 @@
 													<li class="last"><a href="{{ path('ec_propietario_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
 												</ul>
 										</div>
+										<div id="propiedad">
+											{%trans%}Propiedad{%endtrans%}: <b>{{ app.user.propiedad.piso }}</b>
+										</div>
 									{% endif %}
 								{% endif %}
    						</section>
-	
-   						<section id="col-der">
-         					{% block colder %}
+						{% endif %}
+   					<section id="col-der">
+         				{% block colder %}
           	
-         					{% endblock %}
-   						</section>
+         				{% endblock %}
+   					</section>
             	</section>
 				</section>
             <footer>
@@ -139,6 +140,9 @@
 		  <script>
 				$(function(){
 					$('#submenu_movil').slicknav_submenu();
+					{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_VECINO')%}
+						document.getElementById('label_comunidad').innerHTML = '{%trans%}Menú{%endtrans%}';
+					{% endif %}
 				});
 		  </script>
     </body>

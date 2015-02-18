@@ -14,6 +14,20 @@
 
 {% block javascripts %}
 	{{ parent() }}
+	<script type="text/javascript">
+       	var Buscar = '{%trans%}Buscar{%endtrans%}';
+       	var Mostrando = '{%trans%}Mostrando{%endtrans%}';
+       	var entradas = '{%trans%}entradas{%endtrans%}';
+       	var de = '{%trans%}de{%endtrans%}';
+       	var a = '{%trans%}a{%endtrans%}';
+			var Anterior = '{%trans%}Anterior{%endtrans%}';
+			var Siguiente = '{%trans%}Siguiente{%endtrans%}';
+			var NoDatos = '{%trans%}No hay datos{%endtrans%}';
+			var NoRegistros = '{%trans%}No hay registros coincidentes encontrados{%endtrans%}';
+			var Cargando = '{%trans%}Cargando...{%endtrans%}';
+			var Procesando = '{%trans%}Procesando...{%endtrans%}';
+			var filtrado = '{%trans%}filtrado{%endtrans%}';
+	</script>
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
 	<script type="text/javascript">
 			$(document).ready(function() {
@@ -37,7 +51,7 @@
 	</hgroup>
 	
 	{% if is_granted('ROLE_VECINO')%}
-   	<a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar{% endtrans %}</span></a>
+   	<a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar Incidencia{% endtrans %}</span></a>
    {% endif %}
    
 	<div id="demo">
@@ -45,7 +59,7 @@
 			<thead>
 				<tr>
 					<th>{% trans %}Fecha{% endtrans %}</th>
-					<th>{% trans %}Categoria{% endtrans %}</th>
+					<th>{% trans %}Categoría{% endtrans %}</th>
 					<th>{% trans %}Asunto{% endtrans %}</th>
 					<th>{% trans %}Estado{% endtrans %}</th>
 				</tr>
@@ -63,7 +77,7 @@
 			<tfoot>
 				<tr>
 					<th>{% trans %}Fecha{% endtrans %}</th>
-					<th>{% trans %}Categoria{% endtrans %}</th>
+					<th>{% trans %}Categoría{% endtrans %}</th>
 					<th>{% trans %}Asunto{% endtrans %}</th>
 					<th>{% trans %}Estado{% endtrans %}</th>
 				</tr>

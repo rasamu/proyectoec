@@ -58,16 +58,17 @@
 	<hgroup>
 	
 	<section class="form">
-			<p><b>Categoría:</b> {{incidencia.categoria.nombre}}</p>
-			<p><b>Asunto:</b> {{incidencia.asunto}}</p>
-			<p><b>Fecha:</b> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</p>
-			<p><b>Propietario:</b> {{incidencia.propietario.razon}}</p>
-			<p><b>Bloque:</b> {{incidencia.propietario.propiedad.bloque.direccion}}	<b>Piso:</b> {{incidencia.propietario.propiedad.piso}}</p>
+		<section id="incidencia">
+			<div><b>{%trans%}Categoría{%endtrans%}:</b> {{incidencia.categoria.nombre}}</div>
+			<div><b>{%trans%}Asunto{%endtrans%}:</b> {{incidencia.asunto}}</div>
+			<div><b>{%trans%}Fecha{%endtrans%}:</b> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</div>
+			<div><b>{%trans%}Propietario{%endtrans%}:</b> {{incidencia.propietario.razon}}</div>
+			<div><b>{%trans%}Bloque{%endtrans%}:</b> {{incidencia.propietario.propiedad.bloque.direccion}}	<b>{%trans%}Piso{%endtrans%}:</b> {{incidencia.propietario.propiedad.piso}}</div>
 		
 			{% if is_granted('ROLE_ADMINFINCAS') %}
 		
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_privacidad) }}>
-    				   <div style="color:red;">{{ form_errors(form_privacidad) }}</div>
+    				   <div class="rojo">{{ form_errors(form_privacidad) }}</div>
     				   
     					<div class="error">{{ form_errors(form_privacidad.privacidad) }}</div>
        		 		<div class="label_campo2"><b>{{ form_label(form_privacidad.privacidad) }}:</b></div>
@@ -75,9 +76,8 @@
         				
     					<input type="submit" value="{% trans %}Cambiar{% endtrans %}"/>
 				</form>
-				<br></br>
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_estado) }}>
-    				   <div style="color:red;">{{ form_errors(form_estado) }}</div>
+    				   <div class="rojo">{{ form_errors(form_estado) }}</div>
     				   
     					<div class="error">{{ form_errors(form_estado.estado) }}</div>
        		 		<div class="label_campo2"><b>{{ form_label(form_estado.estado) }}:</b></div>
@@ -87,42 +87,42 @@
 				</form>
 				
 			{% else %}
-				<p><b>Privacidad:</b> {{incidencia.privacidad.nombre}}</b></p>
-				<p><b>Estado:</b> {{incidencia.estado.nombre}}</b></p>
+				<div><b>{%trans%}Privacidad{%endtrans%}:</b> {{incidencia.privacidad.nombre}}</b></div>
+				<div><b>{%trans%}Estado{%endtrans%}:</b> {{incidencia.estado.nombre}}</b></div>
 			{% endif %}		
 
-			<p><b>Descripción:</b> {{incidencia.descripcion}}</p>
-			<p><b>Actuaciones:</b></p>
+			<div><b>{%trans%}Descripción{%endtrans%}:</b> {{incidencia.descripcion}}</div>
+			<div><b>{%trans%}Actuaciones{%endtrans%}:</b></div>
 			{% for actuacion in actuaciones %}
-				<p>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
+				<div>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
 				{%if actuacion.usuario is not empty%}
 					{% if actuacion.usuario.role.nombre=='ROLE_ADMINFINCAS' %}
-						{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} (Administrador)
+						{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} ({%trans%}Administrador{%endtrans%})
 					{% else %}
 						{% if actuacion.usuario.role.nombre=='ROLE_PRESIDENTE' %}
-							{{actuacion.usuario.razon}} (Presidente)
+							{{actuacion.usuario.razon}} ({%trans%}Presidente{%endtrans%})
 						{% else %}
 							{% if actuacion.usuario.role.nombre=='ROLE_VICEPRESIDENTE' %}
-								{{actuacion.usuario.razon}} (Vicepresidente)
+								{{actuacion.usuario.razon}} ({%trans%}Vicepresidente{%endtrans%})
 							{% else %}
 								{{actuacion.usuario.razon}}
 							{%endif%}
 						{%endif%}
 					{% endif %}			
 				{% else %}
-					Antiguo propietario
+					{%trans%}Antiguo propietario{%endtrans%}
 				{% endif %}
-				:</p>
-				<p style="margin-left:30px;">{{actuacion.mensaje}}</p>
+				:</div>
+				<div class="margen_izquierdo">{{actuacion.mensaje}}</div>
 			{% endfor %}
 
 			{% if ( incidencia.estado.id !='3') %}	
             <form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post">
-    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				<div class="rojo">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.mensaje) }}  (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
-        				<p>{{ form_widget(form.mensaje) }}</p>
+        				<div>{{ form_widget(form.mensaje) }}</div>
         				<div class="error">{{ form_errors(form.mensaje) }}</div>
     				</div> 		
     				   
@@ -132,5 +132,6 @@
     				</div>
 				</form>
 			{% endif %}
+		</section>
 	</section>
 {% endblock %}

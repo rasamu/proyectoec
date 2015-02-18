@@ -61,7 +61,6 @@ a.boton_documento {
     cursor: pointer;
     display: inline;
     margin: 2px;
-    text-decoration: none;
     font-size: 0.9em;
     padding: 3px 7px 3px 29px;
     background-position: 5px center;
@@ -80,7 +79,6 @@ a.boton_documento:hover{
 }
 
 a.boton_alta {
-    text-decoration: none;
     background-repeat: no-repeat;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -100,7 +98,27 @@ a.boton_alta {
 	transition: all 0.3s ease;
 }
 
-a.boton_alta:hover{
+a.boton_alta_admin {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 2px;
+    text-decoration: none;
+    font-size: 0.9em;
+    padding: 2px 3px 2px 3px;
+    background-color: #f17e4d;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	text-indent: 0;
+}
+
+a.boton_alta:hover, a.boton_alta_admin:hover{
 	background-color: #316431;
 	color:#fff;
 	-moz-transition: all 0.3s ease;
@@ -121,7 +139,6 @@ a.boton_estadistica {
     display: inline-block;
     margin-left: 2px;
     margin-bottom: 2px;
-    text-decoration: none;
     font-size: 0.9em;
     padding: 3px 7px 3px 28px;
     background-position: 2px center;

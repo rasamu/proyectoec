@@ -25,7 +25,7 @@ class UsuarioController extends Controller
         		->add('pass', 'password', array('label' => 'Contraseña','max_length' =>9))
 				->add('password', 'repeated', array(
                 'type' => 'password',
-                'invalid_message' => 'Las dos contraseñas deben coincidir',
+                'invalid_message' => 'Las contraseñas deben coincidir',
                 'required' => true,
                 'first_options'  => array('label' => 'Nueva Contraseña','max_length' =>9),
     				 'second_options' => array('label' => 'Confirmación','max_length' =>9),
@@ -55,7 +55,7 @@ class UsuarioController extends Controller
    				 	$em->persist($usuario);
     					$em->flush();
     					
-						$this->get('session')->getFlashBag()->add('notice','La contraseña ha sido actualizada.');
+						$this->get('session')->getFlashBag()->add('notice','La contraseña ha sido cambiada.');
    				 	$this->get('session')->getFlashBag()->add('color','green');
    				 	return $this->redirect($this->generateUrl('ec_usuario_contraseña'));	
             	}else{    				     				 

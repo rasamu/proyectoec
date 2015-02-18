@@ -1,0 +1,137 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+		<!--[if lt IE 9]>
+    		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			@import url(http://fonts.googleapis.com/css?family=Miltonian+Tattoo);
+			
+			body { 
+				font-family: serif, Arial, Helvetica, ;
+				font-size: 12px; 
+				color: #000; 
+				background-color:  #d9e1e8;
+				margin: 0;
+			}
+    
+			.clear { 
+				clear: both; 
+			}
+
+			.subtitulo{
+				font-family: serif, Arial, Helvetica;
+				font-size: 20px;
+				color: #316431;
+				padding-top: 10px; 
+			}
+
+			.centrado{
+				text-align: center;
+			}
+
+			.izquierda{
+				text-align: left;
+			}
+
+			.derecha{
+				text-align: right;
+			}
+
+			#topheader{
+				height: 60px; 
+				background: #316431; 
+				color:#fff;
+				padding: 5px;
+			}
+
+			#tituloheader{
+				width: 100%;
+				margin:0 auto;	
+			}
+
+			.titulo{
+				font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;
+				font-size: 50px; 
+				float: left;
+				width: auto;
+				margin-left:10px;
+			}
+
+			#subheader{
+				border-bottom: 1px solid #316431;
+				background:  #d9e1e8;
+				margin-left:10px;
+				padding:5px;
+				height:40px;
+			}
+
+			#botones{
+				margin: 0 auto;
+				width: 100%;
+				clear: both;
+				height: 60px;
+			}
+
+			#wrapper{
+				background-color: #fff;
+				clear: both;
+			}
+
+			#contenido{
+				width: auto;
+				margin:0 auto;
+				overflow:hidden;
+				clear: both;
+				background: #fff;
+				padding:15px;
+				margin-left:10px;
+			}
+
+			.verde{
+				color:#316431;
+				font-size:14px;
+			}
+
+			.cab{
+				font-size:18px;
+				padding-top:14px;
+			}
+
+			p{
+				margin: 0 2em 0.8em;
+			}
+
+			.negrita{
+				font-weight:bold;
+			}
+
+			.cursiva{
+				font-style:italic;
+			}
+		</style>
+	</head>
+	<body>
+     <header id="header">
+          <section id="topheader">
+          		<section id="tituloheader">
+            		  <div class="titulo"><a href="{{ url('ec_buscador_anuncios') }}" style="color:#f7d118; text-decoration:none">Entre</a><a href="{{ url('ec_buscador_anuncios') }}" style="color:#fff; text-decoration:none;">Comunidades</a></div>
+            	</section>
+          </section>
+          
+          <section id="subheader">	
+               {% block subheader %}
+                	  		 	
+               {% endblock %}
+			 </section>
+     </header>
+     
+     <section id="wrapper">
+          <section id="contenido">
+            	{% block contenido %}
+								
+					{% endblock %}
+          </section>
+		</section>
+</body>
+</html>

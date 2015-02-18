@@ -13,12 +13,14 @@
 
 {% block javascripts %}
 	{{ parent() }}
-     
-{% endblock %}
-
-{% block sidebar %}
-	{{ parent() }}
-
+   <script type="text/javascript">
+       	var Print = '{%trans%}Imprimir gráfico{%endtrans%}';
+       	var DownloadPNG = '{%trans%}Descargar imagen PNG{%endtrans%}';
+       	var DownloadJPEG = '{%trans%}Descargar imagen JPEG{%endtrans%}';
+       	var DownloadPDF = '{%trans%}Descargar documento PDF{%endtrans%}';
+       	var DownloadSVG = '{%trans%}Descargar imagen vectorial SVG{%endtrans%}';
+       	var ChartContext = '{%trans%}Menú contextual Gráfico{%endtrans%}';
+	</script>
 {% endblock %}
 
 {% block colder %}    

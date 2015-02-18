@@ -82,7 +82,7 @@ class Usuario implements UserInterface, \Serializable
     /**
      * @Assert\NotNull()
      * @Assert\Email(
-     *     message = "El email '{{ value }}' no es un email válido.",
+     *     message = "El email '{{ value }}' no es un email válido",
      *     checkMX = true
      * )
      * @ORM\Column(name="email",type="string", length=100,nullable=true)

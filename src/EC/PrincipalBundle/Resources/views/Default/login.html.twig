@@ -1,24 +1,19 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Formulario de acceso{% endtrans %}
+	{% trans %}Iniciar Sesión{% endtrans %}
 	{{ parent() }}
-{% endblock %}
-
-{% block sidebar %}
-	{{ parent() }}
-	
 {% endblock %}
 
 {% block colder %}
 	{{ parent() }}
 		<section id="form_login">
 			<hgroup>
-				<h2 class="verde centrado">{% trans %}Formulario de acceso{% endtrans %}</h2>
+				<h2 class="verde centrado">{% trans %}Iniciar Sesión{% endtrans %}</h2>
 			</hgroup>
 			
 			{% if error %}
-				<div class="mensaje" style="color:red;">{% trans %}Datos incorrectos{% endtrans %}</div>
+				<div class="mensaje rojo">{% trans %}Datos incorrectos{% endtrans %}</div>
 			{% endif %}
 
 			<form method="post" action="{{ path('login_check') }}">
@@ -32,9 +27,15 @@
 				</div>
 				<div class="campo_login">
 					<input type="checkbox" id="remember_me" name="_remember_me" />
-    				<div class="label_campo_login"><label for="remember_me">No cerrar sesión</label></div>
+    				<div class="label_campo_login"><label for="remember_me">{%trans%}No cerrar sesión{%endtrans%}</label></div>
     			</div>
-				<div class="campo_login"><div></div><input type="submit" value="{% trans %}Acceder{% endtrans %}"></div>
+				<div class="campo_login"><input type="submit" value="{% trans %}Acceder{% endtrans %}"></div>
 			</form>
+			
+			<div class="campo_login"><a class="link" href="{{ path('ec_principal_olvido_password')}}"><span>{% trans %}¿Has olvidado tu contraseña?{% endtrans %}</span></a>
 		</section>
+		
+		<div id="skyline">
+			<img src="{{ asset('images/skyline4.png') }}" alt="skyline" />
+		</div>
 {% endblock %}

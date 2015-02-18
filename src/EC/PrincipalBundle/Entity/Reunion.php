@@ -45,10 +45,10 @@ class Reunion
     /**
      * @Assert\File(
      *	maxSize="6000000",
-     *	maxSizeMessage = "El fichero ocupa demasiado.",
-     *	notFoundMessage = "Seleccione un fichero.",
+     *	maxSizeMessage = "El fichero ocupa demasiado",
+     *	notFoundMessage = "Seleccione un fichero",
      *   mimeTypes = {"application/pdf"},
-     *   mimeTypesMessage = "Por favor, suba un fichero PDF válido."
+     *   mimeTypesMessage = "Por favor, suba un fichero PDF válido"
      * )
      */
     private $file;

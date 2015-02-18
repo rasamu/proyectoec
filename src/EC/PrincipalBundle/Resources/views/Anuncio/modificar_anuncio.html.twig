@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Modificar Anuncio{% endtrans %}
+	{% trans %}Editar Anuncio{% endtrans %}
 	{{ parent() }}
 {% endblock %}
 
@@ -61,11 +61,11 @@
 	
 		<section class="form">
 			<hgroup>
-				<h2 class="verde centrado">{% trans %}Modificar Anuncio{% endtrans %}</h2>
+				<h2 class="verde centrado">{% trans %}Editar Anuncio{% endtrans %}</h2>
 			</hgroup>
 			
 			<form action="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
-    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				<div class="rojo">{{ form_errors(form) }}</div>
 
 					<div class="campo_login">
         				<div class="label_campo">{{ form_label(form.categoria) }}</div>
@@ -92,12 +92,11 @@
     				</div> 	
    				   
     				<div class="campo_login">
-    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
     				</div>
 			</form>
     		<div class="campo_login">
-				<a href="{{ path('ec_modificar_anuncio_imagenes', { 'id': anuncio.id }) }}" class="boton_alta btn_nuevo">Modificar Imágenes</a>
+				<a href="{{ path('ec_modificar_anuncio_imagenes', { 'id': anuncio.id }) }}" class="boton_alta btn_nuevo">{% trans %}Editar Imágenes{% endtrans %}</a>
 			</div>
 
 		</section>

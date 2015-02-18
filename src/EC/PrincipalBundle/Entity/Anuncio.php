@@ -22,7 +22,7 @@ class Anuncio
     protected $id;
     
     /**
-	  * @var string $asunto
+	  * @var string $titulo
 	  * @Assert\NotNull()
 	  * @Assert\Type(type="string")
 	  * @Assert\Length(
@@ -34,7 +34,7 @@ class Anuncio
     protected $titulo;
     
     /**
-	  * @var string $asunto
+	  * @var string $descripcion
 	  * @Assert\NotNull()
 	  * @Assert\Type(type="string")
 	  * @Assert\Length(

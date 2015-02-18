@@ -48,7 +48,7 @@
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
@@ -59,7 +59,7 @@
 			</hgroup>
 
 			{{ form_start(form) }}
-    				<div style="color:red;">{{ form_errors(form) }}</div>
+    				<div class="rojo">{{ form_errors(form) }}</div>
 
 					<div class="campo_login">
         				<div class="label_campo">{{ form_label(form.categoria) }}</div>
@@ -80,8 +80,7 @@
     				</div> 		
     				   
     				<div class="campo_login">
-    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    					<input type="submit" value="{% trans %}Notificar{% endtrans %}"/>
     				</div>
 			{{ form_end(form) }}
 

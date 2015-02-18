@@ -34,7 +34,7 @@
 			} else if (current_page.match('.*propietario.*')) {
 				$("#menu_comunidad li:eq(5)").addClass('selected');
 			} else if (current_page.match('.*bloque.*')) {
-				$("#menu_comunidad li:eq(6)").addClass('selected');
+				$("#menu_comunidad li:eq(6)").addClass('selected').addClass('current');
 			} else { // don't mark any nav links as selected
 				$("#menu_comunidad li").removeClass('selected');
 			};
@@ -49,15 +49,10 @@
 	         
 {% endblock %}
 
-{% block sidebar %}
- {{ parent() }}
-
-{% endblock %}
-
 {% block colder %} 
 	{{ parent() }}
 	<div id="menu_comunidad_general">
-		<div class="verde titulo_comunidad letra_miltonian"><em>{% trans %}Comunidad{% endtrans %}: </em><em>{{comunidad.codigo}}</em></div>
+		<div class="verde titulo_comunidad letra_miltonian"><em>{% trans %}Comunidad{% endtrans %} </em><em>{{comunidad.codigo}}</em></div>
 		
 		<div id="menu_comunidad">
 				<ul id="menu_comunidad_movil" class="menu_comunidad">
@@ -78,7 +73,7 @@
 	<script>
 		$(function(){
 			$('#menu_comunidad_movil').slicknav_comunidad();
-			document.getElementById('label_comunidad').innerHTML = 'Comunidad {{comunidad.codigo}}';
+			document.getElementById('label_comunidad').innerHTML = '{%trans%}Comunidad{%endtrans%} {{comunidad.codigo}}';
 		});
 </script>  
 {% endblock %}

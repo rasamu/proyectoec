@@ -2,449 +2,1081 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="es" datatype="plaintext" original="file.ext">
         <body>
-        		<trans-unit id="1">
-                <source>Mis Comunidades</source>
-                <target>My Communities</target>
-            </trans-unit>
-            <trans-unit id="2">
-                <source>Mi Perfil</source>
-                <target>My Profile</target>
-            </trans-unit>
-            <trans-unit id="3">
-                <source>Alta</source>
-                <target>New</target>
-            </trans-unit>
-            <trans-unit id="4">
-                <source>Listado</source>
-                <target>List</target>
-            </trans-unit>
-            <trans-unit id="5">
-                <source>Datos Personales</source>
-                <target>Personal data</target>
-            </trans-unit>
-            <trans-unit id="6">
-                <source>Bienvenid@</source>
-                <target>Welcome</target>
-            </trans-unit>
-            <trans-unit id="7">
-                <source>Alta Comunidad</source>
-                <target>New Community</target>
-            </trans-unit>
-            <trans-unit id="8">
-                <source>Código Despacho</source>
-                <target>Office Code</target>
-            </trans-unit>
-            <trans-unit id="9">
-                <source>País</source>
-                <target>Country</target>
-            </trans-unit>
-            <trans-unit id="10">
-                <source>Cuidad</source>
-                <target>City</target>
-            </trans-unit>
-            <trans-unit id="11">
-                <source>Piscina</source>
-                <target>Pool</target>
-            </trans-unit>
-            <trans-unit id="12">
-                <source>Pistas Deportivas</source>
-                <target>Sports Courts</target>
-            </trans-unit>
-            <trans-unit id="13">
-                <source>Gimnasio</source>
-                <target>Gym</target>
-            </trans-unit>
-            <trans-unit id="14">
-                <source>Ascensor</source>
-                <target>Lift</target>
-            </trans-unit>
-            <trans-unit id="15">
-                <source>Conserjería</source>
-                <target>Janitor</target>
-            </trans-unit>
-            <trans-unit id="16">
-                <source>Listado de comunidades</source>
-                <target>List of communities</target>
-            </trans-unit>
-            <trans-unit id="17">
-                <source>Acciones</source>
-                <target>Actions</target>
-            </trans-unit>
-            <trans-unit id="18">
-                <source>Comunidad</source>
-                <target>Community</target>
-            </trans-unit>
-            <trans-unit id="19">
-                <source>Bloques</source>
-                <target>Blocks</target>
-            </trans-unit>
-            <trans-unit id="20">
-                <source>Propietarios</source>
-                <target>Owners</target>
-            </trans-unit>
-            <trans-unit id="21">
-                <source>Nuevo bloque</source>
-                <target>New block</target>
-            </trans-unit>
-            <trans-unit id="22">
-                <source>Nuevo propietario</source>
-                <target>New owner</target>
-            </trans-unit>
-            <trans-unit id="23">
-                <source>Listado de bloques</source>
-                <target>List of blocks</target>
-            </trans-unit>
-            <trans-unit id="24">
-                <source>Nº Bloque</source>
-                <target>Block number</target>
-            </trans-unit>
-            <trans-unit id="25">
-                <source>Alta de bloque</source>
-                <target>New block</target>
-            </trans-unit>
-            <trans-unit id="26">
-                <source>Importar bloques mediante CSV</source>
-                <target>Import blocks from CSV</target>
-            </trans-unit>
-            <trans-unit id="27">
-                <source>Fichero CSV</source>
-                <target>CSV file</target>
-            </trans-unit>
-            <trans-unit id="28">
-                <source>Listado de propietarios</source>
-                <target>List of owners</target>
-            </trans-unit>
-            <trans-unit id="29">
-                <source>Propiedad</source>
-                <target>Property</target>
-            </trans-unit>
-            <trans-unit id="30">
-                <source>Bloque</source>
-                <target>Blocks</target>
-            </trans-unit>
-            <trans-unit id="31">
-                <source>Importar propietarios mediante CSV</source>
-                <target>Import owners from CSV</target>
-            </trans-unit>
-            <trans-unit id="32">
-                <source>Alta propietario</source>
-                <target>New owner</target>
-            </trans-unit>
-            <trans-unit id="33">
-                <source>Nombrar presidente</source>
-                <target>Appoint president</target>
-            </trans-unit>
-            <trans-unit id="34">
-                <source>Nombrar vicepresidente</source>
-                <target>Appoint vice-president</target>
-            </trans-unit>
-            <trans-unit id="35">
-                <source>Guardar</source>
-                <target>Save</target>
-            </trans-unit>
-            <trans-unit id="36">
-                <source>Volver</source>
-                <target>Return</target>
-            </trans-unit>
-            <trans-unit id="37">
-                <source>Editar comunidad</source>
-                <target>Edit community</target>
-            </trans-unit>
-            <trans-unit id="38">
-                <source>Modificar datos personales</source>
-                <target>Modify personal data</target>
-            </trans-unit>
-            <trans-unit id="39">
-                <source>Actualizar</source>
-                <target>Update</target>
-            </trans-unit>
-            <trans-unit id="40">
-                <source>Cambiar contraseña</source>
-                <target>Change password</target>
-            </trans-unit>
-            <trans-unit id="41">
-                <source>Nueva contraseña</source>
-                <target>New password</target>
-            </trans-unit>
-				<trans-unit id="42">
-                <source>Confirmación contraseña</source>
-                <target>Confirm password</target>
-            </trans-unit>
-            <trans-unit id="43">
-                <source>Contraseña actual</source>
-                <target>Current password</target>
-            </trans-unit>
-            <trans-unit id="44">
-                <source>Su perfil ha sido actualizado.</source>
-                <target>Your profile has been updated.</target>
-            </trans-unit>
-				<trans-unit id="45">
-                <source>Su contraseña ha sido actualizada.</source>
-                <target>Your password has been updated.</target>
-            </trans-unit>
-            <trans-unit id="46">
-                <source>Contraseña no válida.</source>
-                <target>Password is not valid.</target>
-            </trans-unit>
-            <trans-unit id="47">
-                <source>Comunidad registrada con éxito.</source>
-                <target>Community has been successfully registered.</target>
-            </trans-unit>
-            <trans-unit id="48">
-                <source>Comunidad ya registrada.</source>
-                <target>Community is already registered.</target>
-            </trans-unit>
-            <trans-unit id="49">
-                <source>Comunidad modificada con éxito.</source>
-                <target>Community successfully modified.</target>
-            </trans-unit>
-            <trans-unit id="50">
-                <source>Comunidad eliminada con éxito.</source>
-                <target>Community succesfully deleted.</target>
-            </trans-unit>
-            <trans-unit id="51">
-                <source>Registro de bloques realizado con éxito.</source>
-                <target>Block registers has been successfully realised.</target>
-            </trans-unit>
-            <trans-unit id="52">
-                <source>Algunos números de bloques del fichero ya existen, por lo que no se han podido dar de alta todos los bloques.</source>
-                <target>Some groups of blocks of the file already exists, so not been able to register all blocks.</target>
-            </trans-unit>
-            <trans-unit id="53">
-                <source>Cabeceras del fichero CSV no válidas.</source>
-                <target>Headers of CSV file are not valid.</target>
-            </trans-unit>
-            <trans-unit id="54">
-                <source>Número de bloque ya registrado..</source>
-                <target>Block number is already registered.</target>
-            </trans-unit>
-            <trans-unit id="55">
-                <source>Registro de bloque realizado con éxito.</source>
-                <target>Block register has been successfully realised.</target>
-            </trans-unit>
-            <trans-unit id="56">
-                <source>El bloque tiene propietarios registrados. Debe eliminar los propietarios primero.</source>
-                <target>The block has owners registered. First, you must deleted the owners.</target>
-            </trans-unit>
-            <trans-unit id="57">
-                <source>Bloque eliminado con éxito.</source>
-                <target>Block succesfully deleted.</target>
-            </trans-unit>
-            <trans-unit id="58">
-                <source>Propietario registrado con éxito.</source>
-                <target>Owner has been successfully registered.</target>
-            </trans-unit>
-            <trans-unit id="59">
-                <source>Registro de propietarios realizado con éxito.</source>
-                <target>Owners have been successfully registered.</target>
-            </trans-unit>
-            <trans-unit id="60">
-                <source>Algunos números de bloques del fichero no existen, por lo que no se han podido dar de alta.</source>
-                <target>Some numbers of blocks of file don't exist, so they can't be registered.</target>
-            </trans-unit>
-            <trans-unit id="61">
-                <source>Para dar de alta a los propietarios, primero debe dar de alta a los bloques.</source>
-                <target>To register the owners, firstly you have to register the blocks.</target>
-            </trans-unit>
-            <trans-unit id="62">
-                <source>El propietario </source>
-                <target>The owner </target>
-            </trans-unit>
-            <trans-unit id="63">
-                <source> ha sido eliminado.</source>
-                <target> has been deleted</target>
-            </trans-unit>
-            <trans-unit id="64">
-                <source> ha sido nombrado nuevo Presidente.</source>
-                <target> has been appointed as new President.</target>
-            </trans-unit>
-            <trans-unit id="65">
-                <source> ha sido nombrado nuevo Vicepresidente.</source>
-                <target> has been appointed as new Vice-President.</target>
-            </trans-unit>
-            <trans-unit id="66">
-                <source>Bienvenid@ a EntreComunidades.</source>
-                <target>Welcome to EntreComunidades.</target>
-            </trans-unit>
-            <trans-unit id="67">
+<!--
+<trans-unit id="">
+    <source></source>
+    <target></target>
+</trans-unit>
+-->
+<!--BOTONES-->
+				<trans-unit id="1">
                 <source>Inicio</source>
                 <target>Home</target>
-            </trans-unit>
-            <trans-unit id="68">
-                <source>Alta Administrador</source>
-                <target>New Administrator</target>
-            </trans-unit>
-            <trans-unit id="69">
+            </trans-unit>     
+            <trans-unit id="2">
+                <source>¿Eres administrador?</source>
+                <target>Are you an administrator?</target>
+            </trans-unit>  
+            <trans-unit id="3">
                 <source>Contacto</source>
                 <target>Contact</target>
             </trans-unit>
-            <trans-unit id="70">
+            <trans-unit id="4">
                 <source>Iniciar sesión</source>
                 <target>Login</target>
             </trans-unit>
-            <trans-unit id="71">
+            <trans-unit id="5">
                 <source>Cerrar sesión</source>
                 <target>Logout</target>
             </trans-unit>
-            <trans-unit id="72">
-                <source>Presidente</source>
-                <target>President</target>
+            <trans-unit id="6">
+                <source>Buscar</source>
+                <target>Find</target>
             </trans-unit>
-            <trans-unit id="73">
-                <source>Administrador de Fincas</source>
-                <target>Property Administrator</target>
+            <trans-unit id="7">
+                <source>Alta Administrador</source>
+                <target>New Administrator</target>
             </trans-unit>
-            <trans-unit id="74">
-                <source>Vicepresidente</source>
-                <target>Vice-president</target>
-            </trans-unit>
-            <trans-unit id="75">
-                <source>Propietario</source>
-                <target>Owner</target>
-            </trans-unit>
-            <trans-unit id="76">
-                <source>Formulario de Contacto</source>
-                <target>Contact form</target>
-            </trans-unit>
-            <trans-unit id="77">
-                <source>Formulario de acceso</source>
-                <target>Access form</target>
-            </trans-unit>
-            <trans-unit id="78">
-                <source>Alta administrador de fincas</source>
-                <target>New property administrator</target>
-            </trans-unit>
-            <trans-unit id="79">
-                <source>Mensaje</source>
-                <target>Message</target>
-            </trans-unit>
-            <trans-unit id="80">
-                <source>Nombre</source>
-                <target>Name</target>
-            </trans-unit>
-            <trans-unit id="81">
-                <source>Formulario de contacto enviado.</source>
-                <target>Contact form has sent.</target>
-            </trans-unit>
-            <trans-unit id="82">
-                <source>NºColegiado</source>
-                <target>Referee nº</target>
-            </trans-unit>
-            <trans-unit id="83">
-                <source>NºColegiado</source>
-                <target>Referee nº</target>
-            </trans-unit>
-            <trans-unit id="84">
-                <source>Apellidos</source>
-                <target>Surnames</target>
-            </trans-unit>
-            <trans-unit id="85">
-                <source>Teléfono</source>
-                <target>Telephone</target>
-            </trans-unit>
-            <trans-unit id="86">
-                <source>Dirección</source>
-                <target>Adress</target>
-            </trans-unit>
-            <trans-unit id="87">
-                <source>Provincia</source>
-                <target>Province</target>
-            </trans-unit>
-            <trans-unit id="88">
-                <source>Localidad</source>
-                <target>City</target>
-            </trans-unit>
-            <trans-unit id="89">
-                <source>Contraseña</source>
-                <target>Password</target>
-            </trans-unit>
-            <trans-unit id="90">
-                <source>Confirmación</source>
-                <target>Confirm</target>
-            </trans-unit>
-            <trans-unit id="91">
-                <source>Campo obligatorio</source>
-                <target>Required field</target>
-            </trans-unit>
-            <trans-unit id="92">
+            <trans-unit id="8">
                 <source>Enviar</source>
-                <target>Sent</target>
-            </trans-unit>
-            <trans-unit id="93">
+                <target>Send</target>
+            </trans-unit>	
+            <trans-unit id="9">
                 <source>Borrar</source>
                 <target>Delete</target>
             </trans-unit>
-            <trans-unit id="94">
-                <source>Usuario</source>
-                <target>User</target>
+            <trans-unit id="10">
+                <source>Acceder</source>
+                <target>Login</target>
             </trans-unit>
-            <trans-unit id="95">
-                <source>Bienvenid@</source>
-                <target>Welcome</target>
+            <trans-unit id="11">
+                <source>aquí</source>
+                <target>here</target>
             </trans-unit>
-            <trans-unit id="96">
+            <trans-unit id="12">
+                <source>Tablón</source>
+                <target>Board</target>
+            </trans-unit>	
+            <trans-unit id="13">
+                <source>Mis Comunidades</source>
+                <target>My Communities</target>
+            </trans-unit>	
+            <trans-unit id="14">
+                <source>Estadísticas</source>
+                <target>Statistics</target>
+            </trans-unit>	
+            <trans-unit id="15">
+                <source>Mi Perfil</source>
+                <target>My Profile</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Comunidades</source>
+                <target>Communities</target>
+            </trans-unit>	
+            <trans-unit id="17">
+                <source>Incidencias/Categorías</source>
+                <target>Incidents/Categories</target>
+            </trans-unit>	
+            <trans-unit id="18">
+                <source>Incidencias/Fecha</source>
+                <target>Incidents/Date</target>
+            </trans-unit>	
+            <trans-unit id="19">
+                <source>Anuncios/Categorías</source>
+                <target>Ads/Categories</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Contraseña</source>
+                <target>Password</target>
+            </trans-unit>	
+            <trans-unit id="21">
+                <source>Actualizar</source>
+                <target>Update</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Nueva Comunidad</source>
+                <target>New Community</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Reuniones</source>
+                <target>Meetings</target>
+            </trans-unit>
+				<trans-unit id="24">
                 <source>Incidencias</source>
                 <target>Incidents</target>
             </trans-unit>
-            <trans-unit id="97">
-                <source>Notificar</source>
-                <target>Advise</target>
+            <trans-unit id="25">
+                <source>Documentos</source>
+                <target>Documents</target>
             </trans-unit>
-            <trans-unit id="98">
+            <trans-unit id="26">
+                <source>Anuncios</source>
+                <target>Ads</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Propietarios</source>
+                <target>Owners</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Bloques</source>
+                <target>Blocks</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Crear</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Cambiar</source>
+                <target>Change</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Nuevo Documento</source>
+                <target>New Document</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Subir</source>
+                <target>Upload</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Descargar</source>
+                <target>Download</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>Previsualizar</source>
+                <target>Preview</target>
+            </trans-unit>
+				<trans-unit id="35">
+                <source>Eliminar</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Nuevo Anuncio</source>
+                <target>New Ad</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Editar</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Añadir Imagen</source>
+                <target>Add Image</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Editar Imágenes</source>
+                <target>Edit Pictures</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Añadir</source>
+                <target>Add</target>
+            </trans-unit>
+				<trans-unit id="41">
+                <source>Volver</source>
+                <target>Return</target>
+            </trans-unit>
+				<trans-unit id="42">
+                <source>Guardar</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Nuevo Propietario</source>
+                <target>New Owner</target>
+            </trans-unit>	
+            <trans-unit id="44">
+                <source>Acciones</source>
+                <target>Actions</target>
+            </trans-unit>	
+            <trans-unit id="45">
+                <source>Es presidente</source>
+                <target>Is president</target>
+            </trans-unit>	
+            <trans-unit id="46">
+                <source>Es vicepresidente</source>
+                <target>Is vice president</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>Generar contraseña</source>
+                <target>Generate password</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Nuevo Bloque</source>
+                <target>New Block</target>
+            </trans-unit>
+				<trans-unit id="49">
+                <source>Generar contraseña</source>
+                <target>Generate password</target>
+            </trans-unit>
+				<trans-unit id="50">
+                <source>Mis Anuncios</source>
+                <target>My Adds</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Notificar Incidencia</source>
+                <target>Notify Incident</target>
+            </trans-unit>
+				<trans-unit id="52">
+                <source>Notificar</source>
+                <target>Notify</target>
+            </trans-unit>							
+        		
+<!--ADMINFINCAS-->
+        		<trans-unit id="100">
+                <source>Alta administrador de fincas</source>
+                <target>New property administrator</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Nombre</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>Teléfono</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>Provincia</source>
+                <target>Province</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>Localidad</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Dirección</source>
+                <target>Address</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Apellidos</source>
+                <target>Surnames</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>NºColegiado</source>
+                <target>Number of referee</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Campo obligatorio</source>
+                <target>Required field</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Confirmación</source>
+                <target>Confirmation</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Las contraseñas deben coincidir</source>
+                <target>Passwords must match</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>Administrador de Fincas ya registrado.</source>
+                <target>Property Administrator already registered.</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso.</source>
+                <target>Process completed successfully. In a few moments you will receive an email with your login details.</target>
+            </trans-unit>
+            <trans-unit id="113">
+                <source>Su perfil ha sido actualizado.</source>
+                <target>Your profile has been updated.</target>
+            </trans-unit>
+               		
+<!--ANUNCIO-->
+        		<trans-unit id="200">
+    				<source>Resultados</source>
+    				<target>Results</target>
+				</trans-unit>
+				<trans-unit id="201">
+    				<source>Categoría</source>
+    				<target>Category</target>
+				</trans-unit>
+				<trans-unit id="202">
+    				<source>Palabras</source>
+    				<target>Words</target>
+				</trans-unit>
+				<trans-unit id="203">
+    				<source>Orden</source>
+    				<target>Order</target>
+				</trans-unit>
+				<trans-unit id="204">
+    				<source>Fecha descendente</source>
+    				<target>Descending date</target>
+				</trans-unit>
+				<trans-unit id="205">
+    				<source>Fecha ascendente</source>
+    				<target>Ascending date</target>
+				</trans-unit>
+				<trans-unit id="206">
+    				<source>Cualquier categoría</source>
+    				<target>Any category</target>
+				</trans-unit>
+				<trans-unit id="207">
+    				<source>En toda España</source>
+    				<target>Throughout Spain</target>
+				</trans-unit>
+				<trans-unit id="208">
+    				<source>Fotos</source>
+    				<target>Photos</target>
+				</trans-unit>
+				<trans-unit id="209">
+    				<source>Contactar</source>
+    				<target>Contact</target>
+				</trans-unit>
+				<trans-unit id="210">
+    				<source>Denunciar</source>
+    				<target>Denounce</target>
+				</trans-unit>
+				<trans-unit id="211">
+    				<source>Precio</source>
+    				<target>Price</target>
+				</trans-unit>
+				<trans-unit id="212">
+    				<source></source>
+    				<target></target>
+				</trans-unit>
+				<trans-unit id="213">
+    				<source></source>
+    				<target></target>
+				</trans-unit>
+				<trans-unit id="214">
+    				<source>Mensaje</source>
+    				<target>Message</target>
+				</trans-unit>
+				<trans-unit id="215">
+    				<source>Caracteres</source>
+    				<target>Characters</target>
+				</trans-unit>
+        		<trans-unit id="216">
+    				<source>No se han encontrado anuncios que concuerden con la búsqueda realizada.</source>
+    				<target>No ads were found that match your search criteria.</target>
+				</trans-unit>
+				<trans-unit id="217">
+    				<source>Número de anuncios</source>
+    				<target>Ads number</target>
+				</trans-unit>
+				<trans-unit id="218">
+    				<source>Anuncios de la Comunidad</source>
+    				<target>Community ads</target>
+				</trans-unit>
+				<trans-unit id="219">
+    				<source>La comunidad no tiene anuncios publicados.</source>
+    				<target>The community has not published ads.</target>
+				</trans-unit>
+				<trans-unit id="220">
+    				<source>No tiene anuncios publicados.</source>
+    				<target>No published ads.</target>
+				</trans-unit>
+				<trans-unit id="221">
+    				<source>¿Estás seguro de eliminar el anuncio</source>
+    				<target>Are you sure to delete the ad</target>
+				</trans-unit>
+				<trans-unit id="222">
+    				<source>Precio (€uros)</source>
+    				<target>Price (€uros)</target>
+				</trans-unit>
+				<trans-unit id="223">
+    				<source>Título</source>
+    				<target>Title</target>
+				</trans-unit>
+				<trans-unit id="224">
+    				<source>Descripción</source>
+    				<target>Description</target>
+				</trans-unit>
+				<trans-unit id="225">
+    				<source>Editar Anuncio</source>
+    				<target>Edit ad</target>
+				</trans-unit>
+				<trans-unit id="226">
+    				<source>Arrastre para ordenar</source>
+    				<target>Drag to order</target>
+				</trans-unit>
+				<trans-unit id="227">
+    				<source>Imagen</source>
+    				<target>Image</target>
+				</trans-unit>
+				<trans-unit id="228">
+    				<source>Editar Imágenes</source>
+    				<target>Edit Images</target>
+				</trans-unit>
+				<trans-unit id="229">
+    				<source>Mensaje enviado con éxito.</source>
+    				<target>Message has sent successfully.</target>
+				</trans-unit>
+				<trans-unit id="230">
+    				<source>El mensaje no se ha enviado correctamente.</source>
+    				<target>The message has not been sent.</target>
+				</trans-unit>
+				<trans-unit id="231">
+    				<source>Denuncia enviada con éxito.</source>
+    				<target>Complaint has sent successfully.</target>
+				</trans-unit>
+				<trans-unit id="232">
+    				<source>Tienes que escribir el mensaje.</source>
+    				<target>You have to write the message.</target>
+				</trans-unit>
+				<trans-unit id="233">
+    				<source>Para publicar anuncios debe añadir primero su Teléfono e Email.</source>
+    				<target>To publish ads firstly you have to add your phone number and your email.</target>
+				</trans-unit>
+				<trans-unit id="234">
+    				<source>Nuevo anuncio registrado con éxito.</source>
+    				<target>New ad registered successfully.</target>
+				</trans-unit>
+				<trans-unit id="235">
+    				<source>Anuncio modificado con éxito.</source>
+    				<target>Ad modified successfully.</target>
+				</trans-unit>
+				<trans-unit id="236">
+    				<source>Imagen añadida con éxito.</source>
+    				<target>Image added successfully.</target>
+				</trans-unit>
+				<trans-unit id="237">
+    				<source>Imagen eliminada con éxito.</source>
+    				<target>Image removed successfully.</target>
+				</trans-unit>
+				<trans-unit id="238">
+    				<source>Anuncio eliminado con éxito.</source>
+    				<target>This ad is removed successfully.</target>
+				</trans-unit>
+				<trans-unit id="239">
+    				<source>Selecciona una categoría</source>
+    				<target>Select a category</target>
+				</trans-unit>
+
+<!--BLOQUE-->
+        		<trans-unit id="300">
+    				<source>Nº Bloque</source>
+    				<target>Block Number</target>
+				</trans-unit>
+				<trans-unit id="301">
+    				<source>Fichero CSV</source>
+    				<target>CSV File</target>
+				</trans-unit>
+				<trans-unit id="302">
+    				<source>Importar bloques mediante CSV</source>
+    				<target>Import blocks from csv </target>
+				</trans-unit>
+				<trans-unit id="303">
+    				<source>¿Estás seguro de eliminar el bloque</source>
+    				<target>Are you sure to delete the block</target>
+				</trans-unit>
+				<trans-unit id="304">
+    				<source>Listado de Bloques</source>
+    				<target>Blocks List</target>
+				</trans-unit>
+				<trans-unit id="305">
+    				<source>Comunidad</source>
+    				<target>Community</target>
+				</trans-unit>
+				<trans-unit id="306">
+    				<source>Registro de bloques realizado con éxito.</source>
+    				<target>The registration of blocks was successful.</target>
+				</trans-unit>
+				<trans-unit id="307">
+    				<source>Algunos números de bloques del fichero ya existen, por lo que no se han podido dar de alta todos los bloques.</source>
+    				<target>Some numbers of blocks in the file already exist, so not all the blocks have been registered.</target>
+				</trans-unit>
+				<trans-unit id="308">
+    				<source>Cabeceras del fichero CSV no válidas.</source>
+    				<target>Headers of CSV file are not valid.</target>
+				</trans-unit>
+				<trans-unit id="309">
+    				<source>Número de bloque ya registrado.</source>
+    				<target>Number of block already exist.</target>
+				</trans-unit>
+				<trans-unit id="310">
+    				<source>Registro de bloque realizado con éxito.</source>
+    				<target>The block was registered successfully.</target>
+				</trans-unit>
+				<trans-unit id="311">
+    				<source>El bloque tiene propietarios registrados. Debe eliminar los propietarios primero.</source>
+    				<target>The block has registered owners. You must delete the owners first.</target>
+				</trans-unit>
+				<trans-unit id="312">
+    				<source>Bloque eliminado con éxito.</source>
+    				<target>Block has been deleted successfully.</target>
+				</trans-unit>
+				<trans-unit id="313">
+    				<source>NºBloques</source>
+    				<target>NºBlocks</target>
+				</trans-unit>
+        		
+<!--COMUNIDAD-->
+        		<trans-unit id="400">
+   				<source>Ciudad</source>
+    				<target>City</target>
+				</trans-unit>
+				<trans-unit id="401">
+   				<source>Código Despacho</source>
+    				<target>Office Code</target>
+				</trans-unit>
+				<trans-unit id="402">
+   				<source>País</source>
+    				<target>Country</target>
+				</trans-unit>
+				<trans-unit id="403">
+   				<source>Pistas Deportivas</source>
+    				<target>Sports Courts</target>
+				</trans-unit>
+				<trans-unit id="404">
+   				<source>Gimnasio</source>
+    				<target>Gym</target>
+				</trans-unit>
+				<trans-unit id="405">
+   				<source>Ascensor</source>
+    				<target>Lifts</target>
+				</trans-unit>
+				<trans-unit id="406">
+   				<source>Conserjería</source>
+    				<target>Concierge</target>
+				</trans-unit>
+				<trans-unit id="407">
+   				<source>Sí</source>
+    				<target>Yes</target>
+				</trans-unit>
+				<trans-unit id="408">
+   				<source>Piscina</source>
+    				<target>Pool</target>
+				</trans-unit>
+				<trans-unit id="409">
+   				<source>Editar Comunidad</source>
+    				<target>Edit Community</target>
+				</trans-unit>
+				<trans-unit id="410">
+   				<source>¿Estás seguro de eliminar la comunidad</source>
+    				<target>Are you sure to delete the community</target>
+				</trans-unit>
+				<trans-unit id="411">
+   				<source>Listado de Comunidades</source>
+    				<target>Communities List</target>
+				</trans-unit>
+				<trans-unit id="412">
+   				<source>Tablón de la Comunidad</source>
+    				<target>Community Board</target>
+				</trans-unit>
+				<trans-unit id="413">
+   				<source>Incidencias abiertas</source>
+    				<target>Open incidents</target>
+				</trans-unit>
+				<trans-unit id="414">
+   				<source>No hay incidencias abiertas.</source>
+    				<target>No open incidents.</target>
+				</trans-unit>
+				<trans-unit id="415">
+   				<source>Bloque</source>
+    				<target>Block</target>
+				</trans-unit>
+				<trans-unit id="416">
+   				<source>Piso</source>
+    				<target>Floor</target>
+				</trans-unit>
+				<trans-unit id="417">
+   				<source>Próximas reuniones</source>
+    				<target>Upcoming meetings</target>
+				</trans-unit>
+				<trans-unit id="418">
+   				<source>No hay reuniones próximamente.</source>
+    				<target>No meetings soon.</target>
+				</trans-unit>
+				<trans-unit id="419">
+   				<source>Comunidad registrada con éxito.</source>
+    				<target>The community has been registered successfully.</target>
+				</trans-unit>
+				<trans-unit id="420">
+   				<source>Comunidad ya registrada.</source>
+    				<target>The community already exist.</target>
+				</trans-unit>
+				<trans-unit id="421">
+   				<source>El código de despacho ya está siendo usado por otra comunidad.</source>
+    				<target>The office code is already used by another community.</target>
+				</trans-unit>
+				<trans-unit id="422">
+   				<source>Comunidad modificada con éxito.</source>
+    				<target>The community has been modified successfully.</target>
+				</trans-unit>
+				<trans-unit id="423">
+   				<source>Comunidad eliminada con éxito.</source>
+    				<target>The community has been deleted successfully.</target>
+				</trans-unit>	
+        		
+<!--DEFAULT-->
+        		<trans-unit id="500">
+                <source>Iniciar Sesión</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="501">
+                <source>Usuario</source>
+                <target>User</target>
+            </trans-unit>
+            <trans-unit id="502">
+                <source>No cerrar sesión</source>
+                <target>Stay signed in</target>
+            </trans-unit>
+            <trans-unit id="503">
+                <source>¿Has olvidado tu contraseña?</source>
+                <target>Do you forgot your password?</target>
+            </trans-unit>
+            <trans-unit id="504">
+                <source>Datos incorrectos</source>
+                <target>Incorrect data</target>
+            </trans-unit>
+            <trans-unit id="505">
+                <source>Si eres propietario...</source>
+                <target>if you are an owner...</target>
+            </trans-unit>
+            <trans-unit id="506">
+                <source>Si eres propietario y ha olvidado la contraseña o nombre de usuario, póngase en contacto con el administrador de fincas de su comunidad de propietarios, el cual le facilitará los datos de acceso a la plataforma web.</source>
+                <target>If you are an owner and you forgot your password or username, please contact the administrator of your community of owners, who will provide you the data to access to the web platform.</target>
+            </trans-unit>
+            <trans-unit id="507">
+                <source>Si eres administrador de fincas...</source>
+                <target>if you are an administrator...</target>
+            </trans-unit>
+            <trans-unit id="508">
+                <source>Si eres administrador de fincas y ha olvidado la contraseña o nombre de usuario de acceso a la plataforma web, haz click</source>
+                <target>If you are an administrator and have forgotten your password or user name to access the web platform, click</target>
+            </trans-unit>
+            <trans-unit id="509">
+                <source>Introduzca su email y le enviaremos sus nuevos datos de acceso.</source>
+                <target>Enter your email and we will send an email with your new data access.</target>
+            </trans-unit>
+            <trans-unit id="510">
+                <source>EntreComunidades es una sistema de comunicación web donde administradores de fincas podrán gestionar comunidades de propietarios
+   	de una manera sencilla, rápida e intuitiva. Ésta aplicación tiene el objetivo de mejorar la comunicación con los propietarios 
+   	de una comunidad, para que los administradores de fincas puedan ofrecer un mejor servicio.</source>
+                <target>EntreComunidades is a web communication system where administrators of communities may manage them in a simple, fast and intuitive way. This application aims to improve communication with the owners of a community in order to offer a better service.</target>
+            </trans-unit>
+            <trans-unit id="511">
+                <source>Para ello, ésta plataforma web ofrece funcionalidades tales como la gestión de incidencias, gestión de documentos, gestión de reuniones,
+   	valoración de los servicios de la comunidad, y la creación de un espacio específico para el intercambio de objetos de segunda mano 
+   	propios de comunidades de propietarios.</source>
+                <target>To do this, this web platform provides features such as incident management, document management, meeting management, assessment of community services, and the creation of a specific space for exchange things of second-hand.</target>
+            </trans-unit>
+            <trans-unit id="512">
+                <source>De igual forma, para poder hacer uso de todas éstas funcionalidades, el administrador de fincas dispondrá de una herramienta sencilla para la importación
+   	de los propietarios de las comunidades que administra desde el software de gestión que utilice. Si eres administrador de fincas y estás interesado en 
+  	   usar ésta aplicación, podrás darte de alta en</source>
+                <target>Similarly, to use all these features, the communities administrator has a simple tool to import owners of communities from the management software you use. If you are an administrador and are interested in using this application, you can register in</target>
+            </trans-unit>
+            <trans-unit id="513">
+                <source>¿Eres administrador de fincas?</source>
+                <target>Are you a communities administrator?</target>
+            </trans-unit>
+            <trans-unit id="514">
+                <source>Formulario de contacto enviado.</source>
+                <target>The contact form has been sent.</target>
+            </trans-unit>
+            <trans-unit id="515">
+                <source>Se le han enviado sus nuevos datos de acceso.</source>
+                <target>We have sent your new data access.</target>
+            </trans-unit>
+            <trans-unit id="516">
+                <source>No existe ningún administrador registrado con el email</source>
+                <target>There is no registered an administrator who has the email</target>
+            </trans-unit>        
+        		
+<!--DOCUMENTO-->
+        		<trans-unit id="600">
+                <source>Fecha de creación</source>
+                <target>Creation date</target>
+            </trans-unit>
+            <trans-unit id="601">
+                <source>Formato</source>
+                <target>Format</target>
+            </trans-unit>
+            <trans-unit id="602">
+                <source>Tamaño</source>
+                <target>Size</target>
+            </trans-unit>
+            <trans-unit id="603">
+                <source>¿Estás seguro de eliminar el documento</source>
+                <target>Are you sure to delete the document</target>
+            </trans-unit>
+            <trans-unit id="604">
+                <source>Documento</source>
+                <target>Document</target>
+            </trans-unit>
+            <trans-unit id="605">
+                <source>Fichero</source>
+                <target>File</target>
+            </trans-unit>
+            <trans-unit id="606">
+                <source>Tipo</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="607">
+                <source>Seleccione un tipo</source>
+                <target>Select a type</target>
+            </trans-unit>
+            <trans-unit id="608">
+                <source>Documento subido con éxito.</source>
+                <target>Document uploaded successfully.</target>
+            </trans-unit>
+            <trans-unit id="609">
+                <source>Documento eliminado con éxito.</source>
+                <target>Document deleted successfully.</target>
+            </trans-unit>
+        		
+<!--INCIDENCIA-->
+        		<trans-unit id="700">
+                <source>Número de incidencias</source>
+                <target>Number of incidents</target>
+            </trans-unit>
+            <trans-unit id="701">
+                <source>Fecha</source>
+                <target>Date</target>
+            </trans-unit>
+            <trans-unit id="702">
+                <source>Asunto</source>
+                <target>Subject</target>
+            </trans-unit>
+            <trans-unit id="703">
+                <source>Estado</source>
+                <target>State</target>
+            </trans-unit>
+            <trans-unit id="704">
+                <source>Propietario</source>
+                <target>Owner</target>
+            </trans-unit>
+            <trans-unit id="705">
+                <source>Privacidad</source>
+                <target>Privacy</target>
+            </trans-unit>
+            <trans-unit id="706">
+                <source>Actuaciones</source>
+                <target>Performances</target>
+            </trans-unit>
+            <trans-unit id="707">
+                <source>Privada</source>
+                <target>Private</target>
+            </trans-unit>
+            <trans-unit id="708">
+                <source>Pública en el Bloque</source>
+                <target>Public on the block</target>
+            </trans-unit>
+            <trans-unit id="709">
+                <source>Pública en la Comunidad</source>
+                <target>Public on the community</target>
+            </trans-unit>
+            <trans-unit id="710">
+                <source>Pendiente</source>
+                <target>Waiting</target>
+            </trans-unit>
+            <trans-unit id="711">
+                <source>En curso</source>
+                <target>In progress</target>
+            </trans-unit>
+            <trans-unit id="712">
+                <source>Finalizada</source>
+                <target>Finished</target>
+            </trans-unit>
+            <trans-unit id="713">
+                <source>Presidente</source>
+                <target>President</target>
+            </trans-unit>
+            <trans-unit id="714">
+                <source>Vicepresidente</source>
+                <target>Vice-president</target>
+            </trans-unit>
+            <trans-unit id="715">
+                <source>Antiguo propietario</source>
+                <target>Former owner</target>
+            </trans-unit>
+            <trans-unit id="716">
                 <source>Nueva incidencia</source>
                 <target>New incident</target>
             </trans-unit>
-            <trans-unit id="99">
-                <source>Listado de incidencias</source>
-                <target>List of incidents</target>
+            <trans-unit id="717">
+                <source>Incidencia notificada con éxito.</source>
+                <target>Incident has been successfully reported.</target>
             </trans-unit>
-            <trans-unit id="100">
+            <trans-unit id="718">
+                <source>Mensaje enviado correctamente.</source>
+                <target>Message sent successfully.</target>
+            </trans-unit>
+            <trans-unit id="719">
+                <source>Estado cambiado con éxito.</source>
+                <target>Status changed successfully.</target>
+            </trans-unit>
+            <trans-unit id="720">
+                <source>La privacidad ha sido cambiada con éxito.</source>
+                <target>Privacy has been successfully changed.</target>
+            </trans-unit>
+        		
+<!--PROPIETARIO-->
+        		<trans-unit id="800">
+                <source>Nuevo propietario</source>
+                <target>New owner</target>
+            </trans-unit>
+            <trans-unit id="801">
+                <source>Nombre/Razón Social</source>
+                <target>Name/Company name</target>
+            </trans-unit>
+            <trans-unit id="802">
+                <source>Propiedad</source>
+                <target>Property</target>
+            </trans-unit>
+            <trans-unit id="803">
+                <source>Importar propietarios mediante CSV</source>
+                <target>Import owners by CSV</target>
+            </trans-unit>
+            <trans-unit id="804">
+                <source>¿Estás seguro de nombrar como nuevo presidente a</source>
+                <target>Are you sure to appoint new president</target>
+            </trans-unit>
+            <trans-unit id="805">
+                <source>¿Estás seguro de nombrar como nuevo vicepresidente a</source>
+                <target>Are you sure to appoint new vice-president</target>
+            </trans-unit>
+            <trans-unit id="806">
+                <source>¿Estás seguro de generar una nueva contraseña a</source>
+                <target>Are you sure to generate a new password to</target>
+            </trans-unit>
+            <trans-unit id="807">
+                <source>¿Estás seguro de eliminar a</source>
+                <target>Are you sure to remove</target>
+            </trans-unit>
+            <trans-unit id="808">
+                <source>Conexión</source>
+                <target>Connection</target>
+            </trans-unit>
+            <trans-unit id="809">
+                <source>Listado de propietarios</source>
+                <target>Owners list</target>
+            </trans-unit>
+            <trans-unit id="810">
+                <source>NºBloque</source>
+                <target>Block number</target>
+            </trans-unit>
+            <trans-unit id="811">
+                <source>Se han dado de alta los siguientes propietarios</source>
+                <target>Were discharged the following owners</target>
+            </trans-unit>
+            <trans-unit id="812">
+                <source>Propietario ya registrado.</source>
+                <target>Owner already exist.</target>
+            </trans-unit>
+            <trans-unit id="813">
+                <source>Error: Existen propietarios que ya han sido dados de alta.</source>
+                <target>Error: There are owners who have already been discharged.</target>
+            </trans-unit>
+            <trans-unit id="814">
+                <source>Error: Existen bloques que no están dados de alta.</source>
+                <target>Error: There are blocks that are not discharged.</target>
+            </trans-unit>
+            <trans-unit id="815">
+                <source>no se ha podido dar de baja. Tiene incidencias no finalizadas.</source>
+                <target>has not been able to unsubscribe. There are incidents which are not finished.</target>
+            </trans-unit>
+            <trans-unit id="816">
+                <source>Para dar de alta a los propietarios, primero debe dar de alta a los bloques.</source>
+                <target>To register owners, you must first register the blocks.</target>
+            </trans-unit>
+            <trans-unit id="817">
+                <source>Nuevas contraseñas generadas</source>
+                <target>New generated passwords</target>
+            </trans-unit>
+            <trans-unit id="818">
+                <source>El propietario</source>
+                <target>The owner</target>
+            </trans-unit>
+            <trans-unit id="819">
+                <source>ha sido eliminado.</source>
+                <target>has been removed.</target>
+            </trans-unit>
+            <trans-unit id="820">
+                <source>Los datos personales han sido actualizados.</source>
+                <target>Personal data have been updated.</target>
+            </trans-unit>
+				<trans-unit id="821">
+    				<source>NºPropietarios</source>
+    				<target>NºOwners</target>
+				</trans-unit>
+        		
+ <!--REUNION-->
+            <trans-unit id="900">
                 <source>Enero</source>
                 <target>January</target>
             </trans-unit>
-            <trans-unit id="101">
+            <trans-unit id="901">
                 <source>Febrero</source>
                 <target>February</target>
             </trans-unit>
-            <trans-unit id="102">
+            <trans-unit id="902">
                 <source>Marzo</source>
                 <target>March</target>
             </trans-unit>
-            <trans-unit id="103">
+            <trans-unit id="903">
                 <source>Abril</source>
                 <target>April</target>
             </trans-unit>
-            <trans-unit id="104">
+            <trans-unit id="904">
                 <source>Mayo</source>
                 <target>May</target>
             </trans-unit>
-            <trans-unit id="105">
+            <trans-unit id="905">
                 <source>Junio</source>
                 <target>June</target>
             </trans-unit>
-            <trans-unit id="106">
+            <trans-unit id="906">
                 <source>Julio</source>
                 <target>July</target>
             </trans-unit>
-            <trans-unit id="107">
+            <trans-unit id="907">
                 <source>Agosto</source>
                 <target>August</target>
             </trans-unit>
-            <trans-unit id="108">
+            <trans-unit id="908">
                 <source>Septiembre</source>
                 <target>September</target>
             </trans-unit>
-            <trans-unit id="109">
+            <trans-unit id="909">
                 <source>Octubre</source>
                 <target>October</target>
             </trans-unit>
-            <trans-unit id="110">
+            <trans-unit id="910">
                 <source>Noviembre</source>
                 <target>November</target>
             </trans-unit>
-            <trans-unit id="111">
+            <trans-unit id="911">
                 <source>Diciembre</source>
                 <target>December</target>
+            </trans-unit>
+            <trans-unit id="912">
+                <source>Reunión</source>
+                <target>Meeting</target>
+            </trans-unit>
+            <trans-unit id="913">
+                <source>¿Estás seguro de eliminar la reunión</source>
+                <target>Are you sure to delete the meeting</target>
+            </trans-unit>
+            <trans-unit id="914">
+                <source>Calendario de reuniones</source>
+                <target>Meeting schedule</target>
+            </trans-unit>
+            <trans-unit id="915">
+                <source>No es posible añadir una reunión con fecha anterior a la actual.</source>
+                <target>You can not add a meeting prior to the current date.</target>
+            </trans-unit>
+            <trans-unit id="916">
+                <source>Nueva Reunión</source>
+                <target>New meeting</target>
+            </trans-unit>
+            <trans-unit id="917">
+                <source>Hora</source>
+                <target>Hour</target>
+            </trans-unit>
+            <trans-unit id="918">
+                <source>Reunión registrada con éxito.</source>
+                <target>Meeting successfully registered.</target>
+            </trans-unit>
+            <trans-unit id="919">
+                <source>La reunión ha sido eliminada.</source>
+                <target>The meeting has been deleted.</target>
+            </trans-unit>
+<!--ROLE-->
+				<trans-unit id="1001">
+                <source>ha sido nombrado nuevo Presidente.</source>
+                <target>has been appointed new president.</target>
+            </trans-unit>
+            <trans-unit id="1002">
+                <source>ha sido nombrado nuevo Vicepresidente.</source>
+                <target>has been appointed new vice-president.</target>
+            </trans-unit>       
+
+<!--USUARIO-->
+				<trans-unit id="1100">
+                <source>Cambiar contraseña</source>
+                <target>Change the password</target>
+            </trans-unit>
+            <trans-unit id="1101">
+                <source>Nueva Contraseña</source>
+                <target>New Password</target>
+            </trans-unit>
+            <trans-unit id="1102">
+                <source>La contraseña ha sido cambiada.</source>
+                <target>The password has been changed.</target>
+            </trans-unit>
+            <trans-unit id="1103">
+                <source>Contraseña no válida.</source>
+                <target>Invalid password.</target>
+            </trans-unit>
+            
+<!--BASE--> 
+				<trans-unit id="1200">
+                <source>Administrador</source>
+                <target>Administrator</target>
+            </trans-unit>
+            <trans-unit id="1201">
+                <source>Menú</source>
+                <target>Menu</target>
+            </trans-unit>
+            
+<!--TABLAS-->
+				<trans-unit id="1300">
+                <source>Mostrando</source>
+                <target>Showing</target>
+            </trans-unit>
+				<trans-unit id="1301">
+                <source>entradas</source>
+                <target>entries</target>
+            </trans-unit>
+            <trans-unit id="1302">
+                <source>de</source>
+                <target>of</target>
+            </trans-unit>
+				<trans-unit id="1303">
+                <source>a</source>
+                <target>to</target>
+            </trans-unit>
+            <trans-unit id="1304">
+                <source>Anterior</source>
+                <target>Previous</target>
+            </trans-unit>
+            <trans-unit id="1305">
+                <source>Siguiente</source>
+                <target>Next</target>
+            </trans-unit>
+				<trans-unit id="1306">
+                <source>No hay datos</source>
+                <target>No data</target>
+            </trans-unit>
+            <trans-unit id="1307">
+                <source>No hay registros coincidentes encontrados</source>
+                <target>No matching records found</target>
+            </trans-unit>
+            <trans-unit id="1308">
+                <source>Cargando...</source>
+                <target>Loading...</target>
+            </trans-unit>
+            <trans-unit id="1309">
+                <source>Procesando...</source>
+                <target>Processing...</target>
+            </trans-unit>
+            <trans-unit id="1310">
+                <source>filtrado</source>
+                <target>filtered</target>
+            </trans-unit>
+            
+<!--EXPORTING HIGHCHARTS-->
+				<trans-unit id="1400">
+                <source>Imprimir gráfico</source>
+                <target>Print chart</target>
+            </trans-unit>
+            <trans-unit id="1401">
+                <source>Descargar imagen PNG</source>
+                <target>Download PNG image</target>
+            </trans-unit>
+            <trans-unit id="1402">
+                <source>Descargar imagen JPEG</source>
+                <target>Download JPEG image</target>
+            </trans-unit>
+            <trans-unit id="1403">
+                <source>Descargar documento PDF</source>
+                <target>Download PDF document</target>
+            </trans-unit>
+            <trans-unit id="1404">
+                <source>Descargar imagen vectorial SVG</source>
+                <target>Download SVG vector image</target>
+            </trans-unit>
+            <trans-unit id="1405">
+                <source>Menú contextual Gráfico</source>
+                <target>Chart context menu</target>
             </trans-unit>
         </body>
     </file>

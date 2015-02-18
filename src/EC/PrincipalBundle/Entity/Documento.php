@@ -37,10 +37,10 @@ class Documento
     /**
      * @Assert\File(
      *	maxSize="6000000",
-     *	maxSizeMessage = "El fichero ocupa demasiado.",
-     *	notFoundMessage = "Seleccione un fichero.",
+     *	maxSizeMessage = "El fichero ocupa demasiado",
+     *	notFoundMessage = "Seleccione un fichero",
      *   mimeTypes = {"application/pdf", "application/vnd.oasis.opendocument.text" ,"application/vnd.oasis.opendocument.presentation", "application/vnd.oasis.opendocument.spreadsheet", "application/msword", "text/plain"},
-     *   mimeTypesMessage = "Por favor, suba un fichero PDF, ODT, ODP, ODS, DOC o TXT válido. "
+     *   mimeTypesMessage = "Por favor, suba un fichero PDF, ODT, ODP, ODS, DOC o TXT válido"
      * )
      */
     private $file;

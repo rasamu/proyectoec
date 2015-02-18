@@ -48,10 +48,6 @@ body {
 	-o-box-shadow: 10px 10px 5px #888888;
 }
 
-p{
-	line-height: 120%;
-}
-
 .clear { 
 	clear: both; 
 }
@@ -85,6 +81,24 @@ h2{
 h3{
 	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
    font-weight: bold;	
+}
+
+p{
+	text-align: justify;	
+	line-height: 150%;
+}
+
+p+p{
+  text-indent: 2em;	
+}
+
+.link{
+	text-decoration: none;	
+   color: #2c4853;
+}
+
+.link:hover{
+	text-decoration: underline;	
 }
 
 .oculto{
@@ -287,6 +301,14 @@ footer{
 	color: #316431;	
 }
 
+.verde_claro{
+	color: #5D935D;	
+}
+
+.verdecito{
+	color: #b9d4b9;	
+}
+
 .rojo{
 	color: red;	
 }
@@ -330,13 +352,13 @@ footer{
 #sidebar { 
 	clear: both;
 	background-color: #fff;
-	height: 34px;
+	height: 35px;
 }
 
 /*Columna Derecha*/
 #col-der { 
 	text-align: left;
-	padding-top: 20px;
+	padding-top: 10px;
 	padding-bottom: 40px;
 	padding-left: 45px;
 	padding-right: 45px;
@@ -442,6 +464,7 @@ input:focus,textarea:focus,select:focus
 }
 
 #entrar > a{
+	clear: both;
 	color:#fff;
 	text-decoration: none;
 	font-size: 1.1em;
@@ -500,6 +523,7 @@ input:focus,textarea:focus,select:focus
 	color:#316431;	
 	float: right;
 	font-style: oblique;
+	clear: both;
 }
 
 .form{
@@ -522,6 +546,8 @@ input:focus,textarea:focus,select:focus
    -webkit-box-shadow: 10px 10px 5px #888888;
    -moz-box-shadow: 10px 10px 5px #888888;
    -o-box-shadow: 10px 10px 5px #888888;
+   position: relative;
+   z-index: 1000;
 }
 
 .campo{
@@ -529,6 +555,11 @@ input:focus,textarea:focus,select:focus
    /*width: 300px;*/
    float: left;
 	margin-bottom: 5px;
+}
+
+#form_olvido_password{
+	position: relative;
+	z-index: 1000;	
 }
 
 #form_login{
@@ -550,6 +581,8 @@ input:focus,textarea:focus,select:focus
    -webkit-box-shadow: 10px 10px 5px #888888;
    -moz-box-shadow: 10px 10px 5px #888888;
    -o-box-shadow: 10px 10px 5px #888888;
+   position: relative;
+   z-index: 1000;
 }
 
 .campo_login{
@@ -604,9 +637,43 @@ label {
 	padding: 0;
 }
 
-#loading{
+#propiedad{
+	float: right;
+	padding: 10px;
+}
+
+.loading{
 	display: none;
-	float: left;	
+	background-image: url('../images/loading.gif');
+	height:32px;
+   width:32px; 
+}
+
+/*DOCUMENTOS*/
+#documento{
+	margin: 0 auto;	
+	width: 82%;
+}
+
+#documento div{
+	margin-bottom: 8px;	
+}
+
+.documento div{
+	margin-top: 8px;	
+}
+
+#incidencia div{
+	margin-top: 8px;	
+}
+
+#reunion{
+	margin: 0 auto;
+	width: 82%;		
+}
+
+#reunion div{
+	margin-top: 8px;	
 }
 
 /*ESTADÍSTICAS*/
@@ -615,6 +682,22 @@ label {
 	min-height: 450px;
 	margin: 0 auto;
 	margin-top:20px;
+}
+
+#skyline{
+	position:absolute;
+   bottom:33px;
+   right:0;
+   left: 0;
+}
+
+#skyline img{
+	width: 962px;
+}
+
+article{
+	position: relative;
+	z-index: 1000;	
 }
 
 /*VERSION MOVIL*/
@@ -700,5 +783,17 @@ label {
     	-webkit-transform: scale(1,1); 
     	transform: scale(1,1);
    	margin-top: 1px;
+	}
+	#skyline{
+		display: none;	
+	}
+	#documento{
+		width: 100%;
+	}
+	#reunion{
+		width: 100%;	
+	}
+	#propiedad{
+		display: none;
 	}
 }

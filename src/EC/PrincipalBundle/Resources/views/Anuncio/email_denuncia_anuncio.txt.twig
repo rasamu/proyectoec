@@ -1,0 +1,18 @@
+{% extends 'ECPrincipalBundle::layout_email.txt.twig' %}
+
+{% block subheader %}
+	{{ parent() }}
+	
+	<section id="botones">
+			<p class="verde cab negrita">Denuncia</p>
+   </section>
+{% endblock %}
+
+{% block contenido %}
+	{{ parent() }}
+	
+	<p class="verde negrita cursiva">Anuncio: r{{anuncio.id}}</p>
+	<p class="verde">Título: {{anuncio.titulo}}</p>
+	<p class="verde">Comunidad: {{anuncio.comunidad.codigo}}</p>
+	<p class="verde">Denuncia: {{denuncia}}</p>
+{% endblock %}						

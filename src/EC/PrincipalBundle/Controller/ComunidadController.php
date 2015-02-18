@@ -219,7 +219,7 @@ class ComunidadController extends Controller
    				 			}
         					}
         			}else{
-        					$flash=$this->get('translator')->trans('El código de despacho '.$form->get('codigo')->getData().' ya está siendo usado por otra comunidad.');
+        					$flash=$this->get('translator')->trans('El código de despacho ya está siendo usado por otra comunidad.');
         			 		$this->get('session')->getFlashBag()->add('notice',$flash);
         			 		$this->get('session')->getFlashBag()->add('color','red');
 							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
@@ -289,10 +289,10 @@ class ComunidadController extends Controller
 			$form = $this ->createFormBuilder($comunidad,array('csrf_protection' => false))
 					->add('codigo','text',array('label' => 'Código Despacho'))
     				->add('piscinas','choice',array('label' => 'Piscina','choices'=>array(1 => 'Si', 0 => 'No')))
-    				->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(1 => 'Si', 0 => 'No')))
-    				->add('gimnasio','choice',array('choices'=>array(1 => 'Si', 0 => 'No')))
-    				->add('ascensor','choice',array('choices'=>array(1 => 'Si', 0 => 'No')))
-    				->add('conserjeria','choice',array('label'=>'Conserjería', 'choices'=>array(1 => 'Si', '0' => 'No')))
+    				->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(1 => 'Sí', 0 => 'No')))
+    				->add('gimnasio','choice',array('choices'=>array(1 => 'Sí', 0 => 'No')))
+    				->add('ascensor','choice',array('choices'=>array(1 => 'Sí', 0 => 'No')))
+    				->add('conserjeria','choice',array('label'=>'Conserjería', 'choices'=>array(1 => 'Sí', '0' => 'No')))
     				->getForm();
     				
     		$form->handleRequest($request);
@@ -317,7 +317,7 @@ class ComunidadController extends Controller
         			 	$this->get('session')->getFlashBag()->add('color','green');
 						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('cif'=>$cif)));
 					}else{
-						$flash=$this->get('translator')->trans('El código de despacho '.$form->get('codigo')->getData().' ya está siendo usado por otra comunidad.');
+						$flash=$this->get('translator')->trans('El código de despacho ya está siendo usado por otra comunidad.');
         			 	$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','red');
 						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('cif'=>$cif)));

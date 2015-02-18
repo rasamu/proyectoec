@@ -14,6 +14,20 @@
 
 {% block javascripts %}
 	{{ parent() }}
+	<script type="text/javascript">
+       	var Buscar = '{%trans%}Buscar{%endtrans%}';
+       	var Mostrando = '{%trans%}Mostrando{%endtrans%}';
+       	var entradas = '{%trans%}entradas{%endtrans%}';
+       	var de = '{%trans%}de{%endtrans%}';
+       	var a = '{%trans%}a{%endtrans%}';
+			var Anterior = '{%trans%}Anterior{%endtrans%}';
+			var Siguiente = '{%trans%}Siguiente{%endtrans%}';
+			var NoDatos = '{%trans%}No hay datos{%endtrans%}';
+			var NoRegistros = '{%trans%}No hay registros coincidentes encontrados{%endtrans%}';
+			var Cargando = '{%trans%}Cargando...{%endtrans%}';
+			var Procesando = '{%trans%}Procesando...{%endtrans%}';
+			var filtrado = '{%trans%}filtrado{%endtrans%}';
+	</script>
 	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
 	<script type="text/javascript">
 			$(document).ready(function() {
@@ -22,20 +36,21 @@
 	</script>
 	<script type="text/javascript"> 
 	$(function() {
-  if ($.browser.msie && $.browser.version.substr(0,1)<7)
-  {
-    $('li').has('ul').mouseover(function(){
-        $(this).children('ul').css('visibility','visible');
-        }).mouseout(function(){
-        $(this).children('ul').css('visibility','hidden');
+  		if ($.browser.msie && $.browser.version.substr(0,1)<7)
+  		{
+    		$('li').has('ul').mouseover(function(){
+        		$(this).children('ul').css('visibility','visible');
+        	}).mouseout(function(){
+        		$(this).children('ul').css('visibility','hidden');
         })
-  }
-}); 
+  		}
+	}); 
 	</script>
 {% endblock %}
 
 {% block colder %}
-{{ parent() }}
+	{{ parent() }}
+	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
     			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
@@ -50,7 +65,7 @@
 	
 	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
-	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo propietario{% endtrans %}</a>
+	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Propietario{% endtrans %}</a>
 
 	<div id="demo">
 		<table class="display" id="example">
@@ -82,10 +97,10 @@
 								<ul id="menu_acciones">
 									<li><a href="#">{% trans %}Acciones{% endtrans %}</a>
 										<ul>
-											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.razon}} como nuevo presidente?')">{% trans %}Es presidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de nombrar a {{propiedad.propietario.razon}} como nuevo vicepresidente?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de generar una nueva contraseña a {{propiedad.propietario.razon}}?')">Generar contraseña</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('¿Estás seguro de eliminar a {{propiedad.propietario.razon}}?')">Eliminar</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo presidente a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Es presidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo vicepresidente a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de generar una nueva contraseña a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Generar contraseña{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Eliminar{% endtrans %}</a></li>
 										</ul>
 									</li>
 								</ul>
