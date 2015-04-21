@@ -71,19 +71,6 @@ class Tipo
     {
         $this->documentos = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    /**
-     * Add documentos
-     *
-     * @param \EC\PrincipalBundle\Entity\Documento $documentos
-     * @return Tipo
-     */
-    public function addIncidencia(\EC\PrincipalBundle\Entity\Documento $documentos)
-    {
-        $this->documentos[] = $documentos;
-    
-        return $this;
-    }
 
     /**
      * Remove documentos

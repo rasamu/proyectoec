@@ -77,9 +77,8 @@ class Anuncio
     protected $usuario;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Imagen", mappedBy="anuncio")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Imagen", mappedBy="anuncio", cascade={"remove"})
      * @ORM\OrderBy({"orden" = "ASC"})
-     * @Assert\Valid()
      */
     protected $imagenes;
  

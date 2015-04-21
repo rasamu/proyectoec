@@ -172,13 +172,19 @@ div#menu li ul span:hover {
 /*VERSION MOVIL*/
 @media (max-width: 767px) {
 	div#menu{
-		margin-top: 23px !important;	
+		margin-top: 23px !important;
+		width: 100%;
+		padding-right: 0;
+		border-top-right-radius: 0;
+		-webkit-border-top-right-radius: 0;
+		-moz-border-top-right-radius: 0;
+		-o-border-top-right-radius: 0;
 	}
 	div#menu li{
 		height: 25px !important;	
 	}
 	div#menu li span{
-		padding: 0 10px;	
+		padding: 0 5px;	
 	}
 	div#menu li a{
 		height: 25px!important;

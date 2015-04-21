@@ -70,9 +70,14 @@ class Incidencia
     protected $categoria;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="incidencia")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="incidencia", cascade={"remove"})
      */
     protected $actuaciones;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Consulta", mappedBy="incidencia", cascade={"remove"})
+     */
+    private $consultas;
 
 	/**
 	 * Get id
@@ -204,6 +209,7 @@ class Incidencia
     public function __construct()
     {
         $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
+		  $this->consultas = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -283,5 +289,38 @@ class Incidencia
     public function getPrivacidad()
     {
         return $this->privacidad;
+    }
+
+    /**
+     * Add consultas
+     *
+     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     * @return Incidencia
+     */
+    public function addConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    {
+        $this->consultas[] = $consultas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove consultas
+     *
+     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     */
+    public function removeConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    {
+        $this->consultas->removeElement($consultas);
+    }
+
+    /**
+     * Get consultas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConsultas()
+    {
+        return $this->consultas;
     }
 }

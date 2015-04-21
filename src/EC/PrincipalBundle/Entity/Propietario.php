@@ -22,15 +22,29 @@ class Propietario extends Usuario
     protected $razon;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Incidencia", mappedBy="propietario")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Incidencia", mappedBy="propietario", cascade={"remove"})
      */
     protected $incidencias;
     
     /**
-     * @ORM\OneToOne(targetEntity="EC\PrincipalBundle\Entity\Propiedad", inversedBy="propietario")
-     * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
-     **/
-    private $propiedad;
+	  * @Assert\NotNull()
+     * @ORM\Column(name="propiedad",type="string", length=155)
+     */
+    protected $propiedad;
+
+	/**
+     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Bloque", inversedBy="propietarios")
+     * @ORM\JoinColumn(name="id_bloque", referencedColumnName="id")
+     */
+    protected $bloque;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->incidencias = new \Doctrine\Common\Collections\ArrayCollection();
+    } 
     
     /**
      * @var integer
@@ -81,16 +95,6 @@ class Propietario extends Usuario
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $logs;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->incidencias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
      * Set razon
@@ -113,29 +117,6 @@ class Propietario extends Usuario
     public function getRazon()
     {
         return $this->razon;
-    }
-    
-    /**
-     * Set propiedad
-     *
-     * @param \EC\PrincipalBundle\Entity\Propiedad $propiedad
-     * @return Usuario
-     */
-    public function setPropiedad(\EC\PrincipalBundle\Entity\Propiedad $propiedad = null)
-    {
-        $this->propiedad = $propiedad;
-    
-        return $this;
-    }
-
-    /**
-     * Get propiedad
-     *
-     * @return \EC\PrincipalBundle\Entity\Propiedad 
-     */
-    public function getPropiedad()
-    {
-        return $this->propiedad;
     }
 
     /**
@@ -444,4 +425,50 @@ class Propietario extends Usuario
     {
         return $this->anuncios;
     }
+
+    /**
+     * Set propiedad
+     *
+     * @param string $propiedad
+     * @return Propietario
+     */
+    public function setPropiedad($propiedad)
+    {
+        $this->propiedad = $propiedad;
+    
+        return $this;
+    }
+
+    /**
+     * Get propiedad
+     *
+     * @return string 
+     */
+    public function getPropiedad()
+    {
+        return $this->propiedad;
+    }
+
+    /**
+     * Set bloque
+     *
+     * @param \EC\PrincipalBundle\Entity\Bloque $bloque
+     * @return Propietario
+     */
+    public function setBloque(\EC\PrincipalBundle\Entity\Bloque $bloque = null)
+    {
+        $this->bloque = $bloque;
+    
+        return $this;
+    }
+
+    /**
+     * Get bloque
+     *
+     * @return \EC\PrincipalBundle\Entity\Bloque 
+     */
+    public function getBloque()
+    {
+        return $this->bloque;
+    }  
 }

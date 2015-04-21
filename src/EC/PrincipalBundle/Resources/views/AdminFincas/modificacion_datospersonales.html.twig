@@ -16,18 +16,17 @@
 	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
 	<section class="form">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
-			</hgroup>
+		<h2 class="verde centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
 			
-			<a class="boton_alta btn_password" href="{{ path('ec_usuario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
+		<a class="boton_alta btn_password" href="{{ path('ec_usuario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
+		<a class="boton_alta btn_baja" href="{{ path('ec_adminfincas_baja') }}" onclick="return confirm('{%trans%}¿Estás seguro que desea darse de baja? Todas sus comunidades serán eliminadas.{%endtrans%}')"><span>{% trans %}Darse de baja{% endtrans %}</span></a>
 			{{ form_start(form) }}
     		<div class="rojo">{{ form_errors(form) }}</div>
  
@@ -88,8 +87,9 @@
     		<div class="campo">
     			(*) {% trans %}Campo obligatorio{% endtrans %}
     		</div>
+    		
     		<div class="campo">
-    			<input type="submit" value="{% trans %}Save{% endtrans %}"/>
+    			<input type="submit" value="{% trans %}Guardar{% endtrans %}"/>
     		</div>
  
 		{{ form_end(form) }}

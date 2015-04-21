@@ -102,12 +102,12 @@
 }
 #menu_comunidad a:hover, #menu_comunidad li.selected  {
 	background: transparent url(../images/menu/submenu_m.png) repeat-x scroll 0 0;
-    color:#6bb90d;
+    color:#316431;
 }
-#menu_comunidad a:hover span { color:#6bb90d; }
+#menu_comunidad a:hover span { color:#316431; }
 #menu_comunidad>ul>li:hover>a, #menu_comunidad li.selected  {
 	background: transparent url(../images/menu/submenu_m.png) repeat-x scroll 0 0;
-    color:#6bb90d;
+    color:#316431;
 }
 #menu_comunidad>ul>li:hover>a span { color:#316431; }
 

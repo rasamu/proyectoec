@@ -1,8 +1,4 @@
 #FRONTEND
-ec_principal_check:
-    pattern:  /check
-    defaults: { _controller: ECPrincipalBundle:Default:check}
-    
 ec_principal_eres_adminfincas:
     pattern:  /adfincas
     defaults: { _controller: ECPrincipalBundle:Default:eres_adminfincas}
@@ -10,10 +6,6 @@ ec_principal_eres_adminfincas:
 ec_principal_contacto:
     pattern:  /contacto
     defaults: { _controller: ECPrincipalBundle:Default:contacto}
-    
-ec_principal_olvido_password:
-    pattern:  /olvido/password
-    defaults: { _controller: ECPrincipalBundle:Default:olvido_password}
     
 select_cities:
    pattern:  /cities
@@ -24,10 +16,6 @@ select_provinces:
    defaults: { _controller: ECPrincipalBundle:Default:provinces}
    
 #ANUNCIOS
-ec_buscador_anuncios:
-    pattern:  /
-    defaults: { _controller: ECPrincipalBundle:Anuncio:buscador}
-    
 ec_buscador_contactar:
     pattern:  /contactar
     defaults: { _controller: ECPrincipalBundle:Anuncio:contactar}
@@ -249,6 +237,14 @@ ec_principal_alta_adminfincas:
     pattern:  /alta
     defaults: { _controller: ECPrincipalBundle:AdminFincas:alta_adminfincas}
 
+ec_adminfincas_baja:
+    pattern:  /adminfincas/baja
+    defaults: { _controller: ECPrincipalBundle:AdminFincas:baja_adminfincas }
+    
 ec_adminfincas_perfil:
     pattern:  /adminfincas/perfil
     defaults: { _controller: ECPrincipalBundle:AdminFincas:modificacion_perfil }
+    
+ec_principal_olvido_password:
+    pattern:  /olvido/password
+    defaults: { _controller: ECPrincipalBundle:AdminFincas:olvido_password}

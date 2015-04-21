@@ -28,15 +28,13 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+    			<div class="flash-notice mensaje {{flashColor}}">
         			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
-	<hgroup>
-		<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
-	</hgroup>
+	<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
 	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
 		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{%trans%}Nuevo Documento{%endtrans%}</a>
@@ -44,7 +42,7 @@
 								
 	{% for tipo in tipos %}
 	
-		<div onclick="javascript:mostrar({{tipo.id}});" class="cursor_pointer"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta"></img><h3 class="verde inline"> {{tipo.nombre}} </h3>
+		<div onclick="javascript:mostrar({{tipo.id}});" class="cursor_pointer"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta" /><h3 class="verde inline"> {{tipo.nombre}} </h3>
 			{% set count=0 %}
 			{% for documento in documentos if documento.tipo==tipo %}
 					{%set count=count+1 %}
@@ -54,15 +52,15 @@
 		
 		<div id="{{tipo.id}}" class="oculto margen_izquierdo">
 			{% for documento in documentos if documento.tipo==tipo%}
-				<section class="documento">
-						<div><b>{%trans%}Descripción{%endtrans%}: </b>{{documento.descripcion}}</div>				
-						<div><b>{%trans%}Fecha de creación{%endtrans%}: </b>{{documento.fecha | date("d/m/Y H:i:s a")}}</div>
-						<div><b>{%trans%}Formato{%endtrans%}: </b>
+				<div class="documento">
+						<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>				
+						<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:s a")}}</div>
+						<div><strong>{%trans%}Formato{%endtrans%}: </strong>
 						{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
-								<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}"></img>
+								<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}" />
 						{% endif %}
 						{{documento.getFormat()}}
-						<b>{%trans%}Tamaño{%endtrans%}: </b>{{documento.getSize()}}
+						<strong>{%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
 						<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
 						
 						{% if is_granted('ROLE_ADMINFINCAS') %}
@@ -76,8 +74,8 @@
 							{% endif %}
 						{% endif %}
 						</div>
-					</section>
-					<hr class="verde"></hr>
+					</div>
+					<hr class="verde" />
 			{% endfor %}		
 		</div>
 	

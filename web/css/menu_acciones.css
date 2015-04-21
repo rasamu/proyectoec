@@ -1,10 +1,10 @@
-#menu_acciones, #menu_acciones ul {
+.menu_acciones, .menu_acciones ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-#menu_acciones {
+.menu_acciones {
     width: 85px;
     margin: 0 auto;
     border: 1px solid #316431;
@@ -22,27 +22,27 @@
     -o-box-shadow: 0 2px 2px #316431;
 }
 
-#menu_acciones:hover{
+.menu_acciones:hover{
 	 background: radial-gradient(white,#316431);
     background: -webkit-radial-gradient(white,#316431);
 	 background: -moz-radial-gradient(white,#316431);
     background: -o-radial-gradient(white,#316431);
 }
 
-#menu_acciones:before,
-#menu_acciones:after {
+.menu_acciones:before,
+.menu_acciones:after {
     content: "";
     display: table;
 }
 
-#menu_acciones:after {
+.menu_acciones:after {
     clear: both;
 }
 
-#menu_acciones {
+.menu_acciones {
     zoom:1;
 }
-#menu_acciones li {
+.menu_acciones li {
     /*float: left;
     border-right: 1px solid #316431;*/
     box-shadow: 1px 0 0 #316431;
@@ -52,7 +52,7 @@
     position: relative;
 }
 
-#menu_acciones a {
+.menu_acciones a {
     float: left;
     padding: 6px 16px;
     color: #316431;
@@ -60,15 +60,15 @@
     text-decoration: none;
 }
 
-#menu_acciones li:hover > a {
+.menu_acciones li:hover > a {
     color: #316431;
 }
 
-*html #menu_acciones li a:hover { /* IE6 only */
+*html .menu_acciones li a:hover { /* IE6 only */
     color: #316431;
 }
 
-#menu_acciones ul {
+.menu_acciones ul {
     margin: 20px 0 0 0;
     _margin: 0; /*IE6 only*/
     opacity: 0;
@@ -92,13 +92,13 @@
     -o-transition: all .2s ease-in-out;
 }
 
-#menu_acciones li:hover > ul {
+.menu_acciones li:hover > ul {
     opacity: 1;
     visibility: visible;
     margin: 0;
 }
 
-#menu_acciones ul ul {
+.menu_acciones ul ul {
     top: 0;
     left: 150px;
     margin: 0 0 0 20px;
@@ -109,7 +109,7 @@
     -o-box-shadow: -1px 0 0 rgba(255,255,255,.3);      
 }
 
-#menu_acciones ul li {
+.menu_acciones ul li {
     float: none;
     display: block;
     border: 0;
@@ -120,14 +120,14 @@
     -o-shadow: 0 1px 0 #316431, 0 2px 0 #666;
 }
 
-#menu_acciones ul li:last-child {   
+.menu_acciones ul li:last-child {   
     box-shadow: none;    
     -webkit-box-shadow: none;    
     -moz-box-shadow: none;    
     -o-box-shadow: none;    
 }
 
-#menu_acciones ul a {    
+.menu_acciones ul a {    
     padding: 8px;
     width: auto;
     _height: 10px; /*IE6 only*/
@@ -138,18 +138,18 @@
     color: white;
 }
 
-#menu_acciones ul a:hover {
+.menu_acciones ul a:hover {
     background-color: #F7D118;
     color: #316431;
 }
-#menu_acciones ul li:first-child > a {
+.menu_acciones ul li:first-child > a {
     border-radius: 8px 8px 0 0;
     -webkit-border-radius: 8px 8px 0 0;
     -moz-border-radius: 8px 8px 0 0;
     -o-border-radius: 8px 8px 0 0;
 }
 
-#menu_acciones ul li:first-child > a:after {
+.menu_acciones ul li:first-child > a:after {
     content: '';
     position: absolute;
     left: 40px;
@@ -159,7 +159,7 @@
     border-bottom: 6px solid #316431;
 }
 
-#menu_acciones ul ul li:first-child a:after {
+.menu_acciones ul ul li:first-child a:after {
     left: -6px;
     top: 50%;
     margin-top: -6px;
@@ -169,16 +169,16 @@
     border-right: 6px solid #316431;
 }
 
-#menu_acciones ul li:first-child a:hover:after {
+.menu_acciones ul li:first-child a:hover:after {
     border-bottom-color: #316431; 
 }
 
-#menu_acciones ul ul li:first-child a:hover:after {
+.menu_acciones ul ul li:first-child a:hover:after {
     border-right-color: #316431; 
     border-bottom-color: transparent;   
 }
 
-#menu_acciones ul li:last-child > a {
+.menu_acciones ul li:last-child > a {
     border-radius: 0 0 8px 8px;
     -webkit-border-radius: 0 0 8px 8px;
     -moz-border-radius: 0 0 8px 8px;

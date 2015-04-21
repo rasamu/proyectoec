@@ -1,8 +1,8 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{{ parent() }}
 	{% trans %}Calendario de reuniones{% endtrans %}
+	{{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -33,7 +33,6 @@
             
         $('#calendar').fullCalendar({
         			 lang: '{{app.getRequest().getLocale()}}',
-        			 height:725,
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -53,7 +52,7 @@
                     start: '{{ reunion.fecha_toString() }}',
                     selectable: true,
                     {% if (reunion.comunidad.id!=comunidad.id) %}
-                    		backgroundColor: '#fcf8e3',
+                    		backgroundColor: '#EDD6A9',
                     		color: '#E6E6E6',
                     		textColor: '#000',                    		
                     {% endif %}
@@ -111,14 +110,6 @@
 						},
     				{% endif %}
         });
-        
-        {% if is_granted('ROLE_ADMINFINCAS') %}
-        		$('#crear').click(function()
-  		  		{
-  					$('#crear').hide();
-      			$('#loading').show();
-  		  		});
-  		  {% endif %}
     });
 	</script>
 {% endblock %}
@@ -127,54 +118,55 @@
 	{{ parent() }}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+    			<div class="flash-notice mensaje {{flashColor}}">
         			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
-	<hgroup>
-		<h2 class="verde centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
-	</hgroup>
-	<br></br>
+	
+	<h2 class="verde centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
+	<br/>
 	
 	<div id='calendar'></div>
 	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
 		<div id="nueva_reunion" class="ventana">  
 			<section class="form">
-				<hgroup>
-					<h2 class="verde centrado">{% trans %}Nueva Reunión{% endtrans %}</h2>
-				</hgroup>
+				<h2 class="verde centrado">{% trans %}Nueva Reunión{% endtrans %}</h2>
 				
             <form action="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
     				<div class="rojo">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.fecha) }}</div>
+       		 		<div class="label_campo_login">{{ form_label(form.fecha) }}</div>
         				{{ form_widget(form.fecha) }}
         				<div class="error">{{ form_errors(form.fecha) }}</div>
     				</div>
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.hora) }}</div>
-        				{{ form_widget(form.hora) }}
+       		 		<div class="label_campo_login"><label class="required" for="form_hora_hour">{%trans%}Hora{%endtrans%}</label></div>
+        				{{ form_widget(form.hora.hour) }}
+        					
+						<label class="required" for="form_hora_minute">:</label>
+        				{{ form_widget(form.hora.minute) }}
+        					
         				<div class="error">{{ form_errors(form.hora) }}</div>
     				</div>
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.descripcion) }}</div>
+       		 		<div class="label_campo_login">{{ form_label(form.descripcion) }}</div>
         				{{ form_widget(form.descripcion) }}
         				<div class="error">{{ form_errors(form.descripcion) }}</div>
     				</div>
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.file) }}</div>
+       		 		<div class="label_campo_login">{{ form_label(form.file) }}</div>
         				{{ form_widget(form.file) }}
         				<div class="error">{{ form_errors(form.file) }}</div>
     				</div>
 
     				<div class="campo_login">
-    					<input type="submit" value="{% trans %}Crear{% endtrans %}" id="crear" />
+    					<input type="submit" value="{% trans %}Crear{% endtrans %}" />
     				</div>
             </form>
 			</section>

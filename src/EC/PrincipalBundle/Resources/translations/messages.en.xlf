@@ -275,6 +275,46 @@
                 <source>Su perfil ha sido actualizado.</source>
                 <target>Your profile has been updated.</target>
             </trans-unit>
+            <trans-unit id="114">
+                <source>Si eres propietario...</source>
+                <target>if you are an owner...</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>Si eres propietario y ha olvidado la contraseña o nombre de usuario, póngase en contacto con el administrador de fincas de su comunidad de propietarios, el cual le facilitará los datos de acceso a la plataforma web.</source>
+                <target>If you are an owner and you forgot your password or username, please contact the administrator of your community of owners, who will provide you the data to access to the web platform.</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>Si eres administrador de fincas...</source>
+                <target>if you are an administrator...</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>Si eres administrador de fincas y ha olvidado la contraseña o nombre de usuario de acceso a la plataforma web, haz click</source>
+                <target>If you are an administrator and have forgotten your password or user name to access the web platform, click</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>Introduzca su email y le enviaremos sus nuevos datos de acceso.</source>
+                <target>Enter your email and we will send an email with your new data access.</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Se le han enviado sus nuevos datos de acceso.</source>
+                <target>We have sent your new data access.</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>No existe ningún administrador registrado con el email</source>
+                <target>There is no registered an administrator who has the email</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>La dirección de correo electrónico proporcionada ya está en uso. Introduzca una dirección de correo electrónico diferente.</source>
+                <target>The email address provided is already in use. Please enter a different email address.</target>
+            </trans-unit>
+				<trans-unit id="122">
+                <source>Darse de baja</source>
+                <target>Unsubscribe</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>¿Estás seguro que desea darse de baja? Todas sus comunidades serán eliminadas.</source>
+                <target>Are you sure you want to unsubscribe ? All Communities will be deleted.</target>
+            </trans-unit>
                		
 <!--ANUNCIO-->
         		<trans-unit id="200">
@@ -414,8 +454,8 @@
     				<target>To publish ads firstly you have to add your phone number and your email.</target>
 				</trans-unit>
 				<trans-unit id="234">
-    				<source>Nuevo anuncio registrado con éxito.</source>
-    				<target>New ad registered successfully.</target>
+    				<source>Nuevo anuncio creado con éxito. A continuación, puede adjuntar las imágenes del anuncio.</source>
+    				<target>New ad created successfully. Then, you can attach the images of the ad.</target>
 				</trans-unit>
 				<trans-unit id="235">
     				<source>Anuncio modificado con éxito.</source>
@@ -436,6 +476,26 @@
 				<trans-unit id="239">
     				<source>Selecciona una categoría</source>
     				<target>Select a category</target>
+				</trans-unit>
+				<trans-unit id="240">
+    				<source>Mostrar</source>
+    				<target>Show</target>
+				</trans-unit>
+				<trans-unit id="241">
+    				<source>2 Anuncio/Página</source>
+    				<target>2 Ad/Page</target>
+				</trans-unit>
+				<trans-unit id="242">
+    				<source>10 Anuncios/Página</source>
+    				<target>10 Ads/Page</target>
+				</trans-unit>
+				<trans-unit id="243">
+    				<source>25 Anuncios/Página</source>
+    				<target>25 Ads/Page</target>
+				</trans-unit>
+				<trans-unit id="244">
+    				<source>50 Anuncios/Página</source>
+    				<target>50 Ads/Page</target>
 				</trans-unit>
 
 <!--BLOQUE-->
@@ -494,6 +554,10 @@
 				<trans-unit id="313">
     				<source>NºBloques</source>
     				<target>NºBlocks</target>
+				</trans-unit>
+				<trans-unit id="314">
+    				<source>Se eliminarán todos sus propietarios con sus respectivos anuncios e incidencias.</source>
+    				<target>All owners with their incidents and with their ads of this block will be deleted.</target>
 				</trans-unit>
         		
 <!--COMUNIDAD-->
@@ -592,6 +656,14 @@
 				<trans-unit id="423">
    				<source>Comunidad eliminada con éxito.</source>
     				<target>The community has been deleted successfully.</target>
+				</trans-unit>
+				<trans-unit id="424">
+   				<source>Mensaje nuevo</source>
+    				<target>New message</target>
+				</trans-unit>	
+				<trans-unit id="425">
+   				<source>Mensajes nuevos</source>
+    				<target>New messages</target>
 				</trans-unit>	
         		
 <!--DEFAULT-->
@@ -616,59 +688,31 @@
                 <target>Incorrect data</target>
             </trans-unit>
             <trans-unit id="505">
-                <source>Si eres propietario...</source>
-                <target>if you are an owner...</target>
-            </trans-unit>
-            <trans-unit id="506">
-                <source>Si eres propietario y ha olvidado la contraseña o nombre de usuario, póngase en contacto con el administrador de fincas de su comunidad de propietarios, el cual le facilitará los datos de acceso a la plataforma web.</source>
-                <target>If you are an owner and you forgot your password or username, please contact the administrator of your community of owners, who will provide you the data to access to the web platform.</target>
-            </trans-unit>
-            <trans-unit id="507">
-                <source>Si eres administrador de fincas...</source>
-                <target>if you are an administrator...</target>
-            </trans-unit>
-            <trans-unit id="508">
-                <source>Si eres administrador de fincas y ha olvidado la contraseña o nombre de usuario de acceso a la plataforma web, haz click</source>
-                <target>If you are an administrator and have forgotten your password or user name to access the web platform, click</target>
-            </trans-unit>
-            <trans-unit id="509">
-                <source>Introduzca su email y le enviaremos sus nuevos datos de acceso.</source>
-                <target>Enter your email and we will send an email with your new data access.</target>
-            </trans-unit>
-            <trans-unit id="510">
                 <source>EntreComunidades es una sistema de comunicación web donde administradores de fincas podrán gestionar comunidades de propietarios
    	de una manera sencilla, rápida e intuitiva. Ésta aplicación tiene el objetivo de mejorar la comunicación con los propietarios 
    	de una comunidad, para que los administradores de fincas puedan ofrecer un mejor servicio.</source>
                 <target>EntreComunidades is a web communication system where administrators of communities may manage them in a simple, fast and intuitive way. This application aims to improve communication with the owners of a community in order to offer a better service.</target>
             </trans-unit>
-            <trans-unit id="511">
+            <trans-unit id="506">
                 <source>Para ello, ésta plataforma web ofrece funcionalidades tales como la gestión de incidencias, gestión de documentos, gestión de reuniones,
    	valoración de los servicios de la comunidad, y la creación de un espacio específico para el intercambio de objetos de segunda mano 
    	propios de comunidades de propietarios.</source>
                 <target>To do this, this web platform provides features such as incident management, document management, meeting management, assessment of community services, and the creation of a specific space for exchange things of second-hand.</target>
             </trans-unit>
-            <trans-unit id="512">
+            <trans-unit id="507">
                 <source>De igual forma, para poder hacer uso de todas éstas funcionalidades, el administrador de fincas dispondrá de una herramienta sencilla para la importación
    	de los propietarios de las comunidades que administra desde el software de gestión que utilice. Si eres administrador de fincas y estás interesado en 
   	   usar ésta aplicación, podrás darte de alta en</source>
                 <target>Similarly, to use all these features, the communities administrator has a simple tool to import owners of communities from the management software you use. If you are an administrador and are interested in using this application, you can register in</target>
             </trans-unit>
-            <trans-unit id="513">
+            <trans-unit id="508">
                 <source>¿Eres administrador de fincas?</source>
                 <target>Are you a communities administrator?</target>
             </trans-unit>
-            <trans-unit id="514">
+            <trans-unit id="509">
                 <source>Formulario de contacto enviado.</source>
                 <target>The contact form has been sent.</target>
-            </trans-unit>
-            <trans-unit id="515">
-                <source>Se le han enviado sus nuevos datos de acceso.</source>
-                <target>We have sent your new data access.</target>
-            </trans-unit>
-            <trans-unit id="516">
-                <source>No existe ningún administrador registrado con el email</source>
-                <target>There is no registered an administrator who has the email</target>
-            </trans-unit>        
+            </trans-unit>       
         		
 <!--DOCUMENTO-->
         		<trans-unit id="600">
@@ -796,6 +840,18 @@
             <trans-unit id="720">
                 <source>La privacidad ha sido cambiada con éxito.</source>
                 <target>Privacy has been successfully changed.</target>
+            </trans-unit>
+            <trans-unit id="721">
+                <source>NºActuaciones</source>
+                <target>NºPerformances</target>
+            </trans-unit>
+            <trans-unit id="722">
+                <source>Nueva</source>
+                <target>New</target>
+            </trans-unit>
+            <trans-unit id="723">
+                <source>incidencia</source>
+                <target>incident</target>
             </trans-unit>
         		
 <!--PROPIETARIO-->

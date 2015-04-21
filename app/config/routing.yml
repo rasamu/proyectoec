@@ -1,7 +1,9 @@
-home:
+ec_buscador_anuncios:
     pattern:  /{_locale}
-    defaults: { _controller: ECPrincipalBundle:Default:index, _locale:es }
-
+    defaults: { _controller: ECPrincipalBundle:Anuncio:buscador, _locale:es}
+    requirements:
+        _locale: en|es
+        
 ec_principal:
     resource: "@ECPrincipalBundle/Resources/config/routing.yml"
     prefix: /{_locale}

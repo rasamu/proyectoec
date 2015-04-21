@@ -23,16 +23,15 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
 	<section class="form">
-			<hgroup>
 				<h2 class="verde centrado">{% trans %}Nuevo Bloque{% endtrans %}</h2>
-			</hgroup>
+				
             <form action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post">
     				<div class="rojo">{{ form_errors(form) }}</div>
 
@@ -51,27 +50,27 @@
     				<div class="campo">
     					(*) {% trans %}Campo obligatorio{% endtrans %}
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
             </form>
 	</section>
 		
 		<!--CSV-->
 		<section class="form">
-			<hgroup>
 				<h2 class="verde centrado">{% trans %}Importar bloques mediante CSV{% endtrans %}</h2>
-			</hgroup>
+
             <form id="form_csv" action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form_csv) }}>
     				<div class="rojo">{{ form_errors(form_csv) }}</div>
 
-    				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form_csv.file) }}</div>
+    				<div class="campo">
+       		 		<div class="label_campo_login">{{ form_label(form_csv.file) }}</div>
         				{{ form_widget(form_csv.file) }}
         				<div class="error">{{ form_errors(form_csv.file) }}</div>
     				</div>   
+    				
+					<div class="clear"></div>
 
-    				<div id="enviar" class="campo_login">
-    					<input type="submit" value="{% trans %}Enviar{% endtrans %}" id="enviar" />
+    				<div id="enviar" class="campo">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}" />
     				</div>
     				
     				<div class="campo_login">

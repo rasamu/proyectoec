@@ -64,6 +64,10 @@ body {
 	text-align: right;
 }
 
+.flotar_izquierda{
+	float: left;	
+}
+
 .margen_izquierdo{
 	margin-left: 38px;	
 }
@@ -125,20 +129,11 @@ p+p{
 
 #topheader{
 	height: 60px; 
-	/*background-color: #316431;*/
 	background: -webkit-linear-gradient(#316431,#5d935d);
    background: -moz-linear-gradient(#316431,#5d935d);
    background: -o-linear-gradient(#316431,#5d935d);
    background: linear-gradient(#316431,#5d935d);
 	color:#fff;
-	/*border-top-left-radius:14px;
-	border-top-right-radius:14px;
-	-webkit-border-top-left-radius:14px;
-	-webkit-border-top-right-radius:14px;
-	-moz-border-top-left-radius:14px;
-	-moz-border-top-right-radius:14px;
-	-o-border-top-left-radius:14px;
-	-o-border-top-right-radius:14px;*/
 	border-bottom: 1px solid #316431;
 }
 
@@ -161,6 +156,7 @@ h1{
 	margin-top: 0;
 	margin-bottom: -8px;
 	float: left;
+	font-style: oblique;
 	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
 	text-shadow: 0.06em 0.06em 0.02em #316431;
 	-webkit-text-shadow: 0.06em 0.06em 0.02em #316431;
@@ -269,7 +265,8 @@ footer{
 }
 
 #titulofooter a{
-	text-decoration: none;	
+	text-decoration: none;
+	font-style: oblique;	
 }
 
 .titulofooter{
@@ -286,7 +283,12 @@ footer{
 }
 
 #tecnologiafooter img{
-	height: 21px;
+	height: 20px;
+}
+
+#tecnologiafooter a{
+	text-decoration: none;
+	margin-left: 5px;	
 }
 
 .amarillo{
@@ -369,7 +371,7 @@ footer{
    background: linear-gradient(white, #D9E1E8);
 }
 
-/*Mensajes de erros y éxito*/
+/*MENSAJES FLASH DE ERROR Y EXITO*/
 .mensaje{
 	text-align: center;
 	border-style: solid;
@@ -381,6 +383,16 @@ footer{
 	-webkit-border-radius:6px;
 	-moz-border-radius:6px;
 	-o-border-radius:6px;
+}
+
+.red{
+	color: red;
+	border-color: red;	
+}
+
+.green{
+	color: green;
+	border-color: green;	
 }
 
 /*FORMULARIO*/
@@ -453,8 +465,7 @@ input:focus,textarea:focus,select:focus
 	-webkit-box-shadow: 0 0 10px #aaa;
 	-moz-box-shadow: 0 0 10px #aaa;
 	-o-box-shadow: 0 0 10px #aaa;
-	border: 1px solid #316431;
-	/*background-color: white;*/
+	border: 1px solid orange;
 }
 
 #entrar{
@@ -586,7 +597,7 @@ input:focus,textarea:focus,select:focus
 }
 
 .campo_login{
-    margin-top: 15px;
+    margin-top: 10px;
     /*width: 300px;*/
     margin-left: 30px;
 }
@@ -700,27 +711,51 @@ article{
 	z-index: 1000;	
 }
 
+#leyenda_propietarios span{
+	padding: 3px;
+	float: right;
+	margin-left: 4px;
+	border-radius: 5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   -o-border-radius: 5px;
+}
+
+.color_presidente{
+	background: -webkit-linear-gradient(left,rgba(161,202,241,0),rgba(161,202,241,1)); 
+  	background: -o-linear-gradient(right,rgba(161,202,241,0),rgba(161,202,241,1)); 
+ 	background: -moz-linear-gradient(right,rgba(161,202,241,0),rgba(161,202,241,1));
+  	background: linear-gradient(to right, rgba(161,202,241,0), rgba(161,202,241,1));
+}
+
+.color_vicepresidente{
+	background: -webkit-linear-gradient(left,rgba(237,214,169,0),rgba(237,214,169,1)); 
+  	background: -o-linear-gradient(right,rgba(237,214,169,0),rgba(237,214,169,1)); 
+ 	background: -moz-linear-gradient(right,rgba(237,214,169,0),rgba(237,214,169,1));
+  	background: linear-gradient(to right, rgba(237,214,169,0), rgba(237,214,169,1));
+	/*background-color: #edd6a9 !important;*/
+}
+
 /*VERSION MOVIL*/
 @media (max-width: 767px) {
 	#box {
    	width: auto !important;
-   	min-width: 360px;
 	}
 	#col-der{
 		min-height: auto !important;
 		padding:5px 10px 8px !important;
 	}
 	#topheader{
-		height: 40px;
+		height: 30px;
 		min-width: 100%;
 		position: fixed;
-		z-index: 1000;
+		z-index: 2000;
 		top: 0;
-		width: 400px;
+		width: 300px;
 	}
 	#subheader{
 		height: 48px;	
-		margin-top: 40px;
+		margin-top: 30px;
 	}
 	#entrar > a{
 		padding: 1px 5px;	
@@ -729,7 +764,7 @@ article{
 		display: none;	
 	}
 	#titulofooter{
-		left:2% !important;
+		left: 10%;
 	}
 	#topheader:after{
 		display: none;	
@@ -745,7 +780,7 @@ article{
 		margin:2px auto !mportant;	
 	}
 	h1{
-		font-size: 2.59em !important;	
+		font-size: 2em !important;	
 		margin-left: 0;
 		margin-right: 0;
 	}
@@ -778,6 +813,11 @@ article{
 	.titulofooter{
 		font-size: 14px; 
 	}
+	#titulofooter{
+		position: relative;
+		text-align: center;
+		left: 0;
+	}
 	textarea:focus{
 		-ms-transform: scale(1,1); 
     	-webkit-transform: scale(1,1); 
@@ -795,5 +835,11 @@ article{
 	}
 	#propiedad{
 		display: none;
+	}
+	#tecnologiafooter{
+		display: none;	
+	}
+	#leyenda_propietarios span{
+		display: none;	
 	}
 }

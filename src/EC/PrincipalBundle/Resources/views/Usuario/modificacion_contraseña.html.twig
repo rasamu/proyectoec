@@ -10,16 +10,14 @@
 	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 
 	<section id="form_login">
-		<hgroup>
-			<h2 class="verde centrado">{% trans %}Cambiar contraseña{% endtrans %}</h2>
-		</hgroup>
+		<h2 class="verde centrado">{% trans %}Cambiar contraseña{% endtrans %}</h2>
 
 		{{ form_start(form) }}
     		<div class="rojo">{{ form_errors(form) }}</div>
@@ -44,7 +42,6 @@
 
     		<div class="campo_login">
     			<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
-    			<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
 		{{ form_end(form) }}

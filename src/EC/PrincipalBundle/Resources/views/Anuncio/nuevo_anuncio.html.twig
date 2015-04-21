@@ -46,59 +46,6 @@
 			}
 		};
 	</script>
-	<script>
-		var $collectionHolder;
-
-		// setup an "add a tag" link
-		var $addImagenLink = $('<a id="add" href="#" class="add_imagen_link campo_login boton_alta btn_nuevo">{% trans %}Añadir Imagen{% endtrans %}</a>');
-		var $newLinkLi = $('<div></div>').append($addImagenLink);
-
-		jQuery(document).ready(function() {
-    			// Get the ul that holds the collection of tags
-    			$collectionHolder = $('#subida_imagenes');
-
-    			// add the "add a tag" anchor and li to the tags ul
-    			$collectionHolder.append($newLinkLi);
-
-    			// count the current form inputs we have (e.g. 2), use that as the new
-    			// index when inserting a new item (e.g. 2)
-    			$collectionHolder.data('index', $collectionHolder.find(':input').length);
-    			$contador=0;
-						
-    			$addImagenLink.on('click', function(e) {
-    					if($contador<5){
-        					// prevent the link from creating a "#" on the URL
-        					e.preventDefault();
-
-        					// add a new tag form (see next code block)
-        					addImagenForm($collectionHolder, $newLinkLi);
-        					$contador=$contador+1;
-        					if($contador>=5){
-        						document.getElementById('add').style.display = 'none';
-        					}
-        				}
-    			});
-		});
-		
-		function addImagenForm($collectionHolder, $newLinkLi) {
-    			// Get the data-prototype explained earlier
-   		 	var prototype = $collectionHolder.data('prototype');
-
-    			// get the new index
-    			var index = $collectionHolder.data('index');
-
-    			// Replace '__name__' in the prototype's HTML to
-    			// instead be a number based on how many items we have
-    			var newForm = prototype.replace(/__name__/g, index);
-
-    			// increase the index with one for the next item
-    			$collectionHolder.data('index', index + 1);
-
-    			// Display the form in the page in an li, before the "Add a tag" link li
-    			var $newFormLi = $('<div class="campo_login"></div>').append(newForm);
-    			$newLinkLi.before($newFormLi);
-		}
-	</script>
 {% endblock %}
 
 {% block colder %}
@@ -106,16 +53,14 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+    			<div class="flash-notice mensaje {{flashColor}}">
         			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
 		<section class="form">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Nuevo Anuncio{% endtrans %}</h2>
-			</hgroup>
+			<h2 class="verde centrado">{% trans %}Nuevo Anuncio{% endtrans %}</h2>
 			
 			{% if is_granted('ROLE_ADMINFINCAS') %}
          	<form action="{{ path('ec_nuevo_anuncio', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
@@ -147,14 +92,9 @@
         				{{ form_widget(form.descripcion) }}
         				<div class="error">{{ form_errors(form.descripcion) }}</div>
     				</div> 
-    				
-    				<div id="subida_imagenes" data-prototype="{% filter escape %}{{ include('ECPrincipalBundle:Anuncio:prototype.html.twig', { 'form': form.imagenes.vars.prototype }) }}{% endfilter %}">
-    				   
-    				</div>	
    				   
     				<div class="campo_login">
-    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
+    					<input type="submit" value="{% trans %}Crear{% endtrans %}"/>
     				</div>
 			</form>
 

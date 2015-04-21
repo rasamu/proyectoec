@@ -3,7 +3,6 @@
 namespace EC\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -15,51 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 
-
 class ReunionController extends Controller
-{  
-	private function comprobar_comunidad($cif) {
-			$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT c
-       			FROM ECPrincipalBundle:Comunidad c
-      			WHERE c.cif = :cif and c.administrador = :admin'
-			)->setParameters(array('cif' => $cif, 'admin' => $this->getUser()));
-			
-			try {
-    				$comunidad = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}			
-    		return $comunidad;	
-	 }
-	 
-	 private function comprobar_reunion($id){
-	 		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT r
-       			FROM ECPrincipalBundle:Reunion r
-      			WHERE r.id = :id'
-			)->setParameters(array('id' => $id));
-			
-			try {
-    				$reunion = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}	
-			$aux=$reunion->getComunidad();
-			
-    		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    			$comunidad=$this->comprobar_comunidad($aux->getCif());
-    		}else{
-    			$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
-    			if($comunidad!=$aux){
-    				throw new AccessDeniedException();
-    			}
-    		}	
-    		return $reunion;
-	 }
- 
+{    
     /**
 	  * @Route("/comunidad/reuniones/{cif}", name="ec_reuniones_comunidad")
 	  * @Template("ECPrincipalBundle:Reunion:reuniones_comunidad.html.twig")
@@ -68,12 +24,13 @@ class ReunionController extends Controller
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    				$comunidad=$this->comprobar_comunidad($cif);
+    				$ComprobacionesService=$this->get('comprobaciones_service');
+      			$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     			}else{
-    				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    				$comunidad=$this->getUser()->getBloque()->getComunidad();	
     			}
 			}else{
-				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
+				$comunidad=$this->getUser()->getBloque()->getComunidad();
 			}
 			
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
@@ -147,16 +104,18 @@ class ReunionController extends Controller
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    				$comunidad=$this->comprobar_comunidad($cif);
+    				$ComprobacionesService=$this->get('comprobaciones_service');
+      			$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     			}else{
-    				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    				$comunidad=$this->getUser()->getBloque()->getComunidad();	
     			}
 			}else{
-				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
+				$comunidad=$this->getUser()->getBloque()->getComunidad();
 			}
 			
-			$reunion=$this->comprobar_reunion($id);
-			
+			$ComprobacionesService=$this->get('comprobaciones_service');
+      	$reunion=$ComprobacionesService->comprobar_reunion($id);
+				
         	return $this->render('ECPrincipalBundle:Reunion:reunion_comunidad.html.twig',array('comunidad' =>$comunidad,'reunion'=>$reunion));
     }
     
@@ -165,7 +124,8 @@ class ReunionController extends Controller
 	  */
 	public function descargar_documento_reunionAction($id)
 	{
-			$reunion=$this->comprobar_reunion($id);
+			$ComprobacionesService=$this->get('comprobaciones_service');
+      	$reunion=$ComprobacionesService->comprobar_reunion($id);
     		
 			$path = $reunion->getWebPath();
          $content = file_get_contents($path);
@@ -183,8 +143,9 @@ class ReunionController extends Controller
 	  */
     public function eliminar_reunionAction($cif,$id)
     {
-    		$comunidad=$this->comprobar_comunidad($cif);
-			$reunion=$this->comprobar_reunion($id);
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$reunion=$ComprobacionesService->comprobar_reunion($id);
 			
 			$comunidad->removeReunione($reunion);
     		$em = $this->getDoctrine()->getManager();

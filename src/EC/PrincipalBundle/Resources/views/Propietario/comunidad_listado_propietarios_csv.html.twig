@@ -1,6 +1,6 @@
 nfinca;piso;razon
 {% for bloque in bloques %}
-{% for propiedad in bloque.propiedades %}
-{{bloque.num}};{{propiedad.piso}};{{propiedad.propietario.razon}}
+{% for propietario in bloque.propietarios %}
+{{bloque.num}};{{propietario.propiedad}};{{propietario.razon}}
 {% endfor %}
 {% endfor %}

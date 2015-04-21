@@ -3,7 +3,6 @@
 namespace EC\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -19,23 +18,7 @@ use EC\PrincipalBundle\Entity\Province;
 use Ps\PdfBundle\Annotation\Pdf;
 
 class ComunidadController extends Controller
-{  
-	private function comprobar_comunidad($cif) {
-			$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT c
-       			FROM ECPrincipalBundle:Comunidad c
-      			WHERE c.cif = :cif and c.administrador = :admin'
-			)->setParameters(array('cif' => $cif, 'admin' => $this->getUser()));
-			
-			try {
-    				$comunidad = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}			
-    		return $comunidad;	
-	 }
-	 
+{  	 
 	 /**
 	  * @Route("/comunidad/tablon/{cif}", name="ec_tablon_comunidad")
 	  * @Template("ECPrincipalBundle:Comunidad:tablon_comunidad.html.twig")
@@ -53,19 +36,19 @@ class ComunidadController extends Controller
     					'SELECT i
 						FROM ECPrincipalBundle:Incidencia i
 						WHERE i.estado!=3 and i.propietario IN
-						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
-						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
 						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
-						(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin))) order by i.fecha)'
+						(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin)) order by i.fecha)'
 					)->setParameters(array('admin'=>$this->getUser()));	
 							
 					$incidencias = $query->getResult();
     			}else{
     				/*TABLON DE UNA COMUNIDAD PARA ADMINISTRADOR, PRESIDENTE O VIDEPRESIDENTE*/
     				if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    					$comunidad=$this->comprobar_comunidad($cif);
+    					$ComprobacionesService=$this->get('comprobaciones_service');
+      				$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     				}else{
-    					$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    					$comunidad=$this->getUser()->getBloque()->getComunidad();	
     				}
     		
 					/*Buscamos las incidencias de la comunidad no finalizadas*/
@@ -74,17 +57,16 @@ class ComunidadController extends Controller
     					'SELECT i
 						FROM ECPrincipalBundle:Incidencia i
 						WHERE i.estado!=3 and i.propietario IN
-						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
-						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)) order by i.fecha)'
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad) order by i.fecha)'
 					)->setParameters(array('comunidad'=>$comunidad,));	
 							
 					$incidencias = $query->getResult();	
 				}
 			}else{
 				/*TABLON DE UNA COMUNIDAD PARA PROPIETARIOS*/
-				$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
-				$bloque=$this->getUser()->getPropiedad()->getBloque();
+				$comunidad=$this->getUser()->getBloque()->getComunidad();
+				$bloque=$this->getUser()->getBloque();
     			$privacidad_bloque_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
         		$privacidad_comunidad_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('3');
         				
@@ -94,12 +76,10 @@ class ComunidadController extends Controller
     				'SELECT i
 					FROM ECPrincipalBundle:Incidencia i
 					WHERE i.estado!=3 and ((i.privacidad= :privacidad_comunidad_publica and i.propietario IN
-						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
-						(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))))
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)))
 					or (i.privacidad= :privacidad_bloque_publica and i.propietario IN
-						(SELECT s FROM ECPrincipalBundle:Propietario s WHERE s.propiedad IN
-						(SELECT t FROM ECPrincipalBundle:Propiedad t WHERE t.bloque= :bloque)))
+						(SELECT s FROM ECPrincipalBundle:Propietario s WHERE s.bloque= :bloque))
 					or (i.propietario= :propietario))'
 				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'propietario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
 				
@@ -154,7 +134,7 @@ class ComunidadController extends Controller
     				 $cif=$form->get('cif')->getData();
 					 $comprobacion=$this->getDoctrine()
         				->getRepository('ECPrincipalBundle:Comunidad')
-        				->find($cif);
+        				->findByCif($cif);
         				
         		    //Comprobamos el código de despacho
         			 $em = $this->getDoctrine()->getManager();
@@ -176,6 +156,8 @@ class ComunidadController extends Controller
     			      	
     				 			$em = $this->getDoctrine()->getManager();
    				 			$em->persist($comunidad);
+   				 			$em->persist($cuidad);
+   				 			$em->persist($this->getUser());
    				 			$em->flush();
    				 		
    				 			$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
@@ -183,46 +165,17 @@ class ComunidadController extends Controller
    				 			$this->get('session')->getFlashBag()->add('color','green');
    				 			return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
         			 		}else{
-        			 			if($comprobacion->getAdministrador()){
-        			 					/*Ya existe*/
-        			 					$flash=$this->get('translator')->trans('Comunidad ya registrada.');
-        			 					$this->get('session')->getFlashBag()->add('notice',$flash);
-        			 					$this->get('session')->getFlashBag()->add('color','red');
-										return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
-   				 			}else{
-										/*Actualizacion*/
-										$cuidad=$form->get('city')->getData();
-							
-										$comprobacion->setCodigo($form->get('codigo')->getData());
-										$comprobacion->setNPiscinas($form->get('n_piscinas')->getData());
-										$comprobacion->setNPistas($form->get('n_pistas')->getData());
-										$comprobacion->setGimnasio($form->get('gimnasio')->getData());
-										$comprobacion->setAscensor($form->get('ascensor')->getData());
-										$comprobacion->setConserjeria($form->get('conserjeria')->getData());
-										$comprobacion->setFechaAlta();
-   				 					$comprobacion->setAdministrador($this->getUser());
-   				 					$this->getUser()->addComunidade($comprobacion);
-   				 		
-   				 					$cuidad_old=$comprobacion->getCity();
-   				 					$cuidad_old->removeComunidade($comprobacion);
-   				 					$comprobacion->setCity($cuidad);
-    			      				$cuidad->addComunidade($comprobacion);
-    			      	
-    			      				$em = $this->getDoctrine()->getManager();
-   				 					$em->persist($comprobacion);
-   				 					$em->flush();
-   				 		
-   				 					$flash=$this->get('translator')->trans('Comunidad registrada con éxito.');
-   				 					$this->get('session')->getFlashBag()->add('notice',$flash);
-   				 					$this->get('session')->getFlashBag()->add('color','green');
-										return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
-   				 			}
+        			 			/*Ya existe*/
+        			 			$flash=$this->get('translator')->trans('Comunidad ya registrada.');
+        			 			$this->get('session')->getFlashBag()->add('notice',$flash);
+        			 			$this->get('session')->getFlashBag()->add('color','red');
+								return $this->redirect($this->generateUrl('ec_adminfincas_alta_comunidad'));
         					}
         			}else{
         					$flash=$this->get('translator')->trans('El código de despacho ya está siendo usado por otra comunidad.');
         			 		$this->get('session')->getFlashBag()->add('notice',$flash);
         			 		$this->get('session')->getFlashBag()->add('color','red');
-							return $this->redirect($this->generateUrl('ec_adminfincas_listado_comunidades'));
+							return $this->redirect($this->generateUrl('ec_adminfincas_alta_comunidad'));
         			}
         	}      	
         	return $this->render('ECPrincipalBundle:Comunidad:alta_comunidad.html.twig',
@@ -283,16 +236,13 @@ class ComunidadController extends Controller
 	  */
  	public function editar_comunidadAction($cif, Request $request)
     {
-    		$comunidad=$this->comprobar_comunidad($cif); 
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	 
     		$codigo_anterior=$comunidad->getCodigo();
 	
 			$form = $this ->createFormBuilder($comunidad,array('csrf_protection' => false))
 					->add('codigo','text',array('label' => 'Código Despacho'))
-    				->add('piscinas','choice',array('label' => 'Piscina','choices'=>array(1 => 'Si', 0 => 'No')))
-    				->add('pistas','choice',array('label' => 'Pistas Deportivas','choices'=>array(1 => 'Sí', 0 => 'No')))
-    				->add('gimnasio','choice',array('choices'=>array(1 => 'Sí', 0 => 'No')))
-    				->add('ascensor','choice',array('choices'=>array(1 => 'Sí', 0 => 'No')))
-    				->add('conserjeria','choice',array('label'=>'Conserjería', 'choices'=>array(1 => 'Sí', '0' => 'No')))
     				->getForm();
     				
     		$form->handleRequest($request);
@@ -335,13 +285,24 @@ class ComunidadController extends Controller
 	  */
     public function eliminar_comunidadAction($cif)
     {
-    		$comunidad=$this->comprobar_comunidad($cif); 
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+    		
+    		$bloques=$comunidad->getBloques();
+			foreach($bloques as $bloque){
+				$propietarios=$bloque->getPropietarios();
+				$PropietarioService=$this->get('propietario_service');
+				foreach($propietarios as $propietario){						
+        			$PropietarioService->eliminar_propietario($propietario);
+				}		
+			}    		
         	
-        	$this->getUser()->removeComunidade($comunidad);
-        	$comunidad->setAdministrador();
-        	$comunidad->setCodigo(0);
+        	$this->getUser()->removeComunidade($comunidad);        
+        	
+        	//Eliminamos la comunidad, (Documentos, reuniones y bloques con cascade={"remove"})
 			$em = $this->getDoctrine()->getManager();
-   	   $em->persist($comunidad);
+   	   $em->remove($comunidad);
+   	   $em->persist($this->getUser());
    	   $em->flush();        	
    	   
    	   $flash=$this->get('translator')->trans('Comunidad eliminada con éxito.');    					
@@ -371,10 +332,9 @@ class ComunidadController extends Controller
     				/*TOTALES DE PROPIETARIOS*/
     				$em = $this->getDoctrine()->getManager();	
 					$query = $em->createQuery(
-    					'SELECT COUNT(u) as total FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
-    					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+    					'SELECT COUNT(u) as total FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
     					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
-    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin)))'
+    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin))'
 					)->setParameters(array('admin'=>$this->getUser(),'comunidad'=>$comunidad['codigo']));							
 					$propietarios = $query->getSingleResult();
 					
@@ -388,10 +348,9 @@ class ComunidadController extends Controller
 					$em = $this->getDoctrine()->getManager();	
 					$query = $em->createQuery(
     					'SELECT COUNT(i) as total FROM ECPrincipalBundle:Incidencia i WHERE i.propietario IN
-    					(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.propiedad IN
-    					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
+    					(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
     					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
-    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin))))'
+    					(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.codigo= :comunidad and c.administrador= :admin)))'
 					)->setParameters(array('admin'=>$this->getUser(),'comunidad'=>$comunidad['codigo']));							
 					$incidencias = $query->getSingleResult();
 					

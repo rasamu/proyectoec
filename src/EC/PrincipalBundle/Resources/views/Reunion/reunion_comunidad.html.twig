@@ -1,15 +1,14 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{{ parent() }}
 	{% trans %}Reunión{% endtrans %}
+	{{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
    {{ parent() }}
    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
       
-</style>
 {% endblock %}
 
 {% block javascripts %}
@@ -22,26 +21,24 @@
 	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
-	<hgroup>
-		<h2 class="verde centrado">{%trans%}Reunión{%endtrans%}</h2>
-	</hgroup>
+	<h2 class="verde centrado">{%trans%}Reunión{%endtrans%}</h2>
 	
-	<section id="reunion">
-		<div><b>{%trans%}Descripción{%endtrans%}: </b>{{reunion.descripcion}}</div>
-		<div><b>{%trans%}Fecha{%endtrans%}: </b>{{reunion.fecha | date("d/m/Y H:i a")}}</div>
-		<div><b>{%trans%}Formato{%endtrans%}: </b>
+	<div id="reunion">
+		<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{reunion.descripcion}}</div>
+		<div><strong>{%trans%}Fecha{%endtrans%}: </strong>{{reunion.fecha | date("d/m/Y H:i a")}}</div>
+		<div><strong>{%trans%}Formato{%endtrans%}: </strong>
 			{% if reunion.getFormat()=='pdf' or reunion.getFormat()=='odt' or reunion.getFormat()=='odp' or reunion.getFormat()=='ods' or reunion.getFormat()=='doc' or reunion.getFormat()=='txt' %}
-				<img src="{{ asset('images/'~reunion.getFormat()~'-icon.png') }}" alt="{{reunion.getFormat()}}"></img>
+				<img src="{{ asset('images/'~reunion.getFormat()~'-icon.png') }}" alt="{{reunion.getFormat()}}"/>
 			{% endif %}
 			{{reunion.getFormat()}}
 		</div>
-		<div><b>{%trans%}Tamaño{%endtrans%}: </b>{{reunion.getSize()}}</div>
+		<div><strong>{%trans%}Tamaño{%endtrans%}: </strong>{{reunion.getSize()}}</div>
 		<div>
 			<a class="boton_documento btn_download" href="{{ path('ec_reunion_descargar', { 'id': reunion.id })  }}">{% trans %}Descargar{% endtrans %}</a>
 			{% if is_granted('ROLE_ADMINFINCAS') %}
@@ -50,7 +47,7 @@
 		</div>
 	
 		<div>
-			<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/reuniones/'~reunion.path~'') }}" width='700' height='900' allowfullscreen webkitallowfullscreen></iframe>
+			<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/reuniones/'~reunion.path~'') }}" width='700' height='900' allowfullscreen></iframe>
 		</div>
-	</section>
+	</div>
 {% endblock %}

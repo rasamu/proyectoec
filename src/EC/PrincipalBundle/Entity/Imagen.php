@@ -122,7 +122,8 @@ class Imagen
      */
     public function removeUpload()
     {
-        if ($file = $this->getAbsolutePath()) {
+        $file = $this->getAbsolutePath();
+        if (file_exists($file)) {
             unlink($file);
         }
     }

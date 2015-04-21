@@ -18,39 +18,48 @@
 
 {% block colder %}
 	{{ parent() }}
-	<hgroup>
-		{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty %}
-			<h2 class="verde centrado">{% trans %}Tablón{% endtrans %}</h2>
-		{% else %}
-			<h2 class="verde centrado">{% trans %}Tablón de la Comunidad{% endtrans %}</h2>
-		{% endif %}
-	</hgroup>
+	
+	{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty %}
+		<h2 class="verde centrado">{% trans %}Tablón{% endtrans %}</h2>
+	{% else %}
+		<h2 class="verde centrado">{% trans %}Tablón de la Comunidad{% endtrans %}</h2>
+	{% endif %}
 
-	<hgroup>	
-		<h3 class="verde izquierda">{% trans %}Incidencias abiertas{% endtrans %}:</h3>
-	</hgroup>
+	<h3 class="verde izquierda">{% trans %}Incidencias abiertas{% endtrans %}:</h3>
+
 		{% if incidencias is empty%}
 			<p>{%trans%}No hay incidencias abiertas.{%endtrans%}.</p>
 		{% else %}
 			{% for incidencia in incidencias %}
 				<a class="enlace" href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}">
-					<article class="entrada">
+					<div class="entrada">
 							<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
 							{{incidencia.fecha | date("d/m/Y")}} 
-							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}<b>{%trans%}Comunidad{%endtrans%}: </b>{{incidencia.propietario.propiedad.bloque.comunidad.codigo}}{% endif %}
-							<b>{%trans%}Categoría{%endtrans%}: </b>{{incidencia.categoria.nombre}} 
-							<b>{%trans%}Bloque{%endtrans%}: </b>{{incidencia.propietario.propiedad.bloque.num}} 
-							<b>{%trans%}Piso{%endtrans%}: </b>{{incidencia.propietario.propiedad.piso}}
-					</article>
+							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}{%trans%}Comunidad{%endtrans%}: <strong>{{incidencia.propietario.bloque.comunidad.codigo}}</strong>{% endif %}
+							{%trans%}Categoría{%endtrans%}: <strong>{{incidencia.categoria.nombre}}</strong> 
+							{%trans%}Bloque{%endtrans%}: <strong>{{incidencia.propietario.bloque.num}}</strong>
+							{%trans%}Propiedad{%endtrans%}: <strong>{{incidencia.propietario.propiedad}}</strong>
+							
+							{% set mensajes=consulta_service_global.comprobar_nuevas_actuaciones(app.user,incidencia) %}
+							{% if mensajes!= null%}
+								{% if mensajes>0 %}
+									{% if mensajes==1 %}							
+										<span id="nuevos_mensajes" class="naranja"><strong>{{mensajes}}</strong> <span>{%trans%}Mensaje nuevo{%endtrans%}</span></span>
+									{% else %}
+										<span id="nuevos_mensajes" class="naranja"><strong>{{mensajes}}</strong> <span>{%trans%}Mensajes nuevos{%endtrans%}</span></span>
+									{% endif %}
+								{% endif%}
+							{%else%}
+								<span id="nuevos_mensajes" class="rojo">{%trans%}Nueva{%endtrans%}<span> {%trans%}incidencia{%endtrans%}</span></span>
+							{% endif %}
+					</div>
 				</a>
 			{% endfor %}
 		{% endif %}
 	
-		<hr class="verde"></hr>
+		<hr class="verde" />
 	
-		<hgroup>
-			<h3 class="verde izquierda">{% trans %}Próximas reuniones{% endtrans %}:</h3>
-		</hgroup>
+		<h3 class="verde izquierda">{% trans %}Próximas reuniones{% endtrans %}:</h3>
 		
 		{% if reuniones is empty%}
 			<p>{%trans%}No hay reuniones próximamente.{%endtrans%}</p>
@@ -58,21 +67,21 @@
 			{% for reunion in reuniones %}
 					{% if is_granted('ROLE_ADMINFINCAS') %}  					
 				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}">
-				   		<article class="entrada">
+				   		<div class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/> 
 				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} 
 				   			{% if comunidad is empty %}
-				   				<b>{%trans%}Comunidad{%endtrans%}: </b>{{reunion.comunidad.codigo}}
+				   				{%trans%}Comunidad{%endtrans%}: <strong>{{reunion.comunidad.codigo}}</strong>
 				   			{% endif %}
-				   			<b>{%trans%}Descripción{%endtrans%}: </b>{{reunion.descripcion}} 
-				   		</article>
+				   			{%trans%}Descripción{%endtrans%}: <strong>{{reunion.descripcion}}</strong>
+				   		</div>
 				   	</a>      		
 					{% else %}
 				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}">
-				   		<article class="entrada">
+				   		<div class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
-				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} <b>{%trans%}Descripción{%endtrans%}: </b>{{reunion.descripcion}} 
-				   		</article>  
+				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} {%trans%}Descripción{%endtrans%}: <strong>{{reunion.descripcion}}</strong> 
+				   		</div>  
 				   	</a>   		
 					{% endif %}
 			{% endfor %}

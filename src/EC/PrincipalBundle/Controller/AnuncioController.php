@@ -21,39 +21,6 @@ use FOS\ElasticaBundle\FOSElasticaBundle;
 
 class AnuncioController extends Controller
 {
-	 private function comprobar_anuncio($id){
-	 		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT a
-       			FROM ECPrincipalBundle:Anuncio a
-      			WHERE a.id = :id'
-			)->setParameters(array('id' => $id));
-			
-			try {
-    				$anuncio = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}	
-
-    		return $anuncio;
-	 }
-	 
-	 private function comprobar_comunidad($cif) {
-			$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT c
-       			FROM ECPrincipalBundle:Comunidad c
-      			WHERE c.cif = :cif and c.administrador = :admin'
-			)->setParameters(array('cif' => $cif, 'admin' => $this->getUser()));
-			
-			try {
-    				$comunidad = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}			
-    		return $comunidad;	
-	 }
-	 
 	 /**
 	  * @Route("/contactar", name="ec_buscador_contactar")
 	  */
@@ -67,7 +34,9 @@ class AnuncioController extends Controller
    
    		if ($request->isXmlHttpRequest()) {
    			if($mensaje!="" and $email!="" and $nombre!=""){
-   				$anuncio=$this->comprobar_anuncio($id_anuncio);
+   				$ComprobacionesService=$this->get('comprobaciones_service');
+      			$anuncio=$ComprobacionesService->comprobar_anuncio($id_anuncio); 
+      			
    				$email_anunciante=$anuncio->getUsuario()->getEmail();
    			
    				//Enviamos email
@@ -105,7 +74,9 @@ class AnuncioController extends Controller
    		
    		if ($request->isXmlHttpRequest()) {
    			if($denuncia!=""){
-   				$anuncio=$this->comprobar_anuncio($id_anuncio);
+   				$ComprobacionesService=$this->get('comprobaciones_service');
+      			$anuncio=$ComprobacionesService->comprobar_anuncio($id_anuncio);
+      			
    				$usuario=$anuncio->getUsuario();
    				if($usuario->getRole()->getId()!='1'){//Anuncio escrito por propietario
    					$email=$anuncio->getComunidad()->getAdministrador()->getEmail();
@@ -162,12 +133,21 @@ class AnuncioController extends Controller
             		'label' => 'Provincia',
             		'required' => false,
             		'empty_value' => 'En toda España'))
+            ->add('mostrar', 'choice', array(
+                'choices' => array(
+                    '2' => '2 Anuncio/Página',
+                    '10' => '10 Anuncios/Página',
+                    '25' => '25 Anuncios/Página',
+                    '50' => '50 Anuncios/Página',                                      
+                ),
+                'data' => '2'))
             ->add('orden', 'choice', array(
                 'choices' => array(
                     'desc' => 'Fecha descendente',
                     'asc' => 'Fecha ascendente'
                 ),
                 'data' => 'desc'))
+            ->setMethod('GET')
         		->getForm();
         	
         	$form_contacto = $this->container
@@ -192,6 +172,49 @@ class AnuncioController extends Controller
        	$categoria=$form->get('categoria')->getData();
        	$orden_fecha=$form->get('orden')->getData();
        	$province=$form->get('province')->getData();
+       	$anuncios_por_pagina=$form->get('mostrar')->getData();
+       	
+       	//SERVIDOR
+       	/*if($categoria!=null and $province!=null){
+       		$em = $this->getDoctrine()->getManager();
+					$query = $em->createQuery(
+    					'SELECT a
+						FROM ECPrincipalBundle:Anuncio a
+						WHERE a.categoria = :categoria and a.comunidad in
+						(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.city in
+						(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province = :province)) order by a.fecha ASC'
+					)->setParameters(array('categoria'=>$categoria, 'province'=>$province));
+				$results = $query->getResult();
+			}else{
+				if($categoria==null and $province==null){
+					$em = $this->getDoctrine()->getManager();
+					$query = $em->createQuery(
+    					'SELECT a
+						FROM ECPrincipalBundle:Anuncio a order by a.fecha ASC'
+					);
+					$results = $query->getResult();
+				}else{
+					if($categoria!=null){
+						$em = $this->getDoctrine()->getManager();
+						$query = $em->createQuery(
+    						'SELECT a
+							FROM ECPrincipalBundle:Anuncio a
+							WHERE a.categoria = :categoria order by a.fecha ASC'
+						)->setParameters(array('categoria'=>$categoria));
+						$results = $query->getResult();
+					}else{
+						$em = $this->getDoctrine()->getManager();
+						$query = $em->createQuery(
+    						'SELECT a
+							FROM ECPrincipalBundle:Anuncio a
+							WHERE a.comunidad in
+							(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.city in
+							(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province=:province)) order by a.fecha ASC'
+						)->setParameters(array('province'=>$province));
+						$results = $query->getResult();
+					}
+				}
+			}*/
 
 			$finder = $this->container->get('fos_elastica.finder.search.anuncio');
 			$boolQuery = new \Elastica\Query\Bool();
@@ -212,9 +235,9 @@ class AnuncioController extends Controller
 			
 			//Filtramos por palabras
 			if($palabras!=null){
-				/*$fieldQuery1 = new \Elastica\Query\Match();
-				$fieldQuery1->setFieldQuery('titulo', $palabras);
-				$boolQuery->addShould($fieldQuery1);*/
+				//$fieldQuery1 = new \Elastica\Query\Match();
+				//$fieldQuery1->setFieldQuery('titulo', $palabras);
+				//$boolQuery->addShould($fieldQuery1);
 				
 				$fieldQuery2 = new \Elastica\Query\Match();
 				$fieldQuery2->setFieldQuery('descripcion', $palabras);
@@ -225,18 +248,41 @@ class AnuncioController extends Controller
 			}
 		
 			$finalQuery = new \Elastica\Query($boolQuery);
+			
+			$finalQuery->setHighlight(array(
+				'pre_tags' => array('<strong class="highlight">'),
+				'post_tags' => array('</strong>'),
+				'fields' => array(
+					'descripcion' => array(
+						'fragment_size' => 200,
+						'number_of_fragments' => 1,
+					)
+				),
+			));
+			
 			//Ordenamos
 			$finalQuery->setSort(array('fecha' => array('order'=>$orden_fecha)));
-			$results = $finder->find($finalQuery);
+			$hybridResults = $finder->findHybrid($finalQuery);
+	
+			//$highlights=null;			
 			
-			//Paginamos
-			$anuncios  = $this->get('knp_paginator')->paginate(
-         	$results,
-         	$request->query->get('page', 1)/*page number*/,
-         	2/*limit per page*/
-    		);
+			foreach($hybridResults as $hybridResult){
+				$results[]=$hybridResult->getResult();
+				//$results[]=$hybridResult->getTransformed();
+			}
+			
+			if($results!=null){			
+				//Paginamos
+				$anuncios  = $this->get('knp_paginator')->paginate(
+         		$results,
+         		$request->query->get('page', 1)/*page number*/,
+         		$anuncios_por_pagina/*limit per page*/
+    			);
+    		}else{
+    			$anuncios=null;	
+    		}
 				
-    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('form' => $form->createView(),'form_contacto'=>$form_contacto->createView(),'form_denuncia'=>$form_denuncia->createView(),'anuncios'=>$anuncios,));
+    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('form' => $form->createView(),'form_contacto'=>$form_contacto->createView(),'form_denuncia'=>$form_denuncia->createView(),'anuncios'=>$anuncios));
     }
 	
 	/**
@@ -246,9 +292,10 @@ class AnuncioController extends Controller
 	public function nuevo_anuncioAction(Request $request, $cif)
 	{ 		
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    		$comunidad=$this->comprobar_comunidad($cif);
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
     	}else{
-    		$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    		$comunidad=$this->getUser()->getBloque()->getComunidad();	
     	}		
 		
 		//Comprobamos que el usuario tiene registrado su telefono e email
@@ -265,7 +312,6 @@ class AnuncioController extends Controller
 			//NUEVO ANUNCIO
 			$anuncio = new Anuncio();
     		$form=$this->createForm(new AnuncioType(),$anuncio);
-    		//$formView->getChild('fotos')->set('full_name', 'form_anuncio[fotos][]');
     				
     		$form->handleRequest($request);
     			
@@ -280,36 +326,16 @@ class AnuncioController extends Controller
 					$comunidad->addAnuncio($anuncio);
 					
 					$em = $this->getDoctrine()->getManager();
-					
-					$imagenes=$anuncio->getImagenes();
-					$orden=1;
-					foreach($imagenes as $imagen){
-						if($imagen->getFile()!=null){
-							$anuncio->AddImagene($imagen);
-							$imagen->SetAnuncio($anuncio);
-							$imagen->setOrden($orden);
-							$em->persist($imagen);	
-							$orden++;
-						}else{
-							$anuncio->removeImagene($imagen);
-							$em->remove($imagen);	
-						}
-					}
-					
 					$em->persist($anuncio);
 					$em->persist($this->getUser());
    				$em->persist($categoria);
    				$em->persist($comunidad);
    				$em->flush();		
     			
-					$flash=$this->get('translator')->trans('Nuevo anuncio registrado con éxito.');
+					$flash=$this->get('translator')->trans('Nuevo anuncio creado con éxito. A continuación, puede adjuntar las imágenes del anuncio.');
 					$this->get('session')->getFlashBag()->add('notice',$flash);
         			$this->get('session')->getFlashBag()->add('color','green');
-        			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-						return $this->redirect($this->generateUrl('ec_listado_mis_anuncios', array('cif'=>$comunidad->getCif())));
-					}else{
-						return $this->redirect($this->generateUrl('ec_listado_mis_anuncios'));
-					}
+					return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes', array('id'=>$anuncio->getId())));
         	}
 			
 			return $this->render('ECPrincipalBundle:Anuncio:nuevo_anuncio.html.twig',array('form' => $form->createView(),'comunidad'=>$comunidad));
@@ -323,7 +349,8 @@ class AnuncioController extends Controller
 	public function listado_mis_anunciosAction($cif)
 	{ 		
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    		$comunidad=$this->comprobar_comunidad($cif);
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
     		
     		$em = $this->getDoctrine()->getManager();
 				$query = $em->createQuery(
@@ -345,7 +372,7 @@ class AnuncioController extends Controller
     	}else{
     		
     		if($this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
-    			$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
+    			$comunidad=$this->getUser()->getBloque()->getComunidad();
     			
     			$mis_anuncios=$this->getUser()->getAnuncios();	
 			
@@ -360,7 +387,7 @@ class AnuncioController extends Controller
     			return $this->render('ECPrincipalBundle:Anuncio:listado_mis_anuncios.html.twig',array('mis_anuncios'=>$mis_anuncios,'anuncios_comunidad'=>$anuncios_comunidad)); 
     			
     		}else{
-    			$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();
+    			$comunidad=$this->getUser()->getBloque()->getComunidad();
     			$mis_anuncios=$this->getUser()->getAnuncios();
     			
     			return $this->render('ECPrincipalBundle:Anuncio:listado_mis_anuncios.html.twig',array('mis_anuncios'=>$mis_anuncios)); 
@@ -374,7 +401,9 @@ class AnuncioController extends Controller
 	  */
 	public function modificarAction(Request $request, $id)
 	{ 		
-		$anuncio=$this->comprobar_anuncio($id);
+		$ComprobacionesService=$this->get('comprobaciones_service');
+      $anuncio=$ComprobacionesService->comprobar_anuncio($id);
+      
 		$comunidad=$anuncio->getComunidad();
     	$usuario=$anuncio->getUsuario();	
 	
@@ -417,7 +446,9 @@ class AnuncioController extends Controller
 	  */
 	public function modificarImagenesAction(Request $request, $id)
 	{ 		
-		$anuncio=$this->comprobar_anuncio($id);
+		$ComprobacionesService=$this->get('comprobaciones_service');
+      $anuncio=$ComprobacionesService->comprobar_anuncio($id);
+      
 		$comunidad=$anuncio->getComunidad();
     	$usuario=$anuncio->getUsuario();
 		
@@ -430,15 +461,34 @@ class AnuncioController extends Controller
     				
     	$form->handleRequest($request);
     			
-    	if ($form->isValid()) {									
+    	if ($form->isValid()) {							
+				//Guardamos
 				$em = $this->getDoctrine()->getManager();	
 				$anuncio->AddImagene($imagen);
 				$imagen->setAnuncio($anuncio);
 				$imagen->setOrden($anuncio->getImagenes()->count());
 				$em->persist($imagen);
 				$em->persist($anuncio);		
-   			$em->flush();		
-    			
+   			$em->flush();
+   			
+   			//Añadimos marca de agua
+				// Cargar la estampa y la foto para aplicarle la marca de agua
+				$estampa = imagecreatefrompng($this->container->get('templating.helper.assets')->getUrl('images/watermark.png'));
+				$im = imagecreatefromjpeg($imagen->getWebPath());
+
+				// Establecer los márgenes para la estampa y obtener el alto/ancho de la imagen de la estampa
+				$margen_dcho = 25;
+				$margen_inf = 25;
+				$sx = imagesx($estampa);
+				$sy = imagesy($estampa);
+
+				// Copiar la imagen de la estampa sobre nuestra foto usando los índices de márgen y el
+				// ancho de la foto para calcular la posición de la estampa. 
+				imagecopy($im, $estampa, imagesx($im) - $sx - $margen_dcho, imagesy($im) - $sy - $margen_inf, 0, 0, imagesx($estampa), imagesy($estampa));	 			
+				imagejpeg($im,$imagen->getWebPath());
+				
+				imagedestroy($im);	
+				
 				$flash=$this->get('translator')->trans('Imagen añadida con éxito.');
 				$this->get('session')->getFlashBag()->add('notice',$flash);
         		$this->get('session')->getFlashBag()->add('color','green');
@@ -458,7 +508,9 @@ class AnuncioController extends Controller
         	return new Response(null, 200);
     	}
     	
-		$anuncio=$this->comprobar_anuncio($id_anuncio);
+		$ComprobacionesService=$this->get('comprobaciones_service');
+      $anuncio=$ComprobacionesService->comprobar_anuncio($id_anuncio);
+      
 		$usuario=$anuncio->getUsuario();
     	if($usuario!=$this->getUser()){
     		throw new AccessDeniedException();
@@ -486,7 +538,9 @@ class AnuncioController extends Controller
 	  */
 	public function eliminarImagenAnuncioAction($id_imagen, $id)
 	{ 		
-		$anuncio=$this->comprobar_anuncio($id);
+		$ComprobacionesService=$this->get('comprobaciones_service');
+      $anuncio=$ComprobacionesService->comprobar_anuncio($id);
+      			
 		$comunidad=$anuncio->getComunidad();
     	$usuario=$anuncio->getUsuario();
     	
@@ -510,6 +564,9 @@ class AnuncioController extends Controller
 		$anuncio->removeImagene($imagen);
 		$em->remove($imagen);	
 		$em->flush();
+		
+		//Eliminamos la cache de imagenes reducidas con una antiguedad de más de 30 días
+		GarbageCollect::dropOldFiles($this->getRequest()->server->get('DOCUMENT_ROOT') .'/uploads/anuncios/cache', 30, true);
     			
     	$flash=$this->get('translator')->trans('Imagen eliminada con éxito.');
     	$this->get('session')->getFlashBag()->add('notice',$flash);
@@ -526,7 +583,9 @@ class AnuncioController extends Controller
 	  */
 	public function eliminarAction($id)
 	{ 		
-		$anuncio=$this->comprobar_anuncio($id);
+		$ComprobacionesService=$this->get('comprobaciones_service');
+      $anuncio=$ComprobacionesService->comprobar_anuncio($id);
+      
 		$comunidad=$anuncio->getComunidad();		
     	$categoria=$anuncio->getCategoria();
     	$usuario=$anuncio->getUsuario();
@@ -543,12 +602,14 @@ class AnuncioController extends Controller
     	}
     	
     	$em = $this->getDoctrine()->getManager();
-		foreach($imagenes as $imagen){
+		/*foreach($imagenes as $imagen){
 			$anuncio->removeImagene($imagen);
 			$em->remove($imagen);	
-		}
+		}*/
+		
 		//Eliminamos la cache de imagenes reducidas con una antiguedad de más de 30 días
 		GarbageCollect::dropOldFiles($this->getRequest()->server->get('DOCUMENT_ROOT') .'/uploads/anuncios/cache', 30, true);
+		
     	$usuario->removeAnuncio($anuncio);
     	$categoria->removeAnuncio($anuncio);
     	$comunidad->removeAnuncio($anuncio);

@@ -9,17 +9,17 @@
 			<tr padding="5px">
 				<td text-align="center" font-style="bold">{%trans%}NºBloque{%endtrans%}</td>
 				<td text-align="center" font-style="bold">{%trans%}Dirección{%endtrans%}</td>
-				<td text-align="center" font-style="bold">{%trans%}Piso{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Propiedad{%endtrans%}</td>
 				<td text-align="center" font-style="bold">{%trans%}Propietario{%endtrans%}</td>
 			</tr>
 			
 			{% for bloque in bloques %}
-				{% for propiedad in bloque.propiedades%}
+				{% for propietario in bloque.propietarios%}
 					<tr>
 						<td>{{bloque.num}}</td>
 						<td>{{bloque.direccion}}</td>
-						<td>{{propiedad.piso}}</td>
-       				<td>{{propiedad.propietario.razon}}</td>
+						<td>{{propietario.propiedad}}</td>
+       				<td>{{propietario.razon}}</td>
       			</tr>
       		{% endfor %}
 			{% endfor %}

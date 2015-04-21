@@ -40,15 +40,13 @@
 {{parent()}}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 
-	<hgroup>	
-		<h2 class="verde centrado">{% trans %}Bloques{% endtrans %}</h2>
-	</hgroup>
+	<h2 class="verde centrado">{% trans %}Bloques{% endtrans %}</h2>
 	
 	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
@@ -58,30 +56,22 @@
 		<table class="display" id="example">
 			<thead>
 				<tr>
-					<th>{% trans %}Nº Bloque{% endtrans %}</th>
-					<th>{% trans %}Dirección{% endtrans %}</th>
-					<th>{% trans %}NºPropietarios{% endtrans %}</th>
-					<th>{% trans %}Acciones{% endtrans %}</th>
+					<th id="n_bloque">{% trans %}Nº Bloque{% endtrans %}</th>
+					<th id="direccion">{% trans %}Dirección{% endtrans %}</th>
+					<th id="n_propietarios">{% trans %}NºPropietarios{% endtrans %}</th>
+					<th id="acciones">{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for bloque in bloques %}
 				<tr class="gradeX">
-       			<td>{{bloque.num}}</td>
-       			<td>{{bloque.direccion}}</td>
-       			<td>{{bloque.getPropiedades()|length}}</td>
-       			<td><a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'cif': comunidad.cif, 'num': bloque.num}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el bloque{%endtrans%} {{bloque.direccion}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a></td>
+       			<td headers="n_bloque">{{bloque.num}}</td>
+       			<td headers="direccion">{{bloque.direccion}}</td>
+       			<td headers="n_propietarios">{{bloque.getPropietarios()|length}}</td>
+       			<td headers="acciones"><a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'cif': comunidad.cif, 'num': bloque.num}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el bloque{%endtrans%} {{bloque.direccion}}? {%trans%}Se eliminarán todos sus propietarios con sus respectivos anuncios e incidencias.{%endtrans%}')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a></td>
       		</tr> 
 			{% endfor %}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th>{% trans %}Nº Bloque{% endtrans %}</th>
-					<th>{% trans %}Dirección{% endtrans %}</th>
-					<th>{% trans %}NºPropietarios{% endtrans %}</th>
-					<th>{% trans %}Acciones{% endtrans %}</th>
-				</tr>
-			</tfoot>
 		</table>
 	</div>
 	

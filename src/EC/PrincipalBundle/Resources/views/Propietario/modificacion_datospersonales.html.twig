@@ -15,16 +15,14 @@
 	{{ parent() }}
 		{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 		{% endfor %}	
 
 		<section class="form">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
-			</hgroup>
+			<h2 class="verde centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
 			
 			<a class="boton_alta btn_password" href="{{ path('ec_usuario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
 			{{ form_start(form) }}

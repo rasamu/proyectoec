@@ -32,6 +32,10 @@
 			$("#"+idtextarea).change(function(){
 				updateContadorTa(idtextarea, idcontador,max);
 			});
+			
+			$("#"+idtextarea).ready(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
 		});
  
 		function updateContadorTa(idtextarea, idcontador,max){
@@ -53,16 +57,14 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
 		<section class="form">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Editar Anuncio{% endtrans %}</h2>
-			</hgroup>
+			<h2 class="verde centrado">{% trans %}Editar Anuncio{% endtrans %}</h2>
 			
 			<form action="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
     				<div class="rojo">{{ form_errors(form) }}</div>

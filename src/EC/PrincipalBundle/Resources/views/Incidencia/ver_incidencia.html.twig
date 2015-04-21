@@ -47,52 +47,50 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
-	<hgroup>
-		<h2 class="verde centrado">{% trans %}Incidencia{% endtrans %}</h2>
-	<hgroup>
+	<h2 class="verde centrado">{% trans %}Incidencia{% endtrans %}</h2>
 	
-	<section class="form">
-		<section id="incidencia">
-			<div><b>{%trans%}Categoría{%endtrans%}:</b> {{incidencia.categoria.nombre}}</div>
-			<div><b>{%trans%}Asunto{%endtrans%}:</b> {{incidencia.asunto}}</div>
-			<div><b>{%trans%}Fecha{%endtrans%}:</b> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</div>
-			<div><b>{%trans%}Propietario{%endtrans%}:</b> {{incidencia.propietario.razon}}</div>
-			<div><b>{%trans%}Bloque{%endtrans%}:</b> {{incidencia.propietario.propiedad.bloque.direccion}}	<b>{%trans%}Piso{%endtrans%}:</b> {{incidencia.propietario.propiedad.piso}}</div>
-		
+	<div class="form">
+		<div id="incidencia">
+			<div><strong>{%trans%}Categoría{%endtrans%}:</strong> {{incidencia.categoria.nombre}}</div>
+			<div><strong>{%trans%}Asunto{%endtrans%}:</strong> {{incidencia.asunto}}</div>
+			<div><strong>{%trans%}Fecha{%endtrans%}:</strong> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</div>
+			<div><strong>{%trans%}Propietario{%endtrans%}:</strong> {{incidencia.propietario.razon}}</div>
+			<div><strong>{%trans%}Bloque{%endtrans%}:</strong> {{incidencia.propietario.bloque.direccion}}	<strong>{%trans%}Propiedad{%endtrans%}:</strong> {{incidencia.propietario.propiedad}}</div>
+			<div><strong>{%trans%}Descripción{%endtrans%}:</strong> {{incidencia.descripcion}}</div>
 			{% if is_granted('ROLE_ADMINFINCAS') %}
 		
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_privacidad) }}>
     				   <div class="rojo">{{ form_errors(form_privacidad) }}</div>
     				   
     					<div class="error">{{ form_errors(form_privacidad.privacidad) }}</div>
-       		 		<div class="label_campo2"><b>{{ form_label(form_privacidad.privacidad) }}:</b></div>
+       		 		<div class="label_campo2"><strong>{{ form_label(form_privacidad.privacidad) }}:</strong></div>
         				{{ form_widget(form_privacidad.privacidad) }}
         				
-    					<input type="submit" value="{% trans %}Cambiar{% endtrans %}"/>
+    					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
 				</form>
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_estado) }}>
     				   <div class="rojo">{{ form_errors(form_estado) }}</div>
     				   
     					<div class="error">{{ form_errors(form_estado.estado) }}</div>
-       		 		<div class="label_campo2"><b>{{ form_label(form_estado.estado) }}:</b></div>
+       		 		<div class="label_campo2"><strong>{{ form_label(form_estado.estado) }}:</strong></div>
         				{{ form_widget(form_estado.estado) }}
         				
     					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
 				</form>
 				
 			{% else %}
-				<div><b>{%trans%}Privacidad{%endtrans%}:</b> {{incidencia.privacidad.nombre}}</b></div>
-				<div><b>{%trans%}Estado{%endtrans%}:</b> {{incidencia.estado.nombre}}</b></div>
+				<div><strong>{%trans%}Privacidad{%endtrans%}:</strong> {{incidencia.privacidad.nombre}}</strong></div>
+				<div><strong>{%trans%}Estado{%endtrans%}:</strong> {{incidencia.estado.nombre}}</strong></div>
 			{% endif %}		
-
-			<div><b>{%trans%}Descripción{%endtrans%}:</b> {{incidencia.descripcion}}</div>
-			<div><b>{%trans%}Actuaciones{%endtrans%}:</b></div>
+			
+			<hr class="verde">
+			<div><strong>{%trans%}Actuaciones{%endtrans%}:</strong></div>
 			{% for actuacion in actuaciones %}
 				<div>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
 				{%if actuacion.usuario is not empty%}
@@ -128,10 +126,9 @@
     				   
     				<div class="campo_login">
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
 				</form>
 			{% endif %}
-		</section>
-	</section>
+		</div>
+	</div>
 {% endblock %}

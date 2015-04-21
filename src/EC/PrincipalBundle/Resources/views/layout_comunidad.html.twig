@@ -12,7 +12,6 @@
 
 {% block javascripts %}
   {{ parent() }}
-   <script type='text/javascript' src="{{ asset('js/dropdown-menu.min_comunidad.js') }}"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -55,6 +54,7 @@
 		<div class="verde titulo_comunidad letra_miltonian"><em>{% trans %}Comunidad{% endtrans %} </em><em>{{comunidad.codigo}}</em></div>
 		
 		<div id="menu_comunidad">
+			<nav>
 				<ul id="menu_comunidad_movil" class="menu_comunidad">
 					<li class="first"><a href="{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
 					<li><a href="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}"><span>{% trans %}Reuniones{% endtrans %}</span></a></li>		
@@ -63,7 +63,8 @@
 					<li><a href="{{ path('ec_listado_mis_anuncios', { 'cif': comunidad.cif }) }}"><span>{% trans %}Anuncios{% endtrans %}</span></a></li>	
 					<li><a href="{{ path('ec_adminfincas_comunidad_listado_propietarios', { 'cif': comunidad.cif }) }}"><span>{% trans %}Propietarios{% endtrans %}</span></a></li>
 					<li class="last"><a href="{{ path('ec_adminfincas_comunidad_listado_bloques', { 'cif': comunidad.cif }) }}"><span>{% trans %}Bloques{% endtrans%}</span></a></li>	
-				</ul>	
+				</ul>
+			</nav>
 		</div>
 	</div>
 

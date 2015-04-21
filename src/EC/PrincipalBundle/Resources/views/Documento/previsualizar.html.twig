@@ -21,26 +21,24 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
-	<hgroup>
-		<h2 class="verde centrado">{%trans%}Documento{%endtrans%}</h2>
-	</hgroup>
+	<h2 class="verde centrado">{%trans%}Documento{%endtrans%}</h2>
 	
-	<section id="documento">
-   	<div><b>{%trans%}Descripción{%endtrans%}: </b>{{documento.descripcion}}</div>
-		<div><b>{%trans%}Fecha de creación{%endtrans%}: </b>{{documento.fecha | date("d/m/Y H:i:sa")}}</div>
-		<div><b>{%trans%}Formato{%endtrans%}: </b>
+	<div id="documento">
+   	<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>
+		<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:sa")}}</div>
+		<div><strong>{%trans%}Formato{%endtrans%}: </strong>
 			{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
-				<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}"></img>
+				<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}" />
 			{% endif %}
 			{{documento.getFormat()}}
 		</div>
-		<div><b>{%trans%}Tamaño{%endtrans%}: </b>{{documento.getSize()}}</div>
+		<div><strong>{%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}</div>
 		<div>
 			<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
 			{% if is_granted('ROLE_ADMINFINCAS') %}
@@ -48,6 +46,6 @@
 			{% endif %}
 		</div>
 	
-		<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/documentos/'~documento.path~'') }}" width='700' height='900' allowfullscreen webkitallowfullscreen></iframe>
-	</section>
+		<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/documentos/'~documento.path~'') }}" width='700' height='900' allowfullscreen></iframe>
+	</div>
 {% endblock %}

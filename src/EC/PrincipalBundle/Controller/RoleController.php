@@ -3,7 +3,6 @@
 namespace EC\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -11,35 +10,19 @@ use EC\PrincipalBundle\Entity\Comunidad;
 use EC\PrincipalBundle\Entity\Bloque;
 use EC\PrincipalBundle\Entity\Usuario;
 use EC\PrincipalBundle\Entity\Role;
-use EC\PrincipalBundle\Entity\Propiedad;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class RoleController extends Controller
-{  
-	private function comprobar_comunidad($cif) {
-			$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT c
-       			FROM ECPrincipalBundle:Comunidad c
-      			WHERE c.cif = :cif and c.administrador = :admin'
-			)->setParameters(array('cif' => $cif, 'admin' => $this->getUser()));
-			
-			try {
-    				$comunidad = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}			
-    		return $comunidad;	
-	 }
-    
+{   
     /**
 	  * @Route("/adminfincas/comunidad/{cif}/nombrarpresidente/{id}", name="ec_adminfincas_nombrar_presidente")
 	  * @Template()
 	  */
     public function nombrar_presidenteAction($cif, $id){
-    		$comunidad=$this->comprobar_comunidad($cif);
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     		$role_presidente=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('3');
 						
     		/*Buscamos y eliminamos Presidente anterior*/
@@ -47,9 +30,8 @@ class RoleController extends Controller
 			$query = $em->createQuery(
     				'SELECT u
 					FROM ECPrincipalBundle:Propietario u
-					WHERE u.role = :role_presidente and u.propiedad IN
-					(SELECT p FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
+					WHERE u.role = :role_presidente and u.bloque IN
+					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)'
 			)->setParameters(array('comunidad'=>$comunidad,'role_presidente'=>$role_presidente[0],));
 			
 			try {
@@ -107,7 +89,8 @@ class RoleController extends Controller
 	  * @Template()
 	  */
     public function nombrar_vicepresidenteAction($cif, $id){
-    	$comunidad=$this->comprobar_comunidad($cif);
+    	$ComprobacionesService=$this->get('comprobaciones_service');
+      $comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     	$bloques=$comunidad->getBloques();
     	$role_vicepresidente=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('4');
     				
@@ -116,9 +99,8 @@ class RoleController extends Controller
 			$query = $em->createQuery(
     				'SELECT u
 					FROM ECPrincipalBundle:Propietario u
-					WHERE u.role = :role and u.propiedad IN
-					(SELECT p.id FROM ECPrincipalBundle:Propiedad p WHERE p.bloque IN
-					(SELECT b.id FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
+					WHERE u.role = :role and u.bloque IN
+					(SELECT b.id FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)'
 			)->setParameters(array('comunidad'=>$comunidad,'role'=>$role_vicepresidente[0],));
 			
 			try {

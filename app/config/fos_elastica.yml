@@ -18,11 +18,14 @@ fos_elastica:
                         descripcion: { type: string, analyzer: my_analyzer}
                         fecha:
                             type: date
+                        precio:
+                            type: integer
                         categoria:
                             type: object
                             properties:
                                 id:
                                     type: integer
+                                nombre: {type:string}
                         comunidad:
                              type: object
                              properties:
@@ -32,7 +35,9 @@ fos_elastica:
                                          province:
                                              type: object
                                              properties:
-                                                id: ~   
+                                                id: ~  
+                                                name: {type:string}
+                                         name: {type:string} 
                     persistence:
                         driver: orm
                         model: EC\PrincipalBundle\Entity\Anuncio

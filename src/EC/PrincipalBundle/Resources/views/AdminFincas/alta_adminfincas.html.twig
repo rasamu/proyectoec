@@ -10,16 +10,14 @@
  
  		{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 		{% endfor %}
  
 		<section class="form">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Alta administrador de fincas{% endtrans %}</h2>
-			</hgroup>
+			<h2 class="verde centrado">{% trans %}Alta administrador de fincas{% endtrans %}</h2>
 			
 			{{ form_start(form) }}
     		<div class="rojo">{{ form_errors(form) }}</div>
@@ -98,7 +96,6 @@
     		<div class="campo">
     		 	(*) {% trans %}Campo obligatorio{% endtrans %}
     			<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
-    			<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     		</div>
  
 			{{ form_end(form) }}

@@ -8,14 +8,6 @@
 {% block javascripts %}
 	{{ parent() }}
 	
-	<script type='text/javascript'>	
-		$(document).ready(function() {
-			$("#form_csv").submit(function(){
-   				   $('#enviar').hide();
-   					$('.loading').show();
-   		});
-   	});
-   </script>
 {% endblock %}
 
 {% block colder %}
@@ -23,42 +15,40 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+    			<div class="flash-notice mensaje {{flashColor}}">
         			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
 		<section class="form">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Nuevo propietario{% endtrans %}</h2>
-			</hgroup>
+			<h2 class="verde centrado">{% trans %}Nuevo propietario{% endtrans %}</h2>
 
          <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post">
     				<div class="rojo">{{ form_errors(form) }}</div>
  			
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.propietario.razon) }} *</div>
-       				 {{ form_widget(form.propietario.razon) }}
-        				<div class="error">{{ form_errors(form.propietario.razon) }}</div>
+        				<div class="label_campo">{{ form_label(form.razon) }} *</div>
+       				 {{ form_widget(form.razon) }}
+        				<div class="error">{{ form_errors(form.razon) }}</div>
     				</div>
     				
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.piso) }} *</div>
-        				{{ form_widget(form.piso) }}
-        				<div class="error">{{ form_errors(form.piso) }}</div>        
+        				<div class="label_campo">{{ form_label(form.propiedad) }} *</div>
+        				{{ form_widget(form.propiedad) }}
+        				<div class="error">{{ form_errors(form.propiedad) }}</div>        
     				</div>
     
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.propietario.telefono) }}</div>
-        				{{ form_widget(form.propietario.telefono) }}
-        				<div class="error">{{ form_errors(form.propietario.telefono) }}</div>       
+        				<div class="label_campo">{{ form_label(form.telefono) }}</div>
+        				{{ form_widget(form.telefono) }}
+        				<div class="error">{{ form_errors(form.telefono) }}</div>       
     				</div>
 
     				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.propietario.email) }}</div>
-        				{{ form_widget(form.propietario.email) }}        
-       		 		<div class="error">{{ form_errors(form.propietario.email) }}</div>
+        				<div class="label_campo">{{ form_label(form.email) }}</div>
+        				{{ form_widget(form.email) }}        
+       		 		<div class="error">{{ form_errors(form.email) }}</div>
     				</div>
     				
     				<div class="campo">
@@ -66,38 +56,33 @@
         				{{ form_widget(form.bloque) }}
         				<div class="error">{{ form_errors(form.bloque) }}</div>        
     				</div>
-    				<div class="campo">
-    					    (*) {% trans %}Campo obligatorio{% endtrans %}
-    				</div>
+    				
+    				<div class="clear"></div>
     				
     				<div class="campo">
+    				   (*) {% trans %}Campo obligatorio{% endtrans %}
     					<input type="submit" value="{% trans %}Enviar{% endtrans %}" />
-    					<input type="reset" value="{% trans %}Borrar{% endtrans %}"/>
     				</div>
 			</form>
 
 		</section>
 
 		<section class="form">
-			<hgroup>
 				<h2 class="verde centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
-			</hgroup>
 
             <form id="form_csv" action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post" {{ form_enctype(form_csv) }}>
     				<div class="rojo">{{ form_errors(form_csv) }}</div>
 
-    				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form_csv.file) }}</div>
+    				<div class="campo">
+       		 		<div class="label_campo_login">{{ form_label(form_csv.file) }}</div>
         				{{ form_widget(form_csv.file) }}
         				<div class="error">{{ form_errors(form_csv.file) }}</div>
     				</div> 
     				  
-    				<div id="enviar" class="campo_login">
-    					<input type="submit" value="{% trans %}Enviar{% endtrans %}" id="enviar"/>
-    				</div>
+    				<div class="clear"></div>
     				
-					<div class="campo_login">
-    					<div class="loading"></div>
+    				<div class="campo">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}" />
     				</div>
             </form>
 		</section>

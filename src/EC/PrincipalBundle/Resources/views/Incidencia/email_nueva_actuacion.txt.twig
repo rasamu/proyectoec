@@ -1,0 +1,17 @@
+{% extends 'ECPrincipalBundle::layout_email.txt.twig' %}
+
+{% block subheader %}
+	{{ parent() }}
+	
+	<section id="botones">
+		<p class="verde cab negrita">Nueva actuación en: {{asunto}}</p></p>
+   </section>
+{% endblock %}
+
+{% block contenido %}
+	{{ parent() }}
+	
+	<p class="verde negrita cursiva">Comunidad:  {{comunidad.codigo}}</p>
+	<p class="verde">Categoría:  {{categoria}}</p>
+	<p class="verde">Actuación ({{actuacion.fecha| date("d/m/Y H:i a")}}): {{actuacion.mensaje}}</p>
+{% endblock %}

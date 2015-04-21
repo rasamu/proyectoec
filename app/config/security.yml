@@ -7,7 +7,7 @@ security:
             form_login:
                login_path: login
                check_path: login_check
-               default_target_path: ec_principal_check
+               default_target_path: ec_tablon_comunidad
             logout:
                path: logout
                target: ec_buscador_anuncios
@@ -31,6 +31,7 @@ security:
         - { path: ^/.*/documento/descargar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/documento/previsualizar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/documentos/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/tablon, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/tablon/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/reunion/descargar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/reunion/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }

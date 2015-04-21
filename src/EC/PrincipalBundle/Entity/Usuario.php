@@ -121,20 +121,25 @@ class Usuario implements UserInterface, \Serializable
     protected $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Actuacion", mappedBy="usuario", cascade={"remove"})
      */
     protected $actuaciones;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Log", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Log", mappedBy="usuario", cascade={"remove"})
      */
     protected $logs;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Anuncio", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Anuncio", mappedBy="usuario", cascade={"remove"})
      */
     protected $anuncios;
-
+		
+	 /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Consulta", mappedBy="usuario", cascade={"remove"})
+     */
+    private $consultas;	
+	
     /**
      * Set telefono
      *
@@ -389,6 +394,7 @@ class Usuario implements UserInterface, \Serializable
         $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->anuncios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->consultas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -422,5 +428,38 @@ class Usuario implements UserInterface, \Serializable
     public function getAnuncios()
     {
         return $this->anuncios;
+    }
+
+    /**
+     * Add consultas
+     *
+     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     * @return Usuario
+     */
+    public function addConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    {
+        $this->consultas[] = $consultas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove consultas
+     *
+     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     */
+    public function removeConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    {
+        $this->consultas->removeElement($consultas);
+    }
+
+    /**
+     * Get consultas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConsultas()
+    {
+        return $this->consultas;
     }
 }

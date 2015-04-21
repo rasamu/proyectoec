@@ -5,7 +5,6 @@
 	-webkit-border-radius:14px;
 	-moz-border-radius:14px;
 	-o-border-radius:14px;
-	margin-bottom: 20px;
 	height: auto;
 	overflow: hidden;
 	margin: 15px auto;
@@ -59,9 +58,13 @@
 .paginador{
 	width: auto;
 	text-align: center;
-	font-weight: bold;
 	position: relative;
 	z-index: 1000;
+	margin-top: 10px;
+}
+
+.pagination{
+	font-weight: bold;	
 }
 
 .pagination span a{
@@ -126,11 +129,12 @@ fieldset{
 }
 
 .descripcion_anuncio{
-	float: left;
 	position: relative;
-	text-align: left;
+	text-align: justify;
 	padding: 5px;
-	margin-left: 10px;
+	margin-left: 5px;
+	float: left;
+	width: 70%;
 }
 
 .foto_anuncio{
@@ -237,10 +241,14 @@ ol#ordenable > li a{
 	float: right;
 }
 
+.highlight{
+	color: #078CC3;	
+}
+
 /*VERSION MOVIL*/
 @media (max-width: 767px) {
 	.anuncio{
-		margin: 0 auto 6px;
+		margin: 0 auto 10px;
 		padding: 2px;
 		width: 100%;
 	}

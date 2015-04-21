@@ -41,14 +41,14 @@ class Bloque
     protected $comunidad;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Propiedad", mappedBy="bloque")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Propietario", mappedBy="bloque", cascade={"remove"})
      */
-    protected $propiedades;
+    protected $propietarios;
     
  
     public function __construct()
     {
-        $this->propiedades = new ArrayCollection();
+        $this->propietarios = new ArrayCollection();
     }
     
     /**
@@ -121,39 +121,6 @@ class Bloque
     }
 
     /**
-     * Add propiedades
-     *
-     * @param \EC\PrincipalBundle\Entity\Propiedad $propiedad
-     * @return Bloque
-     */
-    public function addPropiedade(\EC\PrincipalBundle\Entity\Propiedad $propiedades)
-    {
-        $this->propiedades[] = $propiedades;
-    
-        return $this;
-    }
-
-    /**
-     * Remove propiedades
-     *
-     * @param \EC\PrincipalBundle\Entity\Propiedad $propiedad
-     */
-    public function removePropiedade(\EC\PrincipalBundle\Entity\Propiedad $propiedades)
-    {
-        $this->propiedades->removeElement($propiedades);
-    }
-
-    /**
-     * Get propiedades
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPropiedades()
-    {
-        return $this->propiedades;
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -161,5 +128,38 @@ class Bloque
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add propietarios
+     *
+     * @param \EC\PrincipalBundle\Entity\Propietario $propietarios
+     * @return Bloque
+     */
+    public function addPropietario(\EC\PrincipalBundle\Entity\Propietario $propietarios)
+    {
+        $this->propietarios[] = $propietarios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove propietarios
+     *
+     * @param \EC\PrincipalBundle\Entity\Propietario $propietarios
+     */
+    public function removePropietario(\EC\PrincipalBundle\Entity\Propietario $propietarios)
+    {
+        $this->propietarios->removeElement($propietarios);
+    }
+
+    /**
+     * Get propietarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPropietarios()
+    {
+        return $this->propietarios;
     }
 }

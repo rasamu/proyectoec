@@ -12,6 +12,8 @@
 	{{ parent() }}
 	
 	<p class="verde negrita cursiva">Comunidad:  {{comunidad.codigo}}</p>
+	<p class="verde">Fecha: {{incidencia.fecha| date("d/m/Y H:i a")}}</p>
 	<p class="verde">Categoría:  {{categoria}}</p>
-	<p class="verde">Descripcion: {{descripcion}}</p>
+	<p class="verde">Asunto: {{incidencia.asunto}}</p>
+	<p class="verde">Descripción: {{incidencia.descripcion}}</p>
 {% endblock %}

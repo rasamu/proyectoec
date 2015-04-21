@@ -8,9 +8,7 @@
 {% block colder %}
 	{{ parent() }}
 		<section id="form_login">
-			<hgroup>
-				<h2 class="verde centrado">{% trans %}Iniciar Sesión{% endtrans %}</h2>
-			</hgroup>
+			<h2 class="verde centrado">{% trans %}Iniciar Sesión{% endtrans %}</h2>
 			
 			{% if error %}
 				<div class="mensaje rojo">{% trans %}Datos incorrectos{% endtrans %}</div>
@@ -32,7 +30,9 @@
 				<div class="campo_login"><input type="submit" value="{% trans %}Acceder{% endtrans %}"></div>
 			</form>
 			
-			<div class="campo_login"><a class="link" href="{{ path('ec_principal_olvido_password')}}"><span>{% trans %}¿Has olvidado tu contraseña?{% endtrans %}</span></a>
+			<div class="campo_login">
+				<a class="link" href="{{ path('ec_principal_olvido_password')}}"><span>{% trans %}¿Has olvidado tu contraseña?{% endtrans %}</span></a>
+			</div>
 		</section>
 		
 		<div id="skyline">

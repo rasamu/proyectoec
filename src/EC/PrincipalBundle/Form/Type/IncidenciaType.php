@@ -16,7 +16,7 @@ class IncidenciaType extends AbstractType
             'empty_value' => 'Selecciona una categoría',
          ));	
          $builder->add('asunto', 'text',array('max_length'=>50));		
-         $builder->add('descripcion', 'textarea',array('label'=>'Descripción','max_length'=>500));		
+         $builder->add('descripcion', 'textarea',array('label'=>'Descripción','max_length'=>500));	
     }
  
     public function setDefaultOptions(OptionsResolverInterface $resolver)

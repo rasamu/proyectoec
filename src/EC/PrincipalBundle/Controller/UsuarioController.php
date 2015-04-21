@@ -6,12 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use EC\PrincipalBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Util\SecureRandom;
-
 
 class UsuarioController extends Controller
 {   
@@ -22,6 +20,7 @@ class UsuarioController extends Controller
     public function modificacion_contraseñaAction(Request $request)
     {
     		$form = $this->createFormBuilder()
+    			->setAction($this->generateUrl('ec_usuario_contraseña'))
         		->add('pass', 'password', array('label' => 'Contraseña','max_length' =>9))
 				->add('password', 'repeated', array(
                 'type' => 'password',
@@ -47,19 +46,21 @@ class UsuarioController extends Controller
 					$clave_old = $encoder_old->encodePassword($form->get('pass')->getData(),$usuario->getSalt());
 					
             	if($usuario->getPassword()==$clave_old){
-						$usuario->setSalt(md5(time()));
-            		$encoder_new = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
-						$clave_new = $encoder_new->encodePassword($form->get('password')->getData(),$usuario->getSalt());
-						$usuario->setPassword($clave_new);
+            		$usuario->setPassword($form->get('password')->getData());
+            		
+						$ComprobacionesService=$this->get('usuario_service');
+      				$ComprobacionesService->setSecurePassword($usuario);
 						
    				 	$em->persist($usuario);
     					$em->flush();
     					
-						$this->get('session')->getFlashBag()->add('notice','La contraseña ha sido cambiada.');
+    					$flash=$this->get('translator')->trans('La contraseña ha sido cambiada.');
+						$this->get('session')->getFlashBag()->add('notice',$flash);
    				 	$this->get('session')->getFlashBag()->add('color','green');
    				 	return $this->redirect($this->generateUrl('ec_usuario_contraseña'));	
             	}else{    				     				 
-    				 	$this->get('session')->getFlashBag()->add('notice','Contraseña no válida.');
+    				 	$flash=$this->get('translator')->trans('Contraseña no válida.');
+    				 	$this->get('session')->getFlashBag()->add('notice',$flash);
    				 	$this->get('session')->getFlashBag()->add('color','red');
    				 	return $this->redirect($this->generateUrl('ec_usuario_contraseña'));	
         			}

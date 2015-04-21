@@ -3,6 +3,11 @@
     background-image: url('../images/ico_delete.png');
 }
 
+.btn_baja {
+    background-color: #ffa500;
+    background-image: url('../images/ico_delete.png');
+}
+
 .btn_download {
     background-color: green;
     background-image: url('../images/ico_download.png');
@@ -48,6 +53,11 @@
 	 margin-bottom: 8px;
     background-color: #f17e4d;
     background-image: url('../images/ico_return.png');
+}
+
+.btn_mis_anuncios{
+	background-color: #759E1A;	
+	background-image: url('../images/ico_go.png');
 }
 
 a.boton_documento {

@@ -163,7 +163,7 @@ button.ui-button-icons-only {
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
 	padding: .4em;
-	text-indent: -9999999px;
+	text-indent: -99999px;
 }
 .ui-button-text-icon-primary .ui-button-text,
 .ui-button-text-icons .ui-button-text {
@@ -631,7 +631,7 @@ button.ui-button::-moz-focus-inner {
 /* For IE8 - See #6727 */
 .ui-slider.ui-state-disabled .ui-slider-handle,
 .ui-slider.ui-state-disabled .ui-slider-range {
-	filter: inherit;
+	filter: inherit \9;
 }
 
 .ui-slider-horizontal {

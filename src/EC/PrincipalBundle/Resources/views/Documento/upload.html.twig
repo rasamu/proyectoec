@@ -15,33 +15,32 @@
 
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
+    			<div class="flash-notice mensaje {{flashColor}}">
         			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 
 		<section class="form">
-			<hgroup>
 				<h2 class="verde centrado">{% trans %}Documento{% endtrans %}</h2>
-			<hgroup>
+
             <form action="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
     				<div class="rojo">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.tipo) }}</div>
+       		 		<div class="label_campo_login">{{ form_label(form.tipo) }}</div>
         				{{ form_widget(form.tipo) }}
         				<div class="error">{{ form_errors(form.tipo) }}</div>
     				</div> 
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.descripcion) }}</div>
+       		 		<div class="label_campo_login">{{ form_label(form.descripcion) }}</div>
         				{{ form_widget(form.descripcion) }}
         				<div class="error">{{ form_errors(form.descripcion) }}</div>
     				</div> 
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.file) }}</div>
+       		 		<div class="label_campo_login">{{ form_label(form.file) }}</div>
         				{{ form_widget(form.file) }}
         				<div class="error">{{ form_errors(form.file) }}</div>
     				</div>   

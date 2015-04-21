@@ -13,60 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class AdminFincasController extends Controller
-{  
-	 private function setSecurePassword($entity) {
-			$entity->setSalt(md5(time()));
-			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
-			$password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-			$entity->setPassword($password);
-	 }
-	 
-	 private function generar_usuario($nombre) {
-	 		$nombre=strtolower($nombre);//Convierte a minusculas
-	 		$nombre = preg_replace('/[.*-_;]/', '', $nombre);//Eliminamos caracteres especiales
-	 		$vector=preg_split("/[\s,]+/",$nombre);//Divide en elementos de un vector
-	 		
-			$usuario=$vector[0].'.'.$vector[1];
-			if($this->comprobar_usuario($usuario)){
-				return $usuario;
-			}else{
-				$usuario=$vector[1].'.'.$vector[0];
-				if($this->comprobar_usuario($usuario)){
-					return $usuario;
-				}else{
-					$usuario=$vector[0].'_'.$vector[1];	
-					if($this->comprobar_usuario($usuario)){
-						return $usuario;
-					}else{
-						$usuario=$vector[1].'_'.$vector[0];
-						if($this->comprobar_usuario($usuario)){
-							return $usuario;
-						}else{
-							$generator = new SecureRandom();
-							$random = bin2hex($generator->nextBytes(4));
-							return $random;
-						}
-					}
-				}
-			}
-	 }
-	 
-	 private function comprobar_usuario($nombre_usuario){
-	 		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT u
-       			FROM ECPrincipalBundle:Usuario u
-      			WHERE u.user = :nombre_usuario'
-			)->setParameters(array('nombre_usuario' => $nombre_usuario));
-			
-			try {
-    				$comprobacion = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			return 1;
-			}	
-			return 0;
-	 }
-    
+{   
     /**
 	  * @Route("/alta", name="ec_principal_alta_adminfincas")
 	  * @Template("ECPrincipalBundle:AdminFincas:alta_adminfincas.html.twig")
@@ -78,16 +25,16 @@ class AdminFincasController extends Controller
     		$invalid_message=$this->get('translator')->trans('Las contraseñas deben coincidir');
     		$form = $this ->createFormBuilder($adminfincas)
     				->setAction($this->generateUrl('ec_principal_alta_adminfincas'))
-    				->add('dni','text', array('label' => 'DNI','max_length' =>9))
+    				->add('dni','text', array('label' => 'DNI','max_length' =>9,'required' => true))
     				->add('n_colegiado','text', array('label' => 'NºColegiado','max_length' =>9,'required' => false))
-    				->add('nombre','text')
-    				->add('apellidos','text')
+    				->add('nombre','text',array('required' => true))
+    				->add('apellidos','text',array('required' => true))
     				->add('telefono','text', array('required' => true,'label' => 'Teléfono','max_length' =>9))
     				->add('fax','text',array('required' => false, 'max_length' =>9))
-    				->add('email','email')
+    				->add('email','email',array('required' => true))
     				->add('direccion','text', array('label' => 'Dirección'))
-    				->add('provincia','text')
-    				->add('localidad','text')
+    				->add('provincia','text',array('required' => true))
+    				->add('localidad','text',array('required' => true))
     				->add('password', 'repeated', array(
                 'type' => 'password',
                 'invalid_message' => $invalid_message,
@@ -118,35 +65,115 @@ class AdminFincasController extends Controller
         				$this->get('session')->getFlashBag()->add('notice',$flash);
    					$this->get('session')->getFlashBag()->add('color','red');
    					return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));
-            	}else{    				     				 
-						$this->setSecurePassword($adminfincas);
-						$nombre_usuario=$this->generar_usuario($adminfincas->getNombre().' '.$adminfincas->getApellidos());
-    					$adminfincas->setUser($nombre_usuario);
-						$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('1');
-						$adminfincas->setRole($role[0]);
-						$role[0]->addUsuario($adminfincas);
-    			
-    				 	$em = $this->getDoctrine()->getManager();
-   				 	$em->persist($adminfincas);
-   				 	$em->persist($role[0]);
-   				 	$em->flush();
-   				 	
-   				 	$message = \Swift_Message::newInstance()
-        				->setSubject('Alta EntreComunidades')
-        				->setFrom('info.entrecomunidades@gmail.com')
-        				->setTo($form->get('email')->getData())
-        				->setContentType('text/html')
-        				->setBody($this->renderView('ECPrincipalBundle:AdminFincas:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
-    					$this->get('mailer')->send($message);
+            	}else{
+            		$email=$form->get('email')->getData();
+        				$em = $this->getDoctrine()->getManager();
+						$query = $em->createQuery(
+    						'SELECT a
+       					FROM ECPrincipalBundle:AdminFincas a
+      					WHERE a.email = :email'
+						)->setParameters(array('email' => $email));    			
+    		
+    					try{
+    						$comprobacion_email=$query->getSingleResult();	
+						} catch (\Doctrine\Orm\NoResultException $e) {
+							$comprobacion_email=null;
+						}
+            		if($comprobacion_email){
+            			$flash=$this->get('translator')->trans('El email proporcionado ya está siendo usado. Por favor, introduzca un email diferente.');
+        					$this->get('session')->getFlashBag()->add('notice',$flash);
+   						$this->get('session')->getFlashBag()->add('color','red');
+   						return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));
+            		}else{			     				 						
+							$ComprobacionesService=$this->get('usuario_service');
+      					$ComprobacionesService->setSecurePassword($adminfincas);
 						
-						$flash=$this->get('translator')->trans('Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso.');
-        				$this->get('session')->getFlashBag()->add('notice',$flash);
-   					$this->get('session')->getFlashBag()->add('color','green');
-   					return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));
+							$ComprobacionesService=$this->get('usuario_service');
+      					$nombre_usuario=$ComprobacionesService->generar_nombre_usuario($adminfincas->getNombre().' '.$adminfincas->getApellidos());
+      				
+    						$adminfincas->setUser($nombre_usuario);
+							$role=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('1');
+							$adminfincas->setRole($role[0]);
+							$role[0]->addUsuario($adminfincas);
+    			
+    				 		$em = $this->getDoctrine()->getManager();
+   				 		$em->persist($adminfincas);
+   				 		$em->persist($role[0]);
+   				 		$em->flush();
+   				 	
+   				 		$message = \Swift_Message::newInstance()
+        					->setSubject('Alta EntreComunidades')
+        					->setFrom('info.entrecomunidades@gmail.com')
+        					->setTo($email)
+        					->setContentType('text/html')
+        					->setBody($this->renderView('ECPrincipalBundle:AdminFincas:email_alta.txt.twig', array('nombre'=>$form->get('nombre')->getData().' '.$form->get('apellidos')->getData(),'usuario'=>$form->get('dni')->getData(),'pass'=>$form->get('password')->getData())));
+    						$this->get('mailer')->send($message);
+						
+							$flash=$this->get('translator')->trans('Alta realizada con éxito. En breves momentos recibirá un email con sus datos de acceso.');
+        					$this->get('session')->getFlashBag()->add('notice',$flash);
+   						$this->get('session')->getFlashBag()->add('color','green');
+   						return $this->redirect($this->generateUrl('ec_principal_alta_adminfincas'));
+   					}
         			}
         	}
         	
         	return $this->render('ECPrincipalBundle:AdminFincas:alta_adminfincas.html.twig',
+        	       		array('form' => $form->createView(),
+        	      		));
+    }
+    
+    /**
+	  * @Route("/adminfincas/baja", name="ec_adminfincas_baja")
+	  */
+    public function baja_adminfincasAction(Request $request)
+    {		
+			$form = $this->createFormBuilder()
+    			->setAction($this->generateUrl('ec_adminfincas_baja'))
+				->add('password', 'repeated', array(
+                'type' => 'password',
+                'invalid_message' => 'Las contraseñas deben coincidir',
+                'required' => true,
+                'first_options'  => array('label' => 'Contraseña','max_length' =>9),
+    				 'second_options' => array('label' => 'Confirmación','max_length' =>9),
+    				))
+       		->getForm();
+ 
+    		$form->handleRequest($request);
+ 
+    		if ($form->isValid()) {
+       		 	$em = $this->getDoctrine()->getManager();
+					$query = $em->createQuery(
+    					'SELECT a
+       				FROM ECPrincipalBundle:AdminFincas a
+      				WHERE a.id = :id'
+					)->setParameter('id', $this->getUser());
+					$adminfincas = $query->getSingleResult();
+					
+					$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
+					$password = $encoder->encodePassword($form->get('password')->getData(),$adminfincas->getSalt());
+					
+            	if($adminfincas->getPassword()==$password){
+            		//Eliminamos al administrador con sus anuncios,logs, actuaciones, 
+            		//y sus comunidades con sus documentos, reuniones, bloques 
+            		//y propietarios con sus incidencias, actuaciones, logs y anuncios con cascade={"remove"} 				        
+						$em = $this->getDoctrine()->getManager();
+   	   			$em->remove($adminfincas);
+   	   			$em->flush();
+   	   			
+   	   			//Cerramos sesión
+   	   			$this->get('security.context')->setToken(null);
+						$this->get('request')->getSession()->invalidate();
+            		
+            		return $this->redirect($this->generateUrl('ec_buscador_anuncios'));
+            	}else{    				     				 
+            		$flash=$this->get('translator')->trans('Contraseña no válida.');
+    				 	$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 	$this->get('session')->getFlashBag()->add('color','red');
+   				 	return $this->redirect($this->generateUrl('ec_adminfincas_baja'));	
+        			}
+    		}
+    	
+    		return $this->render('ECPrincipalBundle:AdminFincas:baja_adminfincas.html.twig',
         	       		array('form' => $form->createView(),
         	      		));
     }
@@ -188,5 +215,71 @@ class AdminFincasController extends Controller
         	return $this->render('ECPrincipalBundle:AdminFincas:modificacion_datospersonales.html.twig',
         	       		array('form' => $form->createView(),
         	      		));
+    }
+    
+    /**
+	  * @Route("/olvido/password", name="ec_principal_olvido_password")
+	  * @Template("ECPrincipalBundle:AdminFincas:olvido_password.html.twig")
+	  */
+    public function olvido_passwordAction(Request $request)
+    {   	
+    		$form = $this->createFormBuilder()
+    			->setAction($this->generateUrl('ec_principal_olvido_password'))
+        		->add('email', 'email', array('label'=>'Email','required' => true))
+        		->getForm();
+        		
+        	$form->handleRequest($request);
+     		if ($form->isValid()) {
+       		$email = $form->get('email')->getData();
+       	 	
+       	 	$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
+    				'SELECT a
+      	 		FROM ECPrincipalBundle:AdminFincas a
+      	 		WHERE a.email= :email'
+				)->setParameters(array('email'=>$email));
+				try {
+    				$adminfincas = $query->getSingleResult();
+				} catch (\Doctrine\Orm\NoResultException $e) {
+        			$adminfincas=null;
+				}
+				
+				if($adminfincas){
+					$ComprobacionesService=$this->get('usuario_service');
+      			$nuevo_password=$ComprobacionesService->generar_password();
+      			
+					$adminfincas->setPassword($nuevo_password);
+
+					$ComprobacionesService=$this->get('usuario_service');
+      			$ComprobacionesService->setSecurePassword($adminfincas);
+      			
+      			$em = $this->getDoctrine()->getManager();
+   				$em->persist($adminfincas);
+   				$em->flush();
+					
+					//Mandamos Email
+					$message = \Swift_Message::newInstance()
+        				->setSubject('Nuevo contraseña EntreComunidades')
+        				->setFrom('info.entrecomunidades@gmail.com')
+        				->setTo($email)
+        				->setContentType('text/html')
+        				->setBody($this->renderView('ECPrincipalBundle:AdminFincas:email_nuevo_password.txt.twig', array('nombre'=>$adminfincas->getNombre().' '.$adminfincas->getApellidos(),'usuario'=>$adminfincas->getUser(),'pass'=>$nuevo_password)));
+    				$this->get('mailer')->send($message);
+    				
+    				$flash=$this->get('translator')->trans('Se le han enviado sus nuevos datos de acceso.');
+        			$this->get('session')->getFlashBag()->add('notice', $flash);
+   				$this->get('session')->getFlashBag()->add('color','green'); 
+   				return $this->redirect($this->generateUrl('ec_principal_olvido_password'));  	
+				}else{
+					$flash=$this->get('translator')->trans('No existe ningún administrador registrado con el email'.' '.$email);
+        			$this->get('session')->getFlashBag()->add('notice', $flash);
+   				$this->get('session')->getFlashBag()->add('color','red'); 
+   				return $this->redirect($this->generateUrl('ec_principal_olvido_password'));  	
+				} 					 	
+   		}
+        		
+        	return $this->render('ECPrincipalBundle:AdminFincas:olvido_password.html.twig', array(
+            		'form' => $form->createView(),
+       			));
     }
 }

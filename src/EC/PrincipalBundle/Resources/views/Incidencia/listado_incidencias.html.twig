@@ -40,15 +40,13 @@
 	{{ parent() }}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
-	<hgroup>
-		<h2 class="verde centrado">{% trans %}Incidencias{% endtrans %}</h2>
-	</hgroup>
+	<h2 class="verde centrado">{% trans %}Incidencias{% endtrans %}</h2>
 	
 	{% if is_granted('ROLE_VECINO')%}
    	<a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar Incidencia{% endtrans %}</span></a>
@@ -58,30 +56,24 @@
 		<table class="display" id="example">
 			<thead>
 				<tr>
-					<th>{% trans %}Fecha{% endtrans %}</th>
-					<th>{% trans %}Categoría{% endtrans %}</th>
-					<th>{% trans %}Asunto{% endtrans %}</th>
-					<th>{% trans %}Estado{% endtrans %}</th>
+					<th id="fecha">{% trans %}Fecha{% endtrans %}</th>
+					<th id="categoria">{% trans %}Categoría{% endtrans %}</th>
+					<th id="asunto">{% trans %}Asunto{% endtrans %}</th>
+					<th id="n_actuaciones" class="no_mostrar">{% trans %}NºActuaciones{% endtrans %}</th>
+					<th id="estado">{% trans %}Estado{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for incidencia in incidencias %}
 					<tr class="gradeX">
-					   <td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</td>
-       				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.categoria.nombre}}</td>
-       				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.asunto}}</td>
-       				<td onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';" style="cursor:pointer;">{{incidencia.estado.nombre}}</td>
+					   <td headers="fecha" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</td>
+       				<td headers="categoria" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.categoria.nombre}}</td>
+       				<td headers="asunto" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.asunto}}</td>
+       				<td headers="n_actuaciones" class="cursor_pointer no_mostrar" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.getActuaciones()|length}}</td>
+       				<td headers="estado" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.estado.nombre}}</td>
       			</tr> 
 			{% endfor %}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th>{% trans %}Fecha{% endtrans %}</th>
-					<th>{% trans %}Categoría{% endtrans %}</th>
-					<th>{% trans %}Asunto{% endtrans %}</th>
-					<th>{% trans %}Estado{% endtrans %}</th>
-				</tr>
-			</tfoot>
 		</table>
 	</div>
 	

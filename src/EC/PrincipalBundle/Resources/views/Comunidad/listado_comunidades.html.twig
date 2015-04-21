@@ -40,14 +40,13 @@
 	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
-	<hgroup>
-		<h2 class="verde centrado">{% trans %}Mis Comunidades{% endtrans %}</h2>
-	</hgroup>
+
+	<h2 class="verde centrado">{% trans %}Mis Comunidades{% endtrans %}</h2>
 	
 	<a href="{{ path('ec_adminfincas_listado_comunidades_pdf') }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_listado_comunidades_csv') }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
@@ -57,39 +56,29 @@
 		<table class="display" id="example">
 			<thead>
 				<tr>
-					<th>{% trans %}Código Despacho{% endtrans %}</th>
-					<th class="no_mostrar">Cif</th>
-					<th>{% trans %}Ciudad{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}NºBloques{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}NºPropietarios{% endtrans %}</th>
-					<th>{% trans %}Acciones{% endtrans %}</th>
+					<th id="codigo">{% trans %}Código Despacho{% endtrans %}</th>
+					<th id="cif" class="no_mostrar">{%trans%}Cif{%endtrans%}</th>
+					<th id="cuidad">{% trans %}Ciudad{% endtrans %}</th>
+					<th id="n_bloques" class="no_mostrar">{% trans %}NºBloques{% endtrans %}</th>
+					<th id="n_propietarios" class="no_mostrar">{% trans %}NºPropietarios{% endtrans %}</th>
+					<th id="acciones">{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for comunidad in comunidades %}
 				<tr class="gradeX">
-				   <td class="cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.codigo}}</td>
-       			<td class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.cif}}</td>
-       			<td class="cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.city.name}}</td>
-       			<td class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.getNBloques()}}</td>
-       			<td class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.getNPropietarios()}}</td>
-       			<td>
+				   <td headers="codigo" class="cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.codigo}}</td>
+       			<td headers="cif" class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.cif}}</td>
+       			<td headers="cuidad" class="cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.city.name}}</td>
+       			<td headers="n_bloques" class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.getBloques()|length}}</td>
+       			<td headers="n_propietarios" class="no_mostrar cursor_pointer" onclick="window.location.href='{{ path('ec_tablon_comunidad', { 'cif': comunidad.cif }) }}';">{{comunidad.getNPropietarios()}}</td>
+       			<td headers="acciones">
        				<a href="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
        				<a href="{{ path('ec_adminfincas_comunidad_eliminar', { 'cif': comunidad.cif}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar la comunidad{%endtrans%} {{comunidad.codigo}}?')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
        			</td>
       		</tr> 
 			{% endfor %}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th>{% trans %}Código Despacho{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Cif{% endtrans %}</th>
-					<th>{% trans %}Ciudad{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}NºBloques{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}NºPropietarios{% endtrans %}</th>
-					<th>{% trans %}Acciones{% endtrans %}</th>
-				</tr>
-			</tfoot>
 		</table>
 	</div>
 {% endblock %}

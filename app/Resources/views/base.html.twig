@@ -7,7 +7,7 @@
 		  <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>{% block title %}- EntreComunidades{% endblock %}</title>
         <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <script type="text/javascript" src="{{ asset('js/html5.js') }}"></script>
         <![endif]-->
         {% block stylesheets %}
             <link type="text/css" rel="stylesheet" href="{{ asset('css/principal.css') }}"/>
@@ -24,34 +24,37 @@
         {% endblock %}
     </head>
     <body>
-    		<section id="box">
+		<div id="box">
             <header id="header">
-            		  <section id="topheader">
+            		  <div id="topheader">
             		  		<section id="tituloheader">
             		  			<a href="{{ path('ec_buscador_anuncios') }}">
-            		  				<hgroup>
-            		  					<h1><em id="entre" class="amarillo">Entre</em><em id="comunidades" class="blanco">Comunidades</em></h1>
-            		  				</hgroup>
+            		  					<h1>
+            		  						<span id="entre" class="amarillo">Entre</span>
+            		  						<span class="blanco">Comunidades</span>
+            		  					</h1>
             		  			</a>
-            		  			<section id="idiomas">
+            		  			<div id="idiomas">
 										<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Idioma Español" height="19" width="19" /></a>
         								<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'en'})) }}"><img src="{{ asset('images/en.png') }}" alt="English language" height="19" width="19" /></a>
-            		  			</section>
+            		  			</div>
             		  		</section>
-            		  </section>
-                	  <section id="subheader">	
-                			<section id="botones">
+            		  </div>
+                	  <div id="subheader">	
+                			<div id="botones">
                     			{% block navigation %}
 									<div id="menu">
+										<nav>
                             		<ul class="menu">
                                 		<li><a href="{{ path('ec_buscador_anuncios') }}"><span>{% trans %}Inicio{% endtrans %}</span></a></li>
                                 		<li><a href="{{ path('ec_principal_eres_adminfincas') }}"><span>{% trans %}¿Eres administrador?{% endtrans %}</span></a></li>
                                 		<li class="last"><a href="{{ path('ec_principal_contacto') }}"><span>{% trans %}Contacto{% endtrans %}</span></a></li>
                             		</ul>
+                            	</nav>
                         	</div>
                     			{% endblock %}
           			
-                    			<section id="entrar">
+                    			<div id="entrar">
 										{% if is_granted('ROLE_ADMINFINCAS') %}	
 											<a class="letra_miltonian login" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>  
 											<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
@@ -77,26 +80,29 @@
 												{% endif %}
 											{% endif %}
 										{% endif %}
-									</section>
-								</section>
-						  </section>
+									</div>
+								</div>
+						  </div>
             </header>
-            <section id="wrapper">
-            	<section id="contenido">
+            <div id="wrapper">
+            	<div id="contenido">
             		{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_VECINO')%}
-                		<section id="sidebar">
+                		<div id="sidebar">
         						{% if is_granted('ROLE_ADMINFINCAS') %}	  
 									<div id='submenu'>
-										<ul id="submenu_movil" class="submenu">
-											<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
-   										<li><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a></li>
-   										<li><a href="{{ path('ec_adminfincas_estadisticas_comunidades') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a></li>
-											<li class="last"><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
-										</ul>
+										<nav>
+											<ul id="submenu_movil" class="submenu">
+												<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
+   											<li><a href="{{ path('ec_adminfincas_listado_comunidades') }}"><span>{% trans %}Mis Comunidades{% endtrans %}</span></a></li>
+   											<li><a href="{{ path('ec_adminfincas_estadisticas_comunidades') }}"><span>{% trans %}Estadísticas{% endtrans %}</span></a></li>
+												<li class="last"><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
+											</ul>
+										</nav>
 									</div>
 								{% else %}
 									{% if is_granted('ROLE_VECINO') %}
 										<div id='submenu'>
+											<nav>
 												<ul id="submenu_movil" class="submenu">
 													<li><a href="{{ path('ec_tablon_comunidad') }}"><span>{% trans %}Tablón{% endtrans %}</span></a></li>
 													<li><a href="{{ path('ec_listado_mis_anuncios') }}"><span>{% trans %}Mis Anuncios{% endtrans %}</span></a></li>
@@ -105,45 +111,49 @@
 													<li><a href="{{ path('ec_listado_documentos') }}"><span>{% trans %}Documentos{% endtrans %}</span></a></li>																							
 													<li class="last"><a href="{{ path('ec_propietario_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
 												</ul>
+											</nav>
 										</div>
 										<div id="propiedad">
-											{%trans%}Propiedad{%endtrans%}: <b>{{ app.user.propiedad.piso }}</b>
+											{%trans%}Propiedad{%endtrans%}: <strong>{{ app.user.propiedad }}</strong>
 										</div>
 									{% endif %}
 								{% endif %}
-   						</section>
+   						</div>
 						{% endif %}
-   					<section id="col-der">
+   					<div id="col-der">
          				{% block colder %}
           	
          				{% endblock %}
-   					</section>
-            	</section>
-				</section>
+   					</div>
+            	</div>
+				</div>
             <footer>
                 {% block footer %}
-                		<section id="titulofooter">
+                		<div id="titulofooter">
                      	<a href="{{ path('ec_buscador_anuncios') }}">
-                     		<em class="amarillo titulofooter letra_miltonian">Entre</em><em class="blanco titulofooter letra_miltonian">Comunidades</em>
+                     		<span class="amarillo titulofooter letra_miltonian">Entre</span><span class="blanco titulofooter letra_miltonian">Comunidades</span>
                      	</a>
-                     	<em class="letra_miltonian">&nbsp;- Rafael Sánchez Muñoz</em>
-                     </section>
+                     	<span class="letra_miltonian no_mostrar">&nbsp;- Rafael Sánchez Muñoz</span>
+                     </div>
                      <div id="tecnologiafooter">
-                     	<a href="http://www.w3.org/html/logo/" target="_blank">
-                     	<img src="{{ asset('images/html5_css3_icon.png') }}" alt="HTML5 Powered with CSS3" title="HTML5 Powered with CSS3"></img>
+                     	<a href="http://www.w3.org/standards/webdesign/accessibility" target="_blank">
+                     		<img src="{{ asset('images/wcag2aa.png') }}" alt="W3C WCAG 2.0 AA" title="W3C WCAG 2.0 AA"/>
                      	</a>
+                     	<a href="http://www.w3.org/html/logo/" target="_blank">
+                     		<img src="{{ asset('images/html5_css3_icon.png') }}" alt="HTML5 Powered with CSS3" title="HTML5 Powered with CSS3"/>
+                     	</a>                    	
                      </div>
                 {% endblock %}
             </footer>
-        </section>
-        <script type='text/javascript' src="{{ asset('js/jquery.slicknav_submenu.min.js') }}"></script>	
-		  <script>
+		</div>
+      <script type='text/javascript' src="{{ asset('js/jquery.slicknav_submenu.min.js') }}"></script>	
+		<script>
 				$(function(){
 					$('#submenu_movil').slicknav_submenu();
 					{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_VECINO')%}
 						document.getElementById('label_comunidad').innerHTML = '{%trans%}Menú{%endtrans%}';
 					{% endif %}
 				});
-		  </script>
+		</script>
     </body>
 </html>

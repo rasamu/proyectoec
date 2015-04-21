@@ -30,6 +30,8 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        consulta_service_global: "@consulta_service"
     
 services:
     ec.listener.login:  
@@ -37,6 +39,24 @@ services:
         arguments: [ @doctrine, @service_container ]  
         tags:  
         - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+        
+    propietario_service:
+        class: EC\PrincipalBundle\Services\PropietarioService
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+        
+    comprobaciones_service:
+        class: EC\PrincipalBundle\Services\ComprobacionesService
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@doctrine"]
+        
+    usuario_service:
+        class: EC\PrincipalBundle\Services\UsuarioService
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            
+    consulta_service:
+        class: EC\PrincipalBundle\Services\ConsultaService
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@doctrine"]
 
 # Assetic Configuration
 assetic:

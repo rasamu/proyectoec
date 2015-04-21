@@ -6,45 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use EC\PrincipalBundle\Entity\Role;
-use EC\PrincipalBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 use EC\PrincipalBundle\Entity\City;
 use EC\PrincipalBundle\Entity\Province;
 
 class DefaultController extends Controller
-{   
-	 private function setSecurePassword($entity) {
-			$entity->setSalt(md5(time()));
-			$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 10);
-			$password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-			$entity->setPassword($password);
-	 }
-	 
-	 private function generar_password() {
-			$generator = new SecureRandom();
-			$random = bin2hex($generator->nextBytes(4));
-			return $random;
-	 }
-	 
-    /**
-	  * @Route("/check", name="ec_principal_check")
-	  */
-    public function checkAction()
-    {
-			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-				return $this->redirect($this->generateUrl('ec_tablon_comunidad'), 301);
-			}else{
-				if($this->get('security.context')->isGranted('ROLE_VECINO')){
-						return $this->redirect($this->generateUrl('ec_tablon_comunidad'), 301);
-				}else{
-					return $this->redirect($this->generateUrl('ec_buscador_anuncios'), 301);
-				}	
-			}
-    }
-    
+{       
     /**
 	  * @Route("/adfincas", name="ec_principal_eres_adminfincas")
 	  * @Template("ECPrincipalBundle:Default:eres_adminfincas.html.twig")
@@ -112,64 +80,6 @@ class DefaultController extends Controller
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
         ));
-    }
-    
-    /**
-	  * @Route("/olvido/password", name="ec_principal_olvido_password")
-	  * @Template("ECPrincipalBundle:Default:olvido_password.html.twig")
-	  */
-    public function olvido_passwordAction(Request $request)
-    {   	
-    		$form = $this->createFormBuilder()
-    			->setAction($this->generateUrl('ec_principal_olvido_password'))
-        		->add('email', 'email', array('label'=>'Email','required' => true))
-        		->getForm();
-        		
-        	$form->handleRequest($request);
-     		if ($form->isValid()) {
-       		$email = $form->get('email')->getData();
-       	 	
-       	 	$em = $this->getDoctrine()->getManager();
-				$query = $em->createQuery(
-    				'SELECT a
-      	 		FROM ECPrincipalBundle:AdminFincas a
-      	 		WHERE a.email= :email'
-				)->setParameters(array('email'=>$email));
-				try {
-    				$adminfincas = $query->getSingleResult();
-				} catch (\Doctrine\Orm\NoResultException $e) {
-        			$adminfincas=null;
-				}
-				
-				if($adminfincas){
-					$nuevo_password=$this->generar_password();
-					$adminfincas->setPassword($nuevo_password);
-					$this->setSecurePassword($adminfincas);
-					
-					//Mandamos Email
-					$message = \Swift_Message::newInstance()
-        				->setSubject('Nuevo contraseña EntreComunidades')
-        				->setFrom('info.entrecomunidades@gmail.com')
-        				->setTo($email)
-        				->setContentType('text/html')
-        				->setBody($this->renderView('ECPrincipalBundle:Default:email_nuevo_password.txt.twig', array('nombre'=>$adminfincas->getNombre().' '.$adminfincas->getApellidos(),'usuario'=>$adminfincas->getDni(),'pass'=>$nuevo_password)));
-    				$this->get('mailer')->send($message);
-    				
-    				$flash=$this->get('translator')->trans('Se le han enviado sus nuevos datos de acceso.');
-        			$this->get('session')->getFlashBag()->add('notice', $flash);
-   				$this->get('session')->getFlashBag()->add('color','green'); 
-   				return $this->redirect($this->generateUrl('ec_principal_olvido_password'));  	
-				}else{
-					$flash=$this->get('translator')->trans('No existe ningún administrador registrado con el email'.' '.$email);
-        			$this->get('session')->getFlashBag()->add('notice', $flash);
-   				$this->get('session')->getFlashBag()->add('color','red'); 
-   				return $this->redirect($this->generateUrl('ec_principal_olvido_password'));  	
-				} 					 	
-   		}
-        		
-        	return $this->render('ECPrincipalBundle:Default:olvido_password.html.twig', array(
-            		'form' => $form->createView(),
-       			));
     }
     
    /**

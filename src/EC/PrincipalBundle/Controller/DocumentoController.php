@@ -13,56 +13,14 @@ use EC\PrincipalBundle\Entity\Documento;
 
 class DocumentoController extends Controller
 {
-	private function comprobar_comunidad($cif) {
-			$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT c
-       			FROM ECPrincipalBundle:Comunidad c
-      			WHERE c.cif = :cif and c.administrador = :admin'
-			)->setParameters(array('cif' => $cif, 'admin' => $this->getUser()));
-			
-			try {
-    				$comunidad = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}			
-    		return $comunidad;	
-	 }
-	 
-	 private function comprobar_documento($id){
-	 		$em = $this->getDoctrine()->getManager();
-			$query = $em->createQuery(
-    				'SELECT d
-       			FROM ECPrincipalBundle:Documento d
-      			WHERE d.id = :id'
-			)->setParameters(array('id' => $id));
-			
-			try {
-    				$documento = $query->getSingleResult();
-			} catch (\Doctrine\Orm\NoResultException $e) {
-        			throw new AccessDeniedException();
-			}	
-			$aux=$documento->getComunidad();
-			
-    		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    			$comunidad=$this->comprobar_comunidad($aux->getCif());
-    		}else{
-    			$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
-    			if($comunidad!=$aux){
-    				throw new AccessDeniedException();
-    			}
-    		}
-    		
-    		return $documento;
-	 }
-	 
 	/**
 	  * @Route("/adminfincas/comunidad/{cif}/documento/upload", name="ec_adminfincas_comunidad_documento_upload")
 	  * @Template("ECPrincipalBundle:Documento:upload.html.twig")
 	  */
 	public function uploadAction(Request $request, $cif)
 	{
-		$comunidad=$this->comprobar_comunidad($cif); 
+		$ComprobacionesService=$this->get('comprobaciones_service');
+      $comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
 					
     	$documento = new Documento();
     	$form = $this->createFormBuilder($documento, array('csrf_protection' => false))
@@ -109,9 +67,10 @@ class DocumentoController extends Controller
 	public function listadoAction($cif=null)
 	{
     		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    			$comunidad=$this->comprobar_comunidad($cif);
+    			$ComprobacionesService=$this->get('comprobaciones_service');
+        		$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     		}else{
-    			$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    			$comunidad=$this->getUser()->getBloque()->getComunidad();	
     		}
     		
 			$repository = $this->getDoctrine()
@@ -132,8 +91,11 @@ class DocumentoController extends Controller
 	  */
 	public function eliminarAction($cif, $id)
 	{
-    		$comunidad=$this->comprobar_comunidad($cif);		
-    		$documento=$this->comprobar_documento($id);
+			$ComprobacionesService=$this->get('comprobaciones_service');
+        	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+        	
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$documento=$ComprobacionesService->comprobar_documento($id); 
     		
     		$comunidad->removeDocumento($documento);
     		$em = $this->getDoctrine()->getManager();
@@ -152,7 +114,8 @@ class DocumentoController extends Controller
 	  */
 	public function descargarAction($id)
 	{
-			$documento=$this->comprobar_documento($id);
+			$ComprobacionesService=$this->get('comprobaciones_service');
+      	$documento=$ComprobacionesService->comprobar_documento($id);
     		
 			$path = $documento->getWebPath();
          $content = file_get_contents($path);
@@ -191,13 +154,15 @@ class DocumentoController extends Controller
 	  */
 	public function previsualizarAction($id, $cif=null)
 	{
+			$ComprobacionesService=$this->get('comprobaciones_service');
+			
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-    			$comunidad=$this->comprobar_comunidad($cif);
+        		$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
     		}else{
-    			$comunidad=$this->getUser()->getPropiedad()->getBloque()->getComunidad();	
+    			$comunidad=$this->getUser()->getBloque()->getComunidad();	
     		}
     		
-    		$documento=$this->comprobar_documento($id);
+      	$documento=$ComprobacionesService->comprobar_documento($id);
     		
 			return $this->render('ECPrincipalBundle:Documento:previsualizar.html.twig',
 					array('documento'=>$documento,'comunidad'=>$comunidad

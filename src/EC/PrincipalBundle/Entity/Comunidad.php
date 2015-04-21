@@ -37,36 +37,6 @@ class Comunidad
     protected $codigo;
     
     /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="piscinas",type="boolean")
-     */
-    protected $piscinas;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="pistas",type="boolean")
-     */
-    protected $pistas;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="gimnasio",type="boolean")
-     */
-    protected $gimnasio;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="ascensor",type="boolean")
-     */
-    protected $ascensor;
-    
-    /**
-	  * @Assert\NotNull()
-     * @ORM\Column(name="conserjeria",type="boolean")
-     */
-    protected $conserjeria;
-    
-    /**
      * @ORM\Column(name="fecha_alta",type="datetime")
      */
     protected $fecha_alta;
@@ -84,22 +54,22 @@ class Comunidad
     protected $city;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Bloque", mappedBy="comunidad")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Bloque", mappedBy="comunidad", cascade={"remove"})
      */
     protected $bloques;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Documento", mappedBy="comunidad")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Documento", mappedBy="comunidad", cascade={"remove"})
      */
     protected $documentos;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Anuncio", mappedBy="comunidad")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Anuncio", mappedBy="comunidad", cascade={"remove"})
      */
     protected $anuncios;
     
 	 /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Reunion", mappedBy="comunidad")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Reunion", mappedBy="comunidad", cascade={"remove"})
      */
     protected $reuniones;
  
@@ -139,98 +109,6 @@ class Comunidad
     public function getCif()
     {
         return $this->cif;
-    }
-    
-    /**
-     * Set piscinas
-     *
-     * @param integer $Piscinas
-     * @return Comunidad
-     */
-    public function setPiscinas($piscinas)
-    {
-        $this->piscinas = $piscinas;
-    
-        return $this;
-    }
-
-    /**
-     * Get piscinas
-     *
-     * @return integer 
-     */
-    public function getPiscinas()
-    {
-        return $this->piscinas;
-    }
-
-    /**
-     * Set gimnasio
-     *
-     * @param integer $gimnasio
-     * @return Comunidad
-     */
-    public function setGimnasio($gimnasio)
-    {
-        $this->gimnasio = $gimnasio;
-    
-        return $this;
-    }
-
-    /**
-     * Get gimnasio
-     *
-     * @return integer 
-     */
-    public function getGimnasio()
-    {
-        return $this->gimnasio;
-    }
-
-    /**
-     * Set ascensor
-     *
-     * @param boolean $ascensor
-     * @return Comunidad
-     */
-    public function setAscensor($ascensor)
-    {
-        $this->ascensor = $ascensor;
-    
-        return $this;
-    }
-
-    /**
-     * Get ascensor
-     *
-     * @return boolean 
-     */
-    public function getAscensor()
-    {
-        return $this->ascensor;
-    }
-
-    /**
-     * Set conserjeria
-     *
-     * @param boolean $conserjeria
-     * @return Comunidad
-     */
-    public function setConserjeria($conserjeria)
-    {
-        $this->conserjeria = $conserjeria;
-    
-        return $this;
-    }
-
-    /**
-     * Get conserjeria
-     *
-     * @return boolean 
-     */
-    public function getConserjeria()
-    {
-        return $this->conserjeria;
     }
     
     /**
@@ -275,29 +153,6 @@ class Comunidad
     public function getAdministrador()
     {
         return $this->administrador;
-    }
-
-    /**
-     * Set pistas
-     *
-     * @param integer $Pistas
-     * @return Comunidad
-     */
-    public function setPistas($Pistas)
-    {
-        $this->pistas = $Pistas;
-    
-        return $this;
-    }
-
-    /**
-     * Get pistas
-     *
-     * @return integer 
-     */
-    public function getPistas()
-    {
-        return $this->pistas;
     }
     
     /**
@@ -489,7 +344,7 @@ class Comunidad
     	  $bloques=$this->getBloques();
     	  $count=0;
     	  foreach($bloques as $bloque){
-    	  		$propietarios=$bloque->getPropiedades();
+    	  		$propietarios=$bloque->getPropietarios();
     	  		$count=$count + $propietarios->count();	
     	  }
         return $count;

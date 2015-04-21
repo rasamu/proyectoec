@@ -71,13 +71,16 @@ class AdminFincas extends Usuario
     protected $localidad;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Comunidad", mappedBy="administrador")
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Comunidad", mappedBy="administrador", cascade={"remove"})
      */
     protected $comunidades;
  
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->comunidades = new ArrayCollection();
+        $this->comunidades = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -587,7 +590,6 @@ class AdminFincas extends Usuario
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $anuncios;
-
 
     /**
      * Add anuncios

@@ -53,54 +53,57 @@
 	
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
-    			<div class="flash-notice mensaje" style="color:{{flashColor}}; border-color:{{flashColor}};">
-        		{{ flashMessage }}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
     			</div>
     		{% endfor %}
 	{% endfor %}
 	
-	<hgroup>
-		<h2 class="verde centrado">{% trans %}Propietarios{% endtrans %}</h2>
-	</hgroup>
+	<h2 class="verde centrado">{% trans %}Propietarios{% endtrans %}</h2>
 	
 	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Propietario{% endtrans %}</a>
-
+	
+	<span id="leyenda_propietarios">
+		<span class="color_vicepresidente derecha">{%trans%}Vicepresidente{%endtrans%}</span>
+  		<span class="color_presidente derecha">{%trans%}Presidente{%endtrans%}</span>
+	</span>
+	
 	<div id="demo">
 		<table class="display" id="example">
 			<thead>
 				<tr>
-					<th>{% trans %}Bloque{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Dirección{% endtrans %}</th>
-					<th>{% trans %}Propiedad{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Nombre/Razón Social{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Conexión{% endtrans %}</th>
-					<th>{% trans %}Acciones{% endtrans %}</th>
+					<th id="bloque">{% trans %}Bloque{% endtrans %}</th>
+					<th id="direccion" class="no_mostrar">{% trans %}Dirección{% endtrans %}</th>
+					<th id="propiedad_">{% trans %}Propiedad{% endtrans %}</th>
+					<th id="razon" class="no_mostrar">{% trans %}Nombre/Razón Social{% endtrans %}</th>
+					<th id="conexion" class="no_mostrar">{% trans %}Conexión{% endtrans %}</th>
+					<th id="acciones">{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for bloque in bloques %}
-				{% for propiedad in bloque.propiedades%}
-					<tr class="gradeX">
-					   <td>{{bloque.num}}</td>
-					   <td class="no_mostrar">{{bloque.direccion}}</td>
-					   <td>{{propiedad.piso}}</td>
-       				<td class="no_mostrar">{{propiedad.propietario.razon}}</td>
-       				<td class="no_mostrar">{% if propiedad.propietario.getUltimoLog() is empty %}
+				{% for propietario in bloque.propietarios%}
+					<tr class="gradeX {% if propietario.role.id == 3%}color_presidente{%else%}{% if propietario.role.id == 4%}color_vicepresidente{%endif%}{%endif%}">
+					   <td headers="bloque">{{bloque.num}}</td>
+					   <td headers="direccion" class="no_mostrar">{{bloque.direccion}}</td>
+					   <td headers="propiedad_">{{propietario.propiedad}}</td>
+       				<td headers="razon" class="no_mostrar">{{propietario.razon}}</td>
+       				<td headers="conexion" class="no_mostrar">{% if propietario.getUltimoLog() is empty %}
 								-
        					{% else %}
-       						 {{propiedad.propietario.getUltimoLog().fecha | date("d/m/Y H:i") }}
+       						 {{propietario.getUltimoLog().fecha | date("d/m/Y H:i") }}
        					{% endif %}
        				</td>
-       				<td>
-								<ul id="menu_acciones">
+       				<td headers="acciones">
+								<ul class="menu_acciones">
 									<li><a href="#">{% trans %}Acciones{% endtrans %}</a>
 										<ul>
-											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo presidente a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Es presidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo vicepresidente a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propiedad.propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de generar una nueva contraseña a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Generar contraseña{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id':propiedad.propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar a{%endtrans%} {{propiedad.propietario.razon}}?')">{% trans %}Eliminar{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propietario.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo presidente a{%endtrans%} {{propietario.razon}}?')">{% trans %}Es presidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo vicepresidente a{%endtrans%} {{propietario.razon}}?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de generar una nueva contraseña a{%endtrans%} {{propietario.razon}}?')">{% trans %}Generar contraseña{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar a{%endtrans%} {{propietario.razon}}?')">{% trans %}Eliminar{% endtrans %}</a></li>
 										</ul>
 									</li>
 								</ul>
@@ -109,16 +112,6 @@
       		{% endfor %} 
 			{% endfor %}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th>{% trans %}Bloque{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Dirección{% endtrans %}</th>
-					<th>{% trans %}Propiedad{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Nombre/Razón Social{% endtrans %}</th>
-					<th class="no_mostrar">{% trans %}Conexión{% endtrans %}</th>
-					<th>{% trans %}Acciones{% endtrans %}</th>
-				</tr>
-			</tfoot>
 		</table>
 	</div>
 
