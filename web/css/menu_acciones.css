@@ -184,3 +184,17 @@
     -moz-border-radius: 0 0 8px 8px;
     -o-border-radius: 0 0 8px 8px;
 }
+
+/*VERSION MOVIL*/
+@media (max-width: 767px) {
+	.menu_acciones ul a {    
+    	padding: 4px;
+	}
+	
+	.menu_acciones a {
+    	padding: 4px 12px;
+	}
+	.menu_acciones ul {
+    	left: -30px;
+	}
+}

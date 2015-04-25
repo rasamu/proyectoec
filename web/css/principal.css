@@ -743,7 +743,7 @@ article{
 	}
 	#col-der{
 		min-height: auto !important;
-		padding:5px 10px 8px !important;
+		padding:5px 5px 12px !important;
 	}
 	#topheader{
 		height: 30px;
@@ -777,7 +777,7 @@ article{
 	.form{
 		width: auto;
 		padding: 2px !important;	
-		margin:2px auto !mportant;	
+		margin: 0 auto !important;	
 	}
 	h1{
 		font-size: 2em !important;	
