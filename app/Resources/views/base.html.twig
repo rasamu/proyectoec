@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}" xml:lang="{{ app.request.locale }}" xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta content="Herramienta web para la administración de comunidades de propietarios" name="description"/>
-		  <meta content="administrador, fincas, gestión, comunidades, vecinos, propiedades, propietarios, bloques, segunda mano" name="keywords"/>
-		  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    	  {% block meta %}
+        		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        		<meta content="Herramienta web para la administración de comunidades de propietarios" name="description"/>
+		  		<meta content="administrador, fincas, gestión, comunidades, vecinos, propiedades, propietarios, bloques, segunda mano" name="keywords"/>
+		  		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		  {% endblock %}
         <title>{% block title %}- EntreComunidades{% endblock %}</title>
         <!--[if lt IE 9]>
             <script type="text/javascript" src="{{ asset('js/html5.js') }}"></script>
@@ -24,23 +26,23 @@
         {% endblock %}
     </head>
     <body>
-		<div id="box">
-            <header id="header">
-            		  <div id="topheader">
-            		  		<section id="tituloheader">
-            		  			<a href="{{ path('ec_buscador_anuncios') }}">
-            		  					<h1>
-            		  						<span id="entre" class="amarillo">Entre</span>
-            		  						<span class="blanco">Comunidades</span>
-            		  					</h1>
-            		  			</a>
-            		  			<div id="idiomas">
-										<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Idioma Español" height="19" width="19" /></a>
-        								<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'en'})) }}"><img src="{{ asset('images/en.png') }}" alt="English language" height="19" width="19" /></a>
-            		  			</div>
-            		  		</section>
-            		  </div>
-                	  <div id="subheader">	
+    		<div id="box">
+            <header id="topheader">
+            		<section id="tituloheader">
+            		  	<a href="{{ path('ec_buscador_anuncios') }}">
+            		  			<h1>
+            		  				<span id="entre" class="amarillo">Entre</span>
+            		  				<span class="blanco">Comunidades</span>
+            		  			</h1>
+            		  	</a>
+            		  	<div id="idiomas">
+								<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'es'})) }}"><img src="{{ asset('images/es.png') }}" alt="Idioma Español" height="19" width="19" /></a>
+        						<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : 'en'})) }}"><img src="{{ asset('images/en.png') }}" alt="English language" height="19" width="19" /></a>
+            		  	</div>
+            		</section>
+            </header>         		  
+            <div id="wrapper">
+            	<div id="subheader">	
                 			<div id="botones">
                     			{% block navigation %}
 									<div id="menu">
@@ -55,36 +57,14 @@
                     			{% endblock %}
           			
                     			<div id="entrar">
-										{% if is_granted('ROLE_ADMINFINCAS') %}	
-											<a class="letra_miltonian login" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>  
-											<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
-											<div>{% trans %}Administrador{% endtrans %}</div>
+										{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_VECINO') %}	
+											<a class="login" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>  
 										{% else %}
-											{% if is_granted('ROLE_PRESIDENTE') %}
-												<a class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-												<div>{{ app.user.razon }}</div>
-												<div>{% trans %}Presidente{% endtrans %}</div>
-											{% else %} 
-												{% if is_granted('ROLE_VICEPRESIDENTE') %}
-													<a class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-													<div>{{ app.user.razon }}</div>
-													<div>{% trans %}Vicepresidente{% endtrans %}</div>
-												{% else %}
-													{% if is_granted('ROLE_VECINO') %}
-														<a class="letra_miltonian" href="{{ path('logout') }}">{% trans %}Cerrar sesión{% endtrans %}</a>
-														<div>{{ app.user.razon }}</div>
-														<div>{% trans %}Propietario{% endtrans %}</div>
-													{% else %}
-														<a class="letra_miltonian" href="{{ path('login') }}" >{% trans %}Iniciar sesión{% endtrans %}</a>
-													{% endif %}
-												{% endif %}
-											{% endif %}
+											<a href="{{ path('login') }}" >{% trans %}Iniciar sesión{% endtrans %}</a>
 										{% endif %}
 									</div>
 								</div>
 						  </div>
-            </header>
-            <div id="wrapper">
             	<div id="contenido">
             		{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_VECINO')%}
                 		<div id="sidebar">
@@ -98,6 +78,10 @@
 												<li class="last"><a href="{{ path('ec_adminfincas_perfil') }}"><span>{% trans %}Mi Perfil{% endtrans %}</span></a></li>
 											</ul>
 										</nav>
+									</div>
+									<div id="propiedad">
+										<div>{{ app.user.nombre }} {{app.user.apellidos}}</div>
+										<div>{% trans %}Administrador{% endtrans %}</div>
 									</div>
 								{% else %}
 									{% if is_granted('ROLE_VECINO') %}
@@ -114,7 +98,8 @@
 											</nav>
 										</div>
 										<div id="propiedad">
-											{%trans%}Propiedad{%endtrans%}: <strong>{{ app.user.propiedad }}</strong>
+											<div>{{ app.user.razon }}</div>
+											<div><strong>{{ app.user.propiedad }}</strong></div>
 										</div>
 									{% endif %}
 								{% endif %}
@@ -125,9 +110,10 @@
           	
          				{% endblock %}
    					</div>
-            	</div>
+   				</div>
 				</div>
             <footer>
+            	<div id="footer">
                 {% block footer %}
                 		<div id="titulofooter">
                      	<a href="{{ path('ec_buscador_anuncios') }}">
@@ -144,8 +130,9 @@
                      	</a>                    	
                      </div>
                 {% endblock %}
+               </div>
             </footer>
-		</div>
+      </div>
       <script type='text/javascript' src="{{ asset('js/jquery.slicknav_submenu.min.js') }}"></script>	
 		<script>
 				$(function(){

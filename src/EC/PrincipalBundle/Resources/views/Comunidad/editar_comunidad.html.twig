@@ -16,16 +16,16 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<section class="form">
-		<h2 class="verde centrado">{% trans %}Editar Comunidad{% endtrans %}</h2>
+	<section id="form_login">
+		<h2 class="centrado">{% trans %}Editar Comunidad{% endtrans %}</h2>
 		
       <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
-    		<div class="rojo">{{ form_errors(form) }}</div>
+    		<div class="red">{{ form_errors(form) }}</div>
 		
 			<div class="campo">
         		<div class="label_campo3">{{ form_label(form.codigo) }}</div>
         		{{ form_widget(form.codigo) }}
-       		 <div class="error">{{ form_errors(form.codigo) }}</div>        
+       		 <div class="error red">{{ form_errors(form.codigo) }}</div>        
     		</div>    		    		
 
     		<div class="campo">

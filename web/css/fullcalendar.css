@@ -24,7 +24,7 @@ html .fc,
 .fc th {
 	padding: 0;
 	vertical-align: top;
-	color: #316431;
+	color: #005D84;
 	}
 
 
@@ -58,7 +58,7 @@ html .fc,
 .fc-header-title h2 {
 	margin-top: 0;
 	white-space: nowrap;
-	color: #4c804c;
+	color: #223E56;
 	}
 	
 .fc .fc-header-space {
@@ -74,8 +74,8 @@ html .fc,
 
 .fc-header .fc-button {
 	margin-right: -1px;
-	background: #acc6ac;
-   color: #316431;
+	background: #A7BDD0;
+   color: white;
 	}
 	
 .fc-header .fc-corner-right,  /* non-theme */
@@ -276,8 +276,8 @@ html .fc,
 	}
 	 
 .fc-event {
-	border: 1px solid #316431; /* default BORDER color */
-	background-color: #316431; /* default BACKGROUND color */
+	border: 1px solid #337AB7; /* default BORDER color */
+	background-color: #337AB7; /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
 	font-size: .85em;
 	cursor: pointer;
@@ -384,8 +384,8 @@ table.fc-border-separate {
 .fc-border-separate tr.fc-last th,
 .fc-border-separate tr.fc-last td {
 	border-bottom-width: 1px;
-	color: #316431;
-	   font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
+	color: #337AB7;
+	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
    font-weight: bold;
 	}
 	

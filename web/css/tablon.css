@@ -1,22 +1,22 @@
 .entrada{
-	width: 100%;
+	width: 95%;
 	background: -webkit-linear-gradient(#D9E1E8, white);
    background: -moz-linear-gradient(#D9E1E8, white);
    background: -o-linear-gradient(#D9E1E8, white);
    background: linear-gradient(#D9E1E8, white);
-   padding:4px;
-   border-radius:6px;
-	-webkit-border-radius:6px;
-	-moz-border-radius:6px;
-	-o-border-radius:6px;
-	margin-bottom: 10px;
+   padding:10px;
+   border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
+	margin: 10px auto 0;
 }
 
 .entrada:hover{
-	background: -webkit-linear-gradient(#acc6ac, white);
-   background: -moz-linear-gradient(#acc6ac, white);
-   background: -o-linear-gradient(#acc6ac, white);
-   background: linear-gradient(#acc6ac, white);
+	background: -webkit-linear-gradient(#A7BDD0, white);
+   background: -moz-linear-gradient(#A7BDD0, white);
+   background: -o-linear-gradient(#A7BDD0, white);
+   background: linear-gradient(#A7BDD0, white);
     /* Webkit for Chrome and Safari */
   -webkit-transform: scale(1.05, 1.05); // This is the enlarged size scale of the image.
   -webkit-transition-duration: 300ms;
@@ -113,5 +113,9 @@
 	}
 	#nuevos_mensajes span{
 		display: none;	
+	}
+	.entrada{
+		padding: 4px;
+		width: 99%;
 	}
 }

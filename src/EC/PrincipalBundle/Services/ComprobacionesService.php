@@ -182,12 +182,27 @@ class ComprobacionesService {
     		return $incidencia;	
 	 }
 	 
-	 public function comprobar_consulta($usuario_id, $incidencia_id) {
+	 public function comprobar_consulta_incidencia($usuario_id, $incidencia_id) {
 			$query = $this->em->createQuery(
     				'SELECT c
-       			FROM ECPrincipalBundle:Consulta c
+       			FROM ECPrincipalBundle:ConsultaIncidencia c
       			WHERE c.usuario = :id_usuario and c.incidencia = :id_incidencia'
 			)->setParameters(array('id_usuario' => $usuario_id, 'id_incidencia' => $incidencia_id));
+			
+			try {
+    				$consulta = $query->getSingleResult();
+			} catch (\Doctrine\Orm\NoResultException $e) {
+        			$consulta = null;
+			}		
+    		return $consulta;	
+	 }
+	 
+	 public function comprobar_consulta_documento($propietario_id, $documento_id) {
+			$query = $this->em->createQuery(
+    				'SELECT c
+       			FROM ECPrincipalBundle:ConsultaDocumento c
+      			WHERE c.propietario = :id_propietario and c.documento = :id_documento'
+			)->setParameters(array('id_propietario' => $propietario_id, 'id_documento' => $documento_id));
 			
 			try {
     				$consulta = $query->getSingleResult();

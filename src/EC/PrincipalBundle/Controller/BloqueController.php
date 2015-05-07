@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class BloqueController extends Controller
 {	 
 	/**
-	  * @Route("/comunidad/{cif}/listado/bloques", name="ec_adminfincas_comunidad_listado_bloques")
+	  * @Route("/adminfincas/comunidad/{cif}/listado/bloques", name="ec_adminfincas_comunidad_listado_bloques")
 	  * @Template("ECPrincipalBundle:Bloque:comunidad_listado_bloques.html.twig")
 	  */
     public function comunidad_listado_bloquesAction($cif)
@@ -34,7 +34,7 @@ class BloqueController extends Controller
     
     /**
      * @Pdf()
-     * @Route("/comunidad/{cif}/listado/bloques/pdf", name="ec_adminfincas_comunidad_listado_bloques_pdf")
+     * @Route("/adminfincas/comunidad/{cif}/listado/bloques/pdf", name="ec_adminfincas_comunidad_listado_bloques_pdf")
      * @Template("ECPrincipalBundle:Bloque:comunidad_listado_bloques_pdf.html.twig")
      */
     public function comunidad_listado_bloques_pdfAction($cif)
@@ -55,7 +55,7 @@ class BloqueController extends Controller
     }
     
     /**
-	  * @Route("/comunidad/{cif}/listado/bloques/csv", name="ec_adminfincas_comunidad_listado_bloques")
+	  * @Route("/adminfincas/comunidad/{cif}/listado/bloques/csv", name="ec_adminfincas_comunidad_listado_bloques")
 	  * @Template("ECPrincipalBundle:Bloque:comunidad_listado_bloques_csv.html.twig")
 	  */
     public function comunidad_listado_bloques_csvAction($cif) {
@@ -74,7 +74,7 @@ class BloqueController extends Controller
 	}
     
     /**
-	  * @Route("/comunidad/{cif}/alta/bloque", name="ec_adminfincas_comunidad_alta_bloque")
+	  * @Route("/adminfincas/comunidad/{cif}/alta/bloque", name="ec_adminfincas_comunidad_alta_bloque")
 	  * @Template("ECPrincipalBundle:Bloque:comunidad_alta_bloque.html.twig")
 	  */
     public function comunidad_alta_bloqueAction(Request $request, $cif)
@@ -171,7 +171,7 @@ class BloqueController extends Controller
     }
     
     /**
-	  * @Route("/comunidad/{cif}/bloque/eliminar/{num}", name="ec_adminfincas_comunidad_eliminar_bloque")
+	  * @Route("/adminfincas/comunidad/{cif}/bloque/eliminar/{num}", name="ec_adminfincas_comunidad_eliminar_bloque")
 	  * @Template("ECPrincipalBundle:Bloque:comunidad_listado_bloques.html.twig")
 	  */
     public function comunidad_eliminar_bloqueAction($cif,$num) {

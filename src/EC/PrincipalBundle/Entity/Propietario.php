@@ -39,11 +39,17 @@ class Propietario extends Usuario
     protected $bloque;
     
     /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\ConsultaDocumento", mappedBy="propietario", cascade={"remove"})
+     */
+    private $consultas_documentos;	
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->incidencias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->consultas_documentos = new \Doctrine\Common\Collections\ArrayCollection();
     } 
     
     /**
@@ -471,4 +477,37 @@ class Propietario extends Usuario
     {
         return $this->bloque;
     }  
+
+    /**
+     * Add consultas_documentos
+     *
+     * @param \EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos
+     * @return Propietario
+     */
+    public function addConsultasDocumento(\EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos)
+    {
+        $this->consultas_documentos[] = $consultasDocumentos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove consultas_documentos
+     *
+     * @param \EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos
+     */
+    public function removeConsultasDocumento(\EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos)
+    {
+        $this->consultas_documentos->removeElement($consultasDocumentos);
+    }
+
+    /**
+     * Get consultas_documentos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConsultasDocumentos()
+    {
+        return $this->consultas_documentos;
+    }
 }

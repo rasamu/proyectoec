@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use EC\PrincipalBundle\Entity\Propietario;
 use EC\PrincipalBundle\Entity\Incidencia;
-use EC\PrincipalBundle\Entity\Consulta;
+use EC\PrincipalBundle\Entity\ConsultaIncidencia;
 use EC\PrincipalBundle\Entity\Actuacion;
 use EC\PrincipalBundle\Entity\Estado;
 use EC\PrincipalBundle\Entity\Categoria;
@@ -18,6 +18,7 @@ use EC\PrincipalBundle\Form\Type\ActuacionType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
+use Ps\PdfBundle\Annotation\Pdf;
 
 class IncidenciaController extends Controller
 {  	     
@@ -55,11 +56,11 @@ class IncidenciaController extends Controller
    				$em->flush();
    				
     				$em = $this->getDoctrine()->getManager();
-					$consulta=new Consulta();
+					$consulta=new ConsultaIncidencia();
 					$consulta->setUsuario($this->getUser());
 					$consulta->setIncidencia($incidencia);
-					$this->getUser()->addConsulta($consulta);
-					$incidencia->addConsulta($consulta);
+					$this->getUser()->addConsultasIncidencia($consulta);
+					$incidencia->addConsultasIncidencia($consulta);
 
 					$em->persist($this->getUser());
 					$em->persist($incidencia);	
@@ -142,6 +143,63 @@ class IncidenciaController extends Controller
 					array('incidencias'=>$incidencias,'comunidad'=>$comunidad,
 					));
     }
+    
+    /**
+     * @Pdf()
+     * @Route("/adminfincas/comunidad/{cif}/listado/incidencias/pdf", name="ec_adminfincas_comunidad_listado_incidencias_pdf")
+     */
+    public function listado_incidencias_pdfAction($cif)
+    {
+    	$ComprobacionesService=$this->get('comprobaciones_service');
+      $comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+    	
+    	/*Buscamos las incidencias de la comunidad*/
+    	$em = $this->getDoctrine()->getManager();
+		$query = $em->createQuery(
+    		'SELECT i
+			FROM ECPrincipalBundle:Incidencia i
+			WHERE i.propietario IN
+			(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+			(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
+		)->setParameters(array('comunidad'=>$comunidad,));			
+		$incidencias = $query->getResult();
+    	    
+    	$format = $this->get('request')->get('_format');  	
+    	$filename = "incidencias_".$comunidad->getCodigo().".pdf";
+    	$response=$this->render(sprintf('ECPrincipalBundle:Incidencia:listado_incidencias_pdf.%s.twig', $format), array(
+        		'incidencias' => $incidencias, 'comunidad'=>$comunidad
+    		));
+    	$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+		return $response;
+    }
+    
+    /**
+	  * @Route("/adminfincas/comunidad/{cif}/listado/incidencias/csv", name="ec_adminfincas_comunidad_listado_incidencias_csv")
+	  * @Template("ECPrincipalBundle:Incidencia:listado_incidencias_csv.html.twig")
+	  */
+    public function listado_incidencias_csvAction($cif)
+    {
+    		$ComprobacionesService=$this->get('comprobaciones_service');
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+    		
+    		/*Buscamos las incidencias de la comunidad*/
+    		$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+    			'SELECT i
+				FROM ECPrincipalBundle:Incidencia i
+				WHERE i.propietario IN
+				(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
+			)->setParameters(array('comunidad'=>$comunidad,));			
+			$incidencias = $query->getResult();   
+    		 
+			$filename = "incidencias_".$comunidad->getCodigo().".csv";	
+			$response = $this->render('ECPrincipalBundle:Incidencia:listado_incidencias_csv.html.twig', array('incidencias' => $incidencias));
+			$response->headers->set('Content-Type', 'text/csv');
+
+			$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+			return $response;
+	 }
     
     /**
 	  * @Route("/incidencia/{id}", name="ec_incidencia")
@@ -272,16 +330,16 @@ class IncidenciaController extends Controller
     		}
     		
 			//Registramos la consulta a la incidencia
-			$consulta=$ComprobacionesService->comprobar_consulta($this->getUser(), $incidencia->getId());
+			$consulta=$ComprobacionesService->comprobar_consulta_incidencia($this->getUser(), $incidencia->getId());
 			$em = $this->getDoctrine()->getManager();
 			if($consulta!=null){
 				$consulta->setFecha();
 			}else{
-				$consulta=new Consulta();
+				$consulta=new ConsultaIncidencia();
 				$consulta->setUsuario($this->getUser());
 				$consulta->setIncidencia($incidencia);
-				$this->getUser()->addConsulta($consulta);
-				$incidencia->addConsulta($consulta);
+				$this->getUser()->addConsultasIncidencia($consulta);
+				$incidencia->addConsultasIncidencia($consulta);
 
 				$em->persist($this->getUser());
 				$em->persist($incidencia);	

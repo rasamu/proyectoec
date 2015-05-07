@@ -1,0 +1,4 @@
+fecha;categoria;propietario;asunto;estado
+{% for incidencia in incidencias %}
+{{ incidencia.fecha | date("d/m/Y H:i:s a") }};{{ incidencia.categoria.nombre }};{{ incidencia.propietario.razon }};{{incidencia.asunto}};{{incidencia.estado.nombre}}
+{% endfor %}

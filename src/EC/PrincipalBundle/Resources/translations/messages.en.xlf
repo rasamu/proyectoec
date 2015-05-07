@@ -497,6 +497,26 @@
     				<source>50 Anuncios/Página</source>
     				<target>50 Ads/Page</target>
 				</trans-unit>
+				<trans-unit id="245">
+    				<source>Denuncia</source>
+    				<target>Complaint</target>
+				</trans-unit>
+				<trans-unit id="246">
+    				<source>Compartir</source>
+    				<target>Share</target>
+				</trans-unit>
+				<trans-unit id="247">
+    				<source>Compartir link en Facebook</source>
+    				<target>Share link on Facebook</target>
+				</trans-unit>
+				<trans-unit id="248">
+    				<source>Compartir link en Twitter</source>
+    				<target>Share link on Twitter</target>
+				</trans-unit>
+				<trans-unit id="249">
+    				<source>Compartir link en Google+</source>
+    				<target>Share link on Google+</target>
+				</trans-unit>
 
 <!--BLOQUE-->
         		<trans-unit id="300">
@@ -754,6 +774,22 @@
             <trans-unit id="609">
                 <source>Documento eliminado con éxito.</source>
                 <target>Document deleted successfully.</target>
+            </trans-unit>
+            <trans-unit id="610">
+                <source>Consultas</source>
+                <target>Consultations</target>
+            </trans-unit>
+            <trans-unit id="611">
+                <source>Última Consulta</source>
+                <target>Last Consultations</target>
+            </trans-unit>
+				<trans-unit id="612">
+                <source>Leído</source>
+                <target>Read</target>
+            </trans-unit>
+				<trans-unit id="613">
+                <source>No Leído</source>
+                <target>Unread</target>
             </trans-unit>
         		
 <!--INCIDENCIA-->

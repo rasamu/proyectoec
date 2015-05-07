@@ -53,7 +53,7 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Incidencia{% endtrans %}</h2>
+	<h2 class="centrado">{% trans %}Incidencia{% endtrans %}</h2>
 	
 	<div class="form">
 		<div id="incidencia">
@@ -66,18 +66,18 @@
 			{% if is_granted('ROLE_ADMINFINCAS') %}
 		
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_privacidad) }}>
-    				   <div class="rojo">{{ form_errors(form_privacidad) }}</div>
+    				   <div class="red">{{ form_errors(form_privacidad) }}</div>
     				   
-    					<div class="error">{{ form_errors(form_privacidad.privacidad) }}</div>
+    					<div class="error red">{{ form_errors(form_privacidad.privacidad) }}</div>
        		 		<div class="label_campo2"><strong>{{ form_label(form_privacidad.privacidad) }}:</strong></div>
         				{{ form_widget(form_privacidad.privacidad) }}
         				
     					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
 				</form>
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_estado) }}>
-    				   <div class="rojo">{{ form_errors(form_estado) }}</div>
+    				   <div class="red">{{ form_errors(form_estado) }}</div>
     				   
-    					<div class="error">{{ form_errors(form_estado.estado) }}</div>
+    					<div class="error red">{{ form_errors(form_estado.estado) }}</div>
        		 		<div class="label_campo2"><strong>{{ form_label(form_estado.estado) }}:</strong></div>
         				{{ form_widget(form_estado.estado) }}
         				
@@ -89,7 +89,7 @@
 				<div><strong>{%trans%}Estado{%endtrans%}:</strong> {{incidencia.estado.nombre}}</strong></div>
 			{% endif %}		
 			
-			<hr class="verde">
+			<hr class="azul_oscuro">
 			<div><strong>{%trans%}Actuaciones{%endtrans%}:</strong></div>
 			{% for actuacion in actuaciones %}
 				<div>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
@@ -116,12 +116,12 @@
 
 			{% if ( incidencia.estado.id !='3') %}	
             <form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post">
-    				<div class="rojo">{{ form_errors(form) }}</div>
+    				<div class="red">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.mensaje) }}  (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
         				<div>{{ form_widget(form.mensaje) }}</div>
-        				<div class="error">{{ form_errors(form.mensaje) }}</div>
+        				<div class="error red">{{ form_errors(form.mensaje) }}</div>
     				</div> 		
     				   
     				<div class="campo_login">

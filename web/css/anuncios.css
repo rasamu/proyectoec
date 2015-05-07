@@ -1,15 +1,15 @@
 .anuncio{
 	width: 80%;
-   padding:6px;
-   border-radius:14px;
-	-webkit-border-radius:14px;
-	-moz-border-radius:14px;
-	-o-border-radius:14px;
+   padding:4px;
 	height: auto;
 	overflow: hidden;
 	margin: 15px auto;
 	position: relative;
 	z-index: 1000;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
 }
 
 .anuncio_color{
@@ -20,10 +20,10 @@
 }
 
 .buscador_color{
-	background: -webkit-linear-gradient(#B9D4B9, white);
-   background: -moz-linear-gradient(#B9D4B9, white);
-   background: -o-linear-gradient(#B9D4B9, white);
-   background: linear-gradient(#B9D4B9, white);
+	background: -webkit-linear-gradient(#A7BDD0, white);
+   background: -moz-linear-gradient(#A7BDD0, white);
+   background: -o-linear-gradient(#A7BDD0, white);
+   background: linear-gradient(#A7BDD0, white);
 }
 
 .denunciar_color{
@@ -35,18 +35,14 @@
 
 .anuncio span{
 	text-decoration: none;
-	margin-left: 20px;
-	cursor: pointer;
+}
+
+.precio span{
+	margin-left: 0;	
 }
 
 .label_campo span{
 	margin-left: 0;	
-}
-
-.anuncio a{
-	text-decoration: none;
-	margin-left: 20px;
-	cursor: pointer;
 }
 
 .total_resultados{
@@ -69,25 +65,32 @@
 
 .pagination span a{
 	text-decoration: none;
-	color: #2C4853;
-	padding: 4px;
-	border: 2px solid #5D935D;	
+	color: white;
+	padding: 6px;
 	margin-left: 2px;
 	margin-right: 2px;
-	border-radius:5px;
-	-webkit-border-radius:5px;
-	-moz-border-radius:5px;
-	-o-border-radius:5px;
-	background-color: #B9D4B9;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
+	background-color: #7CB5EC;
+}
+
+.pagination span a:hover{
+	background-color: #337AB7;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 fieldset{
 	background-color: white;
-	border-radius:14px;
-	-webkit-border-radius:14px;
-	-moz-border-radius:14px;
-	-o-border-radius:14px;
-	border: #316431 1px outset;
+	border-radius:6px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	-o-border-radius:6px;
+	border: #7CB5EC 1px outset;
 	min-height: 120px;
 }
 
@@ -100,10 +103,6 @@ fieldset{
   -moz-transform: none;
   -ms-transform: none;
   transform: none;
-}
-
-.anuncio span:hover{
-	text-decoration: underline;	
 }
 
 .label_campo span:hover{
@@ -119,7 +118,7 @@ fieldset{
 .titulo_anuncio{
 	width: 100%;
 	height: auto;
-	border-bottom: 1px #316431 solid;
+	border-bottom: 1px #223E56 solid;
 	padding-bottom: 4px;
 	margin-bottom: 4px;
 }
@@ -165,26 +164,23 @@ fieldset{
 	width: auto;
 	float: left;
 	position: relative;
-	color:#316431;	
-	padding: 2px;
-	margin-left: 10px;
+	color:#005D84;	
+	padding: 4px;
+	margin-left: 2px;
 }
 
 .precio{
 	width: auto;
 	float: left;
 	position: relative;
-	color:#316431;
-	background: -webkit-linear-gradient(white, #b9d4b9);
-   background: -moz-linear-gradient(white, #b9d4b9);
-   background: -o-linear-gradient(white, #b9d4b9);
-   background: linear-gradient(white, #b9d4b9);
-   padding:2px;
-   border-radius:6px;
-	-webkit-border-radius:6px;
-	-moz-border-radius:6px;
-	-o-border-radius:6px;
-	border:1px green solid;
+	color:#223E56;
+	background: #D9E1E8;
+   padding:4px;
+   border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
+	/*border:1px green solid;*/
 }
 
 ol#ordenable{
@@ -208,7 +204,7 @@ ol#ordenable > li:before{
     line-height: 1;
     font-weight: bold;
     text-align: right;
-    color: #759E1A;
+    color: #7CB5EC;
      
     transform: rotate(-25deg);
     -ms-transform: rotate(-25deg);
@@ -245,6 +241,10 @@ ol#ordenable > li a{
 	color: #078CC3;	
 }
 
+.oculto{
+	visibility: hidden;	
+}
+
 /*VERSION MOVIL*/
 @media (max-width: 767px) {
 	.anuncio{
@@ -263,10 +263,12 @@ ol#ordenable > li a{
 	}
 	
 	.anuncio span{
-		margin-left: 5px;
+		margin-left: 0;//5px
 	}
-
-	.anuncio a{
-		margin-left: 5px;
+	.precio{
+		padding: 2px;	
+	}
+	.num_fotos{
+		padding: 2px;	
 	}
 }

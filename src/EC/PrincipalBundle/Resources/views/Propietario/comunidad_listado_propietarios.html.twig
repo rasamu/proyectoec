@@ -59,7 +59,7 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Propietarios{% endtrans %}</h2>
+	<h2 class="centrado">{% trans %}Propietarios{% endtrans %}</h2>
 	
 	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>

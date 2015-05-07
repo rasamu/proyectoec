@@ -119,7 +119,7 @@ class ComunidadController extends Controller
     }
 	 
 	 /**
-	  * @Route("/alta/comunidad", name="ec_adminfincas_alta_comunidad")
+	  * @Route("/adminfincas/alta/comunidad", name="ec_adminfincas_alta_comunidad")
 	  * @Template("ECPrincipalBundle:Comunidad:alta_comunidad.html.twig")
 	  */
     public function alta_comunidadAction(Request $request)
@@ -184,7 +184,7 @@ class ComunidadController extends Controller
     }
     
     /**
-	  * @Route("/listado/comunidades", name="ec_adminfincas_listado_comunidades")
+	  * @Route("/adminfincas/listado/comunidades", name="ec_adminfincas_listado_comunidades")
 	  * @Template("ECPrincipalBundle:Comunidad:listado_comunidades.html.twig")
 	  */
     public function listado_comunidadesAction()
@@ -198,7 +198,7 @@ class ComunidadController extends Controller
     
    /**
      * @Pdf()
-     * @Route("/listado/comunidades/pdf", name="ec_adminfincas_listado_comunidades_pdf")
+     * @Route("/adminfincas/listado/comunidades/pdf", name="ec_adminfincas_listado_comunidades_pdf")
      */
     public function listado_comunidades_pdfAction()
     {
@@ -214,7 +214,7 @@ class ComunidadController extends Controller
     }
     
     /**
-	  * @Route("/listado/comunidades/csv", name="ec_adminfincas_listado_comunidades_csv")
+	  * @Route("/adminfincas/listado/comunidades/csv", name="ec_adminfincas_listado_comunidades_csv")
 	  * @Template("ECPrincipalBundle:Comunidad:listado_comunidades_csv.html.twig")
 	  */
     public function listado_comunidades_csvAction()
@@ -231,7 +231,7 @@ class ComunidadController extends Controller
     
     
     /**
-	  * @Route("/comunidad/{cif}/editar", name="ec_adminfincas_comunidad_editar")
+	  * @Route("/adminfincas/comunidad/{cif}/editar", name="ec_adminfincas_comunidad_editar")
 	  * @Template("ECPrincipalBundle:Comunidad:editar_comunidad.html.twig")
 	  */
  	public function editar_comunidadAction($cif, Request $request)
@@ -280,7 +280,7 @@ class ComunidadController extends Controller
     }
     
     /**
-	  * @Route("/comunidad/{cif}/eliminar", name="ec_adminfincas_comunidad_eliminar")
+	  * @Route("/adminfincas/comunidad/{cif}/eliminar", name="ec_adminfincas_comunidad_eliminar")
 	  * @Template()
 	  */
     public function eliminar_comunidadAction($cif)

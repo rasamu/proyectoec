@@ -11,6 +11,7 @@
     <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
     <link rel='stylesheet' type='text/css' href="{{ asset('css/anuncios.css') }}" />
     <link rel='stylesheet' type='text/css' href="{{ asset('css/jquery.fancybox.css') }}" media="screen"/>
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/social-likes.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
@@ -18,6 +19,7 @@
 	
 	<script type='text/javascript' src="{{ asset('js/jquery.fancybox.js') }}" ></script>
 	<script type='text/javascript' src="{{ asset('js/jquery.fancybox.pack.js') }}" ></script>
+	<script type='text/javascript' src="{{ asset('js/social-likes.min.js') }}" ></script>
 	<script type='text/javascript'>	
 		$(document).ready(function() {
 			/* Apply fancybox to multiple items */
@@ -43,7 +45,7 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Mis Anuncios{% endtrans %}</h2>
+	<h2 class="centrado">{% trans %}Mis Anuncios{% endtrans %}</h2>
 
 	{% if is_granted('ROLE_ADMINFINCAS') %}
 		<a class="boton_alta btn_nuevo" href="{{ path('ec_nuevo_anuncio', {'cif': comunidad.cif}) }}"><span>{% trans %}Nuevo Anuncio{% endtrans %}</span></a>
@@ -88,22 +90,29 @@
 				</div>
 				<div class="footer_anuncio">
 					<div class="precio">
-						{%trans%}Precio{%endtrans%}: <strong>{{mi_anuncio.precio}} €</strong>
+						<span class="no_mostrar">{%trans%}Precio{%endtrans%}: </span> <strong>{{mi_anuncio.precio}} €</strong>
 					</div>
 					<div class="num_fotos">
 						<strong>{{mi_anuncio.getImagenes().count()}}</strong> {% trans %}Fotos{% endtrans %}
 					</div>
-					<a class="naranja" href="{{ path('ec_modificar_anuncio', { 'id': mi_anuncio.id }) }}">{% trans %}Editar{% endtrans %}</a>
-					<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el anuncio{%endtrans%} {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
+					
+					<div class="social-likes social-likes_single" data-counters="no" data-url="{{ url('ec_buscador_anuncios', {'_locale': app.request.getLocale(), 'id_anuncio': mi_anuncio.id}) }}" data-title="{{mi_anuncio.titulo}}" data-single-title="{%trans%}Compartir{%endtrans%}">
+						<div class="facebook" title="{%trans%}Compartir link en Facebook{%endtrans%}">Facebook</div>
+						<div class="twitter" title="{%trans%}Compartir link en Twitter{%endtrans%}">Twitter</div>
+						<div class="plusone" title="{%trans%}Compartir link en Google+{%endtrans%}">Google+</div>
+					</div>
+					
+					<a class="boton_documento btn_preview" href="{{ path('ec_modificar_anuncio', { 'id': mi_anuncio.id }) }}">{% trans %}Editar{% endtrans %}</a>
+					<a class="boton_documento btn_delete" href="{{ path('ec_eliminar_anuncio', { 'id': mi_anuncio.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el anuncio{%endtrans%} {{mi_anuncio.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
 				</div>
 			</div>
 		{% endfor %}		
 	{% endif %}
 	
 	{% if is_granted('ROLE_ADMINFINCAS') or is_granted('ROLE_PRESIDENTE') or is_granted('ROLE_VICEPRESIDENTE')%}
-		<hr class="verdecito" />
+		<hr class="azul_oscuro" />
 
-		<h2 class="verde centrado">{% trans %}Anuncios de la Comunidad{% endtrans %}</h2>
+		<h2 class="centrado">{% trans %}Anuncios de la Comunidad{% endtrans %}</h2>
 
 		{% if anuncios_comunidad is empty%}
 			<p>{%trans%}La comunidad no tiene anuncios publicados.{%endtrans%}</p>
@@ -142,13 +151,20 @@
 					</div>
 					<div class="footer_anuncio">
 						<div class="precio">
-							{%trans%}Precio{%endtrans%}: <strong>{{anuncio_comunidad.precio}} €</strong>
+							<span class="no_mostrar">{%trans%}Precio{%endtrans%}: </span> <strong>{{anuncio_comunidad.precio}} €</strong>
 						</div>
 						<div class="num_fotos">
 							<strong>{{anuncio_comunidad.getImagenes().count()}}</strong> {% trans %}Fotos{% endtrans %}
 						</div>
+						
+						<div class="social-likes social-likes_single" data-counters="no" data-url="{{ url('ec_buscador_anuncios', {'_locale': app.request.getLocale(), 'id_anuncio': anuncio_comunidad.id}) }}" data-title="{{anuncio_comunidad.titulo}}" data-single-title="{%trans%}Compartir{%endtrans%}">
+							<div class="facebook" title="{%trans%}Compartir link en Facebook{%endtrans%}">Facebook</div>
+							<div class="twitter" title="{%trans%}Compartir link en Twitter{%endtrans%}">Twitter</div>
+							<div class="plusone" title="{%trans%}Compartir link en Google+{%endtrans%}">Google+</div>
+						</div>
+					
 						{% if is_granted('ROLE_ADMINFINCAS') %}
-							<a class="rojo" href="{{ path('ec_eliminar_anuncio', { 'id': anuncio_comunidad.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el anuncio{%endtrans%} {{anuncio_comunidad.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
+							<a class="boton_documento btn_delete" href="{{ path('ec_eliminar_anuncio', { 'id': anuncio_comunidad.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el anuncio{%endtrans%} {{anuncio_comunidad.titulo}}?')">{% trans %}Eliminar{% endtrans %}</a>
 						{% endif %}
 					</div>
 				</div>

@@ -260,11 +260,13 @@ class AdminFincas extends Usuario
     protected $id;
 
     /**
+     * @Assert\NotNull()
      * @var string
      */
     protected $telefono;
 
     /**
+     * @Assert\NotNull()
      * @var string
      */
     protected $email;

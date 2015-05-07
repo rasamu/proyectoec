@@ -3,6 +3,7 @@ namespace EC\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -64,6 +65,19 @@ class Documento
      * @ORM\JoinColumn(name="comunidad", referencedColumnName="id")
      */
     protected $comunidad;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\ConsultaDocumento", mappedBy="documento", cascade={"remove"})
+     */
+    private $consultas_documentos;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->consultas_documentos = new \Doctrine\Common\Collections\ArrayCollection();
+    } 
 
     /**
      * Sets file.
@@ -305,5 +319,38 @@ class Documento
     public function getComunidad()
     {
         return $this->comunidad;
+    }
+
+    /**
+     * Add consultas_documentos
+     *
+     * @param \EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos
+     * @return Documento
+     */
+    public function addConsultasDocumento(\EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos)
+    {
+        $this->consultas_documentos[] = $consultasDocumentos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove consultas_documentos
+     *
+     * @param \EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos
+     */
+    public function removeConsultasDocumento(\EC\PrincipalBundle\Entity\ConsultaDocumento $consultasDocumentos)
+    {
+        $this->consultas_documentos->removeElement($consultasDocumentos);
+    }
+
+    /**
+     * Get consultas_documentos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConsultasDocumentos()
+    {
+        return $this->consultas_documentos;
     }
 }

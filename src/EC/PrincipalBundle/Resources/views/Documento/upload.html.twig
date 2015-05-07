@@ -22,27 +22,27 @@
 	{% endfor %}
 
 		<section class="form">
-				<h2 class="verde centrado">{% trans %}Documento{% endtrans %}</h2>
+				<h2 class="centrado">{% trans %}Documento{% endtrans %}</h2>
 
             <form action="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
-    				<div class="rojo">{{ form_errors(form) }}</div>
+    				<div class="red">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
        		 		<div class="label_campo_login">{{ form_label(form.tipo) }}</div>
         				{{ form_widget(form.tipo) }}
-        				<div class="error">{{ form_errors(form.tipo) }}</div>
+        				<div class="error red">{{ form_errors(form.tipo) }}</div>
     				</div> 
     				
     				<div class="campo_login">
        		 		<div class="label_campo_login">{{ form_label(form.descripcion) }}</div>
         				{{ form_widget(form.descripcion) }}
-        				<div class="error">{{ form_errors(form.descripcion) }}</div>
+        				<div class="error red">{{ form_errors(form.descripcion) }}</div>
     				</div> 
     				
     				<div class="campo_login">
        		 		<div class="label_campo_login">{{ form_label(form.file) }}</div>
         				{{ form_widget(form.file) }}
-        				<div class="error">{{ form_errors(form.file) }}</div>
+        				<div class="error red">{{ form_errors(form.file) }}</div>
     				</div>   
 
     				<div class="campo_login">

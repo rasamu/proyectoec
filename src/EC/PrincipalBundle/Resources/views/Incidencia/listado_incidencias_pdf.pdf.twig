@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+	<dynamic-page>
+		<h1 padding="10px" background-color="#005D84" width="100%"><span color="#F7D118">Entre</span><span color="white">Comunidades</span></h1>
+		<h2 color="#223E56">{%trans%}Comunidad{%endtrans%}: {{comunidad.codigo}}</h2>
+		<p>{%trans%}Incidencias{%endtrans%}</p>
+		<table>
+
+			{% for incidencia in incidencias %}
+				<tr>
+				   <td>{{incidencia.fecha | date("d/m/Y H:i:s a")}}</td>
+       			<td>{{incidencia.categoria.nombre}}</td>
+       			<td>{{incidencia.propietario.razon}}</td>
+       			<td>{{incidencia.asunto}}</td>
+       			<td>{{incidencia.estado.nombre}}</td>
+      		</tr> 
+			{% endfor %}
+
+		</table>
+		<p text-align="right">{{ "now"|date("d/m/Y") }}</p>
+	</dynamic-page>
+</pdf>

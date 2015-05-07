@@ -25,6 +25,7 @@ class BloqueRepository extends EntityRepository
 	{
    	 return $this->createQueryBuilder('b')
         	->where('b.comunidad = :id')
+        	->orderBy('b.num', 'ASC')
         	->setParameter('id', $comunidad->getId());
 	}
 }

@@ -64,33 +64,33 @@
 	{% endfor %}
 	
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Editar Anuncio{% endtrans %}</h2>
+			<h2 class="centrado">{% trans %}Editar Anuncio{% endtrans %}</h2>
 			
 			<form action="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
-    				<div class="rojo">{{ form_errors(form) }}</div>
+    				<div class="red">{{ form_errors(form) }}</div>
 
 					<div class="campo_login">
         				<div class="label_campo">{{ form_label(form.categoria) }}</div>
         				{{ form_widget(form.categoria) }}
-       		 		<div class="error">{{ form_errors(form.categoria) }}</div>        
+       		 		<div class="error red">{{ form_errors(form.categoria) }}</div>        
     				</div> 
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.titulo) }}</div>
         				{{ form_widget(form.titulo) }}
-        				<div class="error">{{ form_errors(form.titulo) }}</div>
+        				<div class="error red">{{ form_errors(form.titulo) }}</div>
     				</div> 
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.precio) }}</div>
         				{{ form_widget(form.precio) }}
-        				<div class="error">{{ form_errors(form.precio) }}</div>
+        				<div class="error red">{{ form_errors(form.precio) }}</div>
     				</div>
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.descripcion) }}  (<span id="contador">0/255</span> {% trans %}Caracteres{% endtrans %})</div>
         				{{ form_widget(form.descripcion) }}
-        				<div class="error">{{ form_errors(form.descripcion) }}</div>
+        				<div class="error red">{{ form_errors(form.descripcion) }}</div>
     				</div> 	
    				   
     				<div class="campo_login">

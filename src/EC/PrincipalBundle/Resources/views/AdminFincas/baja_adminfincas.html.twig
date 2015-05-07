@@ -22,21 +22,21 @@
 	{% endfor %}
 	
 	<section id="form_login">		
-		<h2 class="verde centrado">{% trans %}Darse de baja{% endtrans %}</h2>	
+		<h2 class="centrado">{% trans %}Darse de baja{% endtrans %}</h2>	
 
 		{{ form_start(form) }}
-    		<div class="rojo">{{ form_errors(form) }}</div>
+    		<div class="red">{{ form_errors(form) }}</div>
  			
  			<div class="campo_login">
         		<div class="label_campo2">{{ form_label(form.password.first) }}</div>
         		{{ form_widget(form.password.first) }}
-       		 <div class="error">{{ form_errors(form.password.first) }}</div>        
+       		 <div class="error red">{{ form_errors(form.password.first) }}</div>        
     		</div>    		
     		
     		<div class="campo_login">
         		<div class="label_campo2">{{ form_label(form.password.second) }}</div>
         		{{ form_widget(form.password.second) }}
-       		 <div class="error">{{ form_errors(form.password.second) }}</div>        
+       		 <div class="error red">{{ form_errors(form.password.second) }}</div>        
     		</div>  
 
     		<div class="campo_login">

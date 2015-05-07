@@ -34,7 +34,7 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Documentos{% endtrans %}</h2>
+	<h2 class="centrado">{% trans %}Documentos{% endtrans %}</h2>
 	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
 		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{%trans%}Nuevo Documento{%endtrans%}</a>
@@ -42,40 +42,58 @@
 								
 	{% for tipo in tipos %}
 	
-		<div onclick="javascript:mostrar({{tipo.id}});" class="cursor_pointer"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta" /><h3 class="verde inline"> {{tipo.nombre}} </h3>
+		<div onclick="javascript:mostrar({{tipo.id}});" class="cursor_pointer"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta" /><h3 class="azul inline"> {{tipo.nombre}} </h3>
 			{% set count=0 %}
 			{% for documento in documentos if documento.tipo==tipo %}
 					{%set count=count+1 %}
 			{% endfor %}
-			({{count}} Ficheros)
+			(<strong>{{count}}</strong> Ficheros)
 		</div>
 		
 		<div id="{{tipo.id}}" class="oculto margen_izquierdo">
 			{% for documento in documentos if documento.tipo==tipo%}
 				<div class="documento">
-						<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>				
-						<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:s a")}}</div>
-						<div><strong>{%trans%}Formato{%endtrans%}: </strong>
-						{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
+						<div>
+							<strong>{%trans%}Formato{%endtrans%}: </strong>
+							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
 								<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}" />
-						{% endif %}
-						{{documento.getFormat()}}
-						<strong>{%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
-						<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
+							{% endif %}
+							{{documento.getFormat()}}
+							<strong>{%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
+						</div>
+						<div>
+							<strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}						
+							{% if is_granted('ROLE_VECINO') %}
+								{% set consulta=consulta_service_global.comprobar_consulta_documento(app.user,documento) %}
+								{% if consulta!= null%}
+									<span class="flotar_derecha mensaje green"><span>{%trans%}Leído{%endtrans%}</span>
+								{%else%}
+									<span class="flotar_derecha mensaje red">{%trans%}No leído{%endtrans%}</span>
+								{% endif %}
+							{% endif %}				
+						</div>				
+						<div>
+							<strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:s a")}}
+						</div>						
+						<div>
+							<nav>
+							<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
 						
-						{% if is_granted('ROLE_ADMINFINCAS') %}
-							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
-						  		<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'cif': comunidad.cif, 'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
+							{% if is_granted('ROLE_ADMINFINCAS') %}
+								{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
+						  			<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'cif': comunidad.cif, 'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
+								{% endif %}
+								<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_comunidad_consultas_documento', { 'id': documento.id}) }}" >{%trans%}Consultas{%endtrans%}</a>
+								<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
+							{% else %}
+								{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
+									<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', {'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
+								{% endif %}
 							{% endif %}
-							<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
-						{% else %}
-							{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
-								<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', {'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
-							{% endif %}
-						{% endif %}
+							</nav>			
 						</div>
 					</div>
-					<hr class="verde" />
+					<hr class="azul_oscuro" />
 			{% endfor %}		
 		</div>
 	

@@ -4,15 +4,15 @@
 	{{ parent() }}
 	
 	<section id="botones">
-		<p class="verde cab negrita">Bienvenid@ {{nombre}}</p>
+		<p class="azul cab negrita">Bienvenid@ {{nombre}}</p>
    </section>
 {% endblock %}
 
 {% block contenido %}
 	{{ parent() }}
 	
-	<p class="verde">Se ha dado de alta correctamente. Sus datos de acceso se muestran a continuación.</p>
-	<p class="verde negrita cursiva">Usuario:  {{usuario}}</p>
-	<p class="verde negrita cursiva">Password: {{pass}}</p>
-	<p class="verde">Puede acceder a su área privada <a href="{{ url("login")}}">aqui</a>.</p>
+	<p class="azul">Se ha dado de alta correctamente. Sus datos de acceso se muestran a continuación.</p>
+	<p class="azul negrita cursiva">Usuario:  {{usuario}}</p>
+	<p class="azul negrita cursiva">Password: {{pass}}</p>
+	<p class="azul">Puede acceder a su área privada <a href="{{ url("login")}}">aqui</a>.</p>
 {% endblock %}

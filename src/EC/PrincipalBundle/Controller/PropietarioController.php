@@ -22,7 +22,7 @@ class PropietarioController extends Controller
 {   	 
 	/**
 	  * @Pdf()
-	  * @Route("/comunidad/{cif}/alta/propietario/{_format}", name="ec_adminfincas_comunidad_alta_propietario")
+	  * @Route("/adminfincas/comunidad/{cif}/alta/propietario/{_format}", name="ec_adminfincas_comunidad_alta_propietario")
 	  * @Template("ECPrincipalBundle:Propietario:alta_propietario.html.twig")
 	  */
     public function alta_propietarioAction(Request $request, $cif)
@@ -248,7 +248,7 @@ class PropietarioController extends Controller
     }
     
 	/**
-	  * @Route("/comunidad/{cif}/propietario/eliminar/{id}", name="ec_adminfincas_comunidad_eliminar_propietario")
+	  * @Route("/adminfincas/comunidad/{cif}/propietario/eliminar/{id}", name="ec_adminfincas_comunidad_eliminar_propietario")
 	  */
     public function comunidad_eliminar_propietarioAction($cif, $id)
     {
@@ -296,7 +296,7 @@ class PropietarioController extends Controller
     }    
     
     /**
-	  * @Route("/comunidad/{cif}/listado/propietarios", name="ec_adminfincas_comunidad_listado_propietarios")
+	  * @Route("/adminfincas/comunidad/{cif}/listado/propietarios", name="ec_adminfincas_comunidad_listado_propietarios")
 	  * @Template("ECAdminFincasBundle:Default:comunidad_listado_propietarios.html.twig")
 	  */
     public function comunidad_listado_propietariosAction($cif)
@@ -313,7 +313,7 @@ class PropietarioController extends Controller
     
     /**
      * @Pdf()
-     * @Route("/comunidad/{cif}/listado/propietarios/pdf", name="ec_adminfincas_comunidad_listado_propietarios_pdf")
+     * @Route("/adminfincas/comunidad/{cif}/listado/propietarios/pdf", name="ec_adminfincas_comunidad_listado_propietarios_pdf")
      */
     public function comunidad_listado_propietarios_pdfAction($cif)
     {
@@ -333,7 +333,7 @@ class PropietarioController extends Controller
     }
     
     /**
-	  * @Route("/comunidad/{cif}/listado/propietarios/csv", name="ec_adminfincas_comunidad_listado_propietarios")
+	  * @Route("/adminfincas/comunidad/{cif}/listado/propietarios/csv", name="ec_adminfincas_comunidad_listado_propietarios")
 	  * @Template("ECAdminFincasBundle:Default:comunidad_listado_propietarios_csv.html.twig")
 	  */
     public function comunidad_listado_propietarios_csvAction($cif) {
@@ -352,7 +352,7 @@ class PropietarioController extends Controller
 	}
     
     	 /**
-	  * @Route("/perfil", name="ec_propietario_perfil")
+	  * @Route("/propietario/perfil", name="ec_propietario_perfil")
 	  * @Template("ECPrincipalBundle:Propietario:modificacion_datospersonales.html.twig")
 	  */
     public function modificacion_perfilAction(Request $request)
@@ -362,8 +362,8 @@ class PropietarioController extends Controller
     		$form = $this ->createFormBuilder($propietario)
     		    	->setAction($this->generateUrl('ec_propietario_perfil'))
     				->add('razon','text',array('label' => 'Nombre/Razón Social'))
-    				->add('telefono','text', array('label' => 'Teléfono','max_length' =>9,'required'=>false))
-    				->add('email','email',array('required'=>false))
+    				->add('telefono','text', array('label' => 'Teléfono','max_length' =>9,'required'=>true))
+    				->add('email','email',array('required'=>true))
     				->getForm();
     		
     		$form->handleRequest($request);

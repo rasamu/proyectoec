@@ -1,5 +1,23 @@
 {% extends 'ECPrincipalBundle::layout.html.twig' %}
 
+	{% block meta %}
+		{{ parent() }}
+		
+		{% if id_anuncio!= null %}
+			{% for anuncio in anuncios %}
+				<meta property="og:type" content="article">
+				<meta property="og:url" content="{{ url('ec_buscador_anuncios', {'_locale': app.request.getLocale(), 'id_anuncio': anuncio.id}) }}">
+				<meta property="og:title" content="{{anuncio.titulo}}">
+				<meta property="og:description" content="{{anuncio.descripcion}}">
+				{% set fotos=anuncio.getImagenes() %}
+				{% if fotos|length()!=0 %}
+						{% set primera= fotos|first %}
+						<meta property="og:image" content="{{asset(primera.getWebPath())}}">
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+{% endblock %}
+
 {% block title %}
 	{% trans %}Anuncios{% endtrans %}
 	{{ parent() }}
@@ -9,6 +27,8 @@
     {{ parent() }}
     
     <link rel='stylesheet' type='text/css' href="{{ asset('css/anuncios.css') }}" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/social-likes.css') }}" />
     <link rel='stylesheet' type='text/css' href="{{ asset('css/jquery.fancybox.css') }}" media="screen"/>
     <link rel="stylesheet" href="{{ asset('css/jquery-ui-dialog.css') }}" />
 {% endblock %}
@@ -17,178 +37,18 @@
 	{{ parent() }}
 	
 	<script type='text/javascript' src="{{ asset('js/jquery-ui.min.js') }}"></script>
+	<script type='text/javascript' src="{{ asset('js/social-likes.min.js') }}" ></script>
 	<script type='text/javascript' src="{{ asset('js/jquery.fancybox.js') }}" ></script>
 	<script type='text/javascript' src="{{ asset('js/jquery.fancybox.pack.js') }}" ></script>
+	<script type='text/javascript'>
+	     var myContactar = '{{ 'Contactar'|trans }}';
+	     var myDenunciar = '{{ 'Denunciar'|trans }}';
+	</script>
+	<script type='text/javascript' src="{{ asset('js/buscador.js') }}"></script>
 	
 	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 	
-	<script type='text/javascript'>	
-		$(document).ready(function() {
-			/* Apply fancybox to multiple items */
-			$("a.grouped_elements").fancybox({
-				'transitionIn'	:	'elastic',
-				'transitionOut'	:	'elastic',
-				'speedIn'		:	600, 
-				'speedOut'		:	200, 
-				'overlayShow'	:	false,
-			});
-		
-			var idtextareaContacto="form_contacto_mensaje";
-			var idcontadorContacto="contadorContacto";
-			var idtextareaDenuncia="form_denuncia_denuncia";
-			var idcontadorDenuncia="contadorDenuncia";
-			var max="255";
-			
-			$("#"+idtextareaContacto).keyup(function(){
-				updateContadorTa(idtextareaContacto, idcontadorContacto,max);
-			});
-			$("#"+idtextareaContacto).keydown(function(){
-				updateContadorTa(idtextareaContacto, idcontadorContacto,max);
-			});
-			$("#"+idtextareaContacto).change(function(){
-				updateContadorTa(idtextareaContacto, idcontadorContacto,max);
-			});
-			$("#"+idtextareaDenuncia).keyup(function(){
-				updateContadorTa(idtextareaDenuncia, idcontadorDenuncia,max);
-			});
-			$("#"+idtextareaDenuncia).keydown(function(){
-				updateContadorTa(idtextareaDenuncia, idcontadorDenuncia,max);
-			});
-			$("#"+idtextareaDenuncia).change(function(){
-				updateContadorTa(idtextareaDenuncia, idcontadorDenuncia,max);
-			});
-			
-   				$("#form_contacto").submit(function(){
-   				   $('#enviar_contacto').hide();
-   					$('#loading_contacto').show();
-        			   var url = $("#form_contacto").attr("action");
-       				$.ajax({
-       					url: url,
-       					data: {
-           					Mensaje:$("#form_contacto_mensaje").val(),
-           					Email:$("#form_contacto_email").val(),
-           					Nombre:$("#form_contacto_nombre").val(),
-           					idAnuncio: id_anuncio,
-       					},
-       					type: "POST",
-       					cache: false,
-       					success:function(data){
-            				if(data.responseCode==200 ){  
-            					document.getElementById('form_contacto_mensaje').value="";
-            					document.getElementById('form_contacto_email').value=""; 
-            					document.getElementById('form_contacto_nombre').value=""; 
-            					$('#loading_contacto').hide();
-            					$('#enviar_contacto').show();
-            			   	$("#form_contactar").hide();  
-                				$('#output_contacto').html(data.greeting).addClass("mensaje").css("border-color","green").css("color","green").show();
-            				}else if(data.responseCode==400){//bad request
-            					$('#loading_contacto').hide();
-            					$('#enviar_contacto').show();
-               				$('#output_contacto').html(data.greeting).addClass("mensaje").css("border-color","red").css("color","red").show();
-           					}else{           					
-              					alert("An unexpeded error occured.");
-              					$('#loading_contacto').hide();
-            					$('#enviar_contacto').show();
-           					}
-       					}
-       				});
-      				return false;
-  		 			});
-  		 			
-   				$("#form_denuncia").submit(function(){
-   				   $('#enviar_denuncia').hide();
-   					$('#loading_denuncia').show();
-        			   var url = $("#form_denuncia").attr("action");
-       				$.ajax({
-       					url: url,
-       					data: {
-           					Denuncia:$("#form_denuncia_denuncia").val(),
-           					idAnuncio: id_anuncio,
-       					},
-       					type: "POST",
-       					cache: false,
-       					success:function(data){
-            				if(data.responseCode==200 ){  
-            					document.getElementById('form_denuncia_denuncia').value="";
-            					$('#loading_denuncia').hide();
-            					$('#enviar_denuncia').show();
-            			   	$("#form_denunciar").hide();  
-                				$('#output_denuncia').html(data.greeting).addClass("mensaje").css("border-color","green").css("color","green").show();
-            				}else if(data.responseCode==400){//bad request
-            					$('#loading_denuncia').hide();
-            					$('#enviar_denuncia').show();
-               				$('#output_denuncia').html(data.greeting).addClass("mensaje").css("border-color","red").css("color","red").show();
-           					}else{           					
-              					alert("An unexpeded error occured.");
-              					$('#loading_denuncia').hide();
-            					$('#enviar_denuncia').show();
-           					}
-       					}
-       				});
-      				return false;
-  		 			});
-		});
-		
-		var id_anuncio ="";
-		
-		function updateContadorTa(idtextarea, idcontador,max){
-			var contador = $("#"+idcontador);
-			var ta =     $("#"+idtextarea);
-			contador.html("0/"+max);
- 
-			contador.html(ta.val().length+"/"+max);
-			if(parseInt(ta.val().length)>max){
-				ta.val(ta.val().substring(0,max-1));
-				contador.html(max+"/"+max);
-			}
-		}
-		
-		function showDialogContactar(anuncio) {
-				id_anuncio=anuncio;
-				updateContadorTa("form_contacto_mensaje", "contadorContacto", 255);
-				$("#form_contactar").show();
-				$("#output_contacto").hide();
-				$("#contacto").dialog({ <!--  ------> muestra la ventana  -->
-            	width: "auto",  <!-- -------------> ancho de la ventana -->
-            	height: "auto",<!--  -------------> altura de la ventana -->
-            	show: "scale", <!-- -----------> animación de la ventana al aparecer -->
-            	hide: "scale", <!-- -----------> animación al cerrar la ventana -->
-            	resizable: "false", <!-- ------> fija o redimensionable si ponemos este valor a "true" -->
-            	position: "center",<!--  ------> posicion de la ventana en la pantalla (left, top, right...) -->
-            	modal: "true", <!-- ------------> si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
-        			title: "{%trans%}Contactar{%endtrans%}",
-        			close: function(event, ui){ 
-        				 document.getElementById('form_contacto_mensaje').value=""; 
-        				 document.getElementById('form_contacto_email').value="";
-						 document.getElementById('form_contacto_nombre').value="";
-        				 $("#output_contacto").removeAttr("style").removeClass("mensaje").text("");
-        			}
-        		});
-		}
-		
-		function showDialogDenunciar(anuncio) {
-				id_anuncio=anuncio;				
-				updateContadorTa("form_denuncia_denuncia", "contadorDenuncia", 255);
-				$("#form_denunciar").show();
-				$("#output_denuncia").hide();
-				$("#denuncia").dialog({ <!--  ------> muestra la ventana  -->
-            	width: "auto",  <!-- -------------> ancho de la ventana -->
-            	height: "auto",<!--  -------------> altura de la ventana -->
-            	show: "scale", <!-- -----------> animación de la ventana al aparecer -->
-            	hide: "scale", <!-- -----------> animación al cerrar la ventana -->
-            	resizable: "false", <!-- ------> fija o redimensionable si ponemos este valor a "true" -->
-            	position: "center",<!--  ------> posicion de la ventana en la pantalla (left, top, right...) -->
-            	modal: "true", <!-- ------------> si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
-        			title: "{%trans%}Denunciar{%endtrans%}",
-        			close: function(event, ui){ 
-        				 document.getElementById('form_denuncia_denuncia').value=""; 
-        				 $("#output_denuncia").removeAttr("style").removeClass("mensaje").text("");
-        			}
-        		});
-		}
-	</script>
-
 {% endblock %}
 
 {% block colder %}
@@ -196,38 +56,36 @@
 	
 	<div class="anuncio buscador_color">
 		{{ form_start(form) }}
-    		<div class="rojo">{{ form_errors(form) }}</div>
+    		<div class="red">{{ form_errors(form) }}</div>
     		
     		<div class="campo_login flotar_izquierda">
         		<div class="label_campo_login">{{ form_label(form.categoria) }}</div>
         		{{ form_widget(form.categoria) }}
-        		<div class="error">{{ form_errors(form.categoria) }}</div>
+        		<div class="error red">{{ form_errors(form.categoria) }}</div>
     		</div>
     		
     		<div class="campo_login flotar_izquierda">
         		<div class="label_campo_login">{{ form_label(form.province) }}</div>
         		{{ form_widget(form.province) }}
-        		<div class="error">{{ form_errors(form.province) }}</div>
+        		<div class="error red">{{ form_errors(form.province) }}</div>
     		</div>
  
     		<div class="campo_login flotar_izquierda">
         		<div class="label_campo_login">{{ form_label(form.palabras) }}</div>
         		{{ form_widget(form.palabras) }}
-        		<div class="error">{{ form_errors(form.palabras) }}</div>
+        		<div class="error red">{{ form_errors(form.palabras) }}</div>
     		</div>
-    		
-    		<div class="clear"></div>
     		
     		<div class="campo_login flotar_izquierda">
         		<div class="label_campo_login">{{ form_label(form.orden) }}</div>
         		{{ form_widget(form.orden) }}
-        		<div class="error">{{ form_errors(form.orden) }}</div>
+        		<div class="error red">{{ form_errors(form.orden) }}</div>
     		</div>
     		
     		<div class="campo_login flotar_izquierda">
         		<div class="label_campo_login">{{ form_label(form.mostrar) }}</div>
         		{{ form_widget(form.mostrar) }}
-        		<div class="error">{{ form_errors(form.mostrar) }}</div>
+        		<div class="error red">{{ form_errors(form.mostrar) }}</div>
     		</div>
     		
     		<div class="campo_login flotar_izquierda">
@@ -237,13 +95,15 @@
 		{{ form_end(form) }}
 	</div>
 	
-	<div class="total_resultados">
-		{% if anuncios is not null%}
-			{{ anuncios.getTotalItemCount }} {%trans%}Resultados{%endtrans%}
-		{% else %}
-			0 {%trans%}Resultados{%endtrans%}
-		{% endif %}
-	</div>
+	{% if id_anuncio==null %}
+		<div class="total_resultados">
+			{% if anuncios is not null%}
+				{{ anuncios.getTotalItemCount }} {%trans%}Resultados{%endtrans%}
+			{% else %}
+				0 {%trans%}Resultados{%endtrans%}
+			{% endif %}
+		</div>
+	{% endif %}
 	
 	{% for anuncio in anuncios %}
 		<div class="anuncio anuncio_color">
@@ -266,7 +126,7 @@
 									</a>
 									{% set count=count+1%}
 								{% else %}
-									<a class="grouped_elements no_mostrar" data-fancybox-group="group{{anuncio.id}}" href="{{ asset(foto.getWebPath()) }}" title="{%trans%}Imagen{%endtrans%}"></a>
+									<a class="grouped_elements no_mostrar" data-fancybox-group="group{{anuncio.id}}" href="{{ asset(foto.getWebPath()) }}" title="{%trans%}Imagen{%endtrans%}"><span class="oculto">{%trans%}Imagen{%endtrans%}</span></a>
 								{% endif %}
 							{% endfor %}
 						{% else %}
@@ -274,56 +134,69 @@
 						{% endif %}
 					</div>
 					<div class="descripcion_anuncio">
-						{% if anuncio.highlights is empty%}
+						{% if id_anuncio==null %}
+							{% if anuncio.highlights is empty%}
+								{{anuncio.descripcion}}
+							{% else %}
+								{{anuncio.highlights.descripcion[0]|raw}}
+							{% endif %}
+						{%else%}
 							{{anuncio.descripcion}}
-						{% else %}
-							{{anuncio.highlights.descripcion[0]|raw}}
-						{% endif %}
+						{%endif%}
 					</div>
 				</div>
 				<div class="footer_anuncio">
 					<div class="precio">
-						{%trans%}Precio{%endtrans%}: <strong>{{anuncio.precio}} €</strong>
+						<span class="no_mostrar">{%trans%}Precio{%endtrans%}: </span> <strong>{{anuncio.precio}} €</strong>
 					</div>
 					<div class="num_fotos">
 						<strong>{{fotos.count()}}</strong> {%trans%}Fotos{%endtrans%}
 					</div>
-					<span onclick="showDialogContactar({{anuncio.id}})" class="verde">{% trans %}Contactar{% endtrans %}</span>
-					<span class="naranja" onclick="showDialogDenunciar({{anuncio.id}})">{% trans %}Denunciar{% endtrans %}</span>
+					
+					<div class="social-likes social-likes_single" data-counters="no" data-url="{{ url('ec_buscador_anuncios', {'_locale': app.request.getLocale(), 'id_anuncio': anuncio.id}) }}" data-title="{{anuncio.titulo}}" data-single-title="{%trans%}Compartir{%endtrans%}">
+						<div class="facebook" title="{%trans%}Compartir link en Facebook{%endtrans%}">Facebook</div>
+						<div class="twitter" title="{%trans%}Compartir link en Twitter{%endtrans%}">Twitter</div>
+						<div class="plusone" title="{%trans%}Compartir link en Google+{%endtrans%}">Google+</div>
+					</div>
+
+					<span class="btn_contactar boton_anuncio" onclick="showDialogContactar({{anuncio.id}})">{% trans %}Contactar{% endtrans %}</span>
+					<span class="btn_denunciar boton_anuncio" onclick="showDialogDenunciar({{anuncio.id}})">{% trans %}Denunciar{% endtrans %}</span>
 				</div>
 		</div>
 	{% endfor %}		
 	
-	<div class="paginador">
-   	{% if anuncios is empty%}
-			<span>{%trans%}No se han encontrado anuncios que concuerden con la búsqueda realizada.{%endtrans%}</span>
-		{% else %}
-   		{{ knp_pagination_render(anuncios) }}
-   	{%endif%}
-   </div>
+	{% if id_anuncio==null %}
+		<div class="paginador">
+   		{% if anuncios is empty%}
+				<span>{%trans%}No se han encontrado anuncios que concuerden con la búsqueda realizada.{%endtrans%}</span>
+			{% else %}
+   			{{ knp_pagination_render(anuncios) }}
+   		{%endif%}
+   	</div>
+   {% endif %}
    
    <div id="contacto" class="ventana">  
    	<div id="output_contacto"></div>
 		<div id="form_contactar" class="anuncio buscador_color" style="display:none;">
 			<form id="form_contacto" action="{{ path('ec_buscador_contactar') }}" method="post">
-    			<div class="rojo">{{ form_errors(form_contacto) }}</div>
+    			<div class="red">{{ form_errors(form_contacto) }}</div>
     		
 				<div class="campo_login">
         			<div class="label_campo">{{ form_label(form_contacto.nombre) }}</div>
         			{{ form_widget(form_contacto.nombre) }}
-        			<div class="error">{{ form_errors(form_contacto.nombre) }}</div>
+        			<div class="error red">{{ form_errors(form_contacto.nombre) }}</div>
     			</div>       		
     		
 				<div class="campo_login">
         			<div class="label_campo">{{ form_label(form_contacto.email) }}</div>
         			{{ form_widget(form_contacto.email) }}
-        			<div class="error">{{ form_errors(form_contacto.email) }}</div>
+        			<div class="error red">{{ form_errors(form_contacto.email) }}</div>
     			</div>    		
     		
     			<div class="campo_login">
         			<div class="label_campo">{{ form_label(form_contacto.mensaje) }} (<span id="contadorContacto">0/255</span> {% trans %}Caracteres{% endtrans %})</div>
         			{{ form_widget(form_contacto.mensaje) }}
-        			<div class="error">{{ form_errors(form_contacto.mensaje) }}</div>
+        			<div class="error red">{{ form_errors(form_contacto.mensaje) }}</div>
     			</div>
     		
     			<div id="enviar_contacto" class="campo_login">
@@ -342,12 +215,12 @@
    	<div id="output_denuncia"></div>
 		<div id="form_denunciar" class="anuncio denunciar_color" style="display:none;">
 			<form id="form_denuncia" action="{{ path('ec_buscador_denunciar') }}" method="post">
-    			<div class="rojo">{{ form_errors(form_denuncia) }}</div>
+    			<div class="red">{{ form_errors(form_denuncia) }}</div>
     		
 				<div class="campo_login">
         			<div class="label_campo">{{ form_label(form_denuncia.denuncia) }} (<span id="contadorDenuncia">0/255</span> {% trans %}Caracteres{% endtrans %})</div>
         			{{ form_widget(form_denuncia.denuncia) }}
-        			<div class="error">{{ form_errors(form_denuncia.denuncia) }}</div>
+        			<div class="error red">{{ form_errors(form_denuncia.denuncia) }}</div>
     			</div>       		
     		
     			<div id="enviar_denuncia" class="campo_login">

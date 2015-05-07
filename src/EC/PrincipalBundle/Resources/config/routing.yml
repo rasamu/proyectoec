@@ -154,6 +154,10 @@ ec_adminfincas_comunidad_eliminar_documento:
     pattern:  /adminfincas/comunidad/{cif}/documento/eliminar/{id}
     defaults: { _controller: ECPrincipalBundle:Documento:eliminar }
     
+ec_adminfincas_comunidad_consultas_documento:
+    pattern:  /adminfincas/documento/consultas/{id}/pdf
+    defaults: { _controller: ECPrincipalBundle:Documento:consultas, _format:pdf }
+    
 ec_documento_descargar:
     pattern:  /documento/descargar/{id}
     defaults: { _controller: ECPrincipalBundle:Documento:descargar }
@@ -210,6 +214,16 @@ ec_propietario_nueva_incidencia:
 ec_listado_incidencias:
     pattern:  /incidencias/listado/{cif}
     defaults: { _controller: ECPrincipalBundle:Incidencia:listado_incidencias, cif: null }
+    
+ec_adminfincas_comunidad_listado_incidencias_pdf:
+    pattern:  /adminfincas/comunidad/{cif}/listado/incidencias/pdf
+    defaults: { _controller: ECPrincipalBundle:Incidencia:listado_incidencias_pdf, _format: pdf }
+    requirements:
+      _format: pdf
+      
+ec_adminfincas_comunidad_listado_incidencias_csv:
+    pattern: /adminfincas/comunidad/{cif}/listado/incidencias/csv
+    defaults: { _controller: ECPrincipalBundle:Incidencia:listado_incidencias_csv }
     
 ec_incidencia:
     pattern:  /incidencia/{id}

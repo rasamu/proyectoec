@@ -139,7 +139,7 @@ class ReunionController extends Controller
 	}
 	
 	 /**
-	  * @Route("adminfincas/comunidad/{cif}/eliminar/reunion/{id}", name="ec_adminfincas_eliminar_reunion")
+	  * @Route("/adminfincas/comunidad/{cif}/eliminar/reunion/{id}", name="ec_adminfincas_eliminar_reunion")
 	  */
     public function eliminar_reunionAction($cif,$id)
     {

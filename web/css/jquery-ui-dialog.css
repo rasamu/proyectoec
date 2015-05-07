@@ -807,10 +807,10 @@ body .ui-tooltip {
 .ui-widget-header {
 	border: 1px solid #aaaaaa/*{borderColorHeader}*/;
 	/*background: #cccccc/ url(../images/dialog/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;*/
-	background: -webkit-linear-gradient(#316431,#5d935d);
-   background: -moz-linear-gradient(#316431,#5d935d);
-   background: -o-linear-gradient(#316431,#5d935d);
-   background: linear-gradient(#316431,#5d935d);
+	background: -webkit-linear-gradient(#223E56, #005D84);
+   background: -moz-linear-gradient(#223E56, #005D84);
+   background: -o-linear-gradient(#223E56, #005D84);
+   background: linear-gradient(#223E56, #005D84);
 	color: white;
 	font-weight: bold;
 }

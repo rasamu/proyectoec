@@ -75,9 +75,9 @@ class Incidencia
     protected $actuaciones;
     
     /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Consulta", mappedBy="incidencia", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\ConsultaIncidencia", mappedBy="incidencia", cascade={"remove"})
      */
-    private $consultas;
+    private $consultas_incidencias;
 
 	/**
 	 * Get id
@@ -209,7 +209,7 @@ class Incidencia
     public function __construct()
     {
         $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
-		  $this->consultas = new \Doctrine\Common\Collections\ArrayCollection();
+		  $this->consultas_incidencias = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -292,35 +292,35 @@ class Incidencia
     }
 
     /**
-     * Add consultas
+     * Add consultas_incidencias
      *
-     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     * @param \EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias
      * @return Incidencia
      */
-    public function addConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    public function addConsultasIncidencia(\EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias)
     {
-        $this->consultas[] = $consultas;
+        $this->consultas_incidencias[] = $consultasIncidencias;
     
         return $this;
     }
 
     /**
-     * Remove consultas
+     * Remove consultas_incidencias
      *
-     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     * @param \EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias
      */
-    public function removeConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    public function removeConsultasIncidencia(\EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias)
     {
-        $this->consultas->removeElement($consultas);
+        $this->consultas_incidencias->removeElement($consultasIncidencias);
     }
 
     /**
-     * Get consultas
+     * Get consultas_incidencias
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getConsultas()
+    public function getConsultasIncidencias()
     {
-        return $this->consultas;
+        return $this->consultas_incidencias;
     }
 }

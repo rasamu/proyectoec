@@ -54,27 +54,27 @@
 	{% endfor %}
 	
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Nueva incidencia{% endtrans %}</h2>
+			<h2 class="centrado">{% trans %}Nueva incidencia{% endtrans %}</h2>
 
 			{{ form_start(form) }}
-    				<div class="rojo">{{ form_errors(form) }}</div>
+    				<div class="red">{{ form_errors(form) }}</div>
 
 					<div class="campo_login">
         				<div class="label_campo">{{ form_label(form.categoria) }}</div>
         				{{ form_widget(form.categoria) }}
-       		 		<div class="error">{{ form_errors(form.categoria) }}</div>        
+       		 		<div class="error red">{{ form_errors(form.categoria) }}</div>        
     				</div> 
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.asunto) }}</div>
         				{{ form_widget(form.asunto) }}
-        				<div class="error">{{ form_errors(form.asunto) }}</div>
+        				<div class="error red">{{ form_errors(form.asunto) }}</div>
     				</div> 
     				
     				<div class="campo_login">
        		 		<div class="label_campo">{{ form_label(form.descripcion) }}  (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
-        				<p>{{ form_widget(form.descripcion) }}</p>
-        				<div class="error">{{ form_errors(form.descripcion) }}</div>
+        				{{ form_widget(form.descripcion) }}
+        				<div class="error red">{{ form_errors(form.descripcion) }}</div>
     				</div> 		
     				   
     				<div class="campo_login">

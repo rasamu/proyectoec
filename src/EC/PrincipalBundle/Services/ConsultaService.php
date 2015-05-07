@@ -11,7 +11,7 @@ class ConsultaService {
     public function comprobar_nuevas_actuaciones($usuario, $incidencia){
 	 		$query = $this->em->createQuery(
     				'SELECT c
-       			FROM ECPrincipalBundle:Consulta c
+       			FROM ECPrincipalBundle:ConsultaIncidencia c
       			WHERE c.usuario = :usuario and c.incidencia = :incidencia'
 			)->setParameters(array('usuario' => $usuario, 'incidencia'=>$incidencia));
 			
@@ -40,6 +40,22 @@ class ConsultaService {
 			}
 			
 			return $total_nuevas_actuaciones;	
+	 }
+	 
+	 public function comprobar_consulta_documento($propietario, $documento){
+	 		$query = $this->em->createQuery(
+    				'SELECT c
+       			FROM ECPrincipalBundle:ConsultaDocumento c
+      			WHERE c.propietario = :propietario and c.documento = :documento'
+			)->setParameters(array('propietario' => $propietario, 'documento'=>$documento));
+			
+			try {
+    				$consulta = $query->getSingleResult();
+			} catch (\Doctrine\Orm\NoResultException $e) {
+        			$consulta = null;
+			}	
+			
+			return $consulta;
 	 }
 	 
 	 public function consulta_imagenes_anuncio($id_anuncio){

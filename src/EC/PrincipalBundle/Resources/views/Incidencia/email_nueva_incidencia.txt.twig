@@ -4,16 +4,16 @@
 	{{ parent() }}
 	
 	<section id="botones">
-		<p class="verde cab negrita">Nueva incidencia</p>
+		<p class="azul cab negrita">Nueva incidencia</p>
    </section>
 {% endblock %}
 
 {% block contenido %}
 	{{ parent() }}
 	
-	<p class="verde negrita cursiva">Comunidad:  {{comunidad.codigo}}</p>
-	<p class="verde">Fecha: {{incidencia.fecha| date("d/m/Y H:i a")}}</p>
-	<p class="verde">Categoría:  {{categoria}}</p>
-	<p class="verde">Asunto: {{incidencia.asunto}}</p>
-	<p class="verde">Descripción: {{incidencia.descripcion}}</p>
+	<p class="azul negrita cursiva">Comunidad:  {{comunidad.codigo}}</p>
+	<p class="azul">Fecha: {{incidencia.fecha| date("d/m/Y H:i a")}}</p>
+	<p class="azul">Categoría:  {{categoria}}</p>
+	<p class="azul">Asunto: {{incidencia.asunto}}</p>
+	<p class="azul">Descripción: {{incidencia.descripcion}}</p>
 {% endblock %}

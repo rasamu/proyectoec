@@ -53,7 +53,7 @@ class DefaultController extends Controller
         		$flash=$this->get('translator')->trans('Formulario de contacto enviado.');
         		$this->get('session')->getFlashBag()->add('notice', $flash);
    			$this->get('session')->getFlashBag()->add('color','green');   				 	
-				return $this->render('ECPrincipalBundle:Default:contacto.html.twig');
+				return $this->render('ECPrincipalBundle:Default:contacto.html.twig', array('form'=>$form->createView()));
    		}
     	
       	return $this->render('ECPrincipalBundle:Default:contacto.html.twig', array(

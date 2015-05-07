@@ -20,15 +20,15 @@
 	{{ parent() }}
 	
 	{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty %}
-		<h2 class="verde centrado">{% trans %}Tablón{% endtrans %}</h2>
+		<h2 class="centrado">{% trans %}Tablón{% endtrans %}</h2>
 	{% else %}
-		<h2 class="verde centrado">{% trans %}Tablón de la Comunidad{% endtrans %}</h2>
+		<h2 class="centrado">{% trans %}Tablón de la Comunidad{% endtrans %}</h2>
 	{% endif %}
 
-	<h3 class="verde izquierda">{% trans %}Incidencias abiertas{% endtrans %}:</h3>
+	<h3 class="azul_fuerte izquierda">{% trans %}Incidencias abiertas{% endtrans %}:</h3>
 
 		{% if incidencias is empty%}
-			<p>{%trans%}No hay incidencias abiertas.{%endtrans%}.</p>
+			<p>{%trans%}No hay incidencias abiertas.{%endtrans%}</p>
 		{% else %}
 			{% for incidencia in incidencias %}
 				<a class="enlace" href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}">
@@ -57,9 +57,9 @@
 			{% endfor %}
 		{% endif %}
 	
-		<hr class="verde" />
+		<hr class="azul_oscuro" />
 	
-		<h3 class="verde izquierda">{% trans %}Próximas reuniones{% endtrans %}:</h3>
+		<h3 class="azul_fuerte izquierda">{% trans %}Próximas reuniones{% endtrans %}:</h3>
 		
 		{% if reuniones is empty%}
 			<p>{%trans%}No hay reuniones próximamente.{%endtrans%}</p>

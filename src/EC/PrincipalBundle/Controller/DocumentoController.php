@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use EC\PrincipalBundle\Entity\Documento;
+use EC\PrincipalBundle\Entity\ConsultaDocumento;
+use Ps\PdfBundle\Annotation\Pdf;
 
 class DocumentoController extends Controller
 {
@@ -145,7 +147,50 @@ class DocumentoController extends Controller
          $response->headers->set('Content-Disposition', 'attachment;filename="'.'documento'.'.'.$documento->getFormat());
 
          $response->setContent($content);
+         
+         //Registramos la consulta al documento
+         if($this->get('security.context')->isGranted('ROLE_VECINO')){
+				$consulta=$ComprobacionesService->comprobar_consulta_documento($this->getUser(), $documento->getId());
+				$em = $this->getDoctrine()->getManager();
+				if($consulta!=null){
+					$consulta->setFecha();
+				}else{
+					$consulta=new ConsultaDocumento();
+					$consulta->setPropietario($this->getUser());
+					$consulta->setDocumento($documento);
+					$this->getUser()->addConsultasDocumento($consulta);
+					$documento->addConsultasDocumento($consulta);
+					$em->persist($this->getUser());
+					$em->persist($documento);	
+				}  	
+				$em->persist($consulta);
+   			$em->flush();
+   		}	
+   		
          return $response;
+	}
+	
+	/**
+	  * @Pdf()
+	  * @Route("/adminfincas/documento/consultas/{id}", name="ec_adminfincas_consultas_documento")
+     * @Template("ECPrincipalBundle:Documento:consultas_documento_pdf.html.twig")	  
+	  */
+	public function consultasAction($id)
+	{
+			$ComprobacionesService=$this->get('comprobaciones_service');
+      	$documento=$ComprobacionesService->comprobar_documento($id);
+    		
+			$comunidad=$documento->getComunidad();
+			
+			$format = $this->get('request')->get('_format');
+    	        
+    		$filename = "consultas_".$comunidad->getCodigo().".pdf";
+    		$response= $this->render(sprintf('ECPrincipalBundle:Documento:consultas_documento_pdf.%s.twig', $format), array(
+        		'comunidad' => $comunidad, 'bloques'=>$comunidad->getBloques(), 'documento' => $documento
+    			));
+    		
+    		$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+			return $response;
 	}
 	
 	/**
@@ -163,11 +208,29 @@ class DocumentoController extends Controller
     		}
     		
       	$documento=$ComprobacionesService->comprobar_documento($id);
+      	
+      	//Registramos la consulta al documento
+         if($this->get('security.context')->isGranted('ROLE_VECINO')){
+				$consulta=$ComprobacionesService->comprobar_consulta_documento($this->getUser(), $documento->getId());
+				$em = $this->getDoctrine()->getManager();
+				if($consulta!=null){
+					$consulta->setFecha();
+				}else{
+					$consulta=new ConsultaDocumento();
+					$consulta->setPropietario($this->getUser());
+					$consulta->setDocumento($documento);
+					$this->getUser()->addConsultasDocumento($consulta);
+					$documento->addConsultasDocumento($consulta);
+					$em->persist($this->getUser());
+					$em->persist($documento);	
+				}  	
+				$em->persist($consulta);
+   			$em->flush();
+   		}	
     		
 			return $this->render('ECPrincipalBundle:Documento:previsualizar.html.twig',
 					array('documento'=>$documento,'comunidad'=>$comunidad
-					)); 
-			 	
+					)); 			 	
 	}
     
 }

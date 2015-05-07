@@ -22,28 +22,28 @@
 		{% endfor %}	
 
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
+			<h2 class="centrado">{% trans %}Mi Perfil{% endtrans %}</h2>
 			
 			<a class="boton_alta btn_password" href="{{ path('ec_usuario_contraseña') }}"><span>{% trans %}Contraseña{% endtrans %}</span></a>
 			{{ form_start(form) }}
-    			<div class="rojo">{{ form_errors(form) }}</div>
+    			<div class="red">{{ form_errors(form) }}</div>
  
     			<div class="campo">
         			<div class="label_campo">{{ form_label(form.razon) }}</div>
        		 	{{ form_widget(form.razon) }}
-        			<div class="error">{{ form_errors(form.razon) }}</div>
+        			<div class="error red">{{ form_errors(form.razon) }}</div>
     			</div>
 
     			<div class="campo">
         			<div class="label_campo">{{ form_label(form.telefono) }}</div>
         			{{ form_widget(form.telefono) }}
-        			<div class="error">{{ form_errors(form.telefono) }}</div>       
+        			<div class="error red">{{ form_errors(form.telefono) }}</div>       
     			</div>
 
     			<div class="campo">
         			<div class="label_campo">{{ form_label(form.email) }}</div>
         			{{ form_widget(form.email) }}        
-       		 	<div class="error">{{ form_errors(form.email) }}</div>
+       		 	<div class="error red">{{ form_errors(form.email) }}</div>
     			</div>
     		
     			<div class="campo">

@@ -22,39 +22,27 @@
 	{% endfor %}
 	
 		<section class="form">
-			<h2 class="verde centrado">{% trans %}Nuevo propietario{% endtrans %}</h2>
+			<h2 class="centrado">{% trans %}Nuevo propietario{% endtrans %}</h2>
 
-         <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post">
-    				<div class="rojo">{{ form_errors(form) }}</div>
+         <form action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post" {{ form_enctype(form) }}>
+    				<div class="red">{{ form_errors(form) }}</div>
  			
     				<div class="campo">
         				<div class="label_campo">{{ form_label(form.razon) }} *</div>
        				 {{ form_widget(form.razon) }}
-        				<div class="error">{{ form_errors(form.razon) }}</div>
+        				<div class="error red">{{ form_errors(form.razon) }}</div>
     				</div>
     				
     				<div class="campo">
         				<div class="label_campo">{{ form_label(form.propiedad) }} *</div>
         				{{ form_widget(form.propiedad) }}
-        				<div class="error">{{ form_errors(form.propiedad) }}</div>        
-    				</div>
-    
-    				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.telefono) }}</div>
-        				{{ form_widget(form.telefono) }}
-        				<div class="error">{{ form_errors(form.telefono) }}</div>       
-    				</div>
-
-    				<div class="campo">
-        				<div class="label_campo">{{ form_label(form.email) }}</div>
-        				{{ form_widget(form.email) }}        
-       		 		<div class="error">{{ form_errors(form.email) }}</div>
+        				<div class="error red">{{ form_errors(form.propiedad) }}</div>        
     				</div>
     				
     				<div class="campo">
         				<div class="label_campo">{{ form_label(form.bloque) }} *</div>
         				{{ form_widget(form.bloque) }}
-        				<div class="error">{{ form_errors(form.bloque) }}</div>        
+        				<div class="error red">{{ form_errors(form.bloque) }}</div>        
     				</div>
     				
     				<div class="clear"></div>
@@ -68,15 +56,15 @@
 		</section>
 
 		<section class="form">
-				<h2 class="verde centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
+				<h2 class="centrado">{% trans %}Importar propietarios mediante CSV{% endtrans %}</h2>
 
             <form id="form_csv" action="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif, '_format': 'pdf' }) }}" method="post" {{ form_enctype(form_csv) }}>
-    				<div class="rojo">{{ form_errors(form_csv) }}</div>
+    				<div class="red">{{ form_errors(form_csv) }}</div>
 
     				<div class="campo">
        		 		<div class="label_campo_login">{{ form_label(form_csv.file) }}</div>
         				{{ form_widget(form_csv.file) }}
-        				<div class="error">{{ form_errors(form_csv.file) }}</div>
+        				<div class="error red">{{ form_errors(form_csv.file) }}</div>
     				</div> 
     				  
     				<div class="clear"></div>

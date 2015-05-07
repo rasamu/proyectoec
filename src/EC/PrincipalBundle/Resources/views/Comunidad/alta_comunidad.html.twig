@@ -47,7 +47,7 @@
 	  {{ parent() }}
 	    
 	<section class="form">
-		<h2 class="verde centrado">{% trans %}Nueva Comunidad{% endtrans %}</h2>
+		<h2 class="centrado">{% trans %}Nueva Comunidad{% endtrans %}</h2>
 		
 		{% for flashMessage in app.session.flashbag.get('notice') %}
 			{% for flashColor in app.session.flashbag.get('color') %}
@@ -58,36 +58,36 @@
 		{% endfor %}
 
       <form action="{{ path('ec_adminfincas_alta_comunidad') }}" method="POST">
-    		<div class="rojo">{{ form_errors(form) }}</div>
+    		<div class="red">{{ form_errors(form) }}</div>
 
     		<div class="campo">
-       		 <div class="label_campo3">{{ form_label(form.cif) }} *</div>
+       		 <div class="label_campo">{{ form_label(form.cif) }} *</div>
         		{{ form_widget(form.cif) }}
-        		<div class="error">{{ form_errors(form.cif) }}</div>
+        		<div class="error red">{{ form_errors(form.cif) }}</div>
     		</div>
     		
     		<div class="campo">
-        		<div class="label_campo3">{{ form_label(form.codigo) }} *</div>
+        		<div class="label_campo">{{ form_label(form.codigo) }} *</div>
         		{{ form_widget(form.codigo) }}
-       		 <div class="error">{{ form_errors(form.codigo) }}</div>        
+       		 <div class="error red">{{ form_errors(form.codigo) }}</div>        
     		</div>    
     		
     		<div class="campo">
-        		<div class="label_campo3">{{ form_label(form.country) }} *</div>
+        		<div class="label_campo">{{ form_label(form.country) }} *</div>
         		{{ form_widget(form.country) }}
-       		 <div class="error">{{ form_errors(form.country) }}</div>        
+       		 <div class="error red">{{ form_errors(form.country) }}</div>        
     		</div>    		
     		
 			<div class="campo">
-        		<div class="label_campo3">{{ form_label(form.province) }} *</div>
+        		<div class="label_campo">{{ form_label(form.province) }} *</div>
         		{{ form_widget(form.province) }}
-       		 <div class="error">{{ form_errors(form.province) }}</div>        
+       		 <div class="error red">{{ form_errors(form.province) }}</div>        
     		</div>    		
     		
 			<div class="campo">
-        		<div class="label_campo3">{{ form_label(form.city) }} *</div>
+        		<div class="label_campo">{{ form_label(form.city) }} *</div>
         		{{ form_widget(form.city) }}
-       		 <div class="error">{{ form_errors(form.city) }}</div>        
+       		 <div class="error red">{{ form_errors(form.city) }}</div>        
     		</div> 				
     		
 			<div class="campo">

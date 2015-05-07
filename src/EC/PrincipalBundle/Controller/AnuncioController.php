@@ -111,7 +111,7 @@ class AnuncioController extends Controller
 	  * @Route("/", name="ec_buscador_anuncios")
 	  * @Template("ECPrincipalBundle:Anuncio:buscador.html.twig")
 	  */
-    public function buscadorAction(Request $request)
+    public function buscadorAction(Request $request, $id_anuncio)
     {
     		$results=null;
     		
@@ -216,73 +216,87 @@ class AnuncioController extends Controller
 				}
 			}*/
 
-			$finder = $this->container->get('fos_elastica.finder.search.anuncio');
-			$boolQuery = new \Elastica\Query\Bool();
+			if($id_anuncio==null){
+				$finder = $this->container->get('fos_elastica.finder.search.anuncio');
+				$boolQuery = new \Elastica\Query\Bool();
 			
-			//Filtramos por categoria
-			if($categoria!=null){
-				$categoryQuery = new \Elastica\Query\Term();
-				$categoryQuery->setTerm('categoria.id', $categoria->getId());
-				$boolQuery->addMust($categoryQuery);
-			}
+				//Filtramos por categoria
+				if($categoria!=null){
+					$categoryQuery = new \Elastica\Query\Term();
+					$categoryQuery->setTerm('categoria.id', $categoria->getId());
+					$boolQuery->addMust($categoryQuery);
+				}
 			
-			//Filtramos por provincia
-			if($province!=null){
-				$provinceQuery = new \Elastica\Query\Term();
-				$provinceQuery->setTerm('comunidad.city.province.id', $province->getId());
-				$boolQuery->addMust($provinceQuery);	
-			}
+				//Filtramos por provincia
+				if($province!=null){
+					$provinceQuery = new \Elastica\Query\Term();
+					$provinceQuery->setTerm('comunidad.city.province.id', $province->getId());
+					$boolQuery->addMust($provinceQuery);	
+				}
 			
-			//Filtramos por palabras
-			if($palabras!=null){
-				//$fieldQuery1 = new \Elastica\Query\Match();
-				//$fieldQuery1->setFieldQuery('titulo', $palabras);
-				//$boolQuery->addShould($fieldQuery1);
+				//Filtramos por palabras
+				if($palabras!=null){
+					//$fieldQuery1 = new \Elastica\Query\Match();
+					//$fieldQuery1->setFieldQuery('titulo', $palabras);
+					//$boolQuery->addShould($fieldQuery1);
 				
-				$fieldQuery2 = new \Elastica\Query\Match();
-				$fieldQuery2->setFieldQuery('descripcion', $palabras);
-				$boolQuery->addMust($fieldQuery2);
-			}else{
-				$fieldQuery = new \Elastica\Query\MatchAll();
-				$boolQuery->addShould($fieldQuery);
-			}
+					$fieldQuery2 = new \Elastica\Query\Match();
+					$fieldQuery2->setFieldQuery('descripcion', $palabras);
+					$boolQuery->addMust($fieldQuery2);
+				}else{
+					$fieldQuery = new \Elastica\Query\MatchAll();
+					$boolQuery->addShould($fieldQuery);
+				}
 		
-			$finalQuery = new \Elastica\Query($boolQuery);
+				$finalQuery = new \Elastica\Query($boolQuery);
 			
-			$finalQuery->setHighlight(array(
-				'pre_tags' => array('<strong class="highlight">'),
-				'post_tags' => array('</strong>'),
-				'fields' => array(
-					'descripcion' => array(
-						'fragment_size' => 200,
-						'number_of_fragments' => 1,
-					)
-				),
-			));
+				$finalQuery->setHighlight(array(
+					'pre_tags' => array('<strong class="highlight">'),
+					'post_tags' => array('</strong>'),
+					'fields' => array(
+						'descripcion' => array(
+							'fragment_size' => 200,
+							'number_of_fragments' => 1,
+						)
+					),
+				));
 			
-			//Ordenamos
-			$finalQuery->setSort(array('fecha' => array('order'=>$orden_fecha)));
-			$hybridResults = $finder->findHybrid($finalQuery);
+				//Ordenamos
+				$finalQuery->setSort(array('fecha' => array('order'=>$orden_fecha)));
+				$hybridResults = $finder->findHybrid($finalQuery);
 	
-			//$highlights=null;			
+				//$highlights=null;			
 			
-			foreach($hybridResults as $hybridResult){
-				$results[]=$hybridResult->getResult();
-				//$results[]=$hybridResult->getTransformed();
-			}
+				foreach($hybridResults as $hybridResult){
+					$results[]=$hybridResult->getResult();
+					//$results[]=$hybridResult->getTransformed();
+				}
 			
-			if($results!=null){			
-				//Paginamos
-				$anuncios  = $this->get('knp_paginator')->paginate(
-         		$results,
-         		$request->query->get('page', 1)/*page number*/,
-         		$anuncios_por_pagina/*limit per page*/
-    			);
+				if($results!=null){			
+					//Paginamos
+					$anuncios  = $this->get('knp_paginator')->paginate(
+         			$results,
+         			$request->query->get('page', 1)/*page number*/,
+         			$anuncios_por_pagina/*limit per page*/
+    				);
+    			}else{
+    				$anuncios=null;	
+    			}
     		}else{
-    			$anuncios=null;	
+       		$em = $this->getDoctrine()->getManager();
+    			$query = $em->createQuery(
+    				'SELECT a FROM ECPrincipalBundle:Anuncio a WHERE a.id = :id_anuncio'
+				)->setParameters(array('id_anuncio'=>$id_anuncio));    			
+    		
+    			try{
+    				$anuncio=$query->getSingleResult();	
+					$anuncios[0]=$anuncio;	
+				} catch (\Doctrine\Orm\NoResultException $e) {
+					$anuncios=null;
+				}
     		}
 				
-    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('form' => $form->createView(),'form_contacto'=>$form_contacto->createView(),'form_denuncia'=>$form_denuncia->createView(),'anuncios'=>$anuncios));
+    		return $this->render('ECPrincipalBundle:Anuncio:buscador.html.twig',array('form' => $form->createView(),'form_contacto'=>$form_contacto->createView(),'form_denuncia'=>$form_denuncia->createView(),'anuncios'=>$anuncios,'id_anuncio'=>$id_anuncio));
     }
 	
 	/**

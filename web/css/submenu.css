@@ -1,13 +1,11 @@
 /* menu::base */
 div#submenu {
-	background: transparent url(../images/menu/submenu_m.png) repeat-x scroll 0 0;
 	position: absolute;
 	font-size: 12px;
 	line-height: 150%;	
 	float:left;
 	clear: both;
 	width: auto;
-	padding-right: 30px;
 	border-bottom-right-radius: 3em;
 	-webkit-border-bottom-right-radius: 3em;
 	-moz-border-bottom-right-radius: 3em;
@@ -40,7 +38,14 @@ div#submenu li {
 	float: left;  
 	height: 35px;
 	z-index: 3;
+	background: #337AB7;
+	margin-right: 10px;
+   border-radius: 4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
 }
+
 /* menu::level1 */
 div#submenu li a {
 	height: 35px;
@@ -48,16 +53,15 @@ div#submenu li a {
 	float: left;
 	line-height: 35px;
 	text-decoration: none;
-	color: #646464;
 	overflow: hidden;
 	z-index: 4;
    position: relative;
-   font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
+   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;	
    font-weight: bold;
 }
 
 div#submenu li span {  
-	color: #316431; 
+	color: white; 
 	display: block;
 	padding: 0 20px;
    background-repeat: no-repeat;
@@ -138,13 +142,13 @@ div#submenu li:hover ul ul, div#submenu li.sfhover ul ul, div#submenu li:hover u
 div#submenu li li:hover ul, div#submenu li li.sfhover ul, div#submenu li li li:hover ul, div#submenu li li li.sfhover ul, div#submenu li li li li:hover ul, div#submenu li li li li.sfhover ul { left: 0pt; z-index: 100; }
 
 div#submenu a:hover {
-	color: #316431;
+	color: #005D84;
 }
 div#submenu span:hover {
-	color: #316431;
+	color: #005D84;
 }
 div#submenu li ul span:hover {
-	color: #316431;
+	color: #005D84;
 }
 
 /*VERSION MOVIL*/

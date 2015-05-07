@@ -159,24 +159,24 @@ table.display thead th {
 	padding: 3px 18px 3px 10px;
 	font-weight: bold;
 	cursor: pointer;
-	   font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;	
    font-weight: bold;
 	/** cursor: hand;*/
-	background-color: #316431;
+	background-color: #223E56;
 	/*background: url(../images/list.png) repeat-x;*/
 	/*background: -webkit-linear-gradient(#316431,#4c804c);
    background: -moz-linear-gradient(#316431,#4c804c);
    background: -o-linear-gradient(#316431,#4c804c);
    background: linear-gradient(#316431,#4c804c);*/
 	color:#fff;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
-	-moz-border-top-left-radius: 10px;
-	-moz-border-top-right-radius: 10px;
-	-o-border-top-left-radius: 10px;
-	-oborder-top-right-radius: 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-top-left-radius: 5px;
+	-moz-border-top-right-radius: 5px;
+	-o-border-top-left-radius: 5px;
+	-oborder-top-right-radius: 5px;
 }
 
 table.display tfoot th {
@@ -271,17 +271,11 @@ table.display tr.even.gradeX {
 }
 
 table.display tr.odd.gradeX:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 table.display tr.even.gradeX:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 table.display tr.odd.gradeU {
@@ -517,45 +511,27 @@ tr.even.gradeX td.sorting_3 {
 }
 
 tr.odd.gradeX td.sorting_1:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 tr.odd.gradeX td.sorting_2:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 tr.odd.gradeX td.sorting_3:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 tr.even.gradeX td.sorting_1:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 tr.even.gradeX td.sorting_2:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 tr.even.gradeX td.sorting_3:hover {
-	background: -webkit-linear-gradient(white,#F7D118);
-   background: -moz-linear-gradient(white,#F7D118);
-   background: -o-linear-gradient(white,#F7D118);
-   background: linear-gradient(white,#F7D118);
+	background: #f8e692;
 }
 
 tr.odd.gradeU td.sorting_1 {

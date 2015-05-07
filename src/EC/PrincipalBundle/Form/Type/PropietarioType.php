@@ -17,10 +17,8 @@ class PropietarioType extends AbstractType
     {
     		$comunidad = $this->comunidad;
     		 
-         $builder->add('propiedad','text',array('label'=>'Propiedad'));
+         $builder->add('propiedad','text',array('label'=>'Propiedad','required' => true));
          $builder->add('razon','text',array('label' => 'Nombre/Razón Social', 'required' => true));
-    		$builder->add('telefono','text', array('label' => 'Teléfono', 'required' => false));
-    		$builder->add('email','email',array('required' => false));
          $builder->add('bloque','entity',array(
          'class'=>'ECPrincipalBundle:Bloque',
          'property'=>'direccion',
@@ -33,8 +31,8 @@ class PropietarioType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'EC\PrincipalBundle\Entity\Usuario',
-             'csrf_protection' => false,
+            'data_class' => 'EC\PrincipalBundle\Entity\Propietario',
+            'csrf_protection' => false,
         ));
     }
  

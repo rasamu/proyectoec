@@ -13,7 +13,7 @@
 .slicknav_submenu_btn .slicknav_submenu_icon-bar + .slicknav_submenu_icon-bar { margin-top: 0.188em }
 .slicknav_submenu_nav { clear: both }
 .slicknav_submenu_nav ul,
-.slicknav_submenu_nav li { display: block; border-bottom: 1px #acc6ac solid; }
+.slicknav_submenu_nav li { display: block; border-bottom: 1px #005D84 solid; }
 .slicknav_submenu_nav .slicknav_submenu_arrow { font-size: 0.8em; margin: 0 0 0 0.4em; }
 .slicknav_submenu_nav .slicknav_submenu_item { cursor: pointer; }
 .slicknav_submenu_nav .slicknav_submenu_row { display: block; }
@@ -43,7 +43,7 @@
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;  
-    background-color: #acc6ac;
+    background-color: #005D84;
 }
 /* Button Text */
 .slicknav_submenu_menu  .slicknav_submenu_menutxt {
@@ -57,10 +57,7 @@
   background-color: #f5f5f5;
 }
 .slicknav_submenu_menu {
-	background: -webkit-linear-gradient(#b9d4b9,#acc6ac);
-   background: -moz-linear-gradient(#b9d4b9,#acc6ac);
-   background: -o-linear-gradient(#b9d4b9,#acc6ac);
-   background: linear-gradient(#b9d4b9,#acc6ac);
+	background: #337AB7;
    padding:0;
    margin-left: -10px;
    margin-right: -10px;
@@ -105,8 +102,8 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    background-color: #d9e1e8;
-    color:#316431;
+    background-color: #A7BDD0;
+    color:white;
 }
 .slicknav_submenu_nav .slicknav_submenu_txtnode {
      margin-left:15px;   

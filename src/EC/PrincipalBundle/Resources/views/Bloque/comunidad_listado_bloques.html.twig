@@ -8,7 +8,6 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('css/boton_acciones.css') }}" type="text/css" rel="stylesheet" />
     <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
@@ -46,7 +45,7 @@
     		{% endfor %}
 	{% endfor %}
 
-	<h2 class="verde centrado">{% trans %}Bloques{% endtrans %}</h2>
+	<h2 class="centrado">{% trans %}Bloques{% endtrans %}</h2>
 	
 	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
 	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>

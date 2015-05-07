@@ -8,10 +8,10 @@
 {% block colder %}
 	{{ parent() }}
 		<section id="form_login">
-			<h2 class="verde centrado">{% trans %}Iniciar Sesión{% endtrans %}</h2>
+			<h2 class="centrado">{% trans %}Iniciar Sesión{% endtrans %}</h2>
 			
 			{% if error %}
-				<div class="mensaje rojo">{% trans %}Datos incorrectos{% endtrans %}</div>
+				<div class="mensaje red">{% trans %}Datos incorrectos{% endtrans %}</div>
 			{% endif %}
 
 			<form method="post" action="{{ path('login_check') }}">
@@ -36,6 +36,6 @@
 		</section>
 		
 		<div id="skyline">
-			<img src="{{ asset('images/skyline4.png') }}" alt="skyline" />
+			<img src="{{ asset('images/skyline2.png') }}" alt="skyline" />
 		</div>
 {% endblock %}

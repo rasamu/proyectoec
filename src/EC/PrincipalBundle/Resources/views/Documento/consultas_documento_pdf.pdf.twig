@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+	<dynamic-page>
+		<h1 padding="10px" background-color="#005D84" width="100%"><span color="#F7D118">Entre</span><span color="white">Comunidades</span></h1>
+		<h2 color="#223E56">{%trans%}Comunidad{%endtrans%}: {{comunidad.codigo}}</h2>
+		<p>{%trans%}Consultas{%endtrans%} <strong>{%trans%}Documento{%endtrans%}:</strong> {{documento.descripcion}}</p>
+		<p><strong>{%trans%}Fecha de creación{%endtrans%}:</strong> {{documento.fecha | date("d/m/Y H:i:s a")}} <strong>{%trans%}Categoría{%endtrans%}:</strong> {{documento.tipo.nombre}}</p>
+		
+		<table>
+			<tr padding="5px">
+				<td text-align="center" font-style="bold">{%trans%}Nº Bloque{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Propiedad{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Propietario{%endtrans%}</td>
+				<td text-align="center" font-style="bold">{%trans%}Última Consulta{%endtrans%}</td>
+			</tr>
+			
+			{% for bloque in bloques %}
+				{% set propietarios=bloque.getPropietarios() %}
+				{% for propietario in propietarios %}
+					<tr>
+				   	<td>{{bloque.num}}</td>
+       				<td>{{propietario.propiedad}}</td>
+       				<td>{{propietario.razon}}</td>			
+       				{% set consulta=consulta_service_global.comprobar_consulta_documento(propietario,documento) %}
+						{% if consulta!= null%}
+							<td>{{consulta.fecha | date("d/m/Y H:i:s a")}}</td>
+						{%else%}
+							<td text-align="center">-</td>
+						{% endif %}
+      			</tr> 
+      		{% endfor %}
+			{% endfor %}
+
+		</table>
+		<p text-align="right">{{ "now"|date("d/m/Y") }}</p>
+	</dynamic-page>
+</pdf>

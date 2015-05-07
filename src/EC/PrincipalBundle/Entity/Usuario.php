@@ -74,13 +74,11 @@ class Usuario implements UserInterface, \Serializable
     protected $id;
 
 	/**
-	  * @Assert\NotNull()
      * @ORM\Column(name="telefono",type="string",length=9,nullable=true)
      */
     protected $telefono;
     
     /**
-     * @Assert\NotNull()
      * @Assert\Email(
      *     message = "El email '{{ value }}' no es un email válido",
      *     checkMX = true
@@ -136,9 +134,9 @@ class Usuario implements UserInterface, \Serializable
     protected $anuncios;
 		
 	 /**
-     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Consulta", mappedBy="usuario", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\ConsultaIncidencia", mappedBy="usuario", cascade={"remove"})
      */
-    private $consultas;	
+    private $consultas_incidencias;	
 	
     /**
      * Set telefono
@@ -394,7 +392,7 @@ class Usuario implements UserInterface, \Serializable
         $this->actuaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->anuncios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->consultas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->consultas_incidencias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -430,36 +428,37 @@ class Usuario implements UserInterface, \Serializable
         return $this->anuncios;
     }
 
+
     /**
-     * Add consultas
+     * Add consultas_incidencias
      *
-     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     * @param \EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias
      * @return Usuario
      */
-    public function addConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    public function addConsultasIncidencia(\EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias)
     {
-        $this->consultas[] = $consultas;
+        $this->consultas_incidencias[] = $consultasIncidencias;
     
         return $this;
     }
 
     /**
-     * Remove consultas
+     * Remove consultas_incidencias
      *
-     * @param \EC\PrincipalBundle\Entity\Consulta $consultas
+     * @param \EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias
      */
-    public function removeConsulta(\EC\PrincipalBundle\Entity\Consulta $consultas)
+    public function removeConsultasIncidencia(\EC\PrincipalBundle\Entity\ConsultaIncidencia $consultasIncidencias)
     {
-        $this->consultas->removeElement($consultas);
+        $this->consultas_incidencias->removeElement($consultasIncidencias);
     }
 
     /**
-     * Get consultas
+     * Get consultas_incidencias
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getConsultas()
+    public function getConsultasIncidencias()
     {
-        return $this->consultas;
+        return $this->consultas_incidencias;
     }
 }

@@ -1,87 +1,131 @@
 .btn_delete {
-    background-color: red;
+    background-color: #d9716f;
     background-image: url('../images/ico_delete.png');
 }
 
 .btn_baja {
-    background-color: #ffa500;
+    background-color: #d9716f;
     background-image: url('../images/ico_delete.png');
 }
 
 .btn_download {
-    background-color: green;
+    background-color: #82bd82;
     background-image: url('../images/ico_download.png');
 }
 
 .btn_preview {
-    background-color: purple;
+    background-color: #d4b166;
+    background-image: url('../images/ico_preview.png');
+}
+
+.btn_consulta {
+    background-color: #d1a0e7;
     background-image: url('../images/ico_preview.png');
 }
 
 .btn_estadistica_incidencia_categoria {
-    background-color: #7cb5ec;
+    background-color: #005D84;
     background-image: url('../images/ico_estadisticas.png');
 }
 
 .btn_estadistica_anuncio_categoria {
-    background-color: #078cc3;
+    background-color: #005D84;
     background-image: url('../images/ico_estadisticas.png');
 }
 
 .btn_estadistica_incidencia_fecha {
-    background-color: #425f9c;
+    background-color: #005D84;
     background-image: url('../images/ico_estadisticas.png');
 }
 
 .btn_estadistica_comunidades {
-    background-color: #355664;
+    background-color: #005D84;
     background-image: url('../images/ico_estadisticas.png');
 }
 
 .btn_password {
-    background-color: #759E1A;
+    background-color: #d4b166;
     background-image: url('../images/ico_password.png');
 }
 
 .btn_nuevo {
 	 margin-bottom: 8px;
-    background-color: #f17e4d;
+    background-color: #7cb5ec;
     background-image: url('../images/ico_add.png');
 }
 
 .btn_return {
 	 margin-bottom: 8px;
-    background-color: #f17e4d;
+    background-color: #d4b166;
     background-image: url('../images/ico_return.png');
 }
 
 .btn_mis_anuncios{
-	background-color: #759E1A;	
+	background-color: #82bd82;	
 	background-image: url('../images/ico_go.png');
 }
 
-a.boton_documento {
-    text-decoration: none;
-    background-repeat: no-repeat;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -o-border-radius: 5px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline;
-    margin: 2px;
-    font-size: 0.9em;
-    padding: 3px 7px 3px 29px;
-    background-position: 5px center;
+.btn_contactar {
+    background-color: #82bd82;
+}
+
+.btn_denunciar {
+    background-color: #d4b166;
+}
+
+span.boton_anuncio{
+	text-decoration: none;
+   background-repeat: no-repeat;
+   border-radius: 4px;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   -o-border-radius: 4px;
+   color: #FFFFFF;
+   cursor: pointer;
+   display: inline;
+   margin: 2px;
+   padding: 8px 8px 8px 8px;
+   background-position: 5px center;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-weight: bold;
+}
+
+span.boton_anuncio:hover{
+	text-decoration: none;
+	background-color: #337AB7;
 	-moz-transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
 
+a.boton_documento {
+    text-decoration: none;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline;
+    margin: 2px;
+    padding: 8px 8px 8px 30px;
+    background-position: 5px center;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-weight: bold;
+}
+
 a.boton_documento:hover{
-	background-color: #F7D118;
+	background-color: #337AB7;
 	-moz-transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
@@ -90,46 +134,48 @@ a.boton_documento:hover{
 
 a.boton_alta {
     background-repeat: no-repeat;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -o-border-radius: 5px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
     color: #fff;
     cursor: pointer;
     display: inline-block;
     margin-left: 2px;
     text-decoration: none;
-    font-size: 0.9em;
-    padding: 3px 7px 3px 28px;
-    background-position: 2px center;
+    padding: 8px 8px 8px 30px;
+    background-position: 5px center;
 	-moz-transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-weight: bold;
 }
 
 a.boton_alta_admin {
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -o-border-radius: 5px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
     color: #fff;
     cursor: pointer;
     display: inline-block;
     margin-left: 2px;
     text-decoration: none;
-    font-size: 0.9em;
-    padding: 2px 3px 2px 3px;
-    background-color: #f17e4d;
+    padding: 8px 8px 8px 8px;
+    background-color: #7cb5ec;
 	-moz-transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 	text-indent: 0;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-weight: bold;
 }
 
 a.boton_alta:hover, a.boton_alta_admin:hover{
-	background-color: #316431;
+	background-color: #337AB7;
 	color:#fff;
 	-moz-transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
@@ -140,29 +186,58 @@ a.boton_alta:hover, a.boton_alta_admin:hover{
 a.boton_estadistica {
     text-decoration: none;
     background-repeat: no-repeat;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -o-border-radius: 5px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
     color: #fff;
     cursor: pointer;
     display: inline-block;
     margin-left: 2px;
     margin-bottom: 2px;
-    font-size: 0.9em;
-    padding: 3px 7px 3px 28px;
+    padding: 8px 8px 8px 30px;
     background-position: 2px center;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-weight: bold;
+}
+
+a.boton_estadistica:hover{
+	background-color: #A7BDD0;
+	color:white;
 	-moz-transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
 
-a.boton_estadistica:hover{
-	background-color: #316431;
-	color:#fff;
-	-moz-transition: all 0.3s ease;
-	-webkit-transition: all 0.3s ease;
-	-o-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+/*VERSION MOVIL*/
+@media (max-width: 767px) {
+	a.boton_estadistica {
+    	padding: 3px 5px 3px 24px;
+	}
+	a.boton_alta {
+    	padding: 3px 5px 3px 24px;
+	}
+	a.boton_alta_admin {
+    	padding: 3px 5px 3px 5px;
+	}
+	a.boton_documento {
+    	padding: 3px 5px 3px 24px;
+	}
+	span.boton_anuncio{
+	   padding: 3px 5px 3px 5px;
+		background-position: 2px center;
+		display:inline-block;
+		margin-left: 0;
+	}
+	a.boton_documento{
+		background-position: 2px center;
+	}
+	a.boton_alta{
+		background-position: 2px center;	
+	}
 }

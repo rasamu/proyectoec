@@ -46,10 +46,13 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{% trans %}Incidencias{% endtrans %}</h2>
+	<h2 class="centrado">{% trans %}Incidencias{% endtrans %}</h2>
 	
 	{% if is_granted('ROLE_VECINO')%}
    	<a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar Incidencia{% endtrans %}</span></a>
+   {% else %}
+   	<a href="{{ path('ec_adminfincas_comunidad_listado_incidencias_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+		<a href="{{ path('ec_adminfincas_comunidad_listado_incidencias_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
    {% endif %}
    
 	<div id="demo">

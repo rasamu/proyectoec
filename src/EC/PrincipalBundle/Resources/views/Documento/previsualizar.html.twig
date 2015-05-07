@@ -27,23 +27,26 @@
     		{% endfor %}
 	{% endfor %}
 	
-	<h2 class="verde centrado">{%trans%}Documento{%endtrans%}</h2>
+	<h2 class="centrado">{%trans%}Documento{%endtrans%}</h2>
 	
-	<div id="documento">
-   	<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>
-		<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:sa")}}</div>
+	<div id="documento" class="documento">
 		<div><strong>{%trans%}Formato{%endtrans%}: </strong>
 			{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' or documento.getFormat()=='doc' or documento.getFormat()=='txt' %}
 				<img src="{{ asset('images/'~documento.getFormat()~'-icon.png') }}" alt="{{documento.getFormat()}}" />
 			{% endif %}
 			{{documento.getFormat()}}
+			<strong> {%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
 		</div>
-		<div><strong>{%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}</div>
+   	<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>
+		<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:sa")}}</div>
 		<div>
-			<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
-			{% if is_granted('ROLE_ADMINFINCAS') %}
-				<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
-			{% endif %}
+			<nav>
+				<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
+				{% if is_granted('ROLE_ADMINFINCAS') %}
+					<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_comunidad_consultas_documento', { 'id': documento.id}) }}" >{%trans%}Consultas{%endtrans%}</a>
+					<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
+				{% endif %}
+			</nav>
 		</div>
 	
 		<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/documentos/'~documento.path~'') }}" width='700' height='900' allowfullscreen></iframe>
