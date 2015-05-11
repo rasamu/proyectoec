@@ -57,7 +57,7 @@
 	
 	<div class="form">
 		<div id="incidencia">
-			<div><strong>{%trans%}Categoría{%endtrans%}:</strong> {{incidencia.categoria.nombre}}</div>
+			<div><strong>{%trans%}Categoría{%endtrans%}:</strong> {{incidencia.categoria.nombre|trans}}</div>
 			<div><strong>{%trans%}Asunto{%endtrans%}:</strong> {{incidencia.asunto}}</div>
 			<div><strong>{%trans%}Fecha{%endtrans%}:</strong> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</div>
 			<div><strong>{%trans%}Propietario{%endtrans%}:</strong> {{incidencia.propietario.razon}}</div>

@@ -38,7 +38,7 @@
 			<strong> {%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
 		</div>
    	<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>
-		<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:sa")}}</div>
+		<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:sa")}} <strong>{%trans%}Categoría{%endtrans%}: </strong>{{documento.tipo.nombre|trans}}</div>
 		<div>
 			<nav>
 				<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>

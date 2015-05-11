@@ -60,7 +60,7 @@
 			<div class="anuncio anuncio_color">
 				<div class="titulo_anuncio">
 					{{mi_anuncio.fecha | date("d/m/Y")}} {{mi_anuncio.comunidad.city.name}} ({{mi_anuncio.comunidad.city.province.name}})
-					<strong>{{mi_anuncio.categoria.nombre}}</strong>: {{mi_anuncio.titulo}}
+					<strong>{{mi_anuncio.categoria.nombre|trans}}</strong>: {{mi_anuncio.titulo}}
 					<div class="referencia_anuncio">
 						r{{mi_anuncio.id}}
 					</div>
@@ -121,7 +121,7 @@
 				<div class="anuncio anuncio_color">
 					<div class="titulo_anuncio">
 						{{anuncio_comunidad.fecha | date("d/m/Y")}} {{anuncio_comunidad.comunidad.city.name}} ({{anuncio_comunidad.comunidad.city.province.name}})
-						<strong>{{anuncio_comunidad.categoria.nombre}}</strong>: {{anuncio_comunidad.titulo}}
+						<strong>{{anuncio_comunidad.categoria.nombre|trans}}</strong>: {{anuncio_comunidad.titulo}}
 						<div class="referencia_anuncio">
 							r{{anuncio_comunidad.id}}
 						</div>

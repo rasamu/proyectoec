@@ -5,12 +5,12 @@ namespace EC\PrincipalBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* EC\PrincipalBundle\Entity\Categoria
+* EC\PrincipalBundle\Entity\CategoriaIncidencias
 *
 * @ORM\Entity
-* @ORM\Table(name="categorias")
+* @ORM\Table(name="categorias_incidencias")
 */
-class Categoria
+class CategoriaIncidencias
 {
 /**
 *
@@ -76,7 +76,7 @@ class Categoria
      * Add incidencias
      *
      * @param \EC\PrincipalBundle\Entity\Incidencia $incidencias
-     * @return Categoria
+     * @return CategoriaIncidencias
      */
     public function addIncidencia(\EC\PrincipalBundle\Entity\Incidencia $incidencias)
     {

@@ -57,7 +57,7 @@
             name: '{%trans%}Incidencias{%endtrans%}',
             data: [
             	{% for cat in categorias %}
-            		['{{cat.nombre}}',{{cat.total}}],
+            		['{{cat.nombre|trans}}',{{cat.total}}],
 					{% endfor %}
             ],
             dataLabels: {

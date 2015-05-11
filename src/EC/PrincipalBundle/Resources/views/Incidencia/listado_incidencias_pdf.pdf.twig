@@ -10,7 +10,7 @@
 			{% for incidencia in incidencias %}
 				<tr>
 				   <td>{{incidencia.fecha | date("d/m/Y H:i:s a")}}</td>
-       			<td>{{incidencia.categoria.nombre}}</td>
+       			<td>{{incidencia.categoria.nombre|trans}}</td>
        			<td>{{incidencia.propietario.razon}}</td>
        			<td>{{incidencia.asunto}}</td>
        			<td>{{incidencia.estado.nombre}}</td>

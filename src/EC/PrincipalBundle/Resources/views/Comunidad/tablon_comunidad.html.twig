@@ -36,7 +36,7 @@
 							<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
 							{{incidencia.fecha | date("d/m/Y")}} 
 							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}{%trans%}Comunidad{%endtrans%}: <strong>{{incidencia.propietario.bloque.comunidad.codigo}}</strong>{% endif %}
-							{%trans%}Categoría{%endtrans%}: <strong>{{incidencia.categoria.nombre}}</strong> 
+							{%trans%}Categoría{%endtrans%}: <strong>{{incidencia.categoria.nombre|trans}}</strong> 
 							{%trans%}Bloque{%endtrans%}: <strong>{{incidencia.propietario.bloque.num}}</strong>
 							{%trans%}Propiedad{%endtrans%}: <strong>{{incidencia.propietario.propiedad}}</strong>
 							

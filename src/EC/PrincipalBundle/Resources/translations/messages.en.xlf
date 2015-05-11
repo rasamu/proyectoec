@@ -889,6 +889,10 @@
                 <source>incidencia</source>
                 <target>incident</target>
             </trans-unit>
+            <trans-unit id="724">
+                <source>Incidencia</source>
+                <target>Incident</target>
+            </trans-unit>
         		
 <!--PROPIETARIO-->
         		<trans-unit id="800">
@@ -1061,6 +1065,10 @@
                 <source>La reunión ha sido eliminada.</source>
                 <target>The meeting has been deleted.</target>
             </trans-unit>
+				<trans-unit id="920">
+                <source>Otra Comunidad</source>
+                <target>Another Community</target>
+            </trans-unit>
 <!--ROLE-->
 				<trans-unit id="1001">
                 <source>ha sido nombrado nuevo Presidente.</source>
@@ -1170,6 +1178,257 @@
                 <source>Menú contextual Gráfico</source>
                 <target>Chart context menu</target>
             </trans-unit>
+            
+<!--CATEGORIAS ANUNCIOS-->
+				<trans-unit id="1500">
+                <source>Acristalamientos</source>
+                <target>Glazings</target>
+            </trans-unit>
+            <trans-unit id="1501">
+                <source>Aire acondicionado</source>
+                <target>Air conditioning</target>
+            </trans-unit>
+            <trans-unit id="1502">
+                <source>Alfombras y moquetas</source>
+                <target>Carpets</target>
+            </trans-unit>
+            <trans-unit id="1503">
+                <source>Antenas</source>
+                <target>Antenna</target>
+            </trans-unit>
+            <trans-unit id="1504">
+                <source>Ascensores y montacargas</source>
+                <target>Lifts and hoists</target>
+            </trans-unit>
+            <trans-unit id="1505">
+                <source>Buzones</source>
+                <target>Mailboxes</target>
+            </trans-unit>
+            <trans-unit id="1506">
+                <source>Calefacción, calderas y gas</source>
+                <target>Heating, boilers and gas</target>
+            </trans-unit>
+            <trans-unit id="1507">
+                <source>Contadores</source>
+                <target>Counters</target>
+            </trans-unit>
+            <trans-unit id="1508">
+                <source>Cubiertas y tejados</source>
+                <target>Roofing</target>
+            </trans-unit>
+            <trans-unit id="1509">
+                <source>Depositos y tanques</source>
+                <target>Tanks</target>
+            </trans-unit>
+            <trans-unit id="1510">
+                <source>Domótica</source>
+                <target>Home automation</target>
+            </trans-unit>
+            <trans-unit id="1511">
+                <source>Energía solar</source>
+                <target>Solar energy</target>
+            </trans-unit>
+            <trans-unit id="1512">
+                <source>Extintores, S. Seg. Incendios</source>
+                <target>Fire extinguishers, Fire safety</target>
+            </trans-unit>
+            <trans-unit id="1513">
+                <source>Fontanería, saneamientos</source>
+                <target>Plumbing, sanitation</target>
+            </trans-unit>
+            <trans-unit id="1514">
+                <source>Iluminación, Detectores de presencia</source>
+                <target>Lighting, Presence detectors</target>
+            </trans-unit>
+            <trans-unit id="1515">
+                <source>Instalaciones deportivas</source>
+                <target>Sports facilities</target>
+            </trans-unit>
+            <trans-unit id="1516">
+                <source>Jardinería</source>
+                <target>Gardening</target>
+            </trans-unit>
+            <trans-unit id="1517">
+                <source>Limpieza</source>
+                <target>Cleaning</target>
+            </trans-unit>
+            <trans-unit id="1518">
+                <source>Materiales de construcción</source>
+                <target>Building materials</target>
+            </trans-unit>
+            <trans-unit id="1519">
+                <source>Mobiliario urbano y equipamiento</source>
+                <target>Street furniture and equipment</target>
+            </trans-unit>
+            <trans-unit id="1520">
+                <source>Pararrayos</source>
+                <target>Lightning rods</target>
+            </trans-unit>
+            <trans-unit id="1521">
+                <source>Persianas y toldos</source>
+                <target>Blinds and awnings</target>
+            </trans-unit>
+            <trans-unit id="1522">
+                <source>Piscinas</source>
+                <target>Pools</target>
+            </trans-unit>
+            <trans-unit id="1523">
+                <source>Porteros automáticos</source>
+                <target>Door openers</target>
+            </trans-unit>
+            <trans-unit id="1524">
+                <source>Puertas automáticas y garajes</source>
+                <target>Automatic doors and garages</target>
+            </trans-unit>
+            <trans-unit id="1525">
+                <source>Puertas de portal</source>
+                <target>Portal doors</target>
+            </trans-unit>
+            <trans-unit id="1526">
+                <source>Rótulos y luminosos</source>
+                <target>Signs and lighting</target>
+            </trans-unit>
+            <trans-unit id="1527">
+                <source>Salvaescaleras y accesibilidad</source>
+                <target>Stair and accessibility</target>
+            </trans-unit>
+            <trans-unit id="1528">
+                <source>Sistemas de seguridad</source>
+                <target>Security systems</target>
+            </trans-unit>
+            <trans-unit id="1539">
+                <source>Suelos y pavimentos</source>
+                <target>Floors and pavements</target>
+            </trans-unit>
+            <trans-unit id="1540">
+                <source>Chimeneas</source>
+                <target>Fireplaces</target>
+            </trans-unit>
+				<trans-unit id="1541">
+                <source>Otros</source>
+                <target>Others</target>
+            </trans-unit>
+            
+<!--CATEGORIAS INCIDENCIAS-->
+				<trans-unit id="160">
+                <source>Administradores de fincas</source>
+                <target>Estate managers</target>
+            </trans-unit>
+            <trans-unit id="1601">
+                <source>Conserjes, Controladores</source>
+                <target>Janitors, Controllers</target>
+            </trans-unit>
+            <trans-unit id="1602">
+                <source>Constructoras</source>
+                <target>Builders</target>
+            </trans-unit>
+            <trans-unit id="1603">
+                <source>Desinsectación, desratización...</source>
+                <target>Disinfestation, deratting...</target>
+            </trans-unit>
+            <trans-unit id="1604">
+                <source>Eficiencia energética</source>
+                <target>Energy efficiency</target>
+            </trans-unit>
+            <trans-unit id="1605">
+                <source>Electricistas</source>
+                <target>Electricians</target>
+            </trans-unit>
+            <trans-unit id="1606">
+                <source>Fachadas</source>
+                <target>Facades</target>
+            </trans-unit>
+            <trans-unit id="1607">
+                <source>Fumigación de jardines</source>
+                <target>Fumigation of gardens</target>
+            </trans-unit>
+            <trans-unit id="1608">
+                <source>Fumistas y chimeneas</source>
+                <target>Fireplaces</target>
+            </trans-unit>
+            <trans-unit id="1609">
+                <source>Humedades, Impermeabilizaciones</source>
+                <target>Humidity, Waterproofing</target>
+            </trans-unit>
+            <trans-unit id="1610">
+                <source>Mudanzas</source>
+                <target>Moving</target>
+            </trans-unit>
+            <trans-unit id="1611">
+                <source>Parquet, tarima y barniz</source>
+                <target>Parquet flooring and varnish</target>
+            </trans-unit>
+            <trans-unit id="1612">
+                <source>Pintores</source>
+                <target>Painters</target>
+            </trans-unit>
+            <trans-unit id="1613">
+                <source>Piscinas, Socorristas</source>
+                <target>Pools, Lifeguards</target>
+            </trans-unit>
+            <trans-unit id="1614">
+                <source>Poceros, desatrancos, desatascos</source>
+                <target>Diggers, unblocking</target>
+            </trans-unit>
+            <trans-unit id="1615">
+                <source>Rehabilitación de edificios</source>
+                <target>Rehabilitation of buildings</target>
+            </trans-unit>
+            <trans-unit id="1616">
+                <source>Seguros</source>
+                <target>Insurance</target>
+            </trans-unit>
+            <trans-unit id="1617">
+                <source>Servicios integrales</source>
+                <target>Comprehensive services</target>
+            </trans-unit>
+            <trans-unit id="1618">
+                <source>Sistemas y personal de seguridad</source>
+                <target>Systems and security personnel</target>
+            </trans-unit>
+            
+<!--TIPOS DOCUMENTOS-->
+				<trans-unit id="1700">
+                <source>Actas</source>
+                <target>Proceedings</target>
+            </trans-unit>
+            <trans-unit id="1701">
+                <source>Balances</source>
+                <target>Balances</target>
+            </trans-unit>
+            <trans-unit id="1702">
+                <source>Contratos (Proveedores,Etc)</source>
+                <target>Contracts (Suppliers, Etc)</target>
+            </trans-unit>
+            <trans-unit id="1703">
+                <source>Derramas</source>
+                <target>Extraordinary fees</target>
+            </trans-unit>
+            <trans-unit id="1704">
+                <source>Estatutos y Normas de Régimen Interno</source>
+                <target>Statutes and Internal Regulations</target>
+            </trans-unit>
+            <trans-unit id="1705">
+                <source>Facturas</source>
+                <target>Bills</target>
+            </trans-unit>
+            <trans-unit id="1706">
+                <source>Liquidaciones</source>
+                <target>Closeouts</target>
+            </trans-unit>
+            <trans-unit id="1707">
+                <source>Presupuestos</source>
+                <target>Budgets</target>
+            </trans-unit>
+            <trans-unit id="1708">
+                <source>Seguros de la Comunidad</source>
+                <target>Community insurances</target>
+            </trans-unit>
+            <trans-unit id="1709">
+                <source>Teléfonos de interés</source>
+                <target>Useful phone numbers</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

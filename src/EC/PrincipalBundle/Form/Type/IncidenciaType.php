@@ -10,7 +10,7 @@ class IncidenciaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {	 
          $builder->add('categoria', 'entity', array(
-            'class' => 'ECPrincipalBundle:Categoria',
+            'class' => 'ECPrincipalBundle:CategoriaIncidencias',
             'property'=>'nombre',
             'label' => 'Categoría',
             'empty_value' => 'Selecciona una categoría',

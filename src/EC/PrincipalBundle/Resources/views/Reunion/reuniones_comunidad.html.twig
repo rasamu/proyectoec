@@ -54,7 +54,7 @@
                     {% if (reunion.comunidad.id!=comunidad.id) %}
                     		backgroundColor: '#EDD6A9',
                     		color: '#E6E6E6',
-                    		textColor: '#000',                    		
+                    		textColor: '#2C4853',                    		
                     {% endif %}
                 	},
                 	{% endfor %}
@@ -125,6 +125,12 @@
 	{% endfor %}
 	
 	<h2 class="centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
+	
+	<span id="leyenda_reuniones">
+		<span class="color_vicepresidente derecha">{%trans%}Otra Comunidad{%endtrans%}</span>
+  		<span class="color_presidente derecha">{%trans%}Comunidad{%endtrans%} {{comunidad.codigo}}</span>
+	</span>
+	
 	<br/>
 	
 	<div id='calendar'></div>

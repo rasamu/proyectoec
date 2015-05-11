@@ -129,7 +129,7 @@ html .fc,
 	}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
-	background: #fdf5d0;
+	background: #e5f4df;
 	}
 	
 .fc-cell-overlay { /* semi-transparent rectangle while dragging */
@@ -276,9 +276,9 @@ html .fc,
 	}
 	 
 .fc-event {
-	border: 1px solid #337AB7; /* default BORDER color */
-	background-color: #337AB7; /* default BACKGROUND color */
-	color: #fff;               /* default TEXT color */
+	border: 1px solid #BBDEFF; /* default BORDER color */
+	background-color: #BBDEFF; /* default BACKGROUND color */
+	color: #2C4853;               /* default TEXT color */
 	font-size: .85em;
 	cursor: pointer;
 	}
@@ -465,7 +465,7 @@ table.fc-border-separate {
 	vertical-align: middle;
 	text-align: right;
 	font-weight: normal;
-	color: #316431;
+	color: #2C4853;
 	font-family: 'Miltonian Tattoo', cursive, serif, Arial, Helvetica;	
 	}
 
@@ -615,5 +615,4 @@ table.fc-border-separate {
 	position:absolute;
 	z-index:10001;
 	padding: 5px;
-	border:1px solid #316431;
 	}

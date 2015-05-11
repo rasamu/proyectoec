@@ -64,7 +64,7 @@ class Incidencia
     
     /**
      * @Assert\NotNull()
-     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Categoria", inversedBy="incidencias")
+     * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\CategoriaIncidencias", inversedBy="incidencias")
      * @ORM\JoinColumn(name="categoria", referencedColumnName="id")
      */
     protected $categoria;
@@ -162,10 +162,10 @@ class Incidencia
     /**
      * Set categoria
      *
-     * @param \EC\PrincipalBundle\Entity\Categoria $categoria
+     * @param \EC\PrincipalBundle\Entity\CategoriaIncidencias $categoria
      * @return Incidencia
      */
-    public function setCategoria(\EC\PrincipalBundle\Entity\Categoria $categoria = null)
+    public function setCategoria(\EC\PrincipalBundle\Entity\CategoriaIncidencias $categoria = null)
     {
         $this->categoria = $categoria;
     
@@ -175,7 +175,7 @@ class Incidencia
     /**
      * Get categoria
      *
-     * @return \EC\PrincipalBundle\Entity\Categoria 
+     * @return \EC\PrincipalBundle\Entity\CategoriaIncidencias 
      */
     public function getCategoria()
     {

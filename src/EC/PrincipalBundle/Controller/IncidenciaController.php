@@ -11,7 +11,7 @@ use EC\PrincipalBundle\Entity\Incidencia;
 use EC\PrincipalBundle\Entity\ConsultaIncidencia;
 use EC\PrincipalBundle\Entity\Actuacion;
 use EC\PrincipalBundle\Entity\Estado;
-use EC\PrincipalBundle\Entity\Categoria;
+use EC\PrincipalBundle\Entity\CategoriaIncidencias;
 use EC\PrincipalBundle\Entity\Privacidad;
 use EC\PrincipalBundle\Form\Type\IncidenciaType;
 use EC\PrincipalBundle\Form\Type\ActuacionType;
@@ -366,7 +366,7 @@ class IncidenciaController extends Controller
 				(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
 				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad IN
 				(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.administrador= :admin)))) as total
-				FROM ECPrincipalBundle:Categoria cat'
+				FROM ECPrincipalBundle:CategoriaIncidencias cat'
 			)->setParameters(array('admin'=>$this->getUser()));			
 			$categorias = $query->getResult();		  				
     		

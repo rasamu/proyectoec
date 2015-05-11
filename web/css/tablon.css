@@ -1,5 +1,5 @@
 .entrada{
-	width: 95%;
+	width: 94%;
 	background: -webkit-linear-gradient(#D9E1E8, white);
    background: -moz-linear-gradient(#D9E1E8, white);
    background: -o-linear-gradient(#D9E1E8, white);
@@ -18,23 +18,23 @@
    background: -o-linear-gradient(#A7BDD0, white);
    background: linear-gradient(#A7BDD0, white);
     /* Webkit for Chrome and Safari */
-  -webkit-transform: scale(1.05, 1.05); // This is the enlarged size scale of the image.
+  -webkit-transform: scale(1.04, 1.04); // This is the enlarged size scale of the image.
   -webkit-transition-duration: 300ms;
   -webkit-transition-timing-function: ease-out;
   /* Webkit for Mozila Firefox */
-  -moz-transform: scale(1.05, 1.05);
+  -moz-transform: scale(1.04, 1.04);
   -moz-transition-duration: 300ms;
   -moz-transition-timing-function: ease-out; 
   /* Webkit for IE( Version: 11, 10 ) */
-  -ms-transform: scale(1.05, 1.05);
+  -ms-transform: scale(1.04, 1.04);
   -ms-transition-duration: 300ms;
   -ms-transition-timing-function: ease-out;
   /* Opera */
-  -o-transform: scale(1.05, 1.05);
+  -o-transform: scale(1.04, 1.04);
   -o-transition-duration: 300ms;
   -o-transition-timing-function: ease-out;
   /*Standard*/
-  transform: scale(1.05, 1.05);
+  transform: scale(1.04, 1.04);
   transition-duration: 300ms;
   transition-timing-function: ease-out;
 }

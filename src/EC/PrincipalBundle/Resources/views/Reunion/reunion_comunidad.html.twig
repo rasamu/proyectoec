@@ -30,20 +30,22 @@
 	<h2 class="centrado">{%trans%}Reunión{%endtrans%}</h2>
 	
 	<div id="reunion">
-		<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{reunion.descripcion}}</div>
-		<div><strong>{%trans%}Fecha{%endtrans%}: </strong>{{reunion.fecha | date("d/m/Y H:i a")}}</div>
 		<div><strong>{%trans%}Formato{%endtrans%}: </strong>
 			{% if reunion.getFormat()=='pdf' or reunion.getFormat()=='odt' or reunion.getFormat()=='odp' or reunion.getFormat()=='ods' or reunion.getFormat()=='doc' or reunion.getFormat()=='txt' %}
 				<img src="{{ asset('images/'~reunion.getFormat()~'-icon.png') }}" alt="{{reunion.getFormat()}}"/>
 			{% endif %}
 			{{reunion.getFormat()}}
+			<strong>{%trans%}Tamaño{%endtrans%}: </strong>{{reunion.getSize()}}
 		</div>
-		<div><strong>{%trans%}Tamaño{%endtrans%}: </strong>{{reunion.getSize()}}</div>
+		<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{reunion.descripcion}}</div>
+		<div><strong>{%trans%}Fecha{%endtrans%}: </strong>{{reunion.fecha | date("d/m/Y H:i a")}}</div>
 		<div>
-			<a class="boton_documento btn_download" href="{{ path('ec_reunion_descargar', { 'id': reunion.id })  }}">{% trans %}Descargar{% endtrans %}</a>
-			{% if is_granted('ROLE_ADMINFINCAS') %}
-				<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_eliminar_reunion', { 'cif': comunidad.cif, 'id': reunion.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar la reunión{%endtrans%} {{reunion.descripcion}}?')">{% trans %}Eliminar{% endtrans %}</a>
-			{% endif %}
+			<nav>
+				<a class="boton_documento btn_download" href="{{ path('ec_reunion_descargar', { 'id': reunion.id })  }}">{% trans %}Descargar{% endtrans %}</a>
+				{% if is_granted('ROLE_ADMINFINCAS') %}
+					<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_eliminar_reunion', { 'cif': comunidad.cif, 'id': reunion.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar la reunión{%endtrans%} {{reunion.descripcion}}?')">{% trans %}Eliminar{% endtrans %}</a>
+				{% endif %}
+			</nav>
 		</div>
 	
 		<div>

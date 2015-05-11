@@ -42,7 +42,7 @@
 								
 	{% for tipo in tipos %}
 	
-		<div onclick="javascript:mostrar({{tipo.id}});" class="cursor_pointer"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta" /><h3 class="azul inline"> {{tipo.nombre}} </h3>
+		<div onclick="javascript:mostrar({{tipo.id}});" class="cursor_pointer"><img src="{{ asset('images/icono-carpeta.png') }}" alt="carpeta" /><h3 class="azul inline"> {{tipo.nombre|trans}} </h3>
 			{% set count=0 %}
 			{% for documento in documentos if documento.tipo==tipo %}
 					{%set count=count+1 %}

@@ -497,6 +497,11 @@ label {
 	margin-top: 8px;	
 }
 
+#reunion div nav{
+	margin-top: 20px;
+	margin-bottom: 20px;	
+}
+
 /*ESTADÍSTICAS*/
 .grafica_estadisticas{
 	min-width: 500px;
@@ -537,6 +542,16 @@ article{
  	background: -moz-linear-gradient(right,rgba(237,214,169,0),rgba(237,214,169,1));
   	background: linear-gradient(to right, rgba(237,214,169,0), rgba(237,214,169,1));
 	/*background-color: #edd6a9 !important;*/
+}
+
+#leyenda_reuniones span{
+	padding: 10px;
+	float: right;
+	margin-left: 4px;
+	border-radius: 4px;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   -o-border-radius: 4px;
 }
 
 /*ESTRUCTURA*/
@@ -660,8 +675,8 @@ footer{
 	text-align: left;
 	padding-top: 12px;
 	padding-bottom: 40px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 0;
+	padding-right: 0;
 	height: 100%;
 }
 
@@ -688,6 +703,10 @@ footer{
 	margin-bottom: 18px;	
 }
 
+#calendar{
+	margin-top: 30px;	
+}
+
 /*VERSION MOVIL*/
 @media (max-width: 767px) {
 	html, body{
@@ -698,7 +717,7 @@ footer{
 	}
 	#col-der{
 		min-height: auto !important;
-		padding:5px 5px 12px !important;
+		padding:0 2px 12px !important;
 	}
 	#topheader{
 		height: 30px;
@@ -819,6 +838,12 @@ footer{
 	}
 	#leyenda_propietarios span{
 		display: none;	
+	}
+	#leyenda_reuniones span{
+		display: none;	
+	}
+	#calendar{
+		margin-top: 0;	
 	}
 	.mensaje{
 		padding: 5px;	

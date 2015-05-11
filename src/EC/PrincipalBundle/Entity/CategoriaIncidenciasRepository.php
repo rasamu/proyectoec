@@ -3,13 +3,13 @@ namespace EC\PrincipalBundle\Entity;
  
 use Doctrine\ORM\EntityRepository;
  
-class CategoriaRepository extends EntityRepository
+class CategoriaIncidenciasRepository extends EntityRepository
 {
     public function findById($id)
     {
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT c FROM ECPrincipalBundle:Categoria c WHERE c.id=$id"
+                "SELECT c FROM ECPrincipalBundle:CategoriaIncidencias c WHERE c.id=$id"
             )
             ->getResult();
     }
