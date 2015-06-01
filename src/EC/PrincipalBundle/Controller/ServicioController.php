@@ -138,7 +138,7 @@ class ServicioController extends Controller
     					'SELECT a
 						FROM ECPrincipalBundle:Servicio a
 						WHERE a.categoria = :categoria and a.city in
-						(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province = :province) order by a.fecha ASC'
+						(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province = :province)'
 					)->setParameters(array('categoria'=>$categoria, 'province'=>$province));
 				$results = $query->getResult();
 			}else{
@@ -146,7 +146,7 @@ class ServicioController extends Controller
 					$em = $this->getDoctrine()->getManager();
 					$query = $em->createQuery(
     					'SELECT a
-						FROM ECPrincipalBundle:Servicio a order by a.fecha ASC'
+						FROM ECPrincipalBundle:Servicio a'
 					);
 					$results = $query->getResult();
 				}else{
@@ -155,7 +155,7 @@ class ServicioController extends Controller
 						$query = $em->createQuery(
     						'SELECT a
 							FROM ECPrincipalBundle:Servicio a
-							WHERE a.categoria = :categoria order by a.fecha ASC'
+							WHERE a.categoria = :categoria'
 						)->setParameters(array('categoria'=>$categoria));
 						$results = $query->getResult();
 					}else{
@@ -164,7 +164,7 @@ class ServicioController extends Controller
     						'SELECT a
 							FROM ECPrincipalBundle:Servicio a
 							WHERE a.city in
-							(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province=:province) order by a.fecha ASC'
+							(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province=:province)'
 						)->setParameters(array('province'=>$province));
 						$results = $query->getResult();
 					}

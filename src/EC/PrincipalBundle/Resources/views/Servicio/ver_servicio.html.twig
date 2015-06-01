@@ -84,7 +84,7 @@
 	
 	<div class="documento anuncio buscador_color">
 			<div class="titulo_anuncio">
-				<strong>{{servicio.categoria.nombre}}</strong>
+				<strong>{{servicio.categoria.nombre|trans}}</strong>
 				, <span>{{servicio.city.name}}</span> <span>({{servicio.city.province.name}})</span>
 				{% set valoracion=consulta_service_global.comprobar_valoracion_servicio(servicio.id) %}
 				<span class="flotar_derecha">

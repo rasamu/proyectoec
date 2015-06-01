@@ -174,49 +174,50 @@ class AnuncioController extends Controller
        	$province=$form->get('province')->getData();
        	$anuncios_por_pagina=$form->get('mostrar')->getData();
        	
-       	//SERVIDOR
-       	/*if($categoria!=null and $province!=null){
-       		$em = $this->getDoctrine()->getManager();
-					$query = $em->createQuery(
-    					'SELECT a
-						FROM ECPrincipalBundle:Anuncio a
-						WHERE a.categoria = :categoria and a.comunidad in
-						(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.city in
-						(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province = :province)) order by a.fecha ASC'
-					)->setParameters(array('categoria'=>$categoria, 'province'=>$province));
-				$results = $query->getResult();
-			}else{
-				if($categoria==null and $province==null){
-					$em = $this->getDoctrine()->getManager();
-					$query = $em->createQuery(
-    					'SELECT a
-						FROM ECPrincipalBundle:Anuncio a order by a.fecha ASC'
-					);
+       	if($id_anuncio==null){
+       	
+       		//SERVIDOR
+       		/*if($categoria!=null and $province!=null){
+       			$em = $this->getDoctrine()->getManager();
+						$query = $em->createQuery(
+    						'SELECT a
+							FROM ECPrincipalBundle:Anuncio a
+							WHERE a.categoria = :categoria and a.comunidad in
+							(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.city in
+							(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province = :province)) order by a.fecha ASC'
+						)->setParameters(array('categoria'=>$categoria, 'province'=>$province));
 					$results = $query->getResult();
 				}else{
-					if($categoria!=null){
+					if($categoria==null and $province==null){
 						$em = $this->getDoctrine()->getManager();
 						$query = $em->createQuery(
     						'SELECT a
-							FROM ECPrincipalBundle:Anuncio a
-							WHERE a.categoria = :categoria order by a.fecha ASC'
-						)->setParameters(array('categoria'=>$categoria));
+							FROM ECPrincipalBundle:Anuncio a order by a.fecha ASC'
+						);
 						$results = $query->getResult();
 					}else{
-						$em = $this->getDoctrine()->getManager();
-						$query = $em->createQuery(
-    						'SELECT a
-							FROM ECPrincipalBundle:Anuncio a
-							WHERE a.comunidad in
-							(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.city in
-							(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province=:province)) order by a.fecha ASC'
-						)->setParameters(array('province'=>$province));
-						$results = $query->getResult();
+						if($categoria!=null){
+							$em = $this->getDoctrine()->getManager();
+							$query = $em->createQuery(
+    							'SELECT a
+								FROM ECPrincipalBundle:Anuncio a
+								WHERE a.categoria = :categoria order by a.fecha ASC'
+							)->setParameters(array('categoria'=>$categoria));
+							$results = $query->getResult();
+						}else{
+							$em = $this->getDoctrine()->getManager();
+							$query = $em->createQuery(
+    							'SELECT a
+								FROM ECPrincipalBundle:Anuncio a
+								WHERE a.comunidad in
+								(SELECT c FROM ECPrincipalBundle:Comunidad c WHERE c.city in
+								(SELECT cu FROM ECPrincipalBundle:City cu WHERE cu.province=:province)) order by a.fecha ASC'
+							)->setParameters(array('province'=>$province));
+							$results = $query->getResult();
+						}
 					}
-				}
-			}*/
+				}*/
 
-			if($id_anuncio==null){
 				$finder = $this->container->get('fos_elastica.finder.search.anuncio');
 				$boolQuery = new \Elastica\Query\Bool();
 			

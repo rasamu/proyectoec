@@ -18,7 +18,7 @@
 			
 			{% for servicio in servicios %}
 				<tr>
-				   <td>{{servicio.categoria.nombre}}</td>
+				   <td>{{servicio.categoria.nombre|trans}}</td>
        			<td>{{servicio.cif}}</td>
        			<td>{{servicio.nombre}}</td>
        			<td>{{servicio.city.name}} ({{servicio.city.province.name}})</td>
