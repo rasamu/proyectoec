@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Reunión{% endtrans %}
+	{% trans %}Reunión{% endtrans %} -
 	{{ parent() }}
 {% endblock %}
 
@@ -38,7 +38,7 @@
 			<strong>{%trans%}Tamaño{%endtrans%}: </strong>{{reunion.getSize()}}
 		</div>
 		<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{reunion.descripcion}}</div>
-		<div><strong>{%trans%}Fecha{%endtrans%}: </strong>{{reunion.fecha | date("d/m/Y H:i a")}}</div>
+		<div><strong>{%trans%}Fecha{%endtrans%}: </strong><span class="azul_fuerte">{{reunion.fecha | date("d/m/Y H:i a")}}</span></div>
 		<div>
 			<nav>
 				<a class="boton_documento btn_download" href="{{ path('ec_reunion_descargar', { 'id': reunion.id })  }}">{% trans %}Descargar{% endtrans %}</a>
@@ -52,4 +52,20 @@
 			<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/reuniones/'~reunion.path~'') }}" width='700' height='900' allowfullscreen></iframe>
 		</div>
 	</div>
+	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}
 {% endblock %}

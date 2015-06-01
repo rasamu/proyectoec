@@ -251,7 +251,7 @@ class AnuncioController extends Controller
 				$finalQuery = new \Elastica\Query($boolQuery);
 			
 				$finalQuery->setHighlight(array(
-					'pre_tags' => array('<strong class="highlight">'),
+					'pre_tags' => array('<strong class="highlight_anuncio">'),
 					'post_tags' => array('</strong>'),
 					'fields' => array(
 						'descripcion' => array(
@@ -300,7 +300,7 @@ class AnuncioController extends Controller
     }
 	
 	/**
-	  * @Route("/nuevo/anuncio/", name="ec_nuevo_anuncio")
+	  * @Route("/nuevo/anuncio/{cif}", name="ec_nuevo_anuncio")
 	  * @Template("ECPrincipalBundle:Anuncio:nuevo_anuncio.html.twig")
 	  */
 	public function nuevo_anuncioAction(Request $request, $cif)
@@ -357,7 +357,7 @@ class AnuncioController extends Controller
 	}
 	
 	/**
-	  * @Route("/anuncios/listado/", name="ec_listado_mis_anuncios")
+	  * @Route("/anuncios/listado/{cif}", name="ec_listado_mis_anuncios")
 	  * @Template("ECPrincipalBundle:Anuncio:listado_mis_anuncios.html.twig")
 	  */
 	public function listado_mis_anunciosAction($cif)

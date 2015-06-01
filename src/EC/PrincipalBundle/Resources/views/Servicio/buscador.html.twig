@@ -1,0 +1,126 @@
+{% extends 'ECPrincipalBundle::layout_comunidad.html.twig' %}
+
+{% block title %}
+	{% trans %}Buscador de Servicios{% endtrans %} -
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/anuncios.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rating.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+	
+	<div class="anuncio buscador_color">
+		{{ form_start(form) }}
+    		<div class="red">{{ form_errors(form) }}</div>
+    		
+    		<div class="campo_login flotar_izquierda">
+        		<div class="label_campo_login">{{ form_label(form.categoria) }}</div>
+        		{{ form_widget(form.categoria) }}
+        		<div class="error red">{{ form_errors(form.categoria) }}</div>
+    		</div>
+    		
+    		<div class="campo_login flotar_izquierda">
+        		<div class="label_campo_login">{{ form_label(form.province) }}</div>
+        		{{ form_widget(form.province) }}
+        		<div class="error red">{{ form_errors(form.province) }}</div>
+    		</div>
+ 
+    		<div class="campo_login flotar_izquierda">
+        		<div class="label_campo_login">{{ form_label(form.nombre) }}</div>
+        		{{ form_widget(form.nombre) }}
+        		<div class="error red">{{ form_errors(form.nombre) }}</div>
+    		</div>
+    		
+    		<div class="campo_login flotar_izquierda">
+        		<div class="label_campo_login">{{ form_label(form.mostrar) }}</div>
+        		{{ form_widget(form.mostrar) }}
+        		<div class="error red">{{ form_errors(form.mostrar) }}</div>
+    		</div>
+    		
+    		<div class="campo_login flotar_izquierda">
+    			<input type="submit" value="{% trans %}Buscar{% endtrans %}"/>
+    		</div>
+ 
+		{{ form_end(form) }}
+	</div>
+	
+	<div class="total_resultados">
+		{% if servicios is not null%}
+			{% if servicios.getTotalItemCount==1 %}
+				{{ servicios.getTotalItemCount }} {%trans%}Resultado{%endtrans%}			
+			{% else %}
+				{{ servicios.getTotalItemCount }} {%trans%}Resultados{%endtrans%}
+			{% endif %}
+		{% else %}
+			0 {%trans%}Resultados{%endtrans%}
+		{% endif %}
+	</div>
+	
+	{% for servicio in servicios %}
+		<div class="documento anuncio anuncio_color">
+			<div class="titulo_anuncio">
+				<strong>{{servicio.categoria.nombre}}</strong>
+				, <span>{{servicio.city.name}}</span> <span>({{servicio.city.province.name}})</span>
+				{% set valoracion=consulta_service_global.comprobar_valoracion_servicio(servicio.id) %}
+				<span class="flotar_derecha">
+					{{valoracion|rating}}
+				</span>
+			</div>
+			<div>
+				{%trans%}Cif/Nif{%endtrans%}: 
+				<span class="azul_fuerte">{{servicio.cif}}</span>
+			   {% set total=consulta_service_global.comprobar_total_valoraciones(servicio.id) %}
+				<span class="flotar_derecha">
+					{% if total==1 %}
+						({{total}} {%trans%}Valoración{%endtrans%})
+					{% else %}
+						({{total}} {%trans%}Valoraciones{%endtrans%})
+					{% endif %}
+				</span>
+				<strong class="flotar_derecha letra_grande">{{valoracion|number_format(1)}}</strong> 
+			</div>
+			<div>
+				{%trans%}Nombre{%endtrans%}: 
+				<span class="azul_fuerte">
+					{% if servicio.highlights is empty%}
+							{{servicio.nombre}}
+					{% else %}
+							{{servicio.highlights.nombre[0]|raw}}
+					{% endif %}
+				</span>
+				<a class="boton_documento btn_consulta flotar_derecha" href="{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}">{% trans %}Ver{% endtrans %}</a>
+				{% set comprobacion=consulta_service_global.comprobar_servicio_comunidad(comunidad.id, servicio.id) %}
+				{% if comprobacion is null%}
+					<a class="boton_documento btn_nuevo flotar_derecha" href="{{ path('ec_adminfincas_añadir_servicio', { 'cif_comunidad': comunidad.cif, 'cif_servicio': servicio.cif }) }}">{% trans %}Añadir{% endtrans %}</a>
+				{% else %}
+					<a class="boton_documento btn_delete flotar_derecha" href="{{ path('ec_adminfincas_quitar_servicio', { 'cif_comunidad': comunidad.cif, 'cif_servicio': servicio.cif }) }}">{% trans %}Quitar{% endtrans %}</a>
+				{% endif %}
+			</div>
+			<div>
+				{%trans%}Dirección{%endtrans%}: <span class="azul_fuerte">{{servicio.direccion}}</span>
+				{%trans%}Teléfono{%endtrans%}: <span class="azul_fuerte">{{servicio.telefono}}</span>
+			</div>
+		</div>
+	{% endfor %}		
+	
+	<div class="paginador">
+   	{% if servicios is empty%}
+			<span>{%trans%}No se han encontrado servicios que concuerden con la búsqueda realizada.{%endtrans%}</span>
+		{% else %}
+   		{{ knp_pagination_render(servicios) }}
+   	{%endif%}
+   </div>
+		
+{% endblock %}

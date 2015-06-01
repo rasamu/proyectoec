@@ -1,8 +1,8 @@
 {% extends 'ECPrincipalBundle::layout_comunidad.html.twig' %}
 
 {% block title %}
+	{% trans %}Propietarios{% endtrans %} -
 	{{ parent() }}
-	{% trans %}Propietarios{% endtrans %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -60,10 +60,10 @@
 	{% endfor %}
 	
 	<h2 class="centrado">{% trans %}Propietarios{% endtrans %}</h2>
-	
-	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+
 	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Propietario{% endtrans %}</a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	
 	<span id="leyenda_propietarios">
 		<span class="color_vicepresidente derecha">{%trans%}Vicepresidente{%endtrans%}</span>
@@ -93,7 +93,7 @@
        				<td headers="conexion" class="no_mostrar">{% if propietario.getUltimoLog() is empty %}
 								-
        					{% else %}
-       						 {{propietario.getUltimoLog().fecha | date("d/m/Y H:i") }}
+       						 <span class="azul_fuerte">{{propietario.getUltimoLog().fecha | date("d/m/Y H:i") }}</span>
        					{% endif %}
        				</td>
        				<td headers="acciones">

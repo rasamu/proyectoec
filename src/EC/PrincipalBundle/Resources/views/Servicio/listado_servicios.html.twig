@@ -1,0 +1,107 @@
+{% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
+
+{% block title %}
+	{% trans %}Servicios{% endtrans %} -
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/table.css') }}" type="text/css" rel="stylesheet" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+	 <link rel="stylesheet" type="text/css" href="{{ asset('css/rating.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+       	var Buscar = '{%trans%}Buscar{%endtrans%}';
+       	var Mostrando = '{%trans%}Mostrando{%endtrans%}';
+       	var entradas = '{%trans%}entradas{%endtrans%}';
+       	var de = '{%trans%}de{%endtrans%}';
+       	var a = '{%trans%}a{%endtrans%}';
+			var Anterior = '{%trans%}Anterior{%endtrans%}';
+			var Siguiente = '{%trans%}Siguiente{%endtrans%}';
+			var NoDatos = '{%trans%}No hay datos{%endtrans%}';
+			var NoRegistros = '{%trans%}No hay registros coincidentes encontrados{%endtrans%}';
+			var Cargando = '{%trans%}Cargando...{%endtrans%}';
+			var Procesando = '{%trans%}Procesando...{%endtrans%}';
+			var filtrado = '{%trans%}filtrado{%endtrans%}';
+	</script>
+	<script type='text/javascript' src="{{ asset('js/jquery.dataTables.js') }}"></script>  
+	<script type="text/javascript">
+			$(document).ready(function() {
+				$('#example').dataTable();
+			} );
+	</script>
+{% endblock %}
+
+{% block colder %}
+{{parent()}}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+
+	<h2 class="centrado">{% trans %}Servicios{% endtrans %}</h2>
+	
+	{% if is_granted('ROLE_ADMINFINCAS') %}
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_nuevo_servicio', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Servicio{% endtrans %}</a>
+		<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_buscador_servicios', { 'cif': comunidad.cif }) }}">{% trans %}Buscador{% endtrans %}</a>
+	{% endif %}
+	<a href="{{ path('ec_listado_servicios_pdf', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_listado_servicios_csv', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+	
+	<div id="demo">
+		<table class="display" id="example">
+			<thead>
+				<tr>
+					<th id="categoria" class="no_mostrar">{% trans %}Categoría{% endtrans %}</th>
+					<th id="nombre">{% trans %}Nombre{% endtrans %}</th>
+					<th id="ciudad" class="no_mostrar">{% trans %}Ciudad{% endtrans %}</th>
+					<th id="direccion" class="no_mostrar">{% trans %}Dirección{% endtrans %}</th>
+					<th id="telefono">{% trans %}Teléfono{% endtrans %}</th>
+					{% if is_granted('ROLE_ADMINFINCAS') %}
+						<th id="valoracion" class="no_mostrar">{% trans %}Valoración{% endtrans %}</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+			{% for servicio in servicios %}
+				<tr class="gradeX">
+       			<td headers="categoria" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.categoria.nombre |trans}}</td>
+       			<td headers="nombre" class="{%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.nombre}}</td>
+       			<td headers="ciudad" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.city.name}} ({{servicio.city.province.name}})</td>       			       			
+       			<td headers="direccion" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.direccion}}</td>       			
+       			<td headers="telefono" class="{%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.telefono}}</td>       			
+       			{% if is_granted('ROLE_ADMINFINCAS') %}
+       				<td headers="valoracion" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';">
+							{% set valoracion=consulta_service_global.comprobar_valoracion_servicio(servicio.id) %}
+							{{valoracion|rating}}
+       				</td>
+       			{%endif%}
+      		</tr> 
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}	
+{% endblock %}

@@ -1,14 +1,14 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
+	{{documento.descripcion}} -
 	{{ parent() }}
-	{{documento.descripcion}}
 {% endblock %}
 
 {% block stylesheets %}
- {{ parent() }}
-      <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
-
+ 	{{ parent() }}
+ 	
+   <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
@@ -38,7 +38,7 @@
 			<strong> {%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
 		</div>
    	<div><strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}</div>
-		<div><strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:sa")}} <strong>{%trans%}Categoría{%endtrans%}: </strong>{{documento.tipo.nombre|trans}}</div>
+		<div><strong>{%trans%}Categoría{%endtrans%}: </strong>{{documento.tipo.nombre|trans}} <strong>{%trans%}Fecha de creación{%endtrans%}: </strong><span class="azul_fuerte">{{documento.fecha | date("d/m/Y H:i:sa")}}</span></div>
 		<div>
 			<nav>
 				<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
@@ -51,4 +51,20 @@
 	
 		<iframe id="viewer" src="{{ asset('bundles/ecprincipal/Viewer.js/index.html') }}#{{ asset('uploads/documentos/'~documento.path~'') }}" width='700' height='900' allowfullscreen></iframe>
 	</div>
+	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}
 {% endblock %}

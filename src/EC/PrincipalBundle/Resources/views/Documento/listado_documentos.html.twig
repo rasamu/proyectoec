@@ -1,8 +1,8 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
+	{% trans %}Documentos{% endtrans %} -
 	{{ parent() }}
-	{% trans %}Documentos{% endtrans %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -60,9 +60,6 @@
 							{% endif %}
 							{{documento.getFormat()}}
 							<strong>{%trans%}Tamaño{%endtrans%}: </strong>{{documento.getSize()}}
-						</div>
-						<div>
-							<strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}						
 							{% if is_granted('ROLE_VECINO') %}
 								{% set consulta=consulta_service_global.comprobar_consulta_documento(app.user,documento) %}
 								{% if consulta!= null%}
@@ -70,10 +67,13 @@
 								{%else%}
 									<span class="flotar_derecha mensaje red">{%trans%}No leído{%endtrans%}</span>
 								{% endif %}
-							{% endif %}				
+							{% endif %}	
+						</div>
+						<div>
+							<strong>{%trans%}Descripción{%endtrans%}: </strong>{{documento.descripcion}}									
 						</div>				
 						<div>
-							<strong>{%trans%}Fecha de creación{%endtrans%}: </strong>{{documento.fecha | date("d/m/Y H:i:s a")}}
+							<strong>{%trans%}Fecha de creación{%endtrans%}: </strong><span class="azul_fuerte">{{documento.fecha | date("d/m/Y H:i:s a")}}</span>
 						</div>						
 						<div>
 							<nav>
@@ -98,4 +98,20 @@
 		</div>
 	
 	{% endfor %}
+	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}
 {% endblock %}

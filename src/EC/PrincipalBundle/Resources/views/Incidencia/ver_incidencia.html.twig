@@ -1,8 +1,8 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
+	{% trans %}Incidencia{% endtrans %} -
 	{{ parent() }}
-	{% trans %}Incidencia{% endtrans %}
 {% endblock %}
 
 {% block javascripts %}
@@ -55,11 +55,11 @@
 	
 	<h2 class="centrado">{% trans %}Incidencia{% endtrans %}</h2>
 	
-	<div class="form">
+	<div class="form form_incidencia">
 		<div id="incidencia">
 			<div><strong>{%trans%}Categoría{%endtrans%}:</strong> {{incidencia.categoria.nombre|trans}}</div>
 			<div><strong>{%trans%}Asunto{%endtrans%}:</strong> {{incidencia.asunto}}</div>
-			<div><strong>{%trans%}Fecha{%endtrans%}:</strong> {{incidencia.fecha | date("d/m/Y H:i:s a")}}</div>
+			<div><strong>{%trans%}Fecha{%endtrans%}:</strong> <span class="azul_fuerte">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</span></div>
 			<div><strong>{%trans%}Propietario{%endtrans%}:</strong> {{incidencia.propietario.razon}}</div>
 			<div><strong>{%trans%}Bloque{%endtrans%}:</strong> {{incidencia.propietario.bloque.direccion}}	<strong>{%trans%}Propiedad{%endtrans%}:</strong> {{incidencia.propietario.propiedad}}</div>
 			<div><strong>{%trans%}Descripción{%endtrans%}:</strong> {{incidencia.descripcion}}</div>
@@ -92,7 +92,7 @@
 			<hr class="azul_oscuro">
 			<div><strong>{%trans%}Actuaciones{%endtrans%}:</strong></div>
 			{% for actuacion in actuaciones %}
-				<div>{{actuacion.fecha | date("d/m/Y H:i:s a")}}  
+				<div><span class="azul_fuerte">{{actuacion.fecha | date("d/m/Y H:i:s a")}}</span>
 				{%if actuacion.usuario is not empty%}
 					{% if actuacion.usuario.role.nombre=='ROLE_ADMINFINCAS' %}
 						{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} ({%trans%}Administrador{%endtrans%})
@@ -131,4 +131,20 @@
 			{% endif %}
 		</div>
 	</div>
+	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}
 {% endblock %}

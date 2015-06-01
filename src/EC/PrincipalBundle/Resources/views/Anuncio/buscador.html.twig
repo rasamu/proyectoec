@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block title %}
-	{% trans %}Anuncios{% endtrans %}
+	{% trans %}Anuncios{% endtrans %} -
 	{{ parent() }}
 {% endblock %}
 
@@ -98,7 +98,11 @@
 	{% if id_anuncio==null %}
 		<div class="total_resultados">
 			{% if anuncios is not null%}
-				{{ anuncios.getTotalItemCount }} {%trans%}Resultados{%endtrans%}
+				{% if anuncios.getTotalItemCount==1 %}
+					{{ anuncios.getTotalItemCount }} {%trans%}Resultado{%endtrans%}				
+				{% else %}
+					{{ anuncios.getTotalItemCount }} {%trans%}Resultados{%endtrans%}
+				{% endif %}
 			{% else %}
 				0 {%trans%}Resultados{%endtrans%}
 			{% endif %}
@@ -108,7 +112,7 @@
 	{% for anuncio in anuncios %}
 		<div class="anuncio anuncio_color">
 				<div class="titulo_anuncio">
-					{{anuncio.fecha | date("d/m/Y")}} {{anuncio.comunidad.city.name}} ({{anuncio.comunidad.city.province.name}})
+					<span class="azul_fuerte">{{anuncio.fecha | date("d/m/Y")}}</span> {{anuncio.comunidad.city.name}} ({{anuncio.comunidad.city.province.name}})
 					<strong>{{anuncio.categoria.nombre|trans}}</strong>: {{anuncio.titulo}}
 					<div class="referencia_anuncio">
 						r{{anuncio.id}}

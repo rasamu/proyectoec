@@ -211,4 +211,35 @@ class ComprobacionesService {
 			}		
     		return $consulta;	
 	 }
+	 
+	 public function comprobar_servicio($cif) {
+			$query = $this->em->createQuery(
+    				'SELECT s
+       			FROM ECPrincipalBundle:Servicio s
+      			WHERE s.cif = :cif'
+			)->setParameters(array('cif' => $cif));
+			
+			try {
+    				$servicio = $query->getSingleResult();
+			} catch (\Doctrine\Orm\NoResultException $e) {
+        			$servicio=null;
+			}			
+    		return $servicio;	
+	 }
+	 
+	 public function comprobar_valoracion($adminfincas, $servicio){
+			$query = $this->em->createQuery(
+    			'SELECT v
+				FROM ECPrincipalBundle:Valoracion v
+				WHERE v.adminfincas=:adminfincas and v.servicio=:servicio'
+			)->setParameters(array('adminfincas'=>$adminfincas,'servicio'=>$servicio));			
+			
+			try {
+    				$comprobacion_valoracion = $query->getSingleResult();
+			} catch (\Doctrine\Orm\NoResultException $e) {
+        			$comprobacion_valoracion = null;
+			}
+			
+			return $comprobacion_valoracion;	
+	 }
 }

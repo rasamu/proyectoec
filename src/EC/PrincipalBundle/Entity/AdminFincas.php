@@ -71,6 +71,11 @@ class AdminFincas extends Usuario
     protected $localidad;
     
     /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Valoracion", mappedBy="adminfincas")
+     */
+    protected $valoraciones;
+    
+    /**
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Comunidad", mappedBy="administrador", cascade={"remove"})
      */
     protected $comunidades;
@@ -624,5 +629,38 @@ class AdminFincas extends Usuario
     public function getAnuncios()
     {
         return $this->anuncios;
+    }
+
+    /**
+     * Add valoraciones
+     *
+     * @param \EC\PrincipalBundle\Entity\Valoracion $valoraciones
+     * @return AdminFincas
+     */
+    public function addValoracione(\EC\PrincipalBundle\Entity\Valoracion $valoraciones)
+    {
+        $this->valoraciones[] = $valoraciones;
+    
+        return $this;
+    }
+
+    /**
+     * Remove valoraciones
+     *
+     * @param \EC\PrincipalBundle\Entity\Valoracion $valoraciones
+     */
+    public function removeValoracione(\EC\PrincipalBundle\Entity\Valoracion $valoraciones)
+    {
+        $this->valoraciones->removeElement($valoraciones);
+    }
+
+    /**
+     * Get valoraciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getValoraciones()
+    {
+        return $this->valoraciones;
     }
 }

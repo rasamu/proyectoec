@@ -1,0 +1,176 @@
+{% extends 'ECPrincipalBundle::layout_comunidad.html.twig' %}
+
+{% block title %}
+	{{servicio.nombre}} -
+	{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/botones.css') }}" />
+    <link rel='stylesheet' type='text/css' href="{{ asset('css/anuncios.css') }}" />
+	 <link rel="stylesheet" type="text/css" href="{{ asset('css/rating.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui-dialog.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	
+	<script type='text/javascript' src="{{ asset('js/jquery-ui.min.js') }}"></script>
+	<script type='text/javascript' src="{{ asset('js/rating.js') }}"></script>		
+	<script type="text/javascript">
+		$(document).ready( function(){
+		
+			var idtextarea="valoracion_mensaje";
+			var idcontador="contador";
+			var max="500";
+			
+			$("#"+idtextarea).keyup(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+			
+			$("#"+idtextarea).keydown(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+ 
+			$("#"+idtextarea).change(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+			
+			$("#"+idtextarea).ready(function(){
+				updateContadorTa(idtextarea, idcontador,max);
+			});
+		});
+ 
+		function updateContadorTa(idtextarea, idcontador,max){
+			var contador = $("#"+idcontador);
+			var ta =     $("#"+idtextarea);
+			contador.html("0/"+max);
+ 
+			contador.html(ta.val().length+"/"+max);
+			if(parseInt(ta.val().length)>max){
+				ta.val(ta.val().substring(0,max-1));
+				contador.html(max+"/"+max);
+			}
+		}
+		
+		function showDialogValorar() {
+			$("#valorar").dialog({ <!--  ------> muestra la ventana  -->
+            width: "auto",  <!-- -------------> ancho de la ventana -->
+            height: "auto",<!--  -------------> altura de la ventana -->
+            show: "scale",
+            hide: "scale",
+            resizable: "false", <!-- ------> fija o redimensionable si ponemos este valor a "true" -->
+            position: "center",<!--  ------> posicion de la ventana en la pantalla (left, top, right...) -->
+            modal: "true", <!-- ------------> si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
+        		title: "{%trans%}Valoración{%endtrans%}",
+        	});
+		}
+	</script>
+{% endblock %}
+
+{% block colder %}
+{{parent()}}
+	<h2 class="centrado">{% trans %}Servicio{% endtrans %}</h2>
+	
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+	<div class="documento anuncio buscador_color">
+			<div class="titulo_anuncio">
+				<strong>{{servicio.categoria.nombre}}</strong>
+				, <span>{{servicio.city.name}}</span> <span>({{servicio.city.province.name}})</span>
+				{% set valoracion=consulta_service_global.comprobar_valoracion_servicio(servicio.id) %}
+				<span class="flotar_derecha">
+					{{valoracion|rating}}
+				</span>
+			</div>
+			<div>
+				{%trans%}Cif/Nif{%endtrans%}: 
+				<span class="azul_fuerte">{{servicio.cif}}</span>
+				<strong class="flotar_derecha letra_grande">{{valoracion|number_format(1)}}</strong>
+			</div>
+			<div>
+				{%trans%}Nombre{%endtrans%}: 
+				<span class="azul_fuerte">
+						{{servicio.nombre}}
+				</span>
+				<span class="btn_contactar boton_anuncio flotar_derecha" onclick="showDialogValorar({{servicio.id}})">{% trans %}Valorar{% endtrans %}</span>
+				{% set comprobacion=consulta_service_global.comprobar_servicio_comunidad(comunidad.id, servicio.id) %}
+				{% if comprobacion is null%}
+					<a class="boton_documento btn_nuevo flotar_derecha" href="{{ path('ec_adminfincas_añadir_servicio', { 'cif_comunidad': comunidad.cif, 'cif_servicio': servicio.cif }) }}">{% trans %}Añadir{% endtrans %}</a>
+				{% else %}
+					<a class="boton_documento btn_delete flotar_derecha" href="{{ path('ec_adminfincas_quitar_servicio', { 'cif_comunidad': comunidad.cif, 'cif_servicio': servicio.cif }) }}">{% trans %}Quitar{% endtrans %}</a>
+				{% endif %}
+			</div>
+			<div>
+				{%trans%}Dirección{%endtrans%}: <span class="azul_fuerte">{{servicio.direccion}}</span>
+				{%trans%}Teléfono{%endtrans%}: <span class="azul_fuerte">{{servicio.telefono}}</span>
+			</div>
+	</div>
+	
+	<div class="total_resultados">
+		<span>
+			{% if valoraciones is not null%}
+				{% if valoraciones.getTotalItemCount ==1 %}
+					{{valoraciones.getTotalItemCount }} {%trans%}Valoración{%endtrans%}
+				{% else %}
+					{{valoraciones.getTotalItemCount }} {%trans%}Valoraciones{%endtrans%}
+				{% endif %}
+			{% else %}
+				0 {%trans%}Valoraciones{%endtrans%}
+			{% endif %}
+		</span>
+	</div>
+	
+	{% for valoracion in valoraciones %}
+		<div class="anuncio anuncio_color documento">
+			<div class="titulo_anuncio">
+				<span class="azul_fuerte">{{valoracion.fecha| date("d/m/Y")}}</span>
+				<span class="flotar_derecha">{{valoracion.puntuacion|rating}}</span>
+			</div>
+			<div>
+				{{valoracion.mensaje}}
+			</div>
+		</div>
+	{% endfor %}
+	
+	<div class="paginador">
+   	{% if valoraciones is empty%}
+			<span>{%trans%}No existen valoraciones de éste servicio.{%endtrans%}</span>
+		{% else %}
+   		{{ knp_pagination_render(valoraciones) }}
+   	{%endif%}
+   </div>
+   	
+	<div id="valorar" class="ventana">  
+		<section class="form form_valorar">
+	
+			{{ form_start(form) }}
+    				<div class="red">{{ form_errors(form) }}</div>
+
+					<div class="campo_login">
+        				{{ form_widget(form.puntuacion) }}
+        				<div class="error red">{{ form_errors(form.puntuacion) }}</div>
+    				</div> 
+
+    				<div class="campo_login">
+       		 		<div class="label_campo">{{ form_label(form.mensaje) }} (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
+        				{{ form_widget(form.mensaje) }}
+        				<div class="error red">{{ form_errors(form.mensaje) }}</div>
+    				</div> 	
+    				   
+    				<div class="campo_login">
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    				</div>
+			{{ form_end(form) }}
+		</section>
+	</div>
+	
+{% endblock %}

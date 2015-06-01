@@ -1429,6 +1429,145 @@
                 <target>Useful phone numbers</target>
             </trans-unit>
 
+<!--SERVICIOS-->
+			<trans-unit id="1800">
+                <source>Servicios</source>
+                <target>Services</target>
+         </trans-unit>
+         <trans-unit id="1801">
+                <source>Nuevo Servicio</source>
+                <target>New Service</target>
+         </trans-unit>
+         <trans-unit id="1802">
+                <source>Valoración</source>
+                <target>Valuation</target>
+         </trans-unit>
+         <trans-unit id="1803">
+                <source>Servicio</source>
+                <target>Service</target>
+         </trans-unit>
+         <trans-unit id="1804">
+                <source>Nuevo servicio creado con éxito.</source>
+                <target>New service successfully created.</target>
+         </trans-unit>
+         <trans-unit id="1805">
+                <source>El servicio ya existe.</source>
+                <target>The service already exists.</target>
+         </trans-unit>
+         <trans-unit id="1806">
+                <source>Buscador</source>
+                <target>Searcher</target>
+         </trans-unit>
+         <trans-unit id="1807">
+                <source>Quitar</source>
+                <target>Remove</target>
+         </trans-unit>
+         <trans-unit id="1808">
+                <source>Valorar</source>
+                <target>Assess</target>
+         </trans-unit>
+         <trans-unit id="1809">
+                <source>No se han encontrado servicios que concuerden con la búsqueda realizada.</source>
+                <target>There are no services that match the search performed.</target>
+         </trans-unit>
+         <trans-unit id="1810">
+                <source>Valoración realizada con éxito.</source>
+                <target>Assessment is carried out successfully.</target>
+         </trans-unit>
+         <trans-unit id="1811">
+                <source>Servicio añadido con éxito.</source>
+                <target>Service successfully added.</target>
+         </trans-unit>
+			<trans-unit id="1812">
+                <source>Servicio quitado con éxito.</source>
+                <target>Service removed successfully.</target>
+         </trans-unit>
+         <trans-unit id="1813">
+                <source>Valoraciones</source>
+                <target>Ratings</target>
+         </trans-unit>
+         <trans-unit id="1814">
+                <source>No existen valoraciones de éste servicio.</source>
+                <target>There are no reviews of this service.</target>
+         </trans-unit>
+         <trans-unit id="1815">
+                <source>Ver</source>
+                <target>View</target>
+         </trans-unit>
+         <trans-unit id="1816">
+                <source>2 Servicios/Página</source>
+                <target>2 Services/Page</target>
+         </trans-unit>
+         <trans-unit id="1817">
+                <source>10 Servicios/Página</source>
+                <target>10 Services/Page</target>
+         </trans-unit>
+         <trans-unit id="1818">
+                <source>25 Servicios/Página</source>
+                <target>25 Services/Page</target>
+         </trans-unit>
+         
+<!--CATEGORIAS SERVICIOS-->
+		  <trans-unit id="1900">
+                <source>Abogados, Peritos judiciales</source>
+                <target>Lawyers, Court experts</target>
+         </trans-unit>
+         <trans-unit id="1901">
+                <source>Aluminios, ventanas y cerramientos</source>
+                <target>Aluminum, windows and enclosures</target>
+         </trans-unit>
+         <trans-unit id="1902">
+                <source>Arquitectos, Ingenieros, Peritos</source>
+                <target>Architects, Engineers, Experts</target>
+         </trans-unit>
+         <trans-unit id="1903">
+                <source>Canalones</source>
+                <target>Gutters</target>
+         </trans-unit>
+         <trans-unit id="1904">
+                <source>Carpinteros, Ebanistas</source>
+                <target>Carpenters, Joiners</target>
+         </trans-unit>
+         <trans-unit id="1905">
+                <source>Cerrajeros</source>
+                <target>Locksmiths</target>
+         </trans-unit>
+         <trans-unit id="1906">
+                <source>Combustibles</source>
+                <target>Fuels</target>
+         </trans-unit>
+         <trans-unit id="1907">
+                <source>Control de Plagas</source>
+                <target>Pest Control</target>
+         </trans-unit>
+         <trans-unit id="1908">
+                <source>Depósitos y tanques</source>
+                <target>Deposits and tanks</target>
+         </trans-unit>
+         <trans-unit id="1909">
+                <source>Ferretería</source>
+                <target>Hardware stores</target>
+         </trans-unit>
+         <trans-unit id="1910">
+                <source>Fumigaciones y Podas</source>
+                <target>Spraying and Pruning</target>
+         </trans-unit>
+         <trans-unit id="1911">
+                <source>Mármoles y granitos</source>
+                <target>Marble and Granite</target>
+         </trans-unit>
+         <trans-unit id="1912">
+                <source>Reformas Integrales</source>
+                <target>Comprehensive Reforms</target>
+         </trans-unit>
+         <trans-unit id="1913">
+                <source>Servicios Integrales</source>
+                <target>Integral Services</target>
+         </trans-unit>
+         <trans-unit id="1914">
+                <source>Suministros de limpieza</source>
+                <target>Cleaning supplies</target>
+         </trans-unit>
         </body>
     </file>
 </xliff>

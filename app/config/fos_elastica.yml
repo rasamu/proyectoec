@@ -46,3 +46,35 @@ fos_elastica:
                         finder: ~
                         elastica_to_model_transformer:
                             ignore_missing: true
+                servicio:
+                    mappings:
+                        nombre: { type: string, analyzer: my_analyzer}
+                        cif:
+                           type: string
+                        direccion:
+                           type: string
+                        telefono:
+                           type: string
+                        categoria:
+                            type: object
+                            properties:
+                                id:
+                                    type: integer
+                                nombre: {type:string}
+                        city:
+                            type: object
+                            properties:
+                                province:
+                                    type: object
+                                    properties:
+                                          id: ~  
+                                          name: {type:string}
+                                name: {type:string}
+                    persistence:
+                        driver: orm
+                        model: EC\PrincipalBundle\Entity\Servicio
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        elastica_to_model_transformer:
+                            ignore_missing: true

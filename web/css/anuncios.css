@@ -92,6 +92,7 @@ fieldset{
 	-o-border-radius:6px;
 	border: #7CB5EC 1px outset;
 	min-height: 120px;
+	margin-right: 25px;
 }
 
 .foto_anuncio a{
@@ -237,31 +238,37 @@ ol#ordenable > li a{
 	float: right;
 }
 
-.highlight{
+.oculto{
+	visibility: hidden;	
+}
+
+.highlight_anuncio{
 	color: #078CC3;	
 }
 
-.oculto{
-	visibility: hidden;	
+.highlight_servicio{
+	color: #ffa500;
+}
+
+.letra_grande{
+	font-size: 1.2em;	
+	margin-right: 4px;
 }
 
 /*VERSION MOVIL*/
 @media (max-width: 767px) {
 	.anuncio{
-		margin: 0 auto 10px;
+		margin: 5px auto 10px;
 		padding: 0;
 		width: 100%;
 	}
-	
 	.total_resultados{
 		margin: 0 auto 5px;
 	}
-	
 	.foto_anuncio img{
 		max-height: 60px;
 		max-width: 100%;
 	}
-	
 	.anuncio span{
 		margin-left: 0;//5px
 	}
@@ -270,5 +277,12 @@ ol#ordenable > li a{
 	}
 	.num_fotos{
 		padding: 2px;	
+	}
+	.letra_grande{
+		font-size: 1.1em;	
+		margin-right: 2px;
+	}
+	fieldset{
+		margin-right: 4px;	
 	}
 }

@@ -1,8 +1,8 @@
 {% extends 'ECPrincipalBundle::layout_comunidad.html.twig' %}
 
 {% block title %}
+	{% trans %}Bloques{% endtrans %} -
 	{{ parent() }}
-	{% trans %}Bloques{% endtrans %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -47,9 +47,9 @@
 
 	<h2 class="centrado">{% trans %}Bloques{% endtrans %}</h2>
 	
-	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Bloque{% endtrans %}</a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	
 	<div id="demo">
 		<table class="display" id="example">

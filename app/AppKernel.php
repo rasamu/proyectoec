@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Gregwar\ImageBundle\GregwarImageBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new blackknight467\StarRatingBundle\StarRatingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

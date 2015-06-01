@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Incidencias{% endtrans %}
+	{% trans %}Incidencias{% endtrans %} -
 	{{ parent() }}
 {% endblock %}
 
@@ -69,7 +69,7 @@
 			<tbody>
 			{% for incidencia in incidencias %}
 					<tr class="gradeX">
-					   <td headers="fecha" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</td>
+					   <td headers="fecha" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';"><span class="azul_fuerte">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</span></td>
        				<td headers="categoria" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.categoria.nombre|trans}}</td>
        				<td headers="asunto" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.asunto}}</td>
        				<td headers="n_actuaciones" class="cursor_pointer no_mostrar" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.getActuaciones()|length}}</td>
@@ -80,4 +80,19 @@
 		</table>
 	</div>
 	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}	
 {% endblock %}

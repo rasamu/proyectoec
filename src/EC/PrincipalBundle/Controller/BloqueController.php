@@ -55,7 +55,7 @@ class BloqueController extends Controller
     }
     
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/listado/bloques/csv", name="ec_adminfincas_comunidad_listado_bloques")
+	  * @Route("/adminfincas/comunidad/{cif}/listado/bloques/csv", name="ec_adminfincas_comunidad_listado_bloques_csv")
 	  * @Template("ECPrincipalBundle:Bloque:comunidad_listado_bloques_csv.html.twig")
 	  */
     public function comunidad_listado_bloques_csvAction($cif) {

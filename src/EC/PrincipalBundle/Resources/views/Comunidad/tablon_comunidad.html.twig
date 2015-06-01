@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') and comunidad is not empty ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Tablón{% endtrans %}
+	{% trans %}Tablón{% endtrans %} -
 	{{ parent() }}
 {% endblock %}
 
@@ -34,7 +34,7 @@
 				<a class="enlace" href="{{ path('ec_incidencia', { 'id': incidencia.id }) }}">
 					<div class="entrada">
 							<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
-							{{incidencia.fecha | date("d/m/Y")}} 
+							<span class="azul_fuerte">{{incidencia.fecha | date("d/m/Y")}}</span>
 							{% if is_granted('ROLE_ADMINFINCAS') and comunidad is empty%}{%trans%}Comunidad{%endtrans%}: <strong>{{incidencia.propietario.bloque.comunidad.codigo}}</strong>{% endif %}
 							{%trans%}Categoría{%endtrans%}: <strong>{{incidencia.categoria.nombre|trans}}</strong> 
 							{%trans%}Bloque{%endtrans%}: <strong>{{incidencia.propietario.bloque.num}}</strong>
@@ -69,7 +69,7 @@
 				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}">
 				   		<div class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/> 
-				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} 
+				   			<span class="azul_fuerte">{{reunion.fecha | date("d/m/Y h:i:s a")}}</span>
 				   			{% if comunidad is empty %}
 				   				{%trans%}Comunidad{%endtrans%}: <strong>{{reunion.comunidad.codigo}}</strong>
 				   			{% endif %}
@@ -85,5 +85,21 @@
 				   	</a>   		
 					{% endif %}
 			{% endfor %}
-		{% endif %}												
+		{% endif %}		
+		
+		{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}									
 {% endblock %}

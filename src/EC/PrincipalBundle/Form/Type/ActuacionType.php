@@ -25,4 +25,3 @@ class ActuacionType extends AbstractType
         return 'actuacion';
     }
 }
-

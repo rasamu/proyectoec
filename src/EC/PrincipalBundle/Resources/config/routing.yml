@@ -236,6 +236,49 @@ ec_adminfincas_estadisticas_incidencias_categorias:
 ec_adminfincas_estadisticas_incidencias_fecha:
    pattern:  /adminfincas/estadisticas/incidencias/fecha
    defaults: { _controller: ECPrincipalBundle:Incidencia:estadisticasIncidenciasFecha }
+   
+#SERVICIOS
+ec_listado_servicios:
+   pattern: /comunidad/servicios/listado/{cif}
+   defaults: { _controller: ECPrincipalBundle:Servicio:listado, cif: null }
+   
+ec_listado_servicios_pdf:
+    pattern:  /comunidad/servicios/listado/pdf/{cif}
+    defaults: { _controller: ECPrincipalBundle:Servicio:listado_pdf, _format: pdf }
+    requirements:
+      _format: pdf
+      
+ec_listado_servicios_csv:
+    pattern: /comunidad/servicios/listado/csv/{cif}
+    defaults: { _controller: ECPrincipalBundle:Servicio:listado_csv }
+   
+ec_adminfincas_nuevo_servicio:
+   pattern: /adminfincas/comunidad/{cif}/servicios/nuevo
+   defaults: { _controller: ECPrincipalBundle:Servicio:nuevo }
+   
+ec_adminfincas_buscador_servicios:
+   pattern: /adminfincas/comunidad/{cif}/servicios/buscador
+   defaults: { _controller: ECPrincipalBundle:Servicio:buscador }
+   
+ec_adminfincas_ver_servicio:
+   pattern: /adminfincas/comunidad/{cif}/servicios/{id}
+   defaults: { _controller: ECPrincipalBundle:Servicio:ver }
+   
+ec_adminfincas_añadir_servicio:
+   pattern: /adminfincas/comunidad/{cif_comunidad}/servicios/añadir/{cif_servicio}
+   defaults: { _controller: ECPrincipalBundle:Servicio:añadir }
+   
+ec_adminfincas_quitar_servicio:
+   pattern: /adminfincas/comunidad/{cif_comunidad}/servicios/quitar/{cif_servicio}
+   defaults: { _controller: ECPrincipalBundle:Servicio:quitar }
+   
+ec_adminfincas_comprobar_servicio:
+    pattern:  /adminfincas/comprobar/servicio
+    defaults: { _controller: ECPrincipalBundle:Servicio:comprobar}
+    requirements:
+        _method:  POST
+    options:
+        expose: true
     
 #ROLE   
 ec_adminfincas_nombrar_presidente:

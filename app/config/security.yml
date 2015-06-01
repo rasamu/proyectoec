@@ -39,6 +39,8 @@ security:
         - { path: ^/.*/anuncio/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/anuncios/listado, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/anuncios/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/servicios/listado, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/servicios/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
 
     providers:
         usuarios:

@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Editar Anuncio{% endtrans %}
+	{% trans %}Editar Anuncio{% endtrans %} -
 	{{ parent() }}
 {% endblock %}
 
@@ -63,7 +63,7 @@
     		{% endfor %}
 	{% endfor %}
 	
-		<section class="form">
+		<section class="form form_incidencia">
 			<h2 class="centrado">{% trans %}Editar Anuncio{% endtrans %}</h2>
 			
 			<form action="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" method="post" {{ form_enctype(form) }}>	
@@ -102,4 +102,20 @@
 			</div>
 
 		</section>
+		
+		{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+		{% endif %}	
 {% endblock %}

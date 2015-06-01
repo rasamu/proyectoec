@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINFINCAS') ? 'ECPrincipalBundle::layout_comunidad.html.twig' : 'ECPrincipalBundle::layout.html.twig' %}
 
 {% block title %}
-	{% trans %}Anuncios{% endtrans %}
+	{% trans %}Anuncios{% endtrans %} -
 	{{ parent() }}
 {% endblock %}
 
@@ -59,7 +59,7 @@
 		{% for mi_anuncio in mis_anuncios %}
 			<div class="anuncio anuncio_color">
 				<div class="titulo_anuncio">
-					{{mi_anuncio.fecha | date("d/m/Y")}} {{mi_anuncio.comunidad.city.name}} ({{mi_anuncio.comunidad.city.province.name}})
+					<span class="azul_fuerte">{{mi_anuncio.fecha | date("d/m/Y")}}</span> {{mi_anuncio.comunidad.city.name}} ({{mi_anuncio.comunidad.city.province.name}})
 					<strong>{{mi_anuncio.categoria.nombre|trans}}</strong>: {{mi_anuncio.titulo}}
 					<div class="referencia_anuncio">
 						r{{mi_anuncio.id}}
@@ -120,7 +120,7 @@
 			{% for anuncio_comunidad in anuncios_comunidad %}
 				<div class="anuncio anuncio_color">
 					<div class="titulo_anuncio">
-						{{anuncio_comunidad.fecha | date("d/m/Y")}} {{anuncio_comunidad.comunidad.city.name}} ({{anuncio_comunidad.comunidad.city.province.name}})
+						<span class="azul_fuerte">{{anuncio_comunidad.fecha | date("d/m/Y")}}</span> {{anuncio_comunidad.comunidad.city.name}} ({{anuncio_comunidad.comunidad.city.province.name}})
 						<strong>{{anuncio_comunidad.categoria.nombre|trans}}</strong>: {{anuncio_comunidad.titulo}}
 						<div class="referencia_anuncio">
 							r{{anuncio_comunidad.id}}
@@ -171,6 +171,21 @@
 			{% endfor %}		
 		{% endif %}
 	{% endif %}
-		
+	
+	{% if is_granted('ROLE_VECINO') %}
+			<div id="administrador" class="no_mostrar">
+				<div class="centrado">
+					Administrador: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.nombre}} {{app.user.bloque.comunidad.administrador.apellidos}}</span>
+					Teléfono: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.telefono}}</span>
+					{% if app.user.bloque.comunidad.administrador.fax!=null%}
+						Fax: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.fax}}</span>
+					{% endif %}
+				</div>
+				<div class="centrado">
+					Email: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.email}}</span>
+					Dirección: <span class="azul_fuerte">{{app.user.bloque.comunidad.administrador.direccion}}, {{app.user.bloque.comunidad.administrador.localidad}} ({{app.user.bloque.comunidad.administrador.provincia}})</span>
+				</div>
+			</div>
+	{% endif %}	
 		
 {% endblock %}

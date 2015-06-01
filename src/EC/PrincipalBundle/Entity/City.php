@@ -45,6 +45,11 @@ class City
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Comunidad", mappedBy="city")
      */
     protected $comunidades;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Servicio", mappedBy="city")
+     */
+    protected $servicios;
 
 /**
 * Get id
@@ -168,5 +173,38 @@ class City
     public function getComunidades()
     {
         return $this->comunidades;
+    }
+
+    /**
+     * Add servicios
+     *
+     * @param \EC\PrincipalBundle\Entity\Servicio $servicios
+     * @return City
+     */
+    public function addServicio(\EC\PrincipalBundle\Entity\Servicio $servicios)
+    {
+        $this->servicios[] = $servicios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove servicios
+     *
+     * @param \EC\PrincipalBundle\Entity\Servicio $servicios
+     */
+    public function removeServicio(\EC\PrincipalBundle\Entity\Servicio $servicios)
+    {
+        $this->servicios->removeElement($servicios);
+    }
+
+    /**
+     * Get servicios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServicios()
+    {
+        return $this->servicios;
     }
 }

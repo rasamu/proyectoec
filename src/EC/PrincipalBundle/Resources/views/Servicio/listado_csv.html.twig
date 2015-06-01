@@ -1,0 +1,4 @@
+categoria;cif;nombre;ciudad;provincia;direccion;telefono
+{% for servicio in servicios %}
+	{{servicio.categoria.nombre}};{{servicio.cif}};{{servicio.nombre}};{{servicio.city.name}};{{servicio.city.province.name}};{{servicio.direccion}};{{servicio.telefono}}
+{% endfor %}

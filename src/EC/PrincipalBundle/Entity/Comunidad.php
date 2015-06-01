@@ -72,10 +72,17 @@ class Comunidad
      * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Reunion", mappedBy="comunidad", cascade={"remove"})
      */
     protected $reuniones;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="EC\PrincipalBundle\Entity\Servicio", inversedBy="comunidades")
+     * @ORM\JoinTable(name="comunidades_servicios")
+     */
+    protected $servicios;
  
     public function __construct()
     {
         $this->bloques = new ArrayCollection();
+        $this->servicios = new ArrayCollection();
     }
     
     /**
@@ -348,5 +355,38 @@ class Comunidad
     	  		$count=$count + $propietarios->count();	
     	  }
         return $count;
+    }
+
+    /**
+     * Add servicios
+     *
+     * @param \EC\PrincipalBundle\Entity\Servicio $servicios
+     * @return Comunidad
+     */
+    public function addServicio(\EC\PrincipalBundle\Entity\Servicio $servicios)
+    {
+        $this->servicios[] = $servicios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove servicios
+     *
+     * @param \EC\PrincipalBundle\Entity\Servicio $servicios
+     */
+    public function removeServicio(\EC\PrincipalBundle\Entity\Servicio $servicios)
+    {
+        $this->servicios->removeElement($servicios);
+    }
+
+    /**
+     * Get servicios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServicios()
+    {
+        return $this->servicios;
     }
 }
