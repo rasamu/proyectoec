@@ -10,7 +10,7 @@ class ValoracionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {	 
          $builder->add('mensaje', 'textarea',array('label'=>'Mensaje','max_length'=>500));
-         $builder->add('puntuacion', 'rating');
+         $builder->add('puntuacion', 'rating',array('label'=>'Puntuación'));
     }
  
     public function setDefaultOptions(OptionsResolverInterface $resolver)

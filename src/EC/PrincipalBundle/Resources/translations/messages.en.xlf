@@ -1506,6 +1506,10 @@
                 <source>25 Servicios/Página</source>
                 <target>25 Services/Page</target>
          </trans-unit>
+         <trans-unit id="1819">
+                <source>Puntuación</source>
+                <target>Score</target>
+         </trans-unit>
          
 <!--CATEGORIAS SERVICIOS-->
 		  <trans-unit id="1900">
