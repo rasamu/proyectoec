@@ -22,13 +22,13 @@ class PropietarioController extends Controller
 {   	 
 	/**
 	  * @Pdf()
-	  * @Route("/adminfincas/comunidad/{cif}/alta/propietario/{_format}", name="ec_adminfincas_comunidad_alta_propietario")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/alta/propietario/{_format}", name="ec_adminfincas_comunidad_alta_propietario")
 	  * @Template("ECPrincipalBundle:Propietario:alta_propietario.html.twig")
 	  */
-    public function alta_propietarioAction(Request $request, $cif)
+    public function alta_propietarioAction(Request $request, $id_comunidad)
     {
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
       	
     		$bloques=$comunidad->getBloques();
     
@@ -52,10 +52,11 @@ class PropietarioController extends Controller
       				$propietario_existente=$ComprobacionesService->comprobar_propiedad($bloque,$propietario->getPropiedad());
         				
 						if(!$propietario_existente or $propietario_existente->getRazon()!=$propietario->getRazon()){
-								if($propietario_existente){																
-									//Eliminamos el antiguo propietario
-									$PropietarioService=$this->get('propietario_service');
-        							$PropietarioService->eliminar_propietario($propietario_existente);												
+								if($propietario_existente and $propietario_existente->getRazon()!=$propietario->getRazon()){																
+        							$flash=$this->get('translator')->trans('La propiedad pertenece a otro propietario. Elimine primero al antiguo propietario.');
+   				 				$this->get('session')->getFlashBag()->add('notice',$flash);
+   				 				$this->get('session')->getFlashBag()->add('color','red');
+   				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('id_comunidad'=>$comunidad->getId())));												
 								}		
 								$propietario->setBloque($bloque);
 								$bloque->addPropietario($propietario);				
@@ -91,14 +92,14 @@ class PropietarioController extends Controller
       						$mensaje=$this->get('translator')->trans('Se han dado de alta los siguientes propietarios').':';				
       						$format = $this->get('request')->get('_format');
     							$filename = "nuevos_propietarios_".$comunidad->getCodigo().".pdf";    	        
-    							$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
+    							$response=$this->render(sprintf('ECPrincipalBundle:Propietario:listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
     							$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
 								return $response;							   						   							  							
    					}else{
    							$flash=$this->get('translator')->trans('Propietario ya registrado.');
    				 			$this->get('session')->getFlashBag()->add('notice',$flash);
    				 			$this->get('session')->getFlashBag()->add('color','red');
-   				 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
+   				 			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('id_comunidad'=>$comunidad->getId())));
    					}
         			}
         			//Form CSV
@@ -117,24 +118,25 @@ class PropietarioController extends Controller
     							if($bloque_csv){
     								//Comprobamos si ya existe el propietario
       							$propietario_existente=$ComprobacionesService->comprobar_propiedad($bloque_csv,$row[$headers[1]]);
-    								if($propietario_existente!=null and $propietario_existente->getRazon()==$row[$headers[2]]){
-   				 					$flash=$this->get('translator')->trans('Error: Existen propietarios que ya han sido dados de alta.');
+    								//if($propietario_existente!=null and $propietario_existente->getRazon()==$row[$headers[2]]){
+    								if($propietario_existente!=null){
+   				 					$flash=$this->get('translator')->trans('Existen propiedades que ya han sido dadas de alta.');
    				 					$this->get('session')->getFlashBag()->add('notice',$flash);
    				 					$this->get('session')->getFlashBag()->add('color','red');
-   				 					return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));		
+   				 					return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('id_comunidad'=>$comunidad->getId())));		
    				 				}
    				 			}else{
-   				 				$flash=$this->get('translator')->trans('Error: Existen bloques que no están dados de alta.');
+   				 				$flash=$this->get('translator')->trans('Existen bloques que no están dados de alta.');
    				 				$this->get('session')->getFlashBag()->add('notice',$flash);
    				 				$this->get('session')->getFlashBag()->add('color','red');
-   				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));	
+   				 				return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('id_comunidad'=>$comunidad->getId())));	
    				 			}
     						}
         				}else{
             			$flash=$this->get('translator')->trans('Cabeceras del fichero CSV no válidas.');
             			$this->get('session')->getFlashBag()->add('notice',$flash);
    				 		$this->get('session')->getFlashBag()->add('color','red');
-   				 		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('cif'=>$comunidad->getCif())));
+   				 		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_propietario', array('id_comunidad'=>$comunidad->getId())));
             		}	
             		
             		//Recorremos el fichero dando de alta a todos los propietarios
@@ -185,7 +187,7 @@ class PropietarioController extends Controller
    				 	$mensaje=$this->get('translator')->trans('Se han dado de alta los siguientes propietarios').':';
    				 	$format = $this->get('request')->get('_format');
     					$filename = "nuevos_propietarios_".$comunidad->getCodigo().".pdf";    	        
-    					$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
+    					$response=$this->render(sprintf('ECPrincipalBundle:Propietario:listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
     					$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);				
 						return $response;	 					
         			}
@@ -197,18 +199,18 @@ class PropietarioController extends Controller
         		$flash=$this->get('translator')->trans('Para dar de alta a los propietarios, primero debe dar de alta a los bloques.');
         		$this->get('session')->getFlashBag()->add('notice',$flash);
    			$this->get('session')->getFlashBag()->add('color','red');
-   			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_bloque', array('cif'=>$comunidad->getCif())));
+   			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_alta_bloque', array('id_comunidad'=>$comunidad->getId())));
         	}
     }
     
     /**
      * @Pdf()
-     * @Route("/adminfincas/comunidad/{cif}/propietario/password/{id}", name="ec_adminfincas_comunidad_generar_password_propietario")
+     * @Route("/adminfincas/comunidad/{id_comunidad}/propietario/password/{id}", name="ec_adminfincas_comunidad_generar_password_propietario")
      */
-    public function comunidad_generar_password_propietario_pdfAction($cif, $id)
+    public function generar_password_propietario_pdfAction($id_comunidad, $id)
     {
     	$ComprobacionesService=$this->get('comprobaciones_service');
-      $comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
+      $comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad); 
     	
     	$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery(
@@ -239,21 +241,21 @@ class PropietarioController extends Controller
 							<td>".$password_generado."</td>
       			</tr>";
       									
-      $mensaje=$this->get('translator')->trans('Nuevas contraseñas generadas').':';										
+      $mensaje=$this->get('translator')->trans('Nueva contraseña generada').':';										
       $format = $this->get('request')->get('_format');
     	$filename = "nueva_contraseña_".$propietario->getId()."_".$comunidad->getCodigo().".pdf";    	        
-    	$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
+    	$response=$this->render(sprintf('ECPrincipalBundle:Propietario:listado_propietarios_password_pdf.%s.twig',$format), array('imprimir'=>$imprimir,'mensaje'=>$mensaje,'comunidad'=>$comunidad));
     	$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
 		return $response;	
     }
     
 	/**
-	  * @Route("/adminfincas/comunidad/{cif}/propietario/eliminar/{id}", name="ec_adminfincas_comunidad_eliminar_propietario")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/propietario/eliminar/{id}", name="ec_adminfincas_comunidad_eliminar_propietario")
 	  */
-    public function comunidad_eliminar_propietarioAction($cif, $id)
+    public function eliminar_propietarioAction($id_comunidad, $id)
     {
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     		
     		/*Buscamos al propietario*/
     		$em = $this->getDoctrine()->getManager();
@@ -292,39 +294,39 @@ class PropietarioController extends Controller
         		$this->get('session')->getFlashBag()->add('color','green');
         	}
         	
-    		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
+    		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('id_comunidad' => $id_comunidad)));
     }    
     
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/listado/propietarios", name="ec_adminfincas_comunidad_listado_propietarios")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/listado/propietarios", name="ec_adminfincas_comunidad_listado_propietarios")
 	  * @Template("ECAdminFincasBundle:Default:comunidad_listado_propietarios.html.twig")
 	  */
-    public function comunidad_listado_propietariosAction($cif)
+    public function listado_propietariosAction($id_comunidad)
     {
 			$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
 			    		
          $bloques=$comunidad->getBloques();
 			
-        	return $this->render('ECPrincipalBundle:Propietario:comunidad_listado_propietarios.html.twig',array(
+        	return $this->render('ECPrincipalBundle:Propietario:listado_propietarios.html.twig',array(
         		'bloques' => $bloques, 'comunidad' =>$comunidad
         	));
     }
     
     /**
      * @Pdf()
-     * @Route("/adminfincas/comunidad/{cif}/listado/propietarios/pdf", name="ec_adminfincas_comunidad_listado_propietarios_pdf")
+     * @Route("/adminfincas/comunidad/{id_comunidad}/listado/propietarios/pdf", name="ec_adminfincas_comunidad_listado_propietarios_pdf")
      */
-    public function comunidad_listado_propietarios_pdfAction($cif)
+    public function listado_propietarios_pdfAction($id_comunidad)
     {
     	$ComprobacionesService=$this->get('comprobaciones_service');
-      $comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      $comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
       	
     	$bloques=$comunidad->getBloques();    
     	$format = $this->get('request')->get('_format');
     	
     	$filename = "propietarios_".$comunidad->getCodigo().".pdf";    	        
-    	$response=$this->render(sprintf('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_pdf.%s.twig', $format), array(
+    	$response=$this->render(sprintf('ECPrincipalBundle:Propietario:listado_propietarios_pdf.%s.twig', $format), array(
         		'bloques' => $bloques, 'comunidad' => $comunidad
     		));
     	
@@ -333,18 +335,18 @@ class PropietarioController extends Controller
     }
     
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/listado/propietarios/csv", name="ec_adminfincas_comunidad_listado_propietarios")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/listado/propietarios/csv", name="ec_adminfincas_comunidad_listado_propietarios")
 	  * @Template("ECAdminFincasBundle:Default:comunidad_listado_propietarios_csv.html.twig")
 	  */
-    public function comunidad_listado_propietarios_csvAction($cif) {
+    public function listado_propietarios_csvAction($id_comunidad) {
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
       	
     		$bloques=$comunidad->getBloques();   
     	
 			$filename = "propietarios_".$comunidad->getCodigo().".csv";
 	
-			$response = $this->render('ECPrincipalBundle:Propietario:comunidad_listado_propietarios_csv.html.twig', array('bloques' => $bloques));
+			$response = $this->render('ECPrincipalBundle:Propietario:listado_propietarios_csv.html.twig', array('bloques' => $bloques));
 			$response->headers->set('Content-Type', 'text/csv');
 
 			$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);

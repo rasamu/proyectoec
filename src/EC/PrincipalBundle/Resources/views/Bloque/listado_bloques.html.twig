@@ -47,9 +47,9 @@
 
 	<h2 class="centrado">{% trans %}Bloques{% endtrans %}</h2>
 	
-	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Bloque{% endtrans %}</a>
-	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'id_comunidad': comunidad.id }) }}">{% trans %}Nuevo Bloque{% endtrans %}</a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_pdf', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_bloques_csv', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	
 	<div id="demo">
 		<table class="display" id="example">
@@ -67,7 +67,10 @@
        			<td headers="n_bloque">{{bloque.num}}</td>
        			<td headers="direccion">{{bloque.direccion}}</td>
        			<td headers="n_propietarios">{{bloque.getPropietarios()|length}}</td>
-       			<td headers="acciones"><a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'cif': comunidad.cif, 'num': bloque.num}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el bloque{%endtrans%} {{bloque.direccion}}? {%trans%}Se eliminarán todos sus propietarios con sus respectivos anuncios e incidencias.{%endtrans%}')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a></td>
+       			<td headers="acciones">
+       			   <a href="{{ path('ec_adminfincas_comunidad_editar_bloque', { 'id_comunidad': comunidad.id, 'num': bloque.num}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
+       				<a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'id_comunidad': comunidad.id, 'num': bloque.num}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el bloque{%endtrans%} {{bloque.direccion}}? {%trans%}Se eliminarán todos sus propietarios con sus respectivos anuncios e incidencias.{%endtrans%}')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>
+       			</td>
       		</tr> 
 			{% endfor %}
 			</tbody>

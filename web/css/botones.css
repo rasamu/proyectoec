@@ -236,6 +236,7 @@ a.boton_estadistica:hover{
 	}
 	a.boton_documento{
 		background-position: 2px center;
+		display:inline-block;
 	}
 	a.boton_alta{
 		background-position: 2px center;	

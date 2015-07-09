@@ -43,7 +43,7 @@
 			<nav>
 				<a class="boton_documento btn_download" href="{{ path('ec_reunion_descargar', { 'id': reunion.id })  }}">{% trans %}Descargar{% endtrans %}</a>
 				{% if is_granted('ROLE_ADMINFINCAS') %}
-					<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_eliminar_reunion', { 'cif': comunidad.cif, 'id': reunion.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar la reunión{%endtrans%} {{reunion.descripcion}}?')">{% trans %}Eliminar{% endtrans %}</a>
+					<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_eliminar_reunion', { 'id_comunidad': comunidad.id, 'id': reunion.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar la reunión{%endtrans%} {{reunion.descripcion}}?')">{% trans %}Eliminar{% endtrans %}</a>
 				{% endif %}
 			</nav>
 		</div>

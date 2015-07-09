@@ -27,11 +27,11 @@
 }
 
 .flotar_izquierda{
-	float: left;	
+	float: left !important;	
 }
 
 .flotar_derecha{
-	float: right;		
+	float: right !important;		
 }
 
 .margen_izquierdo{
@@ -47,11 +47,6 @@ h2{
 	-webkit-text-shadow: 0.06em 0.06em 0.02em #C7D4DE;
 	-moz-text-shadow: 0.06em 0.06em 0.02em #C7D4DE;
 	-o-text-shadow: 0.06em 0.06em 0.02em #C7D4DE;
-}
-
-h3{
-	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;	
-   font-weight: bold;	
 }
 
 p{
@@ -204,6 +199,14 @@ a img:hover {
 
 .azul_fuerte{
 	color: #337AB7;	
+}
+
+.azul_label{
+	color: #355664;	
+}
+
+a img{
+	vertical-align:middle;
 }
 
 /*MENSAJES FLASH DE ERROR Y EXITO*/

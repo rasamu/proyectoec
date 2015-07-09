@@ -30,12 +30,12 @@ class ComprobacionesService {
     		return $anuncio;
 	 }
 	 
-	 public function comprobar_comunidad($cif) {
+	 public function comprobar_comunidad($id) {
 			$query = $this->em->createQuery(
     				'SELECT c
        			FROM ECPrincipalBundle:Comunidad c
-      			WHERE c.cif = :cif and c.administrador = :admin'
-			)->setParameters(array('cif' => $cif, 'admin' => $this->user));
+      			WHERE c.id = :id and c.administrador = :admin'
+			)->setParameters(array('id' => $id, 'admin' => $this->user));
 			
 			try {
     				$comunidad = $query->getSingleResult();
@@ -55,7 +55,7 @@ class ComprobacionesService {
     		try {
     				$bloque = $query->getSingleResult();
 			} catch (\Doctrine\Orm\NoResultException $e) {
-        			return null;
+        			$bloque = null;
 			}			
     		return $bloque;
 	 } 
@@ -89,7 +89,7 @@ class ComprobacionesService {
 			$aux=$documento->getComunidad();
 			
     		if($this->context->isGranted('ROLE_ADMINFINCAS')){
-    			$comunidad=$this->comprobar_comunidad($aux->getCif());
+    			$comunidad=$this->comprobar_comunidad($aux->getId());
     		}else{
     			$comunidad=$this->user->getBloque()->getComunidad();	
     			if($comunidad!=$aux){
@@ -115,7 +115,7 @@ class ComprobacionesService {
 			$aux=$reunion->getComunidad();
 			
     		if($this->context->isGranted('ROLE_ADMINFINCAS')){
-    			$comunidad=$this->comprobar_comunidad($aux->getCif());
+    			$comunidad=$this->comprobar_comunidad($aux->getId());
     		}else{
     			$comunidad=$this->user->getBloque()->getComunidad();	
     			if($comunidad!=$aux){
@@ -212,7 +212,22 @@ class ComprobacionesService {
     		return $consulta;	
 	 }
 	 
-	 public function comprobar_servicio($cif) {
+	 public function comprobar_servicio($id) {
+			$query = $this->em->createQuery(
+    				'SELECT s
+       			FROM ECPrincipalBundle:Servicio s
+      			WHERE s.id = :id'
+			)->setParameters(array('id' => $id));
+			
+			try {
+    				$servicio = $query->getSingleResult();
+			} catch (\Doctrine\Orm\NoResultException $e) {
+        			$servicio=null;
+			}			
+    		return $servicio;	
+	 }
+	 
+	 public function comprobar_servicio_cif($cif) {
 			$query = $this->em->createQuery(
     				'SELECT s
        			FROM ECPrincipalBundle:Servicio s

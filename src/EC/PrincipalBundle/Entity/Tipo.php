@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 * EC\PrincipalBundle\Entity\Tipo
 *
 * @ORM\Entity
-* @ORM\Table(name="tipos_documento")
+* @ORM\Table(name="Tipos_Documentos")
 */
 class Tipo
 {
@@ -23,7 +23,7 @@ class Tipo
 /**
 * @var string $nombre
 *
-* @ORM\Column(name="nombre", type="string", length=255)
+* @ORM\Column(name="nombre", type="string", length=100)
 */
     protected $nombre;
     

@@ -1,0 +1,48 @@
+{% extends 'ECPrincipalBundle::layout_comunidad.html.twig' %}
+
+{% block title %}
+	{% trans %}Editar Bloque{% endtrans %} -
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block colder %}
+	{{ parent() }}
+
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+			{% for flashColor in app.session.flashbag.get('color') %}
+    			<div class="flash-notice mensaje {{flashColor}}">
+        			{{ flashMessage }}
+    			</div>
+    		{% endfor %}
+	{% endfor %}
+	
+	<section class="form">
+				<h2 class="centrado">{% trans %}Editar Bloque{% endtrans %}</h2>
+				
+            <form action="{{ path('ec_adminfincas_comunidad_editar_bloque', { 'id_comunidad': comunidad.id, 'num': bloque.num }) }}" method="post">
+    				<div class="red">{{ form_errors(form) }}</div>
+
+    				<div class="campo">
+       		 		<div class="label_campo">{{ form_label(form.num) }} *</div>
+        				{{ form_widget(form.num) }}
+        				<div class="error red">{{ form_errors(form.num) }}</div>
+    				</div>
+    		
+    				<div class="campo">
+        				<div class="label_campo">{{ form_label(form.direccion) }} *</div>
+        				{{ form_widget(form.direccion) }}
+       		 		<div class="error red">{{ form_errors(form.direccion) }}</div>        
+    				</div>    
+
+    				<div class="campo">
+    					(*) {% trans %}Campo obligatorio{% endtrans %}
+    					<input type="submit" value="{% trans %}Enviar{% endtrans %}"/>
+    				</div>
+            </form>
+	</section>
+{% endblock %}

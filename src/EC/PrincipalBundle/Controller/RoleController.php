@@ -17,12 +17,12 @@ use Symfony\Component\Security\Core\Util\SecureRandom;
 class RoleController extends Controller
 {   
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/nombrarpresidente/{id}", name="ec_adminfincas_nombrar_presidente")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/nombrarpresidente/{id}", name="ec_adminfincas_nombrar_presidente")
 	  * @Template()
 	  */
-    public function nombrar_presidenteAction($cif, $id){
+    public function nombrar_presidenteAction($id_comunidad, $id){
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     		$role_presidente=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('3');
 						
     		/*Buscamos y eliminamos Presidente anterior*/
@@ -81,16 +81,16 @@ class RoleController extends Controller
 			$flash=$this->get('translator')->trans('ha sido nombrado nuevo Presidente.');
 			$this->get('session')->getFlashBag()->add('notice',$presidente->getRazon().' '.$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
-			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
+			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('id_comunidad' => $id_comunidad)));
     }
     
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/nombrarvicepresidente/{id}", name="ec_adminfincas_nombrar_vicepresidente")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/nombrarvicepresidente/{id}", name="ec_adminfincas_nombrar_vicepresidente")
 	  * @Template()
 	  */
-    public function nombrar_vicepresidenteAction($cif, $id){
+    public function nombrar_vicepresidenteAction($id_comunidad, $id){
     	$ComprobacionesService=$this->get('comprobaciones_service');
-      $comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      $comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     	$bloques=$comunidad->getBloques();
     	$role_vicepresidente=$this->getDoctrine()->getRepository('ECPrincipalBundle:Role')->findById('4');
     				
@@ -149,6 +149,6 @@ class RoleController extends Controller
 			$flash=$this->get('translator')->trans('ha sido nombrado nuevo Vicepresidente.');
 			$this->get('session')->getFlashBag()->add('notice',$vicepresidente->getRazon().' '.$flash);
         	$this->get('session')->getFlashBag()->add('color','green');
-			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('cif' => $cif)));
+			return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_listado_propietarios', array('id_comunidad' => $id_comunidad)));
     }
 }

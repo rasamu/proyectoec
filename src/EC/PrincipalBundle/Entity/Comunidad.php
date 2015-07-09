@@ -43,13 +43,13 @@ class Comunidad
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\AdminFincas", inversedBy="comunidades")
-     * @ORM\JoinColumn(name="adminfincas", referencedColumnName="id")
+     * @ORM\JoinColumn(name="adminfincas_id", referencedColumnName="id", nullable=false)
      */
     protected $administrador;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\City", inversedBy="comunidades")
-     * @ORM\JoinColumn(name="city", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ciudad_id", referencedColumnName="id", nullable=false)
      */
     protected $city;
     
@@ -75,7 +75,7 @@ class Comunidad
     
     /**
      * @ORM\ManyToMany(targetEntity="EC\PrincipalBundle\Entity\Servicio", inversedBy="comunidades")
-     * @ORM\JoinTable(name="comunidades_servicios")
+     * @ORM\JoinTable(name="Comunidades_Servicios")
      */
     protected $servicios;
  

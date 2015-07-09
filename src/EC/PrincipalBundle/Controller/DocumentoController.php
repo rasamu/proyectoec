@@ -16,13 +16,13 @@ use Ps\PdfBundle\Annotation\Pdf;
 class DocumentoController extends Controller
 {
 	/**
-	  * @Route("/adminfincas/comunidad/{cif}/documento/upload", name="ec_adminfincas_comunidad_documento_upload")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/documento/upload", name="ec_adminfincas_comunidad_documento_upload")
 	  * @Template("ECPrincipalBundle:Documento:upload.html.twig")
 	  */
-	public function uploadAction(Request $request, $cif)
+	public function uploadAction(Request $request, $id_comunidad)
 	{
 		$ComprobacionesService=$this->get('comprobaciones_service');
-      $comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
+      $comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad); 
 					
     	$documento = new Documento();
     	$form = $this->createFormBuilder($documento, array('csrf_protection' => false))
@@ -54,7 +54,7 @@ class DocumentoController extends Controller
 			$flash=$this->get('translator')->trans('Documento subido con éxito.');
 			$this->get('session')->getFlashBag()->add('notice',$flash);
    		$this->get('session')->getFlashBag()->add('color','green');
-   		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_documento_upload', array('cif'=>$comunidad->getCif())));
+   		return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_documento_upload', array('id_comunidad'=>$comunidad->getId())));
     	}
     	
     	return $this->render('ECPrincipalBundle:Documento:upload.html.twig',
@@ -63,14 +63,14 @@ class DocumentoController extends Controller
 	}
 	
 	/**
-	  * @Route("/documentos/listado/{cif}", name="ec_listado_documentos")
+	  * @Route("/documentos/listado/{id_comunidad}", name="ec_listado_documentos")
 	  * @Template("ECPrincipalBundle:Documento:listado_documentos.html.twig")
 	  */
-	public function listadoAction($cif=null)
+	public function listadoAction($id_comunidad=null)
 	{
     		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     			$ComprobacionesService=$this->get('comprobaciones_service');
-        		$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+        		$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     		}else{
     			$comunidad=$this->getUser()->getBloque()->getComunidad();	
     		}
@@ -89,12 +89,12 @@ class DocumentoController extends Controller
 	}
 	
 	/**
-	  * @Route("/adminfincas/comunidad/{cif}/documento/eliminar/{id}", name="ec_adminfincas_comunidad_eliminar_documento")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/documento/eliminar/{id}", name="ec_adminfincas_comunidad_eliminar_documento")
 	  */
-	public function eliminarAction($cif, $id)
+	public function eliminarAction($id_comunidad, $id)
 	{
 			$ComprobacionesService=$this->get('comprobaciones_service');
-        	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+        	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
         	
     		$ComprobacionesService=$this->get('comprobaciones_service');
       	$documento=$ComprobacionesService->comprobar_documento($id); 
@@ -108,7 +108,7 @@ class DocumentoController extends Controller
     		$flash=$this->get('translator')->trans('Documento eliminado con éxito.');
     		$this->get('session')->getFlashBag()->add('notice',$flash);
    		$this->get('session')->getFlashBag()->add('color','green');
-   		return $this->redirect($this->generateUrl('ec_listado_documentos', array('cif'=>$comunidad->getCif()))); 						 	
+   		return $this->redirect($this->generateUrl('ec_listado_documentos', array('id_comunidad'=>$comunidad->getId()))); 						 	
 	}
 	
 	/**
@@ -194,15 +194,15 @@ class DocumentoController extends Controller
 	}
 	
 	/**
-	  * @Route("/{cif}/documento/previsualizar/{id}", name="ec_documento_previsualizar")
+	  * @Route("/{id_comunidad}/documento/previsualizar/{id}", name="ec_documento_previsualizar")
 	  * @Template("ECPrincipalBundle:Documento:previsualizar.html.twig")
 	  */
-	public function previsualizarAction($id, $cif=null)
+	public function previsualizarAction($id, $id_comunidad=null)
 	{
 			$ComprobacionesService=$this->get('comprobaciones_service');
 			
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-        		$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+        		$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     		}else{
     			$comunidad=$this->getUser()->getBloque()->getComunidad();	
     		}

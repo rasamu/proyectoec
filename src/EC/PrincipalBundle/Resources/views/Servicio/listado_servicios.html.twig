@@ -49,11 +49,11 @@
 	<h2 class="centrado">{% trans %}Servicios{% endtrans %}</h2>
 	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
-		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_nuevo_servicio', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Servicio{% endtrans %}</a>
-		<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_buscador_servicios', { 'cif': comunidad.cif }) }}">{% trans %}Buscador{% endtrans %}</a>
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_nuevo_servicio', { 'id_comunidad': comunidad.id }) }}">{% trans %}Nuevo Servicio{% endtrans %}</a>
+		<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_buscador_servicios', { 'id_comunidad': comunidad.id }) }}">{% trans %}Buscador{% endtrans %}</a>
 	{% endif %}
-	<a href="{{ path('ec_listado_servicios_pdf', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-	<a href="{{ path('ec_listado_servicios_csv', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+	<a href="{{ path('ec_listado_servicios_pdf', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_listado_servicios_csv', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	
 	<div id="demo">
 		<table class="display" id="example">
@@ -72,13 +72,13 @@
 			<tbody>
 			{% for servicio in servicios %}
 				<tr class="gradeX">
-       			<td headers="categoria" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.categoria.nombre |trans}}</td>
-       			<td headers="nombre" class="{%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.nombre}}</td>
-       			<td headers="ciudad" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.city.name}} ({{servicio.city.province.name}})</td>       			       			
-       			<td headers="direccion" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.direccion}}</td>       			
-       			<td headers="telefono" class="{%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';"{%endif%}>{{servicio.telefono}}</td>       			
+       			<td headers="categoria" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}';"{%endif%}>{{servicio.categoria.nombre |trans}}</td>
+       			<td headers="nombre" class="{%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}';"{%endif%}>{{servicio.nombre}}</td>
+       			<td headers="ciudad" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}';"{%endif%}>{{servicio.city.name}} ({{servicio.city.province.name}})</td>       			       			
+       			<td headers="direccion" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}';"{%endif%}>{{servicio.direccion}}</td>       			
+       			<td headers="telefono" class="{%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" {%if is_granted('ROLE_ADMINFINCAS')%}onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}';"{%endif%}>{{servicio.telefono}}</td>       			
        			{% if is_granted('ROLE_ADMINFINCAS') %}
-       				<td headers="valoracion" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}';">
+       				<td headers="valoracion" class="no_mostrar {%if is_granted('ROLE_ADMINFINCAS')%}cursor_pointer{%endif%}" onclick="window.location.href='{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}';">
 							{% set valoracion=consulta_service_global.comprobar_valoracion_servicio(servicio.id) %}
 							{{valoracion|rating}}
        				</td>

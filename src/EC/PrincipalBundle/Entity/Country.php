@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
 * EC\PrincipalBundle\Entity\Country
 *
-* @ORM\Table(name="main_country")
+* @ORM\Table(name="Paises")
 * @ORM\Entity()
 */
 class Country
@@ -24,16 +24,9 @@ class Country
 /**
 * @var string $name
 *
-* @ORM\Column(name="name", type="string", length=255)
+* @ORM\Column(name="name", type="string", length=100)
 */
     protected $name;
-
-/**
-* @var string $slug
-*
-* @ORM\Column(name="slug", type="string", length=255, unique=true)
-*/
-    protected $slug;
 
 /**
 * @ORM\OneToMany(targetEntity="EC\PrincipalBundle\Entity\Province", mappedBy="country")
@@ -79,29 +72,6 @@ class Country
     public function getName()
     {
         return $this->name;
-    }
-    
-    /**
-* Set slug
-*
-* @param string $slug
-* @return Country
-*/
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-* Get slug
-*
-* @return string
-*/
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
 /**

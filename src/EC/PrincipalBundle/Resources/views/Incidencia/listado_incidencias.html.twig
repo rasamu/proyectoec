@@ -50,11 +50,11 @@
 	
 	{% if is_granted('ROLE_VECINO')%}
    	<a class="boton_alta btn_nuevo" href="{{ path('ec_propietario_nueva_incidencia') }}"><span>{% trans %}Notificar Incidencia{% endtrans %}</span></a>
-   {% else %}
-   	<a href="{{ path('ec_adminfincas_comunidad_listado_incidencias_pdf', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-		<a href="{{ path('ec_adminfincas_comunidad_listado_incidencias_csv', { 'cif': comunidad.cif }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
    {% endif %}
    
+   <a href="{{ path('ec_listado_incidencias_pdf', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_listado_incidencias_csv', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+	
 	<div id="demo">
 		<table class="display" id="example">
 			<thead>

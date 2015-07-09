@@ -38,9 +38,9 @@
     		</div>
  
     		<div class="campo_login flotar_izquierda">
-        		<div class="label_campo_login">{{ form_label(form.nombre) }}</div>
-        		{{ form_widget(form.nombre) }}
-        		<div class="error red">{{ form_errors(form.nombre) }}</div>
+        		<div class="label_campo_login">{{ form_label(form.palabras) }}</div>
+        		{{ form_widget(form.palabras) }}
+        		<div class="error red">{{ form_errors(form.palabras) }}</div>
     		</div>
     		
     		<div class="campo_login flotar_izquierda">
@@ -72,15 +72,27 @@
 		<div class="documento anuncio anuncio_color">
 			<div class="titulo_anuncio">
 				<strong>{{servicio.categoria.nombre|trans}}</strong>
-				, <span>{{servicio.city.name}}</span> <span>({{servicio.city.province.name}})</span>
+				, <span>
+					{% if attribute(servicio.highlights, 'city.name') is not defined%}
+						{{servicio.city.name}}
+					{% else %}
+						{{attribute(servicio.highlights, 'city.name')[0]|raw}}
+					{% endif %}
+				</span> 
+				<span>({{servicio.city.province.name}})</span>
 				{% set valoracion=consulta_service_global.comprobar_valoracion_servicio(servicio.id) %}
-				<span class="flotar_derecha">
-					{{valoracion|rating}}
-				</span>
+				{{valoracion|rating}}
+				<div class="clear"></div>
 			</div>
 			<div>
 				{%trans%}Cif/Nif{%endtrans%}: 
-				<span class="azul_fuerte">{{servicio.cif}}</span>
+				<span class="azul_fuerte">
+					{% if servicio.highlights.cif is not defined%}
+							{{servicio.cif}}
+					{% else %}
+							{{servicio.highlights.cif[0]|raw}}
+					{% endif %}
+				</span>
 			   {% set total=consulta_service_global.comprobar_total_valoraciones(servicio.id) %}
 				<span class="flotar_derecha">
 					{% if total==1 %}
@@ -94,23 +106,38 @@
 			<div>
 				{%trans%}Nombre{%endtrans%}: 
 				<span class="azul_fuerte">
-					{% if servicio.highlights is empty%}
+					{% if servicio.highlights.nombre is not defined%}
 							{{servicio.nombre}}
 					{% else %}
 							{{servicio.highlights.nombre[0]|raw}}
 					{% endif %}
 				</span>
-				<a class="boton_documento btn_consulta flotar_derecha" href="{{ path('ec_adminfincas_ver_servicio', { 'cif': comunidad.cif, 'id': servicio.cif }) }}">{% trans %}Ver{% endtrans %}</a>
-				{% set comprobacion=consulta_service_global.comprobar_servicio_comunidad(comunidad.id, servicio.id) %}
-				{% if comprobacion is null%}
-					<a class="boton_documento btn_nuevo flotar_derecha" href="{{ path('ec_adminfincas_añadir_servicio', { 'cif_comunidad': comunidad.cif, 'cif_servicio': servicio.cif }) }}">{% trans %}Añadir{% endtrans %}</a>
-				{% else %}
-					<a class="boton_documento btn_delete flotar_derecha" href="{{ path('ec_adminfincas_quitar_servicio', { 'cif_comunidad': comunidad.cif, 'cif_servicio': servicio.cif }) }}">{% trans %}Quitar{% endtrans %}</a>
-				{% endif %}
+				
 			</div>
 			<div>
-				{%trans%}Dirección{%endtrans%}: <span class="azul_fuerte">{{servicio.direccion}}</span>
-				{%trans%}Teléfono{%endtrans%}: <span class="azul_fuerte">{{servicio.telefono}}</span>
+				{%trans%}Dirección{%endtrans%}: 
+				<span class="azul_fuerte">
+					{% if servicio.highlights.direccion is not defined%}
+							{{servicio.direccion}}
+					{% else %}
+							{{servicio.highlights.direccion[0]|raw}}
+					{% endif %}
+				</span>
+				{%trans%}Teléfono{%endtrans%}: 
+				<span class="azul_fuerte">
+					{% if servicio.highlights.telefono is not defined%}
+							{{servicio.telefono}}
+					{% else %}
+							{{servicio.highlights.telefono[0]|raw}}
+					{% endif %}
+				</span>
+				<a class="boton_documento btn_consulta flotar_derecha" href="{{ path('ec_adminfincas_ver_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}">{% trans %}Ver{% endtrans %}</a>
+				{% set comprobacion=consulta_service_global.comprobar_servicio_comunidad(comunidad.id, servicio.id) %}
+				{% if comprobacion is null%}
+					<a class="boton_documento btn_nuevo flotar_derecha" href="{{ path('ec_adminfincas_añadir_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de añadir a la comunidad{%endtrans%} {{servicio.nombre}}?')">{% trans %}Añadir{% endtrans %}</a>
+				{% else %}
+					<a class="boton_documento btn_delete flotar_derecha" href="{{ path('ec_adminfincas_quitar_servicio', { 'id_comunidad': comunidad.id, 'id_servicio': servicio.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de quitar de la comunidad{%endtrans%} {{servicio.nombre}}?')">{% trans %}Quitar{% endtrans %}</a>
+				{% endif %}
 			</div>
 		</div>
 	{% endfor %}		

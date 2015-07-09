@@ -94,7 +94,7 @@ class Usuario implements UserInterface, \Serializable
     
     /**
      * @Assert\Type(type="string")
-     * @ORM\Column(name="user",type="string",unique=true)
+     * @ORM\Column(name="user",type="string",unique=true, length=100)
      */
     protected $user;
     
@@ -114,7 +114,7 @@ class Usuario implements UserInterface, \Serializable
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Role", inversedBy="usuarios")
-     * @ORM\JoinColumn(name="role", referencedColumnName="id")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      */
     protected $role;
 

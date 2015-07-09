@@ -112,8 +112,29 @@
 	{% for anuncio in anuncios %}
 		<div class="anuncio anuncio_color">
 				<div class="titulo_anuncio">
-					<span class="azul_fuerte">{{anuncio.fecha | date("d/m/Y")}}</span> {{anuncio.comunidad.city.name}} ({{anuncio.comunidad.city.province.name}})
-					<strong>{{anuncio.categoria.nombre|trans}}</strong>: {{anuncio.titulo}}
+					<span class="azul_fuerte">{{anuncio.fecha | date("d/m/Y")}}</span> 
+					{% if id_anuncio==null %}
+							{% if attribute(anuncio.highlights, 'comunidad.city.name') is not defined%}
+								{{anuncio.comunidad.city.name}}
+							{% else %}
+
+								{{attribute(anuncio.highlights, 'comunidad.city.name')[0]|raw}}
+							{% endif %}
+					{%else%}
+							{{anuncio.comunidad.city.name}}
+					{%endif%}
+					({{anuncio.comunidad.city.province.name}})
+					
+					<strong>{{anuncio.categoria.nombre|trans}}</strong>: 
+					{% if id_anuncio==null %}
+							{% if anuncio.highlights.titulo is not defined%}
+								{{anuncio.titulo}}
+							{% else %}
+								{{anuncio.highlights.titulo[0]|raw}}
+							{% endif %}
+					{%else%}
+							{{anuncio.titulo}}
+					{%endif%}
 					<div class="referencia_anuncio">
 						r{{anuncio.id}}
 					</div>
@@ -139,7 +160,7 @@
 					</div>
 					<div class="descripcion_anuncio">
 						{% if id_anuncio==null %}
-							{% if anuncio.highlights is empty%}
+							{% if anuncio.highlights.descripcion is not defined%}
 								{{anuncio.descripcion}}
 							{% else %}
 								{{anuncio.highlights.descripcion[0]|raw}}
@@ -163,7 +184,7 @@
 						<div class="plusone" title="{%trans%}Compartir link en Google+{%endtrans%}">Google+</div>
 					</div>
 
-					<span class="btn_contactar boton_anuncio" onclick="showDialogContactar({{anuncio.id}})">{% trans %}Contactar{% endtrans %}</span>
+					<span class="btn_contactar boton_anuncio" onclick="showDialogContactar({{anuncio.id}},{{anuncio.usuario.telefono}})">{% trans %}Contactar{% endtrans %}</span>
 					<span class="btn_denunciar boton_anuncio" onclick="showDialogDenunciar({{anuncio.id}})">{% trans %}Denunciar{% endtrans %}</span>
 				</div>
 		</div>
@@ -179,11 +200,17 @@
    	</div>
    {% endif %}
    
-   <div id="contacto" class="ventana">  
+   <div id="contacto" class="ventana"> 
    	<div id="output_contacto"></div>
 		<div id="form_contactar" class="anuncio buscador_color" style="display:none;">
 			<form id="form_contacto" action="{{ path('ec_buscador_contactar') }}" method="post">
-    			<div class="red">{{ form_errors(form_contacto) }}</div>
+				<div class="centrado tipo_contacto">{% trans %}Teléfono{% endtrans %}</div>
+				
+			   <div class="campo_login azul_label">{%trans%}Teléfono{%endtrans%}: <span id="telefono" class="azul_fuerte"></span></div>
+			   
+			   <div class="centrado tipo_contacto">{% trans %}Email{% endtrans %}</div>
+			   
+    			<div class="campo_login red">{{ form_errors(form_contacto) }}</div>
     		
 				<div class="campo_login">
         			<div class="label_campo">{{ form_label(form_contacto.nombre) }}</div>

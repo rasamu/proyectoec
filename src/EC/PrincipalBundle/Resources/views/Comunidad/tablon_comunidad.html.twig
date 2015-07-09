@@ -66,7 +66,7 @@
 		{% else %}
 			{% for reunion in reuniones %}
 					{% if is_granted('ROLE_ADMINFINCAS') %}  					
-				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'cif': reunion.comunidad.cif }) }}">
+				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id, 'id_comunidad': reunion.comunidad.id }) }}">
 				   		<div class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/> 
 				   			<span class="azul_fuerte">{{reunion.fecha | date("d/m/Y h:i:s a")}}</span>
@@ -80,7 +80,7 @@
 				   	<a class="enlace" href="{{ path('ec_ver_reunion_comunidad', { 'id': reunion.id }) }}">
 				   		<div class="entrada">
 				   			<img src="{{ asset('images/lupa.gif') }}" alt="ver"/>
-				   			{{reunion.fecha | date("d/m/Y h:i:s a")}} {%trans%}Descripción{%endtrans%}: <strong>{{reunion.descripcion}}</strong> 
+				   			<span class="azul_fuerte">{{reunion.fecha | date("d/m/Y h:i:s a")}}</span> {%trans%}Descripción{%endtrans%}: <strong>{{reunion.descripcion}}</strong> 
 				   		</div>  
 				   	</a>   		
 					{% endif %}

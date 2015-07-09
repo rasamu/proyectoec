@@ -72,7 +72,7 @@
        		 		<div class="label_campo2"><strong>{{ form_label(form_privacidad.privacidad) }}:</strong></div>
         				{{ form_widget(form_privacidad.privacidad) }}
         				
-    					<input type="submit" value="{% trans %}Actualizar{% endtrans %}"/>
+    					<input type="submit" value="{% trans %}Cambiar{% endtrans %}"/>
 				</form>
 				<form action="{{ path('ec_incidencia', { 'id': incidencia.id }) }}" method="post" {{ form_enctype(form_estado) }}>
     				   <div class="red">{{ form_errors(form_estado) }}</div>
@@ -95,20 +95,20 @@
 				<div><span class="azul_fuerte">{{actuacion.fecha | date("d/m/Y H:i:s a")}}</span>
 				{%if actuacion.usuario is not empty%}
 					{% if actuacion.usuario.role.nombre=='ROLE_ADMINFINCAS' %}
-						{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}} ({%trans%}Administrador{%endtrans%})
+						<strong>{{actuacion.usuario.nombre}} {{actuacion.usuario.apellidos}}</strong> ({%trans%}Administrador{%endtrans%})
 					{% else %}
 						{% if actuacion.usuario.role.nombre=='ROLE_PRESIDENTE' %}
-							{{actuacion.usuario.razon}} ({%trans%}Presidente{%endtrans%})
+							<strong>{{actuacion.usuario.razon}}</strong> ({%trans%}Presidente{%endtrans%})
 						{% else %}
 							{% if actuacion.usuario.role.nombre=='ROLE_VICEPRESIDENTE' %}
-								{{actuacion.usuario.razon}} ({%trans%}Vicepresidente{%endtrans%})
+								<strong>{{actuacion.usuario.razon}}</strong> ({%trans%}Vicepresidente{%endtrans%})
 							{% else %}
-								{{actuacion.usuario.razon}}
+								<strong>{{actuacion.usuario.razon}}</strong>
 							{%endif%}
 						{%endif%}
 					{% endif %}			
 				{% else %}
-					{%trans%}Antiguo propietario{%endtrans%}
+					<strong>{%trans%}Antiguo propietario{%endtrans%}</strong>
 				{% endif %}
 				:</div>
 				<div class="margen_izquierdo">{{actuacion.mensaje}}</div>
@@ -119,7 +119,7 @@
     				<div class="red">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">
-       		 		<div class="label_campo">{{ form_label(form.mensaje) }}  (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
+       		 		<div class="label_campo negrita">{{ form_label(form.mensaje) }}  (<span id="contador">0/500</span> {% trans %}Caracteres{% endtrans %})</div>
         				<div>{{ form_widget(form.mensaje) }}</div>
         				<div class="error red">{{ form_errors(form.mensaje) }}</div>
     				</div> 		

@@ -24,7 +24,7 @@
 		<section class="form">
 				<h2 class="centrado">{% trans %}Documento{% endtrans %}</h2>
 
-            <form action="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
+            <form action="{{ path('ec_adminfincas_comunidad_documento_upload', { 'id_comunidad': comunidad.id }) }}" method="post" {{ form_enctype(form) }}>
     				<div class="red">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">

@@ -54,7 +54,7 @@ $(document).ready(function() {
             					document.getElementById('form_contacto_nombre').value=""; 
             					$('#loading_contacto').hide();
             					$('#enviar_contacto').show();
-            			   	$("#form_contactar").hide();  
+            			   	$("#form_contactar").hide(); 
                 				$('#output_contacto').html(data.greeting).addClass("mensaje").css("color","green").css("background","#DFF0D8").show();
             				}else if(data.responseCode==400){//bad request
             					$('#loading_contacto').hide();
@@ -118,8 +118,9 @@ $(document).ready(function() {
 			}
 		}
 		
-		function showDialogContactar(anuncio) {
+		function showDialogContactar(anuncio, telefono) {
 				id_anuncio=anuncio;
+				$('#telefono').html(telefono);
 				updateContadorTa("form_contacto_mensaje", "contadorContacto", 255);
 				$("#form_contactar").show();
 				$("#output_contacto").hide();

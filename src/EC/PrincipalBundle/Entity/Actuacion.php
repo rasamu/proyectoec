@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 * EC\PrincipalBundle\Entity\Actuacion
 *
 * @ORM\Entity
-* @ORM\Table(name="actuaciones")
+* @ORM\Table(name="Actuaciones")
 * @ORM\HasLifecycleCallbacks
 */
 class Actuacion
@@ -37,13 +37,13 @@ class Actuacion
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Incidencia", inversedBy="actuaciones")
-     * @ORM\JoinColumn(name="incidencia", referencedColumnName="id")
+     * @ORM\JoinColumn(name="incidencia_id", referencedColumnName="id", nullable=false)
      */
     protected $incidencia;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Usuario", inversedBy="actuaciones")
-     * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=true)
      */
     protected $usuario;
 

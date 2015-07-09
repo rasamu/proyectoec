@@ -44,21 +44,20 @@ class Servicio
     /**
 	  * @Assert\NotNull()
 	  * @Assert\Type(type="string")
-     * @ORM\Column(name="direccion_bloque",type="string", length=155)
+     * @ORM\Column(name="direccion",type="string", length=155)
      */
     protected $direccion;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\City", inversedBy="servicios")
-     * @ORM\JoinColumn(name="city", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ciudad_id", referencedColumnName="id", nullable=false)
      */
     protected $city;
     
     /**
      * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\CategoriaServicios", inversedBy="servicios")
-     * @ORM\JoinColumn(name="categoria", referencedColumnName="id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id", nullable=false)
      */
     protected $categoria;
     

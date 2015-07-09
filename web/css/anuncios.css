@@ -33,6 +33,19 @@
    background: linear-gradient(#ffd486, white);
 }
 
+#form_contactar, #form_denunciar{
+	width: auto;
+}
+
+.tipo_contacto{
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;	
+   font-weight: bold;
+   color: #005D84;
+   display: block;
+   font-size: 1.17em;
+   margin: 1em 0;
+}
+
 .anuncio span{
 	text-decoration: none;
 }

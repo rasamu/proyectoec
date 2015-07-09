@@ -3,7 +3,9 @@
 <pdf>
 	<dynamic-page>
 		<h1 padding="10px" background-color="#005D84" width="100%"><span color="#F7D118">Entre</span><span color="white">Comunidades</span></h1>
-		<h2 color="#223E56">{%trans%}Comunidad{%endtrans%}: {{comunidad.codigo}}</h2>
+		{% if is_granted('ROLE_ADMINFINCAS')%}
+			<h2 color="#223E56">{%trans%}Comunidad{%endtrans%}: {{comunidad.codigo}}</h2>
+		{% endif %}
 		<p>{%trans%}Incidencias{%endtrans%}</p>
 		<table>
 

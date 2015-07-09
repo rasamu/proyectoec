@@ -11,6 +11,7 @@ fos_elastica:
                             my_analyzer:
                                 type: snowball
                                 language: Spanish
+                                stopwords: [a, o, u, y, de, en, el, la, los, un, una, uno, se, para, por, sin, tras, hasta, hacia, entre, con, desde]
             types:
                 anuncio:
                     mappings:
@@ -35,9 +36,13 @@ fos_elastica:
                                          province:
                                              type: object
                                              properties:
-                                                id: ~  
+                                                id: {type:integer}
                                                 name: {type:string}
-                                         name: {type:string} 
+                                         name: {type:string}
+                        usuario:
+                              type: object
+                              properties:
+                                   telefono: {type:string}
                     persistence:
                         driver: orm
                         model: EC\PrincipalBundle\Entity\Anuncio
@@ -67,7 +72,7 @@ fos_elastica:
                                 province:
                                     type: object
                                     properties:
-                                          id: ~  
+                                          id: {type:integer}  
                                           name: {type:string}
                                 name: {type:string}
                     persistence:

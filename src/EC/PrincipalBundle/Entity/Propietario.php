@@ -10,14 +10,14 @@ use EC\PrincipalBundle\Entity\Role;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Propietario")
+ * @ORM\Table(name="Propietarios")
  * @ORM\HasLifecycleCallbacks
  */
 class Propietario extends Usuario
 {     
 	 /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="razon",type="string", length=100)
+     * @ORM\Column(name="razon_propietario",type="string", length=100)
      */ 
     protected $razon;
     
@@ -28,13 +28,13 @@ class Propietario extends Usuario
     
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="propiedad",type="string", length=155)
+     * @ORM\Column(name="propiedad_propietario",type="string", length=100)
      */
     protected $propiedad;
 
 	/**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Bloque", inversedBy="propietarios")
-     * @ORM\JoinColumn(name="id_bloque", referencedColumnName="id")
+     * @ORM\JoinColumn(name="bloque_id_propietario", referencedColumnName="id")
      */
     protected $bloque;
     

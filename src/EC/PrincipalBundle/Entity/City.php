@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
 * EC\PrincipalBundle\Entity\City
 *
-* @ORM\Table(name="main_city")
+* @ORM\Table(name="Ciudades")
 * @ORM\Entity(repositoryClass="EC\PrincipalBundle\Entity\CityRepository")
 */
 class City
@@ -24,20 +24,13 @@ class City
 /**
 * @var string $name
 *
-* @ORM\Column(name="name", type="string", length=255)
+* @ORM\Column(name="name", type="string", length=100)
 */
     protected $name;
     
-    /**
-* @var string $slug
-*
-* @ORM\Column(name="slug", type="string", length=255, unique=true)
-*/
-    protected $slug;
-
 /**
 * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Province", inversedBy="cities")
-* @ORM\JoinColumn(name="province_id", referencedColumnName="id")
+* @ORM\JoinColumn(name="province_id", referencedColumnName="id", nullable=false)
 */
     protected $province;
     
@@ -82,29 +75,6 @@ class City
     public function getName()
     {
         return $this->name;
-    }
-
-/**
-* Set slug
-*
-* @param string $slug
-* @return City
-*/
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-* Get slug
-*
-* @return string
-*/
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
 /**

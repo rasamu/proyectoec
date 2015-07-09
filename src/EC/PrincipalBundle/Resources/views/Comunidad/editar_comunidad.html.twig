@@ -19,7 +19,7 @@
 	<section id="form_login">
 		<h2 class="centrado">{% trans %}Editar Comunidad{% endtrans %}</h2>
 		
-      <form action="{{ path('ec_adminfincas_comunidad_editar', { 'cif': comunidad.cif }) }}" method="post">
+      <form action="{{ path('ec_adminfincas_comunidad_editar', { 'id_comunidad': comunidad.id }) }}" method="post">
     		<div class="red">{{ form_errors(form) }}</div>
 		
 			<div class="campo">

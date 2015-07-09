@@ -38,12 +38,12 @@ class AdminFincas extends Usuario
       
     /**
 	  * @Assert\NotNull()
-     * @ORM\Column(name="nombre",type="string", length=100)
+     * @ORM\Column(name="nombre_admin",type="string", length=100)
      */
     protected $nombre;
 
 	/**
-     * @ORM\Column(name="apellidos",type="string", length=100,nullable=true)
+     * @ORM\Column(name="apellidos_admin",type="string", length=100)
      */
     protected $apellidos;
     

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 * EC\PrincipalBundle\Entity\ConsultaIncidencia
 *
 * @ORM\Entity
-* @ORM\Table(name="consultas_incidencias")
+* @ORM\Table(name="Consultas_Incidencias")
 * @ORM\HasLifecycleCallbacks
 */
 class ConsultaIncidencia

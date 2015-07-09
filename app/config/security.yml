@@ -22,7 +22,6 @@ security:
         ROLE_VICEPRESIDENTE: ROLE_VECINO
            
     access_control:
-        - { path: ^/.*/root, roles: ROLE_ADMIN }
         - { path: ^/.*/adminfincas/.*, roles: ROLE_ADMINFINCAS }
         - { path: ^/.*/propietario/.*, roles: ROLE_VECINO }
         - { path: ^/.*/usuario/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
@@ -36,6 +35,7 @@ security:
         - { path: ^/.*/reunion/descargar/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/reunion/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/reuniones/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
+        - { path: ^/.*/comunidad/reuniones, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/anuncio/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/anuncios/listado, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }
         - { path: ^/.*/anuncios/listado/.*, roles: [ROLE_ADMINFINCAS, ROLE_VECINO] }

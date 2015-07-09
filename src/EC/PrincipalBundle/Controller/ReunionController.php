@@ -17,15 +17,15 @@ use Symfony\Component\Security\Core\SecurityContext;
 class ReunionController extends Controller
 {    
     /**
-	  * @Route("/comunidad/reuniones/{cif}", name="ec_reuniones_comunidad")
-	  * @Template("ECPrincipalBundle:Reunion:reuniones_comunidad.html.twig")
+	  * @Route("/comunidad/reuniones/{id_comunidad}", name="ec_reuniones_comunidad")
+	  * @Template("ECPrincipalBundle:Reunion:reuniones.html.twig")
 	  */
-    public function ver_reuniones_comunidadAction($cif=null,Request $request)
+    public function ver_reunionesAction($id_comunidad=null,Request $request)
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     				$ComprobacionesService=$this->get('comprobaciones_service');
-      			$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      			$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     			}else{
     				$comunidad=$this->getUser()->getBloque()->getComunidad();	
     			}
@@ -34,7 +34,7 @@ class ReunionController extends Controller
 			}
 			
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-					/*Buscamos las incidencias de la comunidad*/
+					/*Buscamos las reuniones de la comunidad*/
     				$em = $this->getDoctrine()->getManager();
 					$query = $em->createQuery(
     					'SELECT r
@@ -58,7 +58,7 @@ class ReunionController extends Controller
     					'minutes'=>range(0, 59, 30),
     					'input' => 'datetime',
     					'widget' => 'choice'))
-        			->add('descripcion','text',array('label'=>'Descripción','max_length'=>25))
+        			->add('descripcion','text',array('label'=>'Descripción','max_length'=>55))
         			->add('file','file', array('label'=>'Fichero'))
         			->getForm();
 
@@ -83,29 +83,29 @@ class ReunionController extends Controller
 						$flash=$this->get('translator')->trans('Reunión registrada con éxito.');
 						$this->get('session')->getFlashBag()->add('notice',$flash);
    					$this->get('session')->getFlashBag()->add('color','green');
-   					return $this->redirect($this->generateUrl('ec_reuniones_comunidad', array('cif'=>$comunidad->getCif())));
+   					return $this->redirect($this->generateUrl('ec_reuniones_comunidad', array('id_comunidad'=>$comunidad->getId())));
     				}	
 			}else{
 					$reuniones=$comunidad->getReuniones();
 			}
 			
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-        		return $this->render('ECPrincipalBundle:Reunion:reuniones_comunidad.html.twig',array('comunidad' =>$comunidad,'reuniones'=>$reuniones,'form' => $form->createView()));
+        		return $this->render('ECPrincipalBundle:Reunion:calendario_reuniones.html.twig',array('comunidad' =>$comunidad,'reuniones'=>$reuniones,'form' => $form->createView()));
         	}else{
-        		return $this->render('ECPrincipalBundle:Reunion:reuniones_comunidad.html.twig',array('comunidad' =>$comunidad,'reuniones'=>$reuniones));
+        		return $this->render('ECPrincipalBundle:Reunion:calendario_reuniones.html.twig',array('comunidad' =>$comunidad,'reuniones'=>$reuniones));
         	}
     }
     
     /**
-	  * @Route("/comunidad/reunion/{id}/{cif}", name="ec_ver_reunion_comunidad")
-	  * @Template("ECPrincipalBundle:Reunion:reunion_comunidad.html.twig")
+	  * @Route("/comunidad/reunion/{id}/{id_comunidad}", name="ec_ver_reunion_comunidad")
+	  * @Template("ECPrincipalBundle:Reunion:reunion.html.twig")
 	  */
-    public function ver_reunion_comunidadAction($id,$cif=null)
+    public function ver_reunionAction($id,$id_comunidad=null)
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     				$ComprobacionesService=$this->get('comprobaciones_service');
-      			$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      			$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     			}else{
     				$comunidad=$this->getUser()->getBloque()->getComunidad();	
     			}
@@ -116,7 +116,7 @@ class ReunionController extends Controller
 			$ComprobacionesService=$this->get('comprobaciones_service');
       	$reunion=$ComprobacionesService->comprobar_reunion($id);
 				
-        	return $this->render('ECPrincipalBundle:Reunion:reunion_comunidad.html.twig',array('comunidad' =>$comunidad,'reunion'=>$reunion));
+        	return $this->render('ECPrincipalBundle:Reunion:ver_reunion.html.twig',array('comunidad' =>$comunidad,'reunion'=>$reunion));
     }
     
     /**
@@ -139,12 +139,12 @@ class ReunionController extends Controller
 	}
 	
 	 /**
-	  * @Route("/adminfincas/comunidad/{cif}/eliminar/reunion/{id}", name="ec_adminfincas_eliminar_reunion")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/eliminar/reunion/{id}", name="ec_adminfincas_eliminar_reunion")
 	  */
-    public function eliminar_reunionAction($cif,$id)
+    public function eliminar_reunionAction($id_comunidad,$id)
     {
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
       	$reunion=$ComprobacionesService->comprobar_reunion($id);
 			
 			$comunidad->removeReunione($reunion);
@@ -156,6 +156,6 @@ class ReunionController extends Controller
     		$flash=$this->get('translator')->trans('La reunión ha sido eliminada.');
     		$this->get('session')->getFlashBag()->add('notice',$flash);
    		$this->get('session')->getFlashBag()->add('color','green');
-   		return $this->redirect($this->generateUrl('ec_reuniones_comunidad', array('cif'=>$comunidad->getCif())));
+   		return $this->redirect($this->generateUrl('ec_reuniones_comunidad', array('id_comunidad'=>$comunidad->getId())));
     }
 }

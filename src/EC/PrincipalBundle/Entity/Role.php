@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 * EC\PrincipalBundle\Entity\Role
 *
 * @ORM\Entity
-* @ORM\Table(name="roles")
+* @ORM\Table(name="Roles")
 */
 class Role
 {
@@ -23,7 +23,7 @@ class Role
 /**
 * @var string $nombre
 *
-* @ORM\Column(name="nombre", type="string", length=255)
+* @ORM\Column(name="nombre", type="string", length=100)
 */
     protected $nombre;
     

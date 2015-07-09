@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 * EC\PrincipalBundle\Entity\Privacidad
 *
 * @ORM\Entity
-* @ORM\Table(name="privacidades")
+* @ORM\Table(name="Privacidades")
 */
 class Privacidad
 {
@@ -24,7 +24,7 @@ class Privacidad
 	/**
 	 * @var string $nombre
  	 *
-	 * @ORM\Column(name="nombre", type="string", length=255)
+	 * @ORM\Column(name="nombre", type="string", length=100)
 	 */
     protected $nombre;
     

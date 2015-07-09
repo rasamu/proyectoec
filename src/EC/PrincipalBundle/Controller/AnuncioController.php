@@ -77,12 +77,8 @@ class AnuncioController extends Controller
    				$ComprobacionesService=$this->get('comprobaciones_service');
       			$anuncio=$ComprobacionesService->comprobar_anuncio($id_anuncio);
       			
-   				$usuario=$anuncio->getUsuario();
-   				if($usuario->getRole()->getId()!='1'){//Anuncio escrito por propietario
-   					$email=$anuncio->getComunidad()->getAdministrador()->getEmail();
-   				}else{//Anuncio escrito por el administrador de la comunidad
-   					$email='info.entrecomunidades@gmail.com';
-   				}
+   				$email=$anuncio->getComunidad()->getAdministrador()->getEmail();
+
    				//Enviamos email
    				$message = \Swift_Message::newInstance()
         				->setSubject('Denuncia anuncio EntreComunidades')
@@ -220,7 +216,26 @@ class AnuncioController extends Controller
 
 				$finder = $this->container->get('fos_elastica.finder.search.anuncio');
 				$boolQuery = new \Elastica\Query\Bool();
-			
+				$boolQuery2 = new \Elastica\Query\Bool();
+					
+				//Filtramos por palabras
+				if($palabras!=null){
+					$fieldQuery1 = new \Elastica\Query\Match();
+					$fieldQuery1->setFieldQuery('titulo', $palabras);
+					$boolQuery2->addShould($fieldQuery1);
+				
+					$fieldQuery2 = new \Elastica\Query\Match();
+					$fieldQuery2->setFieldQuery('descripcion', $palabras);
+					$boolQuery2->addShould($fieldQuery2);
+					
+					$fieldQuery3 = new \Elastica\Query\Match();
+					$fieldQuery3->setFieldQuery('comunidad.city.name', $palabras);
+					$boolQuery2->addShould($fieldQuery3);
+				}else{
+					$fieldQuery = new \Elastica\Query\MatchAll();
+					$boolQuery2->addShould($fieldQuery);
+				}
+				
 				//Filtramos por categoria
 				if($categoria!=null){
 					$categoryQuery = new \Elastica\Query\Term();
@@ -234,21 +249,9 @@ class AnuncioController extends Controller
 					$provinceQuery->setTerm('comunidad.city.province.id', $province->getId());
 					$boolQuery->addMust($provinceQuery);	
 				}
-			
-				//Filtramos por palabras
-				if($palabras!=null){
-					//$fieldQuery1 = new \Elastica\Query\Match();
-					//$fieldQuery1->setFieldQuery('titulo', $palabras);
-					//$boolQuery->addShould($fieldQuery1);
 				
-					$fieldQuery2 = new \Elastica\Query\Match();
-					$fieldQuery2->setFieldQuery('descripcion', $palabras);
-					$boolQuery->addMust($fieldQuery2);
-				}else{
-					$fieldQuery = new \Elastica\Query\MatchAll();
-					$boolQuery->addShould($fieldQuery);
-				}
-		
+				$boolQuery->addMust($boolQuery2);
+				
 				$finalQuery = new \Elastica\Query($boolQuery);
 			
 				$finalQuery->setHighlight(array(
@@ -256,6 +259,14 @@ class AnuncioController extends Controller
 					'post_tags' => array('</strong>'),
 					'fields' => array(
 						'descripcion' => array(
+							'fragment_size' => 200,
+							'number_of_fragments' => 1,
+						),
+						'titulo' => array(
+							'fragment_size' => 200,
+							'number_of_fragments' => 1,
+						),
+						'comunidad.city.name' => array(
 							'fragment_size' => 200,
 							'number_of_fragments' => 1,
 						)
@@ -301,14 +312,14 @@ class AnuncioController extends Controller
     }
 	
 	/**
-	  * @Route("/nuevo/anuncio/{cif}", name="ec_nuevo_anuncio")
+	  * @Route("/nuevo/anuncio/{id_comunidad}", name="ec_nuevo_anuncio")
 	  * @Template("ECPrincipalBundle:Anuncio:nuevo_anuncio.html.twig")
 	  */
-	public function nuevo_anuncioAction(Request $request, $cif)
+	public function nuevo_anuncioAction(Request $request, $id_comunidad)
 	{ 		
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad); 
     	}else{
     		$comunidad=$this->getUser()->getBloque()->getComunidad();	
     	}		
@@ -358,14 +369,14 @@ class AnuncioController extends Controller
 	}
 	
 	/**
-	  * @Route("/anuncios/listado/{cif}", name="ec_listado_mis_anuncios")
+	  * @Route("/anuncios/listado/{id_comunidad}", name="ec_listado_mis_anuncios")
 	  * @Template("ECPrincipalBundle:Anuncio:listado_mis_anuncios.html.twig")
 	  */
-	public function listado_mis_anunciosAction($cif)
+	public function listado_mis_anunciosAction($id_comunidad)
 	{ 		
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif); 
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad); 
     		
     		$em = $this->getDoctrine()->getManager();
 				$query = $em->createQuery(
@@ -446,7 +457,7 @@ class AnuncioController extends Controller
 				$this->get('session')->getFlashBag()->add('notice',$flash);
         		$this->get('session')->getFlashBag()->add('color','green');
         		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-					return $this->redirect($this->generateUrl('ec_listado_mis_anuncios', array('cif'=>$comunidad->getCif())));
+					return $this->redirect($this->generateUrl('ec_listado_mis_anuncios', array('id_comunidad'=>$comunidad->getId())));
 				}else{
 					return $this->redirect($this->generateUrl('ec_listado_mis_anuncios'));
 				}
@@ -587,7 +598,7 @@ class AnuncioController extends Controller
     	$this->get('session')->getFlashBag()->add('notice',$flash);
    	$this->get('session')->getFlashBag()->add('color','green');
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-			return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes', array('cif'=>$comunidad->getCif(),'id'=>$id)));
+			return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes', array('id_comunidad'=>$comunidad->getId(),'id'=>$id)));
 		}else{
 			return $this->redirect($this->generateUrl('ec_modificar_anuncio_imagenes',array('id'=>$id)));
 		}
@@ -638,7 +649,7 @@ class AnuncioController extends Controller
     	$this->get('session')->getFlashBag()->add('notice',$flash);
    	$this->get('session')->getFlashBag()->add('color','green');
 		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
-			return $this->redirect($this->generateUrl('ec_listado_mis_anuncios', array('cif'=>$comunidad->getCif())));
+			return $this->redirect($this->generateUrl('ec_listado_mis_anuncios', array('id_comunidad'=>$comunidad->getId())));
 		}else{
 			return $this->redirect($this->generateUrl('ec_listado_mis_anuncios'));
 		}

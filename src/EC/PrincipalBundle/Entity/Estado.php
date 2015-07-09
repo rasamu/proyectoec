@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 * EC\PrincipalBundle\Entity\Estado
 *
 * @ORM\Entity
-* @ORM\Table(name="estados")
+* @ORM\Table(name="Estados")
 */
 class Estado
 {
@@ -23,7 +23,7 @@ class Estado
 	/**
 	 * @var string $nombre
  	 *
-	 * @ORM\Column(name="nombre", type="string", length=255)
+	 * @ORM\Column(name="nombre", type="string", length=100)
 	 */
     protected $nombre;
     

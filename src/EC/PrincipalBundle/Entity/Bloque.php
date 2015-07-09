@@ -23,20 +23,20 @@ class Bloque
     /**
      * @Assert\Type(type="string")
      * @Assert\NotNull()
-     * @ORM\Column(name="num_bloque",type="string",length=9)
+     * @ORM\Column(name="numero",type="string",length=9)
      */
     protected $num;
     
     /**
 	  * @Assert\NotNull()
 	  * @Assert\Type(type="string")
-     * @ORM\Column(name="direccion_bloque",type="string", length=155)
+     * @ORM\Column(name="direccion",type="string", length=155)
      */
     protected $direccion;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Comunidad", inversedBy="bloques")
-     * @ORM\JoinColumn(name="id_comunidad", referencedColumnName="id")
+     * @ORM\JoinColumn(name="comunidad_id", referencedColumnName="id", nullable=false)
      */
     protected $comunidad;
     

@@ -57,7 +57,7 @@
        				url: url,
        				data: {
            				cif_servicio: $("#servicio_cif").val(),
-           				cif_comunidad: {{comunidad.cif}},
+           				id_comunidad: {{comunidad.id}},
        				},
        				type: "POST",
        				cache: false,
@@ -101,7 +101,7 @@
     		{% endfor %}
 		{% endfor %}
 
-      <form action="{{ path('ec_adminfincas_nuevo_servicio', { 'cif': comunidad.cif }) }}" method="post">
+      <form action="{{ path('ec_adminfincas_nuevo_servicio', { 'id_comunidad': comunidad.id }) }}" method="post">
     		<div class="red">{{ form_errors(form) }}</div>
     		
     		<div class="campo">

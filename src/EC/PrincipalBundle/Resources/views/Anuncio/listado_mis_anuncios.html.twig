@@ -48,7 +48,7 @@
 	<h2 class="centrado">{% trans %}Mis Anuncios{% endtrans %}</h2>
 
 	{% if is_granted('ROLE_ADMINFINCAS') %}
-		<a class="boton_alta btn_nuevo" href="{{ path('ec_nuevo_anuncio', {'cif': comunidad.cif}) }}"><span>{% trans %}Nuevo Anuncio{% endtrans %}</span></a>
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_nuevo_anuncio', {'id_comunidad': comunidad.id}) }}"><span>{% trans %}Nuevo Anuncio{% endtrans %}</span></a>
 	{% else %}
 		<a class="boton_alta btn_nuevo" href="{{ path('ec_nuevo_anuncio') }}"><span>{% trans %}Nuevo Anuncio{% endtrans %}</span></a>
 	{% endif %}

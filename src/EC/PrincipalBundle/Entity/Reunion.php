@@ -26,7 +26,7 @@ class Reunion
 	* @var string $asunto
 	* @Assert\NotNull()
 	* @Assert\Type(type="string")
-	* @ORM\Column(name="descripcion", type="string")
+	* @ORM\Column(name="descripcion", type="string", length=55)
 	*/
     protected $descripcion;
     
@@ -55,7 +55,7 @@ class Reunion
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Comunidad", inversedBy="reuniones")
-     * @ORM\JoinColumn(name="comunidad", referencedColumnName="id")
+     * @ORM\JoinColumn(name="comunidad_id", referencedColumnName="id", nullable=false)
      */
     protected $comunidad;
 

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 * EC\PrincipalBundle\Entity\CategoriaIncidencias
 *
 * @ORM\Entity
-* @ORM\Table(name="categorias_incidencias")
+* @ORM\Table(name="Categorias_Incidencias")
 */
 class CategoriaIncidencias
 {
@@ -23,7 +23,7 @@ class CategoriaIncidencias
 /**
 * @var string $nombre
 *
-* @ORM\Column(name="nombre", type="string", length=255)
+* @ORM\Column(name="nombre", type="string", length=100)
 */
     protected $nombre;
     

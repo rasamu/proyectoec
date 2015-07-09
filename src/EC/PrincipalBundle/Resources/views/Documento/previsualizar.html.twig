@@ -44,7 +44,7 @@
 				<a class="boton_documento btn_download" href="{{ path('ec_documento_descargar', { 'id': documento.id })  }}">{%trans%}Descargar{%endtrans%}</a>
 				{% if is_granted('ROLE_ADMINFINCAS') %}
 					<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_comunidad_consultas_documento', { 'id': documento.id}) }}" >{%trans%}Consultas{%endtrans%}</a>
-					<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
+					<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'id_comunidad': comunidad.id, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
 				{% endif %}
 			</nav>
 		</div>

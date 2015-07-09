@@ -47,7 +47,7 @@
                     title: '{{ reunion.descripcion }}',
                     {% if is_granted('ROLE_ADMINFINCAS') %}
                     		comunidad: '{{reunion.comunidad.codigo}}',
-                    		cif: '{{reunion.comunidad.cif}}',
+                    		id_comunidad: '{{reunion.comunidad.id}}',
                     {% endif %}
                     start: '{{ reunion.fecha_toString() }}',
                     selectable: true,
@@ -62,7 +62,7 @@
             	
             	eventClick: function(event) {    
             		{% if is_granted('ROLE_ADMINFINCAS') %}  					
-    						window.location=Routing.generate('ec_ver_reunion_comunidad', { id: event.id, cif: event.cif });
+    						window.location=Routing.generate('ec_ver_reunion_comunidad', { id: event.id, id_comunidad: event.id_comunidad });
     					{% else %}
     					   window.location=Routing.generate('ec_ver_reunion_comunidad', { id: event.id });
     					{% endif %}
@@ -140,7 +140,7 @@
 			<section class="form">
 				<h2 class="centrado">{% trans %}Nueva Reunión{% endtrans %}</h2>
 				
-            <form action="{{ path('ec_reuniones_comunidad', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
+            <form action="{{ path('ec_reuniones_comunidad', { 'id_comunidad': comunidad.id }) }}" method="post" {{ form_enctype(form) }}>
     				<div class="red">{{ form_errors(form) }}</div>
     				
     				<div class="campo_login">

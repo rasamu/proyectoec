@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 * EC\PrincipalBundle\Entity\Log
 *
 * @ORM\Entity
-* @ORM\Table(name="logs")
+* @ORM\Table(name="Logs")
 * @ORM\HasLifecycleCallbacks
 */
 class Log
@@ -34,7 +34,7 @@ class Log
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Usuario", inversedBy="logs")
-     * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=false)
      */
     protected $usuario;
 

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 * EC\PrincipalBundle\Entity\Valoracion
 *
 * @ORM\Entity
-* @ORM\Table(name="valoraciones")
+* @ORM\Table(name="Valoraciones")
 * @ORM\HasLifecycleCallbacks
 */
 class Valoracion

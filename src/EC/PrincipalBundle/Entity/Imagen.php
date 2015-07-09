@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * EC\PrincipalBundle\Entity\Imagen
  *
  * @ORM\Entity
- * @ORM\Table(name="Imagen_anuncio")
+ * @ORM\Table(name="Imagenes_Anuncios")
  * @ORM\HasLifecycleCallbacks
  */
 class Imagen
@@ -22,7 +22,7 @@ class Imagen
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      */
     protected $path;
     
@@ -33,14 +33,14 @@ class Imagen
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Anuncio", inversedBy="imagenes")
-     * @ORM\JoinColumn(name="anuncio_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="anuncio_id", referencedColumnName="id", nullable=false)
      */
     protected $anuncio;
     
     /**
      * @Assert\NotNull()
      * @Assert\File(
-     *	maxSize="1000000",
+     *	maxSize="2000000",
      *	maxSizeMessage = "El fichero ocupa demasiado",
      *	notFoundMessage = "Seleccione una imagen",
      *   mimeTypes = {"image/jpeg"},

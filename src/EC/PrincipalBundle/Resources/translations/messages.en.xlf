@@ -579,6 +579,14 @@
     				<source>Se eliminarán todos sus propietarios con sus respectivos anuncios e incidencias.</source>
     				<target>All owners with their incidents and with their ads of this block will be deleted.</target>
 				</trans-unit>
+				<trans-unit id="315">
+    				<source>Bloque modificado con éxito.</source>
+    				<target>The block has been modified successfully.</target>
+				</trans-unit>
+				<trans-unit id="316">
+    				<source>Editar Bloque</source>
+    				<target>Edit Block</target>
+				</trans-unit>
         		
 <!--COMUNIDAD-->
         		<trans-unit id="400">
@@ -948,12 +956,12 @@
                 <target>Owner already exist.</target>
             </trans-unit>
             <trans-unit id="813">
-                <source>Error: Existen propietarios que ya han sido dados de alta.</source>
-                <target>Error: There are owners who have already been discharged.</target>
+                <source>Existen propiedades que ya han sido dadas de alta.</source>
+                <target>There are properties that have already been discharged.</target>
             </trans-unit>
             <trans-unit id="814">
-                <source>Error: Existen bloques que no están dados de alta.</source>
-                <target>Error: There are blocks that are not discharged.</target>
+                <source>Existen bloques que no están dados de alta.</source>
+                <target>There are blocks that are not discharged.</target>
             </trans-unit>
             <trans-unit id="815">
                 <source>no se ha podido dar de baja. Tiene incidencias no finalizadas.</source>
@@ -964,8 +972,8 @@
                 <target>To register owners, you must first register the blocks.</target>
             </trans-unit>
             <trans-unit id="817">
-                <source>Nuevas contraseñas generadas</source>
-                <target>New generated passwords</target>
+                <source>Nueva contraseña generada</source>
+                <target>New generated password</target>
             </trans-unit>
             <trans-unit id="818">
                 <source>El propietario</source>
@@ -982,6 +990,10 @@
 				<trans-unit id="821">
     				<source>NºPropietarios</source>
     				<target>NºOwners</target>
+				</trans-unit>
+				<trans-unit id="822">
+    				<source>La propiedad pertenece a otro propietario. Elimine primero al antiguo propietario.</source>
+    				<target>The property belongs to another owner .First delete the old owner.</target>
 				</trans-unit>
         		
  <!--REUNION-->
@@ -1509,6 +1521,14 @@
          <trans-unit id="1819">
                 <source>Puntuación</source>
                 <target>Score</target>
+         </trans-unit>
+         <trans-unit id="1820">
+                <source>¿Estás seguro de añadir a la comunidad</source>
+                <target>Are you sure to add in the community</target>
+         </trans-unit>
+         <trans-unit id="1821">
+                <source>¿Estás seguro de quitar de la comunidad</source>
+                <target>Are you sure to remove in the community</target>
          </trans-unit>
          
 <!--CATEGORIAS SERVICIOS-->

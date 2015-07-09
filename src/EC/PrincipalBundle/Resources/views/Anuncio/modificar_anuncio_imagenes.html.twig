@@ -83,7 +83,7 @@
 			<div class="campo_login">
 				<a href="{{ path('ec_modificar_anuncio', { 'id': anuncio.id }) }}" class="boton_alta btn_return">{% trans %}Volver{% endtrans %}</a>
 				{% if is_granted('ROLE_ADMINFINCAS') %}
-					<a href="{{ path('ec_listado_mis_anuncios', { 'cif': comunidad.cif }) }}" class="boton_alta btn_mis_anuncios">{% trans %}Mis Anuncios{% endtrans %}</a>
+					<a href="{{ path('ec_listado_mis_anuncios', { 'id_comunidad': comunidad.id }) }}" class="boton_alta btn_mis_anuncios">{% trans %}Mis Anuncios{% endtrans %}</a>
 				{% else %}
 					<a href="{{ path('ec_listado_mis_anuncios') }}" class="boton_alta btn_mis_anuncios">{% trans %}Mis Anuncios{% endtrans %}</a>
 				{% endif %}

@@ -63,7 +63,7 @@
 			<h2 class="centrado">{% trans %}Nuevo Anuncio{% endtrans %}</h2>
 			
 			{% if is_granted('ROLE_ADMINFINCAS') %}
-         	<form action="{{ path('ec_nuevo_anuncio', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form) }}>
+         	<form action="{{ path('ec_nuevo_anuncio', { 'id_comunidad': comunidad.id }) }}" method="post" {{ form_enctype(form) }}>
 			{% else %}
 			   <form action="{{ path('ec_nuevo_anuncio') }}" method="post" {{ form_enctype(form) }}>	
     		{% endif %}

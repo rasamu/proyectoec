@@ -61,9 +61,9 @@
 	
 	<h2 class="centrado">{% trans %}Propietarios{% endtrans %}</h2>
 
-	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'cif': comunidad.cif }) }}">{% trans %}Nuevo Propietario{% endtrans %}</a>
-	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
-	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'cif': comunidad.cif }) }}"><img align="absmiddle" src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
+	<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_alta_propietario', { 'id_comunidad': comunidad.id }) }}">{% trans %}Nuevo Propietario{% endtrans %}</a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_pdf', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/pdf-icon.png') }}" alt="pdf"></a>
+	<a href="{{ path('ec_adminfincas_comunidad_listado_propietarios_csv', { 'id_comunidad': comunidad.id }) }}"><img src="{{ asset('images/csv-icon.png') }}" alt="csv"></a>
 	
 	<span id="leyenda_propietarios">
 		<span class="color_vicepresidente derecha">{%trans%}Vicepresidente{%endtrans%}</span>
@@ -100,10 +100,10 @@
 								<ul class="menu_acciones">
 									<li><a href="#">{% trans %}Acciones{% endtrans %}</a>
 										<ul>
-											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'cif' : comunidad.cif, 'id': propietario.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo presidente a{%endtrans%} {{propietario.razon}}?')">{% trans %}Es presidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'cif' : comunidad.cif, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo vicepresidente a{%endtrans%} {{propietario.razon}}?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'cif' : comunidad.cif, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de generar una nueva contraseña a{%endtrans%} {{propietario.razon}}?')">{% trans %}Generar contraseña{% endtrans %}</a></li>
-											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'cif': comunidad.cif, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar a{%endtrans%} {{propietario.razon}}?')">{% trans %}Eliminar{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_presidente', { 'id_comunidad' : comunidad.id, 'id': propietario.id }) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo presidente a{%endtrans%} {{propietario.razon}}?')">{% trans %}Es presidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_nombrar_vicepresidente', { 'id_comunidad' : comunidad.id, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de nombrar como nuevo vicepresidente a{%endtrans%} {{propietario.razon}}?')">{% trans %}Es vicepresidente{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_generar_password_propietario', { 'id_comunidad' : comunidad.id, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de generar una nueva contraseña a{%endtrans%} {{propietario.razon}}?')">{% trans %}Generar contraseña{% endtrans %}</a></li>
+											<li><a href="{{ path('ec_adminfincas_comunidad_eliminar_propietario', { 'id_comunidad': comunidad.id, 'id': propietario.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar a{%endtrans%} {{propietario.razon}}?')">{% trans %}Eliminar{% endtrans %}</a></li>
 										</ul>
 									</li>
 								</ul>

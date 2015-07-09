@@ -37,7 +37,7 @@
 	<h2 class="centrado">{% trans %}Documentos{% endtrans %}</h2>
 	
 	{% if is_granted('ROLE_ADMINFINCAS') %}
-		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'cif': comunidad.cif }) }}">{%trans%}Nuevo Documento{%endtrans%}</a>
+		<a class="boton_alta btn_nuevo" href="{{ path('ec_adminfincas_comunidad_documento_upload', { 'id_comunidad': comunidad.id }) }}">{%trans%}Nuevo Documento{%endtrans%}</a>
 	{% endif %}
 								
 	{% for tipo in tipos %}
@@ -81,10 +81,10 @@
 						
 							{% if is_granted('ROLE_ADMINFINCAS') %}
 								{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
-						  			<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'cif': comunidad.cif, 'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
+						  			<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', { 'id_comunidad': comunidad.id, 'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>
 								{% endif %}
 								<a class="boton_documento btn_consulta" href="{{ path('ec_adminfincas_comunidad_consultas_documento', { 'id': documento.id}) }}" >{%trans%}Consultas{%endtrans%}</a>
-								<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'cif': comunidad.cif, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
+								<a class="boton_documento btn_delete" href="{{ path('ec_adminfincas_comunidad_eliminar_documento', { 'id_comunidad': comunidad.id, 'id': documento.id}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el documento{%endtrans%} {{documento.descripcion}}?')">{%trans%}Eliminar{%endtrans%}</a>
 							{% else %}
 								{% if documento.getFormat()=='pdf' or documento.getFormat()=='odt' or documento.getFormat()=='odp' or documento.getFormat()=='ods' %}
 									<a class="boton_documento btn_preview" href="{{ path('ec_documento_previsualizar', {'id': documento.id }) }}">{%trans%}Previsualizar{%endtrans%}</a>

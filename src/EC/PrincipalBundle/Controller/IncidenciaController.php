@@ -95,12 +95,12 @@ class IncidenciaController extends Controller
 	  * @Route("/incidencias/listado", name="ec_listado_incidencias")
 	  * @Template("ECPrincipalBundle:Incidencia:listado_incidencias.html.twig")
 	  */
-    public function listado_incidenciasAction($cif=null)
+    public function listado_incidenciasAction($id_comunidad=null)
     {
     		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     				$ComprobacionesService=$this->get('comprobaciones_service');
-      			$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      			$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     			}else{
     				$comunidad=$this->getUser()->getBloque()->getComunidad();	
     			}
@@ -146,42 +146,19 @@ class IncidenciaController extends Controller
     
     /**
      * @Pdf()
-     * @Route("/adminfincas/comunidad/{cif}/listado/incidencias/pdf", name="ec_adminfincas_comunidad_listado_incidencias_pdf")
+     * @Route("/incidencias/listado/{id_comunidad}/pdf", name="ec_listado_incidencias_pdf")
      */
-    public function listado_incidencias_pdfAction($cif)
+    public function listado_incidencias_pdfAction($id_comunidad)
     {
-    	$ComprobacionesService=$this->get('comprobaciones_service');
-      $comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+    	if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+    			$ComprobacionesService=$this->get('comprobaciones_service');
+      		$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
+     	}else{
+    			$comunidad=$this->getUser()->getBloque()->getComunidad();	
+    	}
+
+		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     	
-    	/*Buscamos las incidencias de la comunidad*/
-    	$em = $this->getDoctrine()->getManager();
-		$query = $em->createQuery(
-    		'SELECT i
-			FROM ECPrincipalBundle:Incidencia i
-			WHERE i.propietario IN
-			(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
-			(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
-		)->setParameters(array('comunidad'=>$comunidad,));			
-		$incidencias = $query->getResult();
-    	    
-    	$format = $this->get('request')->get('_format');  	
-    	$filename = "incidencias_".$comunidad->getCodigo().".pdf";
-    	$response=$this->render(sprintf('ECPrincipalBundle:Incidencia:listado_incidencias_pdf.%s.twig', $format), array(
-        		'incidencias' => $incidencias, 'comunidad'=>$comunidad
-    		));
-    	$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
-		return $response;
-    }
-    
-    /**
-	  * @Route("/adminfincas/comunidad/{cif}/listado/incidencias/csv", name="ec_adminfincas_comunidad_listado_incidencias_csv")
-	  * @Template("ECPrincipalBundle:Incidencia:listado_incidencias_csv.html.twig")
-	  */
-    public function listado_incidencias_csvAction($cif)
-    {
-    		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
-    		
     		/*Buscamos las incidencias de la comunidad*/
     		$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
@@ -191,9 +168,91 @@ class IncidenciaController extends Controller
 				(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
 				(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
 			)->setParameters(array('comunidad'=>$comunidad,));			
-			$incidencias = $query->getResult();   
-    		 
-			$filename = "incidencias_".$comunidad->getCodigo().".csv";	
+			$incidencias = $query->getResult();
+		}else{
+    			$bloque=$this->getUser()->getBloque();
+    			$comunidad=$bloque->getComunidad();
+    			$privacidad_bloque_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
+        		$privacidad_comunidad_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('3');
+        				
+    			/*Buscamos las incidencias del propietario privadas y de la comunidad o bloque publicas*/
+    			$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
+    				'SELECT i
+					FROM ECPrincipalBundle:Incidencia i
+					WHERE (i.privacidad= :privacidad_comunidad_publica and i.propietario IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)))
+					or (i.privacidad= :privacidad_bloque_publica and i.propietario IN
+						(SELECT s FROM ECPrincipalBundle:Propietario s WHERE s.bloque= :bloque))
+					or (i.propietario= :propietario)'
+				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'propietario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));
+				
+				$incidencias = $query->getResult();				
+    	}
+    	    
+    	$format = $this->get('request')->get('_format');
+    	if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+    		$filename = "incidencias_".$comunidad->getCodigo().".pdf";
+    	}else{
+    		$filename = "incidencias.pdf";
+    	}
+    	$response=$this->render(sprintf('ECPrincipalBundle:Incidencia:listado_incidencias_pdf.%s.twig', $format), array(
+        		'incidencias' => $incidencias, 'comunidad'=>$comunidad
+    		));
+    	$response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+		return $response;
+    }
+    
+    /**
+	  * @Route("/incidencias/listado/{id_comunidad}/csv", name="ec_listado_incidencias_csv")
+	  * @Template("ECPrincipalBundle:Incidencia:listado_incidencias_csv.html.twig")
+	  */
+    public function listado_incidencias_csvAction($id_comunidad)
+    {
+    		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+    			$ComprobacionesService=$this->get('comprobaciones_service');
+      		$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
+     		}else{
+    			$comunidad=$this->getUser()->getBloque()->getComunidad();	
+    		}
+
+			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
+    			/*Buscamos las incidencias de la comunidad*/
+    			$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
+    				'SELECT i
+					FROM ECPrincipalBundle:Incidencia i
+					WHERE i.propietario IN
+					(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+					(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad))'
+				)->setParameters(array('comunidad'=>$comunidad,));			
+				$incidencias = $query->getResult();
+			}else{
+    			$bloque=$this->getUser()->getBloque();
+    			$privacidad_bloque_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('2');
+        		$privacidad_comunidad_publica=$this->getDoctrine()->getRepository('ECPrincipalBundle:Privacidad')->findById('3');
+        				
+    			/*Buscamos las incidencias del propietario privadas y de la comunidad o bloque publicas*/
+    			$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
+    				'SELECT i
+					FROM ECPrincipalBundle:Incidencia i
+					WHERE (i.privacidad= :privacidad_comunidad_publica and i.propietario IN
+						(SELECT u FROM ECPrincipalBundle:Propietario u WHERE u.bloque IN
+						(SELECT b FROM ECPrincipalBundle:Bloque b WHERE b.comunidad = :comunidad)))
+					or (i.privacidad= :privacidad_bloque_publica and i.propietario IN
+						(SELECT s FROM ECPrincipalBundle:Propietario s WHERE s.bloque= :bloque))
+					or (i.propietario= :propietario)'
+				)->setParameters(array('comunidad'=>$comunidad,'bloque'=>$bloque,'propietario'=>$this->getUser(),'privacidad_comunidad_publica'=>$privacidad_comunidad_publica,'privacidad_bloque_publica'=>$privacidad_bloque_publica,));		
+				$incidencias = $query->getResult();				
+    		}
+    		
+    		if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+				$filename = "incidencias_".$comunidad->getCodigo().".csv";
+			}else{
+				$filename = "incidencias.csv";
+			}
 			$response = $this->render('ECPrincipalBundle:Incidencia:listado_incidencias_csv.html.twig', array('incidencias' => $incidencias));
 			$response->headers->set('Content-Type', 'text/csv');
 

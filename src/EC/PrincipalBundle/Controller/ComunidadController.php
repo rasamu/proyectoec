@@ -20,14 +20,14 @@ use Ps\PdfBundle\Annotation\Pdf;
 class ComunidadController extends Controller
 {  	 
 	 /**
-	  * @Route("/comunidad/tablon/{cif}", name="ec_tablon_comunidad")
+	  * @Route("/comunidad/tablon/{id_comunidad}", name="ec_tablon_comunidad")
 	  * @Template("ECPrincipalBundle:Comunidad:tablon_comunidad.html.twig")
 	  */
-    public function ver_tablon_comunidadAction($cif=null)
+    public function ver_tablon_comunidadAction($id_comunidad=null)
     {
 			if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS') or $this->get('security.context')->isGranted('ROLE_PRESIDENTE') or $this->get('security.context')->isGranted('ROLE_VICEPRESIDENTE')){
     			/*TABLON GENERAL DE TODAS LAS COMUNIDADES PARA ADMINISTRADOR*/
-    			if($cif==null && $this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+    			if($id_comunidad==null && $this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     				$comunidad=null;
     				
     				/*Buscamos las incidencias de todas las comunidades del administrador*/
@@ -46,7 +46,7 @@ class ComunidadController extends Controller
     				/*TABLON DE UNA COMUNIDAD PARA ADMINISTRADOR, PRESIDENTE O VIDEPRESIDENTE*/
     				if($this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
     					$ComprobacionesService=$this->get('comprobaciones_service');
-      				$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      				$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     				}else{
     					$comunidad=$this->getUser()->getBloque()->getComunidad();	
     				}
@@ -87,7 +87,7 @@ class ComunidadController extends Controller
 			}
 			
 			/*PROXIMAS REUNIONES DE TODAS LAS COMUNIDADES*/
-			if($cif==null && $this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
+			if($id_comunidad==null && $this->get('security.context')->isGranted('ROLE_ADMINFINCAS')){
 				$fecha_actual=new \DateTime('now');
 				$fecha_proximo_mes=new \DateTime('now');
 				$fecha_proximo_mes->modify('+1 month');
@@ -231,13 +231,13 @@ class ComunidadController extends Controller
     
     
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/editar", name="ec_adminfincas_comunidad_editar")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/editar", name="ec_adminfincas_comunidad_editar")
 	  * @Template("ECPrincipalBundle:Comunidad:editar_comunidad.html.twig")
 	  */
- 	public function editar_comunidadAction($cif, Request $request)
+ 	public function editar_comunidadAction($id_comunidad, Request $request)
     {
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
       	 
     		$codigo_anterior=$comunidad->getCodigo();
 	
@@ -265,12 +265,12 @@ class ComunidadController extends Controller
    				   $flash=$this->get('translator')->trans('Comunidad modificada con éxito.');    					
 						$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','green');
-						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('cif'=>$cif)));
+						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('id_comunidad'=>$id_comunidad)));
 					}else{
 						$flash=$this->get('translator')->trans('El código de despacho ya está siendo usado por otra comunidad.');
         			 	$this->get('session')->getFlashBag()->add('notice',$flash);
         			 	$this->get('session')->getFlashBag()->add('color','red');
-						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('cif'=>$cif)));
+						return $this->redirect($this->generateUrl('ec_adminfincas_comunidad_editar',array('id_comunidad'=>$id_comunidad)));
 					}
         	}
         	
@@ -280,13 +280,13 @@ class ComunidadController extends Controller
     }
     
     /**
-	  * @Route("/adminfincas/comunidad/{cif}/eliminar", name="ec_adminfincas_comunidad_eliminar")
+	  * @Route("/adminfincas/comunidad/{id_comunidad}/eliminar", name="ec_adminfincas_comunidad_eliminar")
 	  * @Template()
 	  */
-    public function eliminar_comunidadAction($cif)
+    public function eliminar_comunidadAction($id_comunidad)
     {
     		$ComprobacionesService=$this->get('comprobaciones_service');
-      	$comunidad=$ComprobacionesService->comprobar_comunidad($cif);
+      	$comunidad=$ComprobacionesService->comprobar_comunidad($id_comunidad);
     		
     		$bloques=$comunidad->getBloques();
 			foreach($bloques as $bloque){

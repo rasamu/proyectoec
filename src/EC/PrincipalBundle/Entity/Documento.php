@@ -56,13 +56,13 @@ class Documento
     /**
      * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Tipo", inversedBy="documentos")
-     * @ORM\JoinColumn(name="tipo", referencedColumnName="id")
+     * @ORM\JoinColumn(name="tipo_id", referencedColumnName="id", nullable=false)
      */
     protected $tipo;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Comunidad", inversedBy="documentos")
-     * @ORM\JoinColumn(name="comunidad", referencedColumnName="id")
+     * @ORM\JoinColumn(name="comunidad_id", referencedColumnName="id", nullable=false)
      */
     protected $comunidad;
     

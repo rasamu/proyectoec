@@ -32,7 +32,7 @@
 	<section class="form">
 				<h2 class="centrado">{% trans %}Nuevo Bloque{% endtrans %}</h2>
 				
-            <form action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post">
+            <form action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'id_comunidad': comunidad.id }) }}" method="post">
     				<div class="red">{{ form_errors(form) }}</div>
 
     				<div class="campo">
@@ -58,7 +58,7 @@
 		<section class="form">
 				<h2 class="centrado">{% trans %}Importar bloques mediante CSV{% endtrans %}</h2>
 
-            <form id="form_csv" action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'cif': comunidad.cif }) }}" method="post" {{ form_enctype(form_csv) }}>
+            <form id="form_csv" action="{{ path('ec_adminfincas_comunidad_alta_bloque', { 'id_comunidad': comunidad.id }) }}" method="post" {{ form_enctype(form_csv) }}>
     				<div class="red">{{ form_errors(form_csv) }}</div>
 
     				<div class="campo">

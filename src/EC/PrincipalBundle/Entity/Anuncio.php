@@ -57,22 +57,20 @@ class Anuncio
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Comunidad", inversedBy="anuncios")
-     * @ORM\JoinColumn(name="comunidad", referencedColumnName="id")
+     * @ORM\JoinColumn(name="comunidad_id", referencedColumnName="id")
      */
     protected $comunidad;
     
      /**
      * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\CategoriaAnuncios", inversedBy="anuncios")
-     * @ORM\JoinColumn(name="categoria", referencedColumnName="id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id", nullable=false)
      */
     protected $categoria;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Usuario", inversedBy="anuncios")
-     * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=false)
      */
     protected $usuario;
     

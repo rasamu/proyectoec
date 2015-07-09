@@ -70,4 +70,70 @@ class UsuarioController extends Controller
         	       		array('form' => $form->createView(),
         	      		));
  	}
+ 	
+ 	/**
+	  * @Route("/olvido/password", name="ec_principal_olvido_password")
+	  * @Template("ECPrincipalBundle:Usuario:olvido_password.html.twig")
+	  */
+    public function olvido_passwordAction(Request $request)
+    {   	
+    		$form = $this->createFormBuilder()
+    			->setAction($this->generateUrl('ec_principal_olvido_password'))
+        		->add('email', 'email', array('label'=>'Email','required' => true))
+        		->getForm();
+        		
+        	$form->handleRequest($request);
+     		if ($form->isValid()) {
+       		$email = $form->get('email')->getData();
+       	 	
+       	 	$em = $this->getDoctrine()->getManager();
+				$query = $em->createQuery(
+    				'SELECT a
+      	 		FROM ECPrincipalBundle:AdminFincas a
+      	 		WHERE a.email= :email'
+				)->setParameters(array('email'=>$email));
+				try {
+    				$adminfincas = $query->getSingleResult();
+				} catch (\Doctrine\Orm\NoResultException $e) {
+        			$adminfincas=null;
+				}
+				
+				if($adminfincas){
+					$ComprobacionesService=$this->get('usuario_service');
+      			$nuevo_password=$ComprobacionesService->generar_password();
+      			
+					$adminfincas->setPassword($nuevo_password);
+
+					$ComprobacionesService=$this->get('usuario_service');
+      			$ComprobacionesService->setSecurePassword($adminfincas);
+      			
+      			$em = $this->getDoctrine()->getManager();
+   				$em->persist($adminfincas);
+   				$em->flush();
+					
+					//Mandamos Email
+					$message = \Swift_Message::newInstance()
+        				->setSubject('Nuevo contraseña EntreComunidades')
+        				->setFrom('info.entrecomunidades@gmail.com')
+        				->setTo($email)
+        				->setContentType('text/html')
+        				->setBody($this->renderView('ECPrincipalBundle:Usuario:email_nuevo_password.txt.twig', array('nombre'=>$adminfincas->getNombre().' '.$adminfincas->getApellidos(),'usuario'=>$adminfincas->getUser(),'pass'=>$nuevo_password)));
+    				$this->get('mailer')->send($message);
+    				
+    				$flash=$this->get('translator')->trans('Se le han enviado sus nuevos datos de acceso.');
+        			$this->get('session')->getFlashBag()->add('notice', $flash);
+   				$this->get('session')->getFlashBag()->add('color','green'); 
+   				return $this->redirect($this->generateUrl('ec_principal_olvido_password'));  	
+				}else{
+					$flash=$this->get('translator')->trans('No existe ningún administrador registrado con el email'.' '.$email);
+        			$this->get('session')->getFlashBag()->add('notice', $flash);
+   				$this->get('session')->getFlashBag()->add('color','red'); 
+   				return $this->redirect($this->generateUrl('ec_principal_olvido_password'));  	
+				} 					 	
+   		}
+        		
+        	return $this->render('ECPrincipalBundle:Usuario:olvido_password.html.twig', array(
+            		'form' => $form->createView(),
+       			));
+    }
 }

@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 * EC\PrincipalBundle\Entity\Incidencia
 *
 * @ORM\Entity
-* @ORM\Table(name="incidencias")
+* @ORM\Table(name="Incidencias")
 * @ORM\HasLifecycleCallbacks
 */
 class Incidencia
@@ -46,26 +46,26 @@ class Incidencia
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Propietario", inversedBy="incidencias")
-     * @ORM\JoinColumn(name="propietario", referencedColumnName="id")
+     * @ORM\JoinColumn(name="propietario_id", referencedColumnName="id", nullable=false)
      */
     protected $propietario;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Estado", inversedBy="incidencias")
-     * @ORM\JoinColumn(name="estado", referencedColumnName="id")
+     * @ORM\JoinColumn(name="estado_id", referencedColumnName="id", nullable=false)
      */
     protected $estado;
     
     /**
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\Privacidad", inversedBy="incidencias")
-     * @ORM\JoinColumn(name="privacidad", referencedColumnName="id")
+     * @ORM\JoinColumn(name="privacidad_id", referencedColumnName="id", nullable=false)
      */
     protected $privacidad;
     
     /**
      * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="EC\PrincipalBundle\Entity\CategoriaIncidencias", inversedBy="incidencias")
-     * @ORM\JoinColumn(name="categoria", referencedColumnName="id")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id", nullable=false)
      */
     protected $categoria;
     
