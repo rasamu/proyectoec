@@ -131,12 +131,11 @@ class AnuncioController extends Controller
             		'empty_value' => 'En toda España'))
             ->add('mostrar', 'choice', array(
                 'choices' => array(
-                    '2' => '2 Anuncio/Página',
+                    '5' => '5 Anuncios/Página',
                     '10' => '10 Anuncios/Página',
                     '25' => '25 Anuncios/Página',
-                    '50' => '50 Anuncios/Página',                                      
                 ),
-                'data' => '2'))
+                'data' => '5'))
             ->add('orden', 'choice', array(
                 'choices' => array(
                     'desc' => 'Fecha descendente',

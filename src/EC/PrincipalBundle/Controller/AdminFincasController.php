@@ -188,11 +188,11 @@ class AdminFincasController extends Controller
     		
     		$form = $this ->createFormBuilder($adminfincas)
     		    	->setAction($this->generateUrl('ec_adminfincas_perfil'))
-    			   ->add('n_colegiado','text', array('label' => 'NºColegiado','required' => false))
+    			   ->add('n_colegiado','text', array('label' => 'NºColegiado','required' => false, 'max_length' =>9))
     				->add('nombre','text')
     				->add('apellidos','text')
-    				->add('telefono','text', array('label' => 'Teléfono','required' => true))
-    				->add('fax','text', array('required' => false))
+    				->add('telefono','text', array('label' => 'Teléfono','required' => true, 'max_length' =>9))
+    				->add('fax','text', array('required' => false, 'max_length' =>9))
     				->add('email','email',array('required' => true))
     				->add('direccion','text', array('label' => 'Dirección'))
     				->add('provincia','text')
@@ -207,8 +207,8 @@ class AdminFincasController extends Controller
 				$query = $em->createQuery(
     				'SELECT a
        			FROM ECPrincipalBundle:AdminFincas a
-      			WHERE a.email = :email'
-				)->setParameters(array('email' => $email));    			
+      			WHERE a.email = :email and a.id!=:id'
+				)->setParameters(array('email' => $email,'id'=>$this->getUser()));    			
     		
     			try{
     				$comprobacion_email=$query->getSingleResult();	

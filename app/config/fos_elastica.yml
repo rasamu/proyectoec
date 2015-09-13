@@ -53,11 +53,10 @@ fos_elastica:
                             ignore_missing: true
                 servicio:
                     mappings:
-                        nombre: { type: string, analyzer: my_analyzer}
+                        nombre: {type: string, analyzer: my_analyzer}
                         cif:
                            type: string
-                        direccion:
-                           type: string
+                        direccion: {type: string, analyzer: my_analyzer}
                         telefono:
                            type: string
                         categoria:
@@ -74,7 +73,7 @@ fos_elastica:
                                     properties:
                                           id: {type:integer}  
                                           name: {type:string}
-                                name: {type:string}
+                                name: {type: string, analyzer: my_analyzer}
                     persistence:
                         driver: orm
                         model: EC\PrincipalBundle\Entity\Servicio

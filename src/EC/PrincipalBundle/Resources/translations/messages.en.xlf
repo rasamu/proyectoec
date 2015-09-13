@@ -482,8 +482,8 @@
     				<target>Show</target>
 				</trans-unit>
 				<trans-unit id="241">
-    				<source>2 Anuncio/Página</source>
-    				<target>2 Ad/Page</target>
+    				<source>5 Anuncios/Página</source>
+    				<target>5 Ads/Page</target>
 				</trans-unit>
 				<trans-unit id="242">
     				<source>10 Anuncios/Página</source>
@@ -492,10 +492,6 @@
 				<trans-unit id="243">
     				<source>25 Anuncios/Página</source>
     				<target>25 Ads/Page</target>
-				</trans-unit>
-				<trans-unit id="244">
-    				<source>50 Anuncios/Página</source>
-    				<target>50 Ads/Page</target>
 				</trans-unit>
 				<trans-unit id="245">
     				<source>Denuncia</source>
@@ -693,7 +689,14 @@
    				<source>Mensajes nuevos</source>
     				<target>New messages</target>
 				</trans-unit>	
-        		
+				<trans-unit id="426">
+   				<source>Código</source>
+    				<target>Code</target>
+				</trans-unit>
+				<trans-unit id="427">
+   				<source>Despacho</source>
+    				<target>Office</target>
+				</trans-unit>
 <!--DEFAULT-->
         		<trans-unit id="500">
                 <source>Iniciar Sesión</source>
@@ -1507,8 +1510,8 @@
                 <target>View</target>
          </trans-unit>
          <trans-unit id="1816">
-                <source>2 Servicios/Página</source>
-                <target>2 Services/Page</target>
+                <source>5 Servicios/Página</source>
+                <target>5 Services/Page</target>
          </trans-unit>
          <trans-unit id="1817">
                 <source>10 Servicios/Página</source>

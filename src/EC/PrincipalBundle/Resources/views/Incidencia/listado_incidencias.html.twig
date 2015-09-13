@@ -60,7 +60,7 @@
 			<thead>
 				<tr>
 					<th id="fecha">{% trans %}Fecha{% endtrans %}</th>
-					<th id="categoria">{% trans %}Categoría{% endtrans %}</th>
+					<th id="categoria" class="no_mostrar">{% trans %}Categoría{% endtrans %}</th>
 					<th id="asunto">{% trans %}Asunto{% endtrans %}</th>
 					<th id="n_actuaciones" class="no_mostrar">{% trans %}NºActuaciones{% endtrans %}</th>
 					<th id="estado">{% trans %}Estado{% endtrans %}</th>
@@ -70,7 +70,7 @@
 			{% for incidencia in incidencias %}
 					<tr class="gradeX">
 					   <td headers="fecha" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';"><span class="azul_fuerte">{{incidencia.fecha | date("d/m/Y H:i:s a")}}</span></td>
-       				<td headers="categoria" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.categoria.nombre|trans}}</td>
+       				<td headers="categoria" class="cursor_pointer no_mostrar" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.categoria.nombre|trans}}</td>
        				<td headers="asunto" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.asunto}}</td>
        				<td headers="n_actuaciones" class="cursor_pointer no_mostrar" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.getActuaciones()|length}}</td>
        				<td headers="estado" class="cursor_pointer" onclick="window.location.href='{{ path('ec_incidencia', { 'id': incidencia.id }) }}';">{{incidencia.estado.nombre}}</td>

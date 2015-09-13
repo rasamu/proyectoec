@@ -55,9 +55,9 @@
 		<table class="display" id="example">
 			<thead>
 				<tr>
-					<th id="n_bloque">{% trans %}Nº Bloque{% endtrans %}</th>
+					<th id="n_bloque"><span class="no_mostrar">{% trans %}Nº{% endtrans %}</span> <span>{% trans %}Bloque{% endtrans %}</span></th>
 					<th id="direccion">{% trans %}Dirección{% endtrans %}</th>
-					<th id="n_propietarios">{% trans %}NºPropietarios{% endtrans %}</th>
+					<th id="n_propietarios" class="no_mostrar">{% trans %}NºPropietarios{% endtrans %}</th>
 					<th id="acciones">{% trans %}Acciones{% endtrans %}</th>
 				</tr>
 			</thead>
@@ -66,7 +66,7 @@
 				<tr class="gradeX">
        			<td headers="n_bloque">{{bloque.num}}</td>
        			<td headers="direccion">{{bloque.direccion}}</td>
-       			<td headers="n_propietarios">{{bloque.getPropietarios()|length}}</td>
+       			<td headers="n_propietarios" class="no_mostrar">{{bloque.getPropietarios()|length}}</td>
        			<td headers="acciones">
        			   <a href="{{ path('ec_adminfincas_comunidad_editar_bloque', { 'id_comunidad': comunidad.id, 'num': bloque.num}) }}"><img src="{{ asset('images/pencil-icon.png') }}" alt="edit"></a>
        				<a href="{{ path('ec_adminfincas_comunidad_eliminar_bloque', { 'id_comunidad': comunidad.id, 'num': bloque.num}) }}" onclick="return confirm('{%trans%}¿Estás seguro de eliminar el bloque{%endtrans%} {{bloque.direccion}}? {%trans%}Se eliminarán todos sus propietarios con sus respectivos anuncios e incidencias.{%endtrans%}')"><img src="{{ asset('images/action-cancel-icon.png') }}" alt="delete"></a>

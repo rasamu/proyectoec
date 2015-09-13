@@ -126,12 +126,13 @@
 	
 	<h2 class="centrado">{% trans %}Calendario de reuniones{% endtrans %}</h2>
 	
-	<span id="leyenda_reuniones">
-		<span class="color_vicepresidente derecha">{%trans%}Otra Comunidad{%endtrans%}</span>
-  		<span class="color_presidente derecha">{%trans%}Comunidad{%endtrans%} {{comunidad.codigo}}</span>
-	</span>
-	
-	<br/>
+	{% if is_granted('ROLE_ADMINFINCAS') %}
+		<span id="leyenda_reuniones">
+			<span class="color_vicepresidente derecha">{%trans%}Otra Comunidad{%endtrans%}</span>
+  			<span class="color_presidente derecha">{%trans%}Comunidad{%endtrans%} {{comunidad.codigo}}</span>
+		</span>
+		<br/>
+	{% endif %}
 	
 	<div id='calendar'></div>
 	

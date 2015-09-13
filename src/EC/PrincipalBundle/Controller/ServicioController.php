@@ -116,11 +116,11 @@ class ServicioController extends Controller
 						'data' => $comunidad->getCity()->getProvince()))
             ->add('mostrar', 'choice', array(
                 'choices' => array(
-                    '2' => '2 Servicios/Página',
+                    '5' => '5 Servicios/Página',
                     '10' => '10 Servicios/Página',
                     '25' => '25 Servicios/Página',
                 ),
-                'data' => '2'))            
+                'data' => '5'))            
             ->setMethod('GET')
         		->getForm();    
         		
